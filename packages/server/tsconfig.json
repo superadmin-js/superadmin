@@ -1,0 +1,21 @@
+{
+    "extends": "../../tsconfig.base.json",
+    "compilerOptions": {
+        "outDir": "./dist",
+        "rootDir": "./src",
+        "tsBuildInfoFile": "./dist/.tsbuildinfo",
+        "types": ["@types/node"]
+    },
+    "include": ["src"],
+    "references": [
+        {
+            "path": "../core/tsconfig.json"
+        },
+        {
+            "path": "../../nzyme/packages/types/tsconfig.json"
+        },
+        {
+            "path": "../../nzyme/packages/utils/tsconfig.json"
+        }
+    ]
+}

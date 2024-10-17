@@ -1,0 +1,13 @@
+{
+    "font-size": {
+        "prefix": "font-size",
+        "scope": "scss",
+        "body": ["font-size: \\$font-size-$0"]
+    },
+
+    "font-weight": {
+        "prefix": "font-weight",
+        "scope": "scss",
+        "body": ["font-weight: \\$font-weight-$0"]
+    }
+}

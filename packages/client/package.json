@@ -1,0 +1,25 @@
+{
+    "name": "@superadmin/client",
+    "version": "1.0.0",
+    "repository": "https://github.com/kedrzu/superadmin.git",
+    "author": "Michał Kędrzyński <m.kedrzynski@gmail.com>",
+    "type": "module",
+    "main": "./dist/index.js",
+    "module": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "sideEffects": false,
+    "scripts": {
+        "eslint": "eslint . --fix --cache",
+        "build": "tsc --build"
+    },
+    "dependencies": {
+        "@nzyme/types": "*",
+        "@nzyme/utils": "*",
+        "@superadmin/core": "*"
+    },
+    "devDependencies": {
+        "@nzyme/eslint": "*",
+        "@types/node": "^22.7.5",
+        "vitest": "^2.1.2"
+    }
+}

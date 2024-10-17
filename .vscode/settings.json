@@ -1,0 +1,81 @@
+{
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[json]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[typescript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[vue]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[scss]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[xml]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "editor.formatOnSave": true,
+    "files.exclude": {
+        "**/.git": true,
+        // "**/dist": true,
+        "**/node_modules/**": true,
+        "**/tsconfig.tsbuildinfo": true
+    },
+    // Allows formatting XML and SVG files by prettier
+    "files.associations": {
+        "*.xml": "html",
+        "*.svg": "html"
+    },
+    "search.exclude": {
+        "**/dist": true,
+        "**/node_modules/**": true,
+        "**/*.code-search": true,
+        "yarn.lock": true,
+        "**/.yarn": true,
+        "**/.pnp.*": true
+    },
+    "search.followSymlinks": true,
+    "terminal.integrated.env.osx": {
+        "NODE_OPTIONS": "--max-old-space-size=8192",
+        "ZSH_SOURCE": "./.bashrc"
+    },
+    "terminal.integrated.env.windows": {
+        "NODE_OPTIONS": "--max-old-space-size=8192"
+    },
+    "javascript.format.enable": false,
+    "json.format.enable": false,
+    "npm.packageManager": "yarn",
+    "npm.scriptExplorerAction": "run",
+    "typescript.format.enable": false,
+    "typescript.tsdk": "node_modules/typescript/lib",
+    "eslint.lintTask.enable": true,
+    "eslint.codeAction.showDocumentation": {
+        "enable": true
+    },
+    "eslint.validate": ["javascript", "typescript", "vue"],
+    "workbench.colorCustomizations": {
+        "activityBar.activeBackground": "#5b28e6",
+        "activityBar.background": "#5b28e6",
+        "activityBar.foreground": "#00BAF6",
+        "activityBar.inactiveForeground": "#ffffff",
+        "activityBarBadge.background": "#ff6bd1",
+        "activityBarBadge.foreground": "#111111",
+        "commandCenter.border": "#e7e7e799",
+        "sash.hoverBorder": "#5b28e6",
+        "statusBar.background": "#5d4cbb",
+        "statusBar.foreground": "#e7e7e7",
+        "statusBarItem.hoverBackground": "#5b28e6",
+        "statusBarItem.remoteBackground": "#5d4cbb",
+        "statusBarItem.remoteForeground": "#e7e7e7",
+        "titleBar.activeBackground": "#5d4cbb",
+        "titleBar.activeForeground": "#e7e7e7",
+        "titleBar.inactiveBackground": "#5b28e699",
+        "titleBar.inactiveForeground": "#e7e7e799"
+    },
+    "figma.autocompleteBlocks": true,
+    "figma.assetExportDirectory": "storefront/storefront-ui/assets",
+    "typescript.enablePromptUseWorkspaceTsdk": true
+}
