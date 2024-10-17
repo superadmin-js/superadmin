@@ -1,5 +1,5 @@
 {
-    "extends": "./tsconfig.base.json",
+    "extends": "./base.json",
     "compilerOptions": {
         "useDefineForClassFields": true,
         "lib": ["DOM", "DOM.Iterable", "ESNext"],
@@ -9,7 +9,7 @@
         "jsx": "react",
         "jsxFactory": "h",
         "jsxFragmentFactory": "h",
-        "types": ["vue", "vite/client"],
+        "types": ["vue", "vite/client", "@types/node"],
         "plugins": [
             {
                 "name": "typescript-vue-plugin"

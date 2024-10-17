@@ -13,12 +13,14 @@
         "build": "tsc --build"
     },
     "dependencies": {
+        "@nzyme/ioc": "*",
         "@nzyme/types": "*",
         "@nzyme/utils": "*"
     },
     "devDependencies": {
         "@nzyme/eslint": "*",
-        "@types/node": "^22.7.5",
-        "vitest": "^2.1.2"
+        "@superadmin/tsconfig": "*",
+        "@types/node": "^22.7.6",
+        "vitest": "^2.1.3"
     }
 }

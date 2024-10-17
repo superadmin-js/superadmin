@@ -1,5 +1,5 @@
 {
-    "extends": "./tsconfig.base.json",
+    "extends": "@superadmin/tsconfig/base.json",
     "include": [],
     "references": [
         {
@@ -79,6 +79,12 @@
         },
         {
             "path": "./packages/core/tsconfig.json"
+        },
+        {
+            "path": "./packages/devkit/tsconfig.json"
+        },
+        {
+            "path": "./packages/runtime-server/tsconfig.json"
         },
         {
             "path": "./packages/server/tsconfig.json"

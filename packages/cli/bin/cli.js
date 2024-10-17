@@ -3,9 +3,12 @@
 import { execute, settings } from '@oclif/core';
 import consola from 'consola';
 import sourceMap from 'source-map-support';
+import * as tsx from 'tsx/esm/api';
 
 consola.wrapAll();
 sourceMap.install();
+console.log(process.cwd());
+tsx.register();
 
 const debug = process.env.DEBUG === 'true';
 

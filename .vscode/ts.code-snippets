@@ -35,7 +35,7 @@
         "body": ["import * as z from \"@nzyme/zchema\";"],
     },
     "ExportNamedFunction": {
-        "prefix": "env",
+        "prefix": "enf",
         "scope": "typescript",
         "body": ["export function ${1:FunctionName}(${2:parameters}) {", "    $3", "}"],
     },

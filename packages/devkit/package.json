@@ -1,0 +1,48 @@
+{
+    "name": "@superadmin/devkit",
+    "version": "1.0.0",
+    "repository": "https://github.com/kedrzu/superadmin.git",
+    "author": "Michał Kędrzyński <m.kedrzynski@gmail.com>",
+    "type": "module",
+    "main": "./dist/index.js",
+    "module": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "sideEffects": false,
+    "scripts": {
+        "eslint": "eslint . --fix --cache",
+        "build": "tsc --build"
+    },
+    "dependencies": {
+        "@nzyme/esm": "*",
+        "@nzyme/ioc": "*",
+        "@nzyme/logging": "*",
+        "@nzyme/project-utils": "*",
+        "@nzyme/types": "*",
+        "@nzyme/utils": "*",
+        "@rollup/plugin-alias": "^5.1.1",
+        "@superadmin/core": "*",
+        "@superadmin/runtime-client": "*",
+        "@superadmin/runtime-server": "*",
+        "@types/fs-extra": "^11.0.4",
+        "@vitejs/plugin-vue": "^5.1.4",
+        "@vitejs/plugin-vue-jsx": "^4.0.1",
+        "chokidar": "^4.0.1",
+        "debug": "^4.3.7",
+        "fs-extra": "^11.2.0",
+        "lodash.debounce": "^4.0.8",
+        "prettier": "^3.3.3",
+        "typescript": "^5.6.3",
+        "vite": "^5.4.9",
+        "vite-plugin-checker": "^0.8.0",
+        "vite-tsconfig-paths": "^5.0.1",
+        "vue-tsc": "^2.1.6"
+    },
+    "devDependencies": {
+        "@nzyme/eslint": "*",
+        "@superadmin/tsconfig": "*",
+        "@types/debug": "^4",
+        "@types/lodash.debounce": "^4.0.9",
+        "@types/node": "^22.7.6",
+        "vitest": "^2.1.3"
+    }
+}

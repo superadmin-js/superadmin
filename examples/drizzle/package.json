@@ -1,0 +1,15 @@
+{
+    "name": "@superadmin/example-drizzle",
+    "version": "1.0.0",
+    "repository": "https://github.com/kedrzu/superadmin.git",
+    "author": "Michał Kędrzyński <m.kedrzynski@gmail.com>",
+    "type": "module",
+    "sideEffects": false,
+    "dependencies": {
+        "@superadmin/core": "*"
+    },
+    "devDependencies": {
+        "@superadmin/cli": "*",
+        "@superadmin/tsconfig": "*"
+    }
+}

@@ -1,5 +1,5 @@
 {
-    "extends": "../../tsconfig.base.json",
+    "extends": "@superadmin/tsconfig/base.json",
     "compilerOptions": {
         "outDir": "./dist",
         "rootDir": "./src",
@@ -8,6 +8,9 @@
     },
     "include": ["src"],
     "references": [
+        {
+            "path": "../../nzyme/packages/ioc/tsconfig.json"
+        },
         {
             "path": "../../nzyme/packages/types/tsconfig.json"
         },

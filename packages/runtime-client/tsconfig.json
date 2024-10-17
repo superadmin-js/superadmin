@@ -1,18 +1,24 @@
 {
-    "extends": "@superadmin/tsconfig/base.json",
+    "extends": "@superadmin/tsconfig/vue.json",
     "compilerOptions": {
         "outDir": "./dist",
         "rootDir": "./src",
         "tsBuildInfoFile": "./dist/.tsbuildinfo",
-        "types": ["@types/node"]
+        "composite": false
     },
     "include": ["src"],
     "references": [
+        {
+            "path": "../../nzyme/packages/ioc/tsconfig.json"
+        },
         {
             "path": "../../nzyme/packages/types/tsconfig.json"
         },
         {
             "path": "../../nzyme/packages/utils/tsconfig.json"
+        },
+        {
+            "path": "../client/tsconfig.json"
         },
         {
             "path": "../core/tsconfig.json"

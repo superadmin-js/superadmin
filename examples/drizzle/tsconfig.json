@@ -1,0 +1,17 @@
+{
+    "extends": "@superadmin/tsconfig/vue.json",
+    "compilerOptions": {
+        "rootDir": ".",
+        "composite": false,
+        "noEmit": true
+    },
+    "include": ["./**/*.ts", "./**/*.tsx", "./**/*.vue", "./**/*.json"],
+    "references": [
+        {
+            "path": "../../packages/core/tsconfig.json"
+        },
+        {
+            "path": "../../packages/cli/tsconfig.json"
+        }
+    ]
+}

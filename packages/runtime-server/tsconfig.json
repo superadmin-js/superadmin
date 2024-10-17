@@ -3,11 +3,13 @@
     "compilerOptions": {
         "outDir": "./dist",
         "rootDir": "./src",
-        "tsBuildInfoFile": "./dist/.tsbuildinfo",
-        "types": ["@types/node"]
+        "tsBuildInfoFile": "./dist/.tsbuildinfo"
     },
     "include": ["src"],
     "references": [
+        {
+            "path": "../../nzyme/packages/ioc/tsconfig.json"
+        },
         {
             "path": "../../nzyme/packages/types/tsconfig.json"
         },
@@ -16,6 +18,9 @@
         },
         {
             "path": "../core/tsconfig.json"
+        },
+        {
+            "path": "../server/tsconfig.json"
         }
     ]
 }

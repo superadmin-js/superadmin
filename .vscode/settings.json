@@ -39,8 +39,7 @@
     },
     "search.followSymlinks": true,
     "terminal.integrated.env.osx": {
-        "NODE_OPTIONS": "--max-old-space-size=8192",
-        "ZSH_SOURCE": "./.bashrc"
+        "NODE_OPTIONS": "--max-old-space-size=8192"
     },
     "terminal.integrated.env.windows": {
         "NODE_OPTIONS": "--max-old-space-size=8192"
