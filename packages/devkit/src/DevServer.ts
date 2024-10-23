@@ -1,20 +1,45 @@
-import { defineService } from '@nzyme/ioc';
-import { DevServerClient } from './DevServerClient.js';
+import path from 'path';
+
+import alias from '@rollup/plugin-alias';
+import commonjs from '@rollup/plugin-commonjs';
+import json from '@rollup/plugin-json';
+import { nodeResolve } from '@rollup/plugin-node-resolve';
+import typescript from '@rollup/plugin-typescript';
+import vue from '@vitejs/plugin-vue';
+import vueJsx from '@vitejs/plugin-vue-jsx';
+import autoprefixer from 'autoprefixer';
 import chalk from 'chalk';
 import consola from 'consola';
-import { ViteDevServer } from 'vite';
-import { RuntimeGenerator } from './RuntimeGenerator.js';
+import tailwindcss from 'tailwindcss';
+import { createServer } from 'vite';
+import { checker } from 'vite-plugin-checker';
+import tsconfigPaths from 'vite-tsconfig-paths';
 
+import { unwrapCjsDefaultImport } from '@nzyme/esm';
+import { defineService } from '@nzyme/ioc';
+import { resolveModulePath, resolveProjectPath } from '@nzyme/project-utils';
+import { devServerMiddleware } from '@nzyme/rollup-utils';
+import { ProjectConfig } from '@superadmin/core';
+
+import { RuntimeGenerator } from './RuntimeGenerator.js';
 import { getViteServerUrl } from './utils/getViteServerUrl.js';
 
 export const DevServer = defineService({
     name: 'DevServer',
     async setup({ inject }) {
-        const runtimeGenerator = inject(RuntimeGenerator);
-        const client = await inject(DevServerClient);
+        const config = inject(ProjectConfig);
+        const runtime = inject(RuntimeGenerator);
 
-        client.httpServer?.addListener('listening', () => {
-            const serverUrl = getViteServerUrl(client);
+        const vite = await createViteServer();
+        const api = createApiServer();
+
+        vite.middlewares.stack.unshift({
+            route: '/api',
+            handle: api,
+        });
+
+        vite.httpServer?.addListener('listening', () => {
+            const serverUrl = getViteServerUrl(vite);
             if (!serverUrl) {
                 return;
             }
@@ -27,8 +52,94 @@ export const DevServer = defineService({
         };
 
         async function start() {
-            await runtimeGenerator.start();
-            await client.listen();
+            await runtime.start();
+            await vite.listen();
+        }
+
+        function createViteServer() {
+            const clientRoot = resolveProjectPath('@superadmin/runtime-client', import.meta);
+
+            return createServer({
+                configFile: false,
+                plugins: [
+                    vue(),
+                    vueJsx(),
+                    tsconfigPaths(),
+                    checker({
+                        root: config.rootPath,
+                        typescript: true,
+                        vueTsc: true,
+                    }),
+                    unwrapCjsDefaultImport(alias)({
+                        entries: {
+                            '@modules': runtime.clientModulesPath,
+                            '@theme': config.theme,
+                        },
+                    }),
+                ],
+                root: clientRoot,
+                server: {
+                    port: config.port,
+                },
+                css: {
+                    postcss: {
+                        plugins: [
+                            tailwindcss({
+                                content: [
+                                    './**/*.vue',
+                                    './**/*.tsx',
+                                    `${clientRoot}/src/**/*.vue`,
+                                    `${clientRoot}/src/**/*.tsx`,
+                                ],
+                            }),
+                            autoprefixer(),
+                        ],
+                    },
+                    preprocessorOptions: {
+                        scss: {
+                            //    additionalData: `@import 'primeflex/primeflex.scss';`,
+                        },
+                    },
+                },
+            });
+        }
+
+        function createApiServer() {
+            return devServerMiddleware({
+                input: resolveModulePath('@superadmin/runtime-server/dev', import.meta),
+                output: {
+                    format: 'esm',
+                    dir: path.join(config.runtimePath, 'server'),
+                    sourcemap: true,
+                },
+                plugins: [
+                    nodeResolve({
+                        preferBuiltins: true,
+                        extensions: ['.js', '.mjs', '.ts', '.tsx', '.json'],
+                        exportConditions: ['node', 'module', 'import', 'require'],
+                    }),
+                    unwrapCjsDefaultImport(commonjs)(),
+                    unwrapCjsDefaultImport(json)(),
+                    unwrapCjsDefaultImport(typescript)(),
+                    unwrapCjsDefaultImport(alias)({
+                        entries: {
+                            '@modules': runtime.serverModulesPath,
+                        },
+                    }),
+                ],
+                external: source => {
+                    if (/^node:/.test(source) || /^[\w_-]+$/.test(source)) {
+                        // Node built-in modules and third party modules
+                        return true;
+                    }
+
+                    if (/node_modules/.test(source)) {
+                        return true;
+                    }
+
+                    return false;
+                },
+            });
         }
     },
 });

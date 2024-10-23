@@ -21,7 +21,7 @@ export interface TableView<
     params: TParams;
     data: TData;
     actions: {
-        fetch: ActionDefinition<TParams, TData>;
+        fetch: ActionDefinition<TParams, z.ArraySchema<{ of: TData }>>;
     };
 }
 
@@ -40,7 +40,9 @@ export function tableView<
         fetch: defineAction({
             name: `${config.name}:fetch`,
             input: params,
-            output: data,
+            output: z.array({
+                of: data,
+            }),
         }),
     };
 

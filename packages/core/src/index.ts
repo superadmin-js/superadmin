@@ -3,6 +3,7 @@ export * from './ProjectConfig.js';
 export { type Module, defineModule, isModule } from './defineModule.js';
 export * from './Modules.js';
 export { type ActionDefinition, type Action, defineAction } from './defineAction.js';
+export * from './defineActionHandler.js';
 
 export { type View, defineView, isView, type ViewBase } from './views/defineView.js';
 export { type GenericView, defineGenericView } from './views/defineGenericView.js';

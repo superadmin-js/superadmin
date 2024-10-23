@@ -4,20 +4,23 @@
     "repository": "https://github.com/kedrzu/superadmin.git",
     "author": "Michał Kędrzyński <m.kedrzynski@gmail.com>",
     "type": "module",
-    "main": "./dist/index.js",
-    "module": "./dist/index.js",
-    "types": "./dist/index.d.ts",
     "sideEffects": false,
+    "exports": {
+        "./dev": "./dist/dev.js"
+    },
     "scripts": {
         "eslint": "eslint . --fix --cache",
         "build": "tsc --build"
     },
     "dependencies": {
         "@nzyme/ioc": "*",
+        "@nzyme/rollup-utils": "*",
         "@nzyme/types": "*",
         "@nzyme/utils": "*",
         "@superadmin/core": "*",
-        "@superadmin/server": "*"
+        "@superadmin/server": "*",
+        "h3": "^1.13.0",
+        "listhen": "^1.9.0"
     },
     "devDependencies": {
         "@superadmin/eslint": "*",

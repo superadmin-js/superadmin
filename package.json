@@ -7,7 +7,8 @@
     "scripts": {
         "monorepo": "node ./nzyme/packages/project-tools/dist/monorepo.js",
         "watch": "tsc --build --watch",
-        "dev": "yarn && yarn monorepo && turbo run dev"
+        "dev": "yarn && yarn monorepo && turbo run dev",
+        "start": "yarn --cwd examples/drizzle dev"
     },
     "devDependencies": {
         "lerna": "^8.1.8",

@@ -21,6 +21,9 @@
             "path": "../../nzyme/packages/project-utils/tsconfig.json"
         },
         {
+            "path": "../../nzyme/packages/rollup-utils/tsconfig.json"
+        },
+        {
             "path": "../../nzyme/packages/types/tsconfig.json"
         },
         {

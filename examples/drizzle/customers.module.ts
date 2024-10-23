@@ -1,17 +1,21 @@
 import { defineAction, tableView } from '@superadmin/core';
 import * as s from '@superadmin/schema';
 
+export const Customer = s.object({
+    props: {
+        id: s.bigint(),
+        firstName: s.string(),
+        lastName: s.string(),
+        email: s.string(),
+    },
+});
+
+export type Customer = s.SchemaValue<typeof Customer>;
+
 export const customersTable = tableView({
     name: 'customers',
     path: '/customers',
-    data: s.object({
-        props: {
-            id: s.bigint(),
-            firstName: s.string(),
-            lastName: s.string(),
-            email: s.string(),
-        },
-    }),
+    data: Customer,
 });
 
 export const syncCustomer = defineAction({

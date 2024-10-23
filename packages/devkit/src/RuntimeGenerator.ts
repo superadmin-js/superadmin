@@ -1,11 +1,13 @@
-import { defineService } from '@nzyme/ioc';
-import { ProjectConfig } from '@superadmin/core';
-import { watch } from 'chokidar';
-import { createModulesRuntime } from './utils/createRuntime.js';
 import path from 'path';
-import { createPromise } from '@nzyme/utils';
 
+import { watch } from 'chokidar';
 import createDebug from 'debug';
+
+import { defineService } from '@nzyme/ioc';
+import { createPromise } from '@nzyme/utils';
+import { ProjectConfig } from '@superadmin/core';
+
+import { createModulesRuntime } from './utils/createRuntime.js';
 
 export const RuntimeGenerator = defineService({
     name: 'RuntimeGenerator',
@@ -13,8 +15,8 @@ export const RuntimeGenerator = defineService({
         const config = inject(ProjectConfig);
         const debug = createDebug('superadmin:runtime');
 
-        const clientModulesPath = path.join(config.runtimePath, 'client.ts');
-        const serverModulesPath = path.join(config.runtimePath, 'server.ts');
+        const clientModulesPath = path.join(config.runtimePath, 'client/modules.ts');
+        const serverModulesPath = path.join(config.runtimePath, 'server/modules.ts');
 
         const clientRuntime = createModulesRuntime({
             moduleRegex: /\.(client|module)\.tsx?$/,

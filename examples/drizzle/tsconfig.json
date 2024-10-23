@@ -3,7 +3,8 @@
     "compilerOptions": {
         "rootDir": ".",
         "composite": false,
-        "noEmit": true
+        "noEmit": true,
+        "declaration": false
     },
     "include": ["./**/*.ts", "./**/*.tsx", "./**/*.vue", "./**/*.json"],
     "references": [
