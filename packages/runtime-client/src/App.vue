@@ -50,10 +50,11 @@ const stateKey = 'superadmin:layout';
     height: 100vh;
     border: none;
     border-radius: 0;
+    --p-splitter-gutter-background: transparent;
 
-    :global .p-splitter-gutter-handle {
-        visibility: hidden;
-    }
+    // :global .p-splitter-gutter-handle {
+    //     visibility: hidden;
+    // }
 }
 
 .menu {

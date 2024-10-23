@@ -1,3 +1,5 @@
+import type { SchemaAny } from '@nzyme/zchema';
+
 import type { ActionDefinition } from '../defineAction.js';
 import type { Module } from '../defineModule.js';
 import { MODULE_SYMBOL } from '../defineModule.js';
@@ -10,7 +12,7 @@ export interface ViewBase {
     name: string;
     path?: string;
     generic?: GenericView;
-    actions?: Record<string, ActionDefinition>;
+    actions?: Record<string, ActionDefinition<SchemaAny, SchemaAny>>;
 }
 
 export interface View extends Module, ViewBase {
@@ -22,12 +24,12 @@ export function defineView<TView extends ViewBase>(view: TView) {
     const viewDef = view as View & TView;
 
     viewDef[MODULE_SYMBOL] = VIEW_SYMBOL;
-    viewDef.install = async function (container) {
+    viewDef.install = function (container) {
         container.resolve(ViewRegistry).register(this);
 
         if (view.actions) {
             for (const action of Object.values(view.actions)) {
-                await action.install(container);
+                action.install(container);
             }
         }
     };

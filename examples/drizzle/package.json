@@ -9,8 +9,8 @@
         "dev": "superadmin start"
     },
     "dependencies": {
-        "@nzyme/zchema": "*",
-        "@superadmin/core": "*"
+        "@superadmin/core": "*",
+        "@superadmin/schema": "*"
     },
     "devDependencies": {
         "@superadmin/cli": "*",

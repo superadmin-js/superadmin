@@ -22,6 +22,12 @@
         },
         {
             "path": "../core/tsconfig.json"
+        },
+        {
+            "path": "../schema/tsconfig.json"
+        },
+        {
+            "path": "../utils/tsconfig.json"
         }
     ]
 }

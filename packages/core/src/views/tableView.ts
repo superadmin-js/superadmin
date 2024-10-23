@@ -1,4 +1,3 @@
-import type { Schema, SchemaAny } from '@nzyme/zchema';
 import * as z from '@nzyme/zchema';
 
 import type { View } from './defineView.js';
@@ -7,10 +6,7 @@ import type { ActionDefinition } from '../defineAction.js';
 import { defineAction } from '../defineAction.js';
 import { defineGenericView } from './defineGenericView.js';
 
-export interface TableViewConfig<
-    TData extends SchemaAny = Schema<unknown>,
-    TParams extends SchemaAny = Schema<unknown>,
-> {
+export interface TableViewConfig<TData extends z.ObjectSchemaAny, TParams extends z.SchemaAny> {
     name: string;
     params?: TParams;
     path?: string;
@@ -18,8 +14,8 @@ export interface TableViewConfig<
 }
 
 export interface TableView<
-    TData extends SchemaAny = Schema<unknown>,
-    TParams extends SchemaAny = Schema<unknown>,
+    TData extends z.ObjectSchemaAny = z.ObjectSchemaAny,
+    TParams extends z.SchemaAny = z.Schema<unknown>,
 > extends View {
     name: string;
     params: TParams;
@@ -33,9 +29,10 @@ export const tableGenericView = defineGenericView({
     name: 'superadmin:table',
 });
 
-export function tableView<TData extends SchemaAny, TParams extends SchemaAny = Schema<void>>(
-    config: TableViewConfig<TData, TParams>,
-): TableView<TData, TParams> {
+export function tableView<
+    TData extends z.ObjectSchemaAny,
+    TParams extends z.SchemaAny = z.Schema<void>,
+>(config: TableViewConfig<TData, TParams>): TableView<TData, TParams> {
     const params = config.params ?? (z.void() as TParams);
     const data = config.data;
 

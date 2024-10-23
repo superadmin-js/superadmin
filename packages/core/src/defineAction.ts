@@ -39,7 +39,7 @@ export function defineAction<
 >(options: ActionOptions<P, R>): ActionDefinition<P, R> {
     const name = options.name;
     const factory = createNamedFunction<ActionFactory<SchemaValue<P>>>(name, input => {
-        return { name, params: input };
+        return { name: name, params: input };
     });
 
     const action = factory as ActionDefinition<P, R>;

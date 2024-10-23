@@ -1,6 +1,8 @@
 import alias from '@rollup/plugin-alias';
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
+import autoprefixer from 'autoprefixer';
+import tailwindcss from 'tailwindcss';
 import { createServer } from 'vite';
 import { checker } from 'vite-plugin-checker';
 import tsconfigPaths from 'vite-tsconfig-paths';
@@ -18,7 +20,7 @@ export const DevServerClient = defineService({
         const config = inject(ProjectConfig);
         const runtime = inject(RuntimeGenerator);
 
-        const root = resolveProjectPath('@superadmin/runtime-client', import.meta);
+        const runtimeRoot = resolveProjectPath('@superadmin/runtime-client', import.meta);
 
         return createServer({
             configFile: false,
@@ -38,11 +40,24 @@ export const DevServerClient = defineService({
                     },
                 }),
             ],
-            root,
+            root: runtimeRoot,
             server: {
                 port: config.port,
             },
             css: {
+                postcss: {
+                    plugins: [
+                        tailwindcss({
+                            content: [
+                                './**/*.vue',
+                                './**/*.tsx',
+                                `${runtimeRoot}/src/**/*.vue`,
+                                `${runtimeRoot}/src/**/*.tsx`,
+                            ],
+                        }),
+                        autoprefixer(),
+                    ],
+                },
                 preprocessorOptions: {
                     scss: {
                         //    additionalData: `@import 'primeflex/primeflex.scss';`,

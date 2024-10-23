@@ -1,11 +1,10 @@
 import { defineService } from '@nzyme/ioc';
 import type { Component } from '@nzyme/vue-utils';
-import { type GenericView, type View, ViewRegistry } from '@superadmin/core';
+import type { GenericView, View } from '@superadmin/core';
 
 export const TemplateRegistry = defineService({
     name: 'TemplateRegistry',
-    setup({ inject }) {
-        const views = inject(ViewRegistry);
+    setup() {
         const registry = new Map<string, Component>();
 
         return {
@@ -17,17 +16,7 @@ export const TemplateRegistry = defineService({
             registry.set(view.name, component);
         }
 
-        function resolve(viewName: string): Component | undefined;
-        function resolve(view: View): Component;
-        function resolve(view: View | string | undefined) {
-            if (typeof view === 'string') {
-                view = views.getByName(view);
-            }
-
-            if (!view) {
-                return undefined;
-            }
-
+        function resolve(view: View) {
             if (view.generic) {
                 return registry.get(view.generic.name);
             }

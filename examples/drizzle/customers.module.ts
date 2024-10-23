@@ -1,26 +1,25 @@
 import { defineAction, tableView } from '@superadmin/core';
-
-import * as z from '@nzyme/zchema';
+import * as s from '@superadmin/schema';
 
 export const customersTable = tableView({
     name: 'customers',
     path: '/customers',
-    data: z.object({
+    data: s.object({
         props: {
-            id: z.bigint(),
-            firstName: z.string(),
-            lastName: z.string(),
-            email: z.string(),
+            id: s.bigint(),
+            firstName: s.string(),
+            lastName: s.string(),
+            email: s.string(),
         },
     }),
 });
 
 export const syncCustomer = defineAction({
     name: 'syncCustomer',
-    input: z.object({
+    input: s.object({
         props: {
-            id: z.bigint(),
+            id: s.bigint(),
         },
     }),
-    output: z.void(),
+    output: s.void(),
 });

@@ -1,11 +1,13 @@
 <script lang="ts" setup>
+import type { PropType } from 'vue';
 import { computed } from 'vue';
 
 import { useService } from '@nzyme/vue';
 import { TemplateRegistry } from '@superadmin/client';
+import type { View } from '@superadmin/core';
 
 const props = defineProps({
-    view: { type: String, required: true },
+    view: { type: Object as PropType<View>, required: true },
     params: { type: Object, required: false },
 });
 
@@ -20,5 +22,6 @@ const template = computed(() => {
     <component
         :is="template"
         :params="props.params"
+        :view="props.view"
     />
 </template>

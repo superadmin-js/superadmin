@@ -1,8 +1,8 @@
 {
-    "name": "@superadmin/server",
+    "name": "@superadmin/utils",
+    "version": "1.0.0",
     "repository": "https://github.com/kedrzu/superadmin.git",
     "author": "Michał Kędrzyński <m.kedrzynski@gmail.com>",
-    "version": "1.0.0",
     "type": "module",
     "main": "./dist/index.js",
     "module": "./dist/index.js",
@@ -12,10 +12,13 @@
         "eslint": "eslint . --fix --cache",
         "build": "tsc --build"
     },
+    "exports": {
+        ".": "./dist/index.js",
+        "./internal": "./dist/internal.js"
+    },
     "dependencies": {
         "@nzyme/types": "*",
-        "@nzyme/utils": "*",
-        "@superadmin/core": "*"
+        "@nzyme/utils": "*"
     },
     "devDependencies": {
         "@superadmin/eslint": "*",

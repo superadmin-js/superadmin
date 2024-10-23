@@ -3,11 +3,11 @@ import type { Container } from '@nzyme/ioc';
 export const MODULE_SYMBOL = Symbol('module');
 
 export type ModuleInput = {
-    (container: Container): void | Promise<void>;
+    (container: Container): void;
 };
 
 export interface Module {
-    install(container: Container): void | Promise<void>;
+    install(container: Container): void;
     readonly [MODULE_SYMBOL]: true | symbol;
 }
 

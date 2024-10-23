@@ -4,22 +4,29 @@ import ToastService from 'primevue/toastservice';
 import type { Plugin } from 'vue';
 
 import { CommonPlugin, VueContainer } from '@nzyme/vue';
-import { ViewRegistry, isModule } from '@superadmin/core';
+import type { Module } from '@superadmin/core';
+import { Modules, isModule } from '@superadmin/core';
 
 import { App } from './App.js';
 import { Router } from './Router.js';
-import ViewRenderer from './components/ViewRenderer.vue';
 import * as defaultModules from './modules.js';
-
-import './index.scss';
 
 export interface StartAppOptions {
     modules: unknown[];
     theme: unknown;
 }
 
-export async function startApp(options: StartAppOptions) {
+export function startApp(options: StartAppOptions) {
     const container = new VueContainer();
+    const modules: Module[] = [...Object.values(defaultModules)];
+
+    for (const module of options.modules) {
+        if (isModule(module)) {
+            modules.push(module);
+        }
+    }
+
+    container.set(Modules, modules);
 
     const app = container.resolve(App);
     const router = container.resolve(Router);
@@ -36,30 +43,8 @@ export async function startApp(options: StartAppOptions) {
     app.use(PrimeVue as unknown as Plugin, primeVueConfig);
     app.use(ToastService as unknown as Plugin);
 
-    for (const module of Object.values(defaultModules)) {
-        if (isModule(module)) {
-            await module.install(container);
-        }
-    }
-
-    for (const module of options.modules) {
-        if (isModule(module)) {
-            await module.install(container);
-        }
-    }
-
-    for (const view of container.resolve(ViewRegistry).getAll()) {
-        if (!view.path) {
-            continue;
-        }
-
-        router.addRoute({
-            path: view.path,
-            component: ViewRenderer,
-            props: {
-                view: view.name,
-            },
-        });
+    for (const module of modules) {
+        module.install(container);
     }
 
     app.mount('#root');

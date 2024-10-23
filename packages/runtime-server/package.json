@@ -20,7 +20,6 @@
         "@superadmin/server": "*"
     },
     "devDependencies": {
-        "@nzyme/eslint": "*",
         "@superadmin/eslint": "*",
         "@superadmin/tsconfig": "*",
         "@types/node": "^22.7.7",
