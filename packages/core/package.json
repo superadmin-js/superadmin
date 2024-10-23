@@ -12,15 +12,21 @@
         "eslint": "eslint . --fix --cache",
         "build": "tsc --build"
     },
+    "exports": {
+        ".": "./dist/index.js",
+        "./internal": "./dist/internal.js"
+    },
     "dependencies": {
         "@nzyme/ioc": "*",
         "@nzyme/types": "*",
-        "@nzyme/utils": "*"
+        "@nzyme/utils": "*",
+        "@nzyme/zchema": "*"
     },
     "devDependencies": {
         "@nzyme/eslint": "*",
+        "@superadmin/eslint": "*",
         "@superadmin/tsconfig": "*",
-        "@types/node": "^22.7.6",
+        "@types/node": "^22.7.7",
         "vitest": "^2.1.3"
     }
 }

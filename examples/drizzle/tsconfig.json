@@ -8,6 +8,9 @@
     "include": ["./**/*.ts", "./**/*.tsx", "./**/*.vue", "./**/*.json"],
     "references": [
         {
+            "path": "../../nzyme/packages/zchema/tsconfig.json"
+        },
+        {
             "path": "../../packages/core/tsconfig.json"
         },
         {

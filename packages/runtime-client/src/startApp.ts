@@ -1,43 +1,65 @@
+import type { PrimeVueConfiguration } from 'primevue/config';
 import PrimeVue from 'primevue/config';
 import ToastService from 'primevue/toastservice';
-import { createApp } from 'vue';
-import { createRouter, createWebHistory } from 'vue-router';
-import Aura from '@primevue/themes/aura';
+import type { Plugin } from 'vue';
 
 import { CommonPlugin, VueContainer } from '@nzyme/vue';
+import { ViewRegistry, isModule } from '@superadmin/core';
 
-import AdminApp from './App.vue';
+import { App } from './App.js';
+import { Router } from './Router.js';
+import ViewRenderer from './components/ViewRenderer.vue';
+import * as defaultModules from './modules.js';
 
 import './index.scss';
-import { isModule } from '@superadmin/core';
 
 export interface StartAppOptions {
     modules: unknown[];
+    theme: unknown;
 }
 
-export function startApp(options: StartAppOptions) {
+export async function startApp(options: StartAppOptions) {
     const container = new VueContainer();
 
-    const app = createApp(AdminApp);
-    const router = createRouter({
-        routes: [],
-        history: createWebHistory(),
-    });
+    const app = container.resolve(App);
+    const router = container.resolve(Router);
 
     app.use(router);
     app.use(CommonPlugin, { container });
-    app.use(PrimeVue.default, {
-        theme: {
-            preset: Aura,
-        },
-    });
 
-    app.use(ToastService.default);
+    const primeVueConfig: PrimeVueConfiguration = {
+        theme: {
+            preset: options.theme,
+        },
+    };
+
+    app.use(PrimeVue as unknown as Plugin, primeVueConfig);
+    app.use(ToastService as unknown as Plugin);
+
+    for (const module of Object.values(defaultModules)) {
+        if (isModule(module)) {
+            await module.install(container);
+        }
+    }
 
     for (const module of options.modules) {
         if (isModule(module)) {
-            module(container);
+            await module.install(container);
         }
+    }
+
+    for (const view of container.resolve(ViewRegistry).getAll()) {
+        if (!view.path) {
+            continue;
+        }
+
+        router.addRoute({
+            path: view.path,
+            component: ViewRenderer,
+            props: {
+                view: view.name,
+            },
+        });
     }
 
     app.mount('#root');

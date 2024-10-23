@@ -7,10 +7,9 @@ import prettier from 'prettier';
 export interface RuntimeOptions {
     moduleRegex: RegExp;
     outputPath: string;
-    script: (params: { script: ScriptBuilder; modules: string }) => void;
 }
 
-export function createRuntime(options: RuntimeOptions) {
+export function createModulesRuntime(options: RuntimeOptions) {
     const { moduleRegex, outputPath } = options;
 
     const moduleFiles = new Set<string>();
@@ -80,9 +79,7 @@ export function createRuntime(options: RuntimeOptions) {
         }
 
         const modulesDestructured = modules.map(module => `...Object.values(${module})`).join(', ');
-        script.addStatement(`const ${modulesVar} = [${modulesDestructured}];`);
-
-        options.script({ script, modules: modulesVar });
+        script.addStatement(`export default [${modulesDestructured}];`);
 
         const prettierConfig = await prettier.resolveConfig(outputPath);
         const formatted = await prettier.format(script.getCode(), {

@@ -21,7 +21,7 @@
         "@nzyme/project-utils": "*",
         "@nzyme/utils": "*",
         "@oclif/core": "^4.0.29",
-        "@oclif/plugin-help": "^6.2.15",
+        "@oclif/plugin-help": "^6.2.16",
         "@oclif/plugin-version": "^2.2.15",
         "@superadmin/devkit": "*",
         "chalk": "^5.3.0",
@@ -32,8 +32,9 @@
         "tsx": "^4.19.1"
     },
     "devDependencies": {
+        "@superadmin/eslint": "*",
         "@superadmin/tsconfig": "*",
-        "@types/node": "^22.7.6",
+        "@types/node": "^22.7.7",
         "@types/source-map-support": "^0.5.10",
         "oclif": "^4.15.9"
     },

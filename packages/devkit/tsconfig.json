@@ -9,6 +9,9 @@
     "include": ["src"],
     "references": [
         {
+            "path": "../../nzyme/packages/esm/tsconfig.json"
+        },
+        {
             "path": "../../nzyme/packages/ioc/tsconfig.json"
         },
         {

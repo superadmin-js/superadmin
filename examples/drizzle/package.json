@@ -5,7 +5,11 @@
     "author": "Michał Kędrzyński <m.kedrzynski@gmail.com>",
     "type": "module",
     "sideEffects": false,
+    "scripts": {
+        "dev": "superadmin start"
+    },
     "dependencies": {
+        "@nzyme/zchema": "*",
         "@superadmin/core": "*"
     },
     "devDependencies": {

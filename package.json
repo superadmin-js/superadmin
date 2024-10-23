@@ -7,13 +7,13 @@
     "scripts": {
         "monorepo": "node ./nzyme/packages/project-tools/dist/monorepo.js",
         "watch": "tsc --build --watch",
-        "dev": "yarn && yarn monorepo && yarn watch"
+        "dev": "yarn && yarn monorepo && turbo run dev"
     },
     "devDependencies": {
         "lerna": "^8.1.8",
         "prettier": "^3.3.3",
         "ts-node": "^10.9.2",
-        "turbo": "^2.1.3",
+        "turbo": "^2.2.2",
         "typescript": "^5.6.3"
     },
     "workspaces": [

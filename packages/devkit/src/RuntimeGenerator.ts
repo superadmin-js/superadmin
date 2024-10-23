@@ -1,7 +1,7 @@
 import { defineService } from '@nzyme/ioc';
 import { ProjectConfig } from '@superadmin/core';
 import { watch } from 'chokidar';
-import { createRuntime } from './utils/createRuntime.js';
+import { createModulesRuntime } from './utils/createRuntime.js';
 import path from 'path';
 import { createPromise } from '@nzyme/utils';
 
@@ -13,32 +13,23 @@ export const RuntimeGenerator = defineService({
         const config = inject(ProjectConfig);
         const debug = createDebug('superadmin:runtime');
 
-        const clientRuntimePath = path.join(config.runtimePath, 'client.ts');
-        const serverRuntimePath = path.join(config.runtimePath, 'server.ts');
+        const clientModulesPath = path.join(config.runtimePath, 'client.ts');
+        const serverModulesPath = path.join(config.runtimePath, 'server.ts');
 
-        const clientRuntime = createRuntime({
+        const clientRuntime = createModulesRuntime({
             moduleRegex: /\.(client|module)\.tsx?$/,
-            outputPath: clientRuntimePath,
-            script: ({ script, modules }) => {
-                const startApp = script.addImport({
-                    from: '@superadmin/runtime-client',
-                    import: 'startApp',
-                });
-
-                script.addStatement(`${startApp}({ modules: ${modules} });`);
-            },
+            outputPath: clientModulesPath,
         });
 
-        const serverRuntime = createRuntime({
+        const serverRuntime = createModulesRuntime({
             moduleRegex: /\.(server|module)\.ts$/,
-            outputPath: serverRuntimePath,
-            script: ({ script, modules }) => {},
+            outputPath: serverModulesPath,
         });
 
         return {
             start,
-            clientRuntimePath,
-            serverRuntimePath,
+            clientModulesPath,
+            serverModulesPath,
         };
 
         async function start() {

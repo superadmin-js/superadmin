@@ -1,16 +1,16 @@
+import alias from '@rollup/plugin-alias';
+import vue from '@vitejs/plugin-vue';
+import vueJsx from '@vitejs/plugin-vue-jsx';
+import { createServer } from 'vite';
+import { checker } from 'vite-plugin-checker';
+import tsconfigPaths from 'vite-tsconfig-paths';
+
+import { unwrapCjsDefaultImport } from '@nzyme/esm';
 import { defineService } from '@nzyme/ioc';
 import { resolveProjectPath } from '@nzyme/project-utils';
 import { ProjectConfig } from '@superadmin/core';
 
-import vue from '@vitejs/plugin-vue';
-import vueJsx from '@vitejs/plugin-vue-jsx';
-import { createServer, Plugin } from 'vite';
-import { checker } from 'vite-plugin-checker';
-import tsconfigPaths from 'vite-tsconfig-paths';
-import alias from '@rollup/plugin-alias';
-
 import { RuntimeGenerator } from './RuntimeGenerator.js';
-import { unwrapCjsDefaultImport } from '@nzyme/esm';
 
 export const DevServerClient = defineService({
     name: 'DevServerClient',
@@ -33,7 +33,8 @@ export const DevServerClient = defineService({
                 }),
                 unwrapCjsDefaultImport(alias)({
                     entries: {
-                        '@runtime': runtime.clientRuntimePath,
+                        '@modules': runtime.clientModulesPath,
+                        '@theme': config.theme,
                     },
                 }),
             ],

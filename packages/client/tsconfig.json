@@ -4,15 +4,22 @@
         "outDir": "./dist",
         "rootDir": "./src",
         "tsBuildInfoFile": "./dist/.tsbuildinfo",
-        "types": ["@types/node"]
+        "types": ["@types/node"],
+        "lib": ["DOM", "DOM.Iterable", "ESNext"]
     },
     "include": ["src"],
     "references": [
+        {
+            "path": "../../nzyme/packages/ioc/tsconfig.json"
+        },
         {
             "path": "../../nzyme/packages/types/tsconfig.json"
         },
         {
             "path": "../../nzyme/packages/utils/tsconfig.json"
+        },
+        {
+            "path": "../../nzyme/packages/vue-utils/tsconfig.json"
         },
         {
             "path": "../core/tsconfig.json"
