@@ -18,7 +18,9 @@
         "@nzyme/types": "*",
         "@nzyme/utils": "*",
         "@superadmin/core": "*",
+        "@superadmin/schema": "*",
         "@superadmin/server": "*",
+        "@superadmin/validation": "*",
         "h3": "^1.13.0",
         "listhen": "^1.9.0"
     },

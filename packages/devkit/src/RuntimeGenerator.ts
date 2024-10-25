@@ -5,6 +5,7 @@ import createDebug from 'debug';
 
 import { defineService } from '@nzyme/ioc';
 import { createPromise } from '@nzyme/utils';
+import type { RuntimeConfig } from '@superadmin/core';
 import { ProjectConfig } from '@superadmin/core';
 
 import { createModulesRuntime } from './utils/createRuntime.js';
@@ -12,33 +13,36 @@ import { createModulesRuntime } from './utils/createRuntime.js';
 export const RuntimeGenerator = defineService({
     name: 'RuntimeGenerator',
     setup({ inject }) {
-        const config = inject(ProjectConfig);
+        const projectConfig = inject(ProjectConfig);
+        const runtimeConfig: RuntimeConfig = {
+            basePath: projectConfig.basePath,
+        };
+
         const debug = createDebug('superadmin:runtime');
 
-        const clientModulesPath = path.join(config.runtimePath, 'client/modules.ts');
-        const serverModulesPath = path.join(config.runtimePath, 'server/modules.ts');
-
-        const clientRuntime = createModulesRuntime({
+        const client = createModulesRuntime({
             moduleRegex: /\.(client|module)\.tsx?$/,
-            outputPath: clientModulesPath,
+            outputDir: path.join(projectConfig.runtimePath, 'client'),
+            config: runtimeConfig,
         });
 
-        const serverRuntime = createModulesRuntime({
+        const server = createModulesRuntime({
             moduleRegex: /\.(server|module)\.ts$/,
-            outputPath: serverModulesPath,
+            outputDir: path.join(projectConfig.runtimePath, 'server'),
+            config: runtimeConfig,
         });
 
         return {
             start,
-            clientModulesPath,
-            serverModulesPath,
+            client,
+            server,
         };
 
         async function start() {
             const promise = createPromise();
 
             const watcher = watch('.', {
-                cwd: config.rootPath,
+                cwd: projectConfig.cwd,
                 ignored: ['node_modules', '.superadmin'],
             });
 
@@ -48,14 +52,14 @@ export const RuntimeGenerator = defineService({
 
             await promise.promise;
 
-            await Promise.all([clientRuntime.start(), serverRuntime.start()]);
+            await Promise.all([client.start(), server.start()]);
         }
 
         function onAddFile(path: string) {
             let added = false;
 
-            added = clientRuntime.addFile(path) || added;
-            added = serverRuntime.addFile(path) || added;
+            added = client.addFile(path) || added;
+            added = server.addFile(path) || added;
 
             if (added) {
                 debug('Added module file: %s', path);
@@ -63,7 +67,7 @@ export const RuntimeGenerator = defineService({
         }
 
         function onDeleteFile(path: string) {
-            const removed = clientRuntime.removeFile(path) || serverRuntime.removeFile(path);
+            const removed = client.removeFile(path) || server.removeFile(path);
 
             if (removed) {
                 debug('Removed module file: %s', path);

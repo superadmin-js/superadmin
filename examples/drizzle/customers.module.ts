@@ -20,10 +20,10 @@ export const customersTable = tableView({
 
 export const syncCustomer = defineAction({
     name: 'syncCustomer',
-    input: s.object({
+    params: s.object({
         props: {
             id: s.bigint(),
         },
     }),
-    output: s.void(),
+    result: s.void(),
 });

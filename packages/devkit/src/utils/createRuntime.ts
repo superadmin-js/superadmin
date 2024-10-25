@@ -1,23 +1,33 @@
 import path from 'path';
+
 import fs from 'fs-extra';
-import { createScript, ScriptBuilder } from '@nzyme/project-utils';
 import debounce from 'lodash.debounce';
-import prettier from 'prettier';
+import { format, resolveConfig } from 'prettier';
+
+import type { ScriptBuilder } from '@nzyme/project-utils';
+import { createScript } from '@nzyme/project-utils';
+import type { RuntimeConfig } from '@superadmin/core';
 
 export interface RuntimeOptions {
     moduleRegex: RegExp;
-    outputPath: string;
+    outputDir: string;
+    config: RuntimeConfig;
 }
 
 export function createModulesRuntime(options: RuntimeOptions) {
-    const { moduleRegex, outputPath } = options;
+    const { moduleRegex, outputDir } = options;
 
     const moduleFiles = new Set<string>();
-    const outputDir = path.dirname(outputPath);
-    const generate = debounce(generateScript, 200);
+
+    const configPath = path.join(outputDir, 'config.ts');
+    const modulesPath = path.join(outputDir, 'modules.ts');
+
+    const generate = debounce(generateModules, 200);
     let started = false;
 
     return {
+        configPath,
+        modulesPath,
         addFile,
         removeFile,
         start,
@@ -57,14 +67,23 @@ export function createModulesRuntime(options: RuntimeOptions) {
         }
 
         started = true;
-        await generateScript();
+        await generateConfig();
+        await generateModules();
     }
 
-    async function generateScript() {
+    async function generateConfig() {
         await fs.ensureDir(outputDir);
 
         const script = createScript();
-        const modulesVar = script.addVariable('modules');
+        script.addStatement(`export default ${JSON.stringify(options.config)};`);
+
+        await saveScript(configPath, script);
+    }
+
+    async function generateModules() {
+        await fs.ensureDir(outputDir);
+
+        const script = createScript();
 
         const modules: string[] = [];
 
@@ -81,12 +100,16 @@ export function createModulesRuntime(options: RuntimeOptions) {
         const modulesDestructured = modules.map(module => `...Object.values(${module})`).join(', ');
         script.addStatement(`export default [${modulesDestructured}];`);
 
-        const prettierConfig = await prettier.resolveConfig(outputPath);
-        const formatted = await prettier.format(script.getCode(), {
+        await saveScript(modulesPath, script);
+    }
+
+    async function saveScript(filePath: string, script: ScriptBuilder) {
+        const prettierConfig = await resolveConfig(filePath);
+        const formatted = await format(script.getCode(), {
             ...prettierConfig,
             parser: 'typescript',
         });
 
-        await fs.writeFile(outputPath, formatted);
+        await fs.writeFile(filePath, formatted);
     }
 }

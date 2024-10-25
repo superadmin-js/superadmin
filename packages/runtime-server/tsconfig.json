@@ -23,7 +23,13 @@
             "path": "../core/tsconfig.json"
         },
         {
+            "path": "../schema/tsconfig.json"
+        },
+        {
             "path": "../server/tsconfig.json"
+        },
+        {
+            "path": "../validation/tsconfig.json"
         }
     ]
 }

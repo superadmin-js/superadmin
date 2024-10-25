@@ -13,6 +13,7 @@
         "build": "tsc --build"
     },
     "dependencies": {
+        "@nzyme/ioc": "*",
         "@nzyme/types": "*",
         "@nzyme/utils": "*",
         "@superadmin/core": "*"

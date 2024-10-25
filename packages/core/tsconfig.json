@@ -18,7 +18,7 @@
             "path": "../../nzyme/packages/utils/tsconfig.json"
         },
         {
-            "path": "../../nzyme/packages/zchema/tsconfig.json"
+            "path": "../schema/tsconfig.json"
         }
     ]
 }

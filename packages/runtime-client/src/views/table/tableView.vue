@@ -2,8 +2,10 @@
 import Column from 'primevue/column';
 import DataTable from 'primevue/datatable';
 import type { PropType } from 'vue';
-import { computed } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 
+import { useService } from '@nzyme/vue';
+import { ActionDispatcher } from '@superadmin/client';
 import type { TableView } from '@superadmin/core';
 import type { Schema } from '@superadmin/schema';
 import { prettifyName } from '@superadmin/utils';
@@ -11,6 +13,8 @@ import { prettifyName } from '@superadmin/utils';
 const props = defineProps({
     view: { type: Object as PropType<TableView>, required: true },
 });
+
+const actionDispatcher = useService(ActionDispatcher);
 
 type ColumnDef = {
     prop: string;
@@ -34,12 +38,23 @@ const columns = computed(() => {
 
     return columns;
 });
+
+const data = ref<object[]>();
+
+onMounted(fetchData);
+
+async function fetchData() {
+    const action = props.view.actions.fetch(undefined);
+    const result = await actionDispatcher(action);
+
+    data.value = result;
+}
 </script>
 
 <template>
     <div class="p-6">
         <DataTable
-            :value="[]"
+            :value="data"
             show-gridlines
         >
             <Column

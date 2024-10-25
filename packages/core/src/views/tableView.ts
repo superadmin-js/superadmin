@@ -1,10 +1,10 @@
-import * as z from '@nzyme/zchema';
+import * as z from '@superadmin/schema';
 
+import { defineGenericView } from './defineGenericView.js';
 import type { View } from './defineView.js';
 import { defineView } from './defineView.js';
-import type { ActionDefinition } from '../defineAction.js';
-import { defineAction } from '../defineAction.js';
-import { defineGenericView } from './defineGenericView.js';
+import type { ActionDefinition } from '../actions/defineAction.js';
+import { defineAction } from '../actions/defineAction.js';
 
 export interface TableViewConfig<TData extends z.ObjectSchemaAny, TParams extends z.SchemaAny> {
     name: string;
@@ -39,8 +39,8 @@ export function tableView<
     const actions = {
         fetch: defineAction({
             name: `${config.name}:fetch`,
-            input: params,
-            output: z.array({
+            params: params,
+            result: z.array({
                 of: data,
             }),
         }),

@@ -66,13 +66,14 @@ export const DevServer = defineService({
                     vueJsx(),
                     tsconfigPaths(),
                     checker({
-                        root: config.rootPath,
+                        root: config.cwd,
                         typescript: true,
                         vueTsc: true,
                     }),
                     unwrapCjsDefaultImport(alias)({
                         entries: {
-                            '@modules': runtime.clientModulesPath,
+                            '@config': runtime.client.configPath,
+                            '@modules': runtime.client.modulesPath,
                             '@theme': config.theme,
                         },
                     }),
@@ -123,7 +124,8 @@ export const DevServer = defineService({
                     unwrapCjsDefaultImport(typescript)(),
                     unwrapCjsDefaultImport(alias)({
                         entries: {
-                            '@modules': runtime.serverModulesPath,
+                            '@config': runtime.server.configPath,
+                            '@modules': runtime.server.modulesPath,
                         },
                     }),
                 ],

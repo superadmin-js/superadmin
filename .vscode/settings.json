@@ -56,26 +56,27 @@
         "enable": true
     },
     "eslint.validate": ["javascript", "typescript", "vue"],
-    "workbench.colorCustomizations": {
-        "activityBar.activeBackground": "#5b28e6",
-        "activityBar.background": "#5b28e6",
-        "activityBar.foreground": "#00BAF6",
-        "activityBar.inactiveForeground": "#ffffff",
-        "activityBarBadge.background": "#ff6bd1",
-        "activityBarBadge.foreground": "#111111",
-        "commandCenter.border": "#e7e7e799",
-        "sash.hoverBorder": "#5b28e6",
-        "statusBar.background": "#5d4cbb",
-        "statusBar.foreground": "#e7e7e7",
-        "statusBarItem.hoverBackground": "#5b28e6",
-        "statusBarItem.remoteBackground": "#5d4cbb",
-        "statusBarItem.remoteForeground": "#e7e7e7",
-        "titleBar.activeBackground": "#5d4cbb",
-        "titleBar.activeForeground": "#e7e7e7",
-        "titleBar.inactiveBackground": "#5b28e699",
-        "titleBar.inactiveForeground": "#e7e7e799"
-    },
     "figma.autocompleteBlocks": true,
     "figma.assetExportDirectory": "storefront/storefront-ui/assets",
-    "typescript.enablePromptUseWorkspaceTsdk": true
+    "typescript.enablePromptUseWorkspaceTsdk": true,
+    "workbench.colorCustomizations": {
+        "activityBar.activeBackground": "#dc435b",
+        "activityBar.background": "#dc435b",
+        "activityBar.foreground": "#FABC3F",
+        "activityBar.inactiveForeground": "#ffffff",
+        "activityBarBadge.background": "#FABC3F",
+        "activityBarBadge.foreground": "#821131",
+        "commandCenter.border": "#e7e7e799",
+        "sash.hoverBorder": "#dc435b",
+        "statusBar.background": "#821131",
+        "statusBar.foreground": "#ffffff",
+        "statusBarItem.hoverBackground": "#dc435b",
+        "statusBarItem.remoteBackground": "#821131",
+        "statusBarItem.remoteForeground": "#ffffff",
+        "titleBar.activeBackground": "#c7253e",
+        "titleBar.activeForeground": "#e7e7e7",
+        "titleBar.inactiveBackground": "#c7253e99",
+        "titleBar.inactiveForeground": "#e7e7e799"
+    },
+    "peacock.color": "#C7253E"
 }

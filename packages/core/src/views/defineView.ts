@@ -1,6 +1,6 @@
 import type { SchemaAny } from '@nzyme/zchema';
 
-import type { ActionDefinition } from '../defineAction.js';
+import type { ActionDefinition } from '../actions/defineAction.js';
 import type { Module } from '../defineModule.js';
 import { MODULE_SYMBOL } from '../defineModule.js';
 import { ViewRegistry } from './ViewRegistry.js';

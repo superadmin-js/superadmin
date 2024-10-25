@@ -94,6 +94,9 @@
         },
         {
             "path": "./packages/utils/tsconfig.json"
+        },
+        {
+            "path": "./packages/validation/tsconfig.json"
         }
     ]
 }
