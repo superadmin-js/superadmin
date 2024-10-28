@@ -4,6 +4,7 @@ import * as s from '@superadmin/schema';
 import type { Module } from '../defineModule.js';
 import { MODULE_SYMBOL } from '../defineModule.js';
 import { ActionRegistry } from './ActionRegistry.js';
+import { prettifyName } from '@superadmin/utils';
 
 export const ACTION_SYMBOL = Symbol('action');
 
@@ -29,10 +30,14 @@ export type ActionDefinition<
         name: string;
         params: P;
         result: R;
+        label: string;
+        icon?: string;
     };
 
 interface ActionOptions<P extends s.SchemaAny, R extends s.SchemaAny> {
     name: string;
+    label?: string;
+    icon?: string;
     params?: P;
     result?: R;
 }
@@ -51,6 +56,8 @@ export function defineAction<
     action[MODULE_SYMBOL] = ACTION_SYMBOL;
     action.params = options.params ?? (s.void() as P);
     action.result = options.result ?? (s.void() as R);
+    action.label = options.label ?? prettifyName(name);
+    action.icon = options.icon;
     action.install = function (container) {
         container.resolve(ActionRegistry).registerAction(this);
     };

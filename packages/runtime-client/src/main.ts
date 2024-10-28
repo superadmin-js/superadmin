@@ -4,15 +4,16 @@ import theme from '@theme';
 import type { PrimeVueConfiguration } from 'primevue/config';
 import PrimeVue from 'primevue/config';
 import ToastService from 'primevue/toastservice';
-import type { Plugin } from 'vue';
+import { type Plugin, createApp } from 'vue';
 
 import { CommonPlugin, VueContainer } from '@nzyme/vue';
+import { App, Router } from '@superadmin/client';
 import type { Module } from '@superadmin/core';
 import { Modules, RuntimeConfig, isModule } from '@superadmin/core';
 
-import { App } from './App.js';
-import { Router } from './Router.js';
+import AppComponent from './App.vue';
 import * as defaultModules from './modules.js';
+import { setupRouter } from './setupRouter.js';
 
 const container = new VueContainer();
 const modules: Module[] = [...Object.values(defaultModules)];
@@ -26,8 +27,11 @@ for (const module of modulesImport) {
 container.set(Modules, modules);
 container.set(RuntimeConfig, config);
 
-const app = container.resolve(App);
-const router = container.resolve(Router);
+const app = createApp(AppComponent);
+const router = setupRouter(modules);
+
+container.set(App, app);
+container.set(Router, router);
 
 app.use(router);
 app.use(CommonPlugin, { container });

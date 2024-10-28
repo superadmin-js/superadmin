@@ -8,6 +8,7 @@ import { useService } from '@nzyme/vue';
 import { ActionDispatcher } from '@superadmin/client';
 import type { TableView } from '@superadmin/core';
 import type { Schema } from '@superadmin/schema';
+import ActionMenu from '@superadmin/ui/ActionMenu.vue';
 import { prettifyName } from '@superadmin/utils';
 
 const props = defineProps({
@@ -24,7 +25,7 @@ type ColumnDef = {
 
 const columns = computed(() => {
     const columns: ColumnDef[] = [];
-    const fields = props.view.data.props;
+    const fields = props.view.rowSchema.props;
 
     for (const key of Object.keys(fields)) {
         const schema = fields[key];
@@ -39,7 +40,7 @@ const columns = computed(() => {
     return columns;
 });
 
-const data = ref<object[]>();
+const rows = ref<object[]>();
 
 onMounted(fetchData);
 
@@ -47,14 +48,14 @@ async function fetchData() {
     const action = props.view.actions.fetch(undefined);
     const result = await actionDispatcher(action);
 
-    data.value = result;
+    rows.value = result;
 }
 </script>
 
 <template>
     <div class="p-6">
         <DataTable
-            :value="data"
+            :value="rows"
             show-gridlines
         >
             <Column
@@ -63,6 +64,15 @@ async function fetchData() {
                 :field="column.prop"
                 :header="column.label"
             ></Column>
+
+            <Column
+                v-if="view.rowActions"
+                class="w-0"
+            >
+                <template #body="{ data }">
+                    <ActionMenu :actions="view.rowActions(data)" />
+                </template>
+            </Column>
         </DataTable>
     </div>
 </template>

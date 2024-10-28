@@ -13,7 +13,13 @@ export {
 } from './actions/defineActionHandler.js';
 export * from './actions/ActionRegistry.js';
 
-export { type View, defineView, isView, type ViewBase } from './views/defineView.js';
+export {
+    type View,
+    defineView,
+    isView,
+    type ViewBase,
+    type ViewParams,
+} from './views/defineView.js';
 export { type GenericView, defineGenericView } from './views/defineGenericView.js';
 export { tableView } from './views/tableView.js';
 export type { TableView, TableViewConfig } from './views/tableView.js';

@@ -1,4 +1,4 @@
-import type { SchemaAny } from '@nzyme/zchema';
+import type { Schema, SchemaAny, SchemaValue } from '@superadmin/schema';
 
 import type { ActionDefinition } from '../actions/defineAction.js';
 import type { Module } from '../defineModule.js';
@@ -13,12 +13,17 @@ export interface ViewBase {
     path?: string;
     generic?: GenericView;
     actions?: Record<string, ActionDefinition<SchemaAny, SchemaAny>>;
+    params?: Schema<unknown>;
 }
 
 export interface View extends Module, ViewBase {
     [MODULE_SYMBOL]: typeof VIEW_SYMBOL;
     generic?: GenericView;
 }
+
+export type ViewParams<TView extends ViewBase> = TView['params'] extends SchemaAny
+    ? SchemaValue<TView['params']>
+    : never;
 
 export function defineView<TView extends ViewBase>(view: TView) {
     const viewDef = view as View & TView;

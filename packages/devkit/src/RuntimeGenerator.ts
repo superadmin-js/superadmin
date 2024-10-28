@@ -21,13 +21,13 @@ export const RuntimeGenerator = defineService({
         const debug = createDebug('superadmin:runtime');
 
         const client = createModulesRuntime({
-            moduleRegex: /\.(client|module)\.tsx?$/,
+            moduleRegex: /\.(client|common)\.tsx?$/,
             outputDir: path.join(projectConfig.runtimePath, 'client'),
             config: runtimeConfig,
         });
 
         const server = createModulesRuntime({
-            moduleRegex: /\.(server|module)\.ts$/,
+            moduleRegex: /\.(server|common)\.ts$/,
             outputDir: path.join(projectConfig.runtimePath, 'server'),
             config: runtimeConfig,
         });

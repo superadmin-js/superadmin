@@ -1,6 +1,6 @@
 import { defineActionHandler } from '@superadmin/core';
 
-import { customersTable } from './customers.module.js';
+import { customersTable } from './customers.common.js';
 
 export const customersFetch = defineActionHandler({
     action: customersTable.actions.fetch,

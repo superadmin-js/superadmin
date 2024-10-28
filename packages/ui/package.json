@@ -1,31 +1,38 @@
 {
-    "name": "@superadmin/core",
+    "name": "@superadmin/ui",
     "version": "1.0.0",
     "repository": "https://github.com/kedrzu/superadmin.git",
     "author": "Michał Kędrzyński <m.kedrzynski@gmail.com>",
     "type": "module",
-    "main": "./dist/index.js",
-    "module": "./dist/index.js",
-    "types": "./dist/index.d.ts",
     "sideEffects": false,
+    "exports": {
+        "./*": "./src/*"
+    },
     "scripts": {
         "eslint": "eslint . --fix --cache",
         "build": "tsc --build"
     },
-    "exports": {
-        ".": "./dist/index.js",
-        "./internal": "./dist/internal.js"
-    },
     "dependencies": {
+        "@nzyme/crypto-utils": "*",
         "@nzyme/ioc": "*",
         "@nzyme/types": "*",
         "@nzyme/utils": "*",
+        "@nzyme/vue": "*",
+        "@nzyme/vue-utils": "*",
+        "@superadmin/client": "*",
+        "@superadmin/core": "*",
         "@superadmin/schema": "*",
-        "@superadmin/utils": "*"
+        "@superadmin/utils": "*",
+        "feather-icons": "^4.29.2",
+        "primevue": "^4.1.1",
+        "tailwindcss": "^3.4.14",
+        "vue": "^3.5.12",
+        "vue-router": "^4.4.5"
     },
     "devDependencies": {
         "@superadmin/eslint": "*",
         "@superadmin/tsconfig": "*",
+        "@types/feather-icons": "^4",
         "@types/node": "^22.7.7",
         "vitest": "^2.1.3"
     }

@@ -15,11 +15,13 @@ export type Customer = s.SchemaValue<typeof Customer>;
 export const customersTable = tableView({
     name: 'customers',
     path: '/customers',
-    data: Customer,
+    rowSchema: Customer,
+    rowActions: c => [syncCustomer({ id: c.id })],
 });
 
 export const syncCustomer = defineAction({
     name: 'syncCustomer',
+    icon: 'refresh-ccw',
     params: s.object({
         props: {
             id: s.bigint(),

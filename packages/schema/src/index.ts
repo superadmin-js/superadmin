@@ -8,7 +8,7 @@ declare module '@nzyme/zchema' {
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    interface SchemaBase<V, O> {
+    interface SchemaProps<V, O> {
         label?: string;
         help?: string;
     }

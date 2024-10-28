@@ -1,28 +1,30 @@
-import * as z from '@superadmin/schema';
+import * as s from '@superadmin/schema';
 
 import { defineGenericView } from './defineGenericView.js';
 import type { View } from './defineView.js';
 import { defineView } from './defineView.js';
-import type { ActionDefinition } from '../actions/defineAction.js';
+import type { Action, ActionDefinition } from '../actions/defineAction.js';
 import { defineAction } from '../actions/defineAction.js';
 
-export interface TableViewConfig<TData extends z.ObjectSchemaAny, TParams extends z.SchemaAny> {
+export interface TableViewConfig<TRow extends s.ObjectSchemaAny, TParams extends s.SchemaAny> {
     name: string;
     params?: TParams;
     path?: string;
-    data: TData;
+    rowSchema: TRow;
+    rowActions?: (data: s.SchemaValue<TRow>) => Action[];
 }
 
 export interface TableView<
-    TData extends z.ObjectSchemaAny = z.ObjectSchemaAny,
-    TParams extends z.SchemaAny = z.Schema<unknown>,
+    TRow extends s.ObjectSchemaAny = s.ObjectSchemaAny,
+    TParams extends s.SchemaAny = s.Schema<unknown>,
 > extends View {
     name: string;
     params: TParams;
-    data: TData;
     actions: {
-        fetch: ActionDefinition<TParams, z.ArraySchema<{ of: TData }>>;
+        fetch: ActionDefinition<TParams, s.ArraySchema<{ of: TRow }>>;
     };
+    rowSchema: TRow;
+    rowActions?: (data: s.SchemaValue<TRow>) => Action[];
 }
 
 export const tableGenericView = defineGenericView({
@@ -30,18 +32,18 @@ export const tableGenericView = defineGenericView({
 });
 
 export function tableView<
-    TData extends z.ObjectSchemaAny,
-    TParams extends z.SchemaAny = z.Schema<void>,
->(config: TableViewConfig<TData, TParams>): TableView<TData, TParams> {
-    const params = config.params ?? (z.void() as TParams);
-    const data = config.data;
+    TRow extends s.ObjectSchemaAny,
+    TParams extends s.SchemaAny = s.Schema<void>,
+>(config: TableViewConfig<TRow, TParams>): TableView<TRow, TParams> {
+    const params = config.params ?? (s.void() as TParams);
+    const rowSchema = config.rowSchema;
 
     const actions = {
         fetch: defineAction({
             name: `${config.name}:fetch`,
             params: params,
-            result: z.array({
-                of: data,
+            result: s.array({
+                of: rowSchema,
             }),
         }),
     };
@@ -51,7 +53,8 @@ export function tableView<
         generic: tableGenericView,
         params,
         path: config.path,
-        data,
         actions,
+        rowSchema,
+        rowActions: config.rowActions,
     });
 }
