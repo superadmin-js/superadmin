@@ -5,6 +5,7 @@ import { computed } from 'vue';
 import { useService } from '@nzyme/vue';
 import { TemplateRegistry } from '@superadmin/client';
 import type { View } from '@superadmin/core';
+import { coerce } from '@superadmin/schema';
 
 const props = defineProps({
     view: { type: Object as PropType<View>, required: true },
@@ -21,7 +22,7 @@ const template = computed(() => {
 <template>
     <component
         :is="template"
-        :params="props.params"
+        :params="props.params ?? coerce(props.view.params)"
         :view="props.view"
     />
 </template>

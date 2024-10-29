@@ -4184,6 +4184,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@superadmin/client@workspace:packages/client"
   dependencies:
+    "@nzyme/crypto-utils": "npm:*"
     "@nzyme/eslint": "npm:*"
     "@nzyme/fetch-utils": "npm:*"
     "@nzyme/ioc": "npm:*"
@@ -4193,6 +4194,8 @@ __metadata:
     "@superadmin/core": "npm:*"
     "@superadmin/schema": "npm:*"
     "@superadmin/tsconfig": "npm:*"
+    "@superadmin/utils": "npm:*"
+    "@superadmin/validation": "npm:*"
     "@types/node": "npm:^22.7.7"
     ufo: "npm:^1.5.4"
     vitest: "npm:^2.1.3"
@@ -4281,6 +4284,7 @@ __metadata:
     "@superadmin/core": "npm:*"
     "@superadmin/schema": "npm:*"
     "@superadmin/tsconfig": "npm:*"
+    "@superadmin/validation": "npm:*"
   languageName: unknown
   linkType: soft
 
@@ -4302,6 +4306,7 @@ __metadata:
     "@superadmin/tsconfig": "npm:*"
     "@superadmin/ui": "npm:*"
     "@superadmin/utils": "npm:*"
+    "@superadmin/validation": "npm:*"
     "@types/node": "npm:^22.7.7"
     primevue: "npm:^4.1.1"
     tailwindcss: "npm:^3.4.14"
@@ -4336,6 +4341,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@superadmin/schema@workspace:packages/schema"
   dependencies:
+    "@nzyme/utils": "npm:*"
     "@nzyme/zchema": "npm:*"
     "@superadmin/eslint": "npm:*"
     "@superadmin/tsconfig": "npm:*"

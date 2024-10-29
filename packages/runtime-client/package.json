@@ -25,6 +25,7 @@
         "@superadmin/schema": "*",
         "@superadmin/ui": "*",
         "@superadmin/utils": "*",
+        "@superadmin/validation": "*",
         "primevue": "^4.1.1",
         "tailwindcss": "^3.4.14",
         "vue": "^3.5.12",

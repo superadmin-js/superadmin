@@ -5,7 +5,7 @@ import Toast from 'primevue/toast';
 import { RouterView, useRoute } from 'vue-router';
 
 const route = useRoute();
-const stateKey = 'superadmin:layout';
+const stateKey = 'superadmin.layout';
 </script>
 
 <template>

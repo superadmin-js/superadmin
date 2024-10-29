@@ -1,6 +1,6 @@
-import { defineActionHandler } from '@superadmin/core';
+import { defineActionHandler, goToView, runInParalell, showToast } from '@superadmin/core';
 
-import { customersTable } from './customers.common.js';
+import { customersTable, newCustomerForm, syncCustomer } from './customers.common.js';
 
 export const customersFetch = defineActionHandler({
     action: customersTable.actions.fetch,
@@ -20,6 +20,48 @@ export const customersFetch = defineActionHandler({
                     email: 'jane.doe@example.com',
                 },
             ];
+        };
+    },
+});
+
+export const newCustomerSubmit = defineActionHandler({
+    action: newCustomerForm.actions.submit,
+    setup: () => {
+        return params => {
+            console.log(params);
+
+            return runInParalell([
+                showToast({
+                    type: 'success',
+                    title: `Customer created`,
+                    message: `Created customer ${params.firstName} ${params.lastName}`,
+                    time: 3000,
+                }),
+                goToView(customersTable),
+            ]);
+        };
+    },
+});
+
+export const syncCustomerHandler = defineActionHandler({
+    action: syncCustomer,
+    setup: () => {
+        return params => {
+            if (params.id === 1n) {
+                return showToast({
+                    type: 'error',
+                    title: `Customer sync failed`,
+                    message: `Customer ${params.id} not found`,
+                    time: 3000,
+                });
+            }
+
+            return showToast({
+                type: 'success',
+                title: `Customer synced`,
+                message: `Synced customer ${params.id}`,
+                time: 3000,
+            });
         };
     },
 });

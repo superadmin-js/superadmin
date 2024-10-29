@@ -7,13 +7,13 @@ import { ActionRegistry } from './ActionRegistry.js';
 
 export const ACTION_HANDLER_SYMBOL = Symbol('action-handler');
 
-export interface ActionHandlerFunction<P = unknown, R = unknown> {
-    (params: P): R | Promise<R>;
+export interface ActionHandlerFunction<P extends SchemaAny, R extends SchemaAny> {
+    (params: SchemaValue<P>): SchemaValue<R> | Promise<SchemaValue<R>>;
 }
 
 export interface ActionHandlerOptions<P extends SchemaAny, R extends SchemaAny> {
     action: ActionDefinition<P, R>;
-    setup: (ctx: ServiceContext) => ActionHandlerFunction<SchemaValue<P>, SchemaValue<R>>;
+    setup: (ctx: ServiceContext) => ActionHandlerFunction<P, R>;
 }
 
 export interface ActionHandler<
@@ -21,7 +21,7 @@ export interface ActionHandler<
     R extends SchemaAny = Schema<unknown>,
 > extends Module {
     action: ActionDefinition<P, R>;
-    service: Resolvable<ActionHandlerFunction<SchemaValue<P>, SchemaValue<R>>>;
+    service: Resolvable<ActionHandlerFunction<P, R>>;
 }
 
 export function defineActionHandler<P extends SchemaAny, R extends SchemaAny>(

@@ -1,4 +1,4 @@
-import { createApp, createError, createRouter, defineEventHandler } from 'h3';
+import { createApp, createError, createRouter, defineEventHandler, readBody } from 'h3';
 
 import { Container } from '@nzyme/ioc';
 import { assertValue } from '@nzyme/utils';
@@ -35,7 +35,7 @@ export function setupApp(options: SetupAppOptions) {
     const actionHandler = defineEventHandler(async event => {
         try {
             const actionName = assertValue(event.context.params?.action);
-            const handler = actionRegistry.resolveHandler(actionName);
+            const handler = resolveActionHandler(actionName);
 
             if (!handler) {
                 return createError({
@@ -45,8 +45,9 @@ export function setupApp(options: SetupAppOptions) {
             }
 
             const action = handler.action;
+            const body: unknown = await readBody(event);
             const paramsSchema = action.params;
-            const params = coerce(paramsSchema, event.context.body);
+            const params: unknown = coerce(paramsSchema, body);
 
             validateOrThrow(paramsSchema, params);
 
@@ -77,4 +78,19 @@ export function setupApp(options: SetupAppOptions) {
     app.use(router);
 
     return app;
+
+    function resolveActionHandler(actionName: string) {
+        const handler = actionRegistry.resolveHandler(actionName);
+        if (handler) {
+            return handler;
+        }
+
+        const action = actionRegistry.resolveAction(actionName);
+        if (action?.handler) {
+            return {
+                action,
+                service: action.handler,
+            };
+        }
+    }
 }

@@ -1,5 +1,5 @@
 export function prettifyName(name: string) {
-    const separatorIndex = name.lastIndexOf(':');
+    const separatorIndex = name.lastIndexOf('.');
     if (separatorIndex !== -1) {
         name = name.slice(separatorIndex + 1);
     }

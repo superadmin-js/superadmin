@@ -1,18 +1,17 @@
 <script lang="ts" setup>
 import Column from 'primevue/column';
 import DataTable from 'primevue/datatable';
-import type { PropType } from 'vue';
 import { computed, onMounted, ref } from 'vue';
 
 import { useService } from '@nzyme/vue';
-import { ActionDispatcher } from '@superadmin/client';
+import { ActionDispatcher, useViewProps } from '@superadmin/client';
 import type { TableView } from '@superadmin/core';
 import type { Schema } from '@superadmin/schema';
 import ActionMenu from '@superadmin/ui/ActionMenu.vue';
 import { prettifyName } from '@superadmin/utils';
 
 const props = defineProps({
-    view: { type: Object as PropType<TableView>, required: true },
+    ...useViewProps<TableView>(),
 });
 
 const actionDispatcher = useService(ActionDispatcher);

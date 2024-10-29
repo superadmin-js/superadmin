@@ -10,7 +10,8 @@
     },
     "dependencies": {
         "@superadmin/core": "*",
-        "@superadmin/schema": "*"
+        "@superadmin/schema": "*",
+        "@superadmin/validation": "*"
     },
     "devDependencies": {
         "@superadmin/cli": "*",

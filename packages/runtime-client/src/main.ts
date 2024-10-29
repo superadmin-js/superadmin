@@ -3,11 +3,11 @@ import modulesImport from '@modules';
 import theme from '@theme';
 import type { PrimeVueConfiguration } from 'primevue/config';
 import PrimeVue from 'primevue/config';
-import ToastService from 'primevue/toastservice';
+import PrimeVueToastService from 'primevue/toastservice';
 import { type Plugin, createApp } from 'vue';
 
 import { CommonPlugin, VueContainer } from '@nzyme/vue';
-import { App, Router } from '@superadmin/client';
+import { App, Router, ToastService } from '@superadmin/client';
 import type { Module } from '@superadmin/core';
 import { Modules, RuntimeConfig, isModule } from '@superadmin/core';
 
@@ -16,7 +16,13 @@ import * as defaultModules from './modules.js';
 import { setupRouter } from './setupRouter.js';
 
 const container = new VueContainer();
-const modules: Module[] = [...Object.values(defaultModules)];
+const modules: Module[] = [];
+
+for (const module of Object.values(defaultModules)) {
+    if (isModule(module)) {
+        modules.push(module);
+    }
+}
 
 for (const module of modulesImport) {
     if (isModule(module)) {
@@ -43,7 +49,9 @@ const primeVueConfig: PrimeVueConfiguration = {
 };
 
 app.use(PrimeVue as unknown as Plugin, primeVueConfig);
-app.use(ToastService as unknown as Plugin);
+
+app.use(PrimeVueToastService as unknown as Plugin);
+container.set(ToastService, app.config.globalProperties.$toast);
 
 for (const module of modules) {
     module.install(container);

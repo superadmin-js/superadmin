@@ -1,21 +1,18 @@
-import { defineAction, tableView } from '@superadmin/core';
+import { defineAction, defineFormView, defineTableView } from '@superadmin/core';
 import * as s from '@superadmin/schema';
+import { emailValidator, requiredValidator } from '@superadmin/validation';
 
-export const Customer = s.object({
-    props: {
-        id: s.bigint(),
-        firstName: s.string(),
-        lastName: s.string(),
-        email: s.string(),
-    },
-});
-
-export type Customer = s.SchemaValue<typeof Customer>;
-
-export const customersTable = tableView({
+export const customersTable = defineTableView({
     name: 'customers',
     path: '/customers',
-    rowSchema: Customer,
+    rowSchema: s.object({
+        props: {
+            id: s.bigint(),
+            firstName: s.string(),
+            lastName: s.string(),
+            email: s.string(),
+        },
+    }),
     rowActions: c => [syncCustomer({ id: c.id })],
 });
 
@@ -27,5 +24,23 @@ export const syncCustomer = defineAction({
             id: s.bigint(),
         },
     }),
-    result: s.void(),
+    result: s.action({ optional: true }),
+});
+
+export const newCustomerForm = defineFormView({
+    name: 'newCustomer',
+    path: '/customers/new',
+    schema: s.object({
+        props: {
+            firstName: s.string({
+                validators: [requiredValidator()],
+            }),
+            lastName: s.string({
+                validators: [requiredValidator()],
+            }),
+            email: s.string({
+                validators: [requiredValidator(), emailValidator()],
+            }),
+        },
+    }),
 });

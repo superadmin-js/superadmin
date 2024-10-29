@@ -4,15 +4,17 @@
     "repository": "https://github.com/kedrzu/superadmin.git",
     "author": "Michał Kędrzyński <m.kedrzynski@gmail.com>",
     "type": "module",
-    "main": "./dist/index.js",
-    "module": "./dist/index.js",
-    "types": "./dist/index.d.ts",
     "sideEffects": false,
+    "exports": {
+        ".": "./dist/index.js",
+        "./internal": "./dist/internal.js"
+    },
     "scripts": {
         "eslint": "eslint . --fix --cache",
         "build": "tsc --build"
     },
     "dependencies": {
+        "@nzyme/crypto-utils": "*",
         "@nzyme/fetch-utils": "*",
         "@nzyme/ioc": "*",
         "@nzyme/types": "*",
@@ -20,6 +22,8 @@
         "@nzyme/vue-utils": "*",
         "@superadmin/core": "*",
         "@superadmin/schema": "*",
+        "@superadmin/utils": "*",
+        "@superadmin/validation": "*",
         "ufo": "^1.5.4"
     },
     "devDependencies": {

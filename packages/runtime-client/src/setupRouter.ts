@@ -4,7 +4,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import type { Module } from '@superadmin/core';
 import { isView } from '@superadmin/core';
 
-import ViewRenderer from './components/ViewRenderer.vue';
+import View from './components/View.vue';
 
 export function setupRouter(modules: Module[]) {
     const routes: RouteRecordRaw[] = [];
@@ -15,8 +15,8 @@ export function setupRouter(modules: Module[]) {
         }
 
         routes.push({
-            path: module.path ?? `/view/${module.name}`,
-            component: ViewRenderer,
+            path: module.path,
+            component: View,
             props: {
                 view: module,
             },

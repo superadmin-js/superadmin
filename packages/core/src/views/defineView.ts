@@ -1,4 +1,4 @@
-import type { Schema, SchemaAny, SchemaValue } from '@superadmin/schema';
+import type { Schema, SchemaValue } from '@superadmin/schema';
 
 import type { ActionDefinition } from '../actions/defineAction.js';
 import type { Module } from '../defineModule.js';
@@ -12,16 +12,18 @@ export interface ViewBase {
     name: string;
     path?: string;
     generic?: GenericView;
-    actions?: Record<string, ActionDefinition<SchemaAny, SchemaAny>>;
-    params?: Schema<unknown>;
+    actions?: Record<string, ActionDefinition>;
+    params?: Schema;
 }
 
-export interface View extends Module, ViewBase {
+export interface View<P extends Schema = Schema> extends Module, ViewBase {
     [MODULE_SYMBOL]: typeof VIEW_SYMBOL;
+    params: P;
+    path: string;
     generic?: GenericView;
 }
 
-export type ViewParams<TView extends ViewBase> = TView['params'] extends SchemaAny
+export type ViewParams<TView extends ViewBase> = TView['params'] extends Schema
     ? SchemaValue<TView['params']>
     : never;
 
@@ -38,6 +40,8 @@ export function defineView<TView extends ViewBase>(view: TView) {
             }
         }
     };
+
+    viewDef.path = view.path ?? `/view/${view.name}`;
 
     return Object.freeze(viewDef);
 }
