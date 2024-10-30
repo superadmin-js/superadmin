@@ -2,7 +2,8 @@
 import Button from 'primevue/button';
 import { ref } from 'vue';
 
-import { useService } from '@nzyme/vue';
+import { ModalContext, useService } from '@nzyme/vue';
+import { injectContext } from '@nzyme/vue-utils';
 import { ActionDispatcher, useViewProps } from '@superadmin/client';
 import type { FormView } from '@superadmin/core';
 import { validate } from '@superadmin/schema';
@@ -15,6 +16,8 @@ const props = defineProps({
 });
 
 const actionDispatcher = useService(ActionDispatcher);
+const modal = injectContext(ModalContext, { optional: true });
+
 const model = ref<unknown>();
 const errors = ref<ValidationErrors | null>();
 
@@ -28,27 +31,51 @@ async function submit() {
 
     const action = props.view.actions.submit(model.value);
     await actionDispatcher(action);
+    modal?.close();
 }
 </script>
 
 <template>
-    <form
-        class="flex flex-col gap-4 p-6"
-        @submit.prevent="submit"
-    >
-        <h1>Form</h1>
+    <component :is="layout">
+        <template #body>
+            <form
+                class="flex flex-col gap-4"
+                @submit.prevent="submit"
+            >
+                <Editor
+                    v-model="model"
+                    :schema="props.view.schema"
+                    :errors="errors"
+                    path=""
+                />
+            </form>
+        </template>
 
-        <Editor
-            v-model="model"
-            :schema="props.view.schema"
-            :errors="errors"
-            path=""
-        />
+        <template #footer>
+            <template v-if="modal">
+                <Button
+                    v-if="modal"
+                    label="Cancel"
+                    severity="secondary"
+                    size="large"
+                    class="flex-1"
+                    @click="modal.close"
+                />
 
-        <Button
-            label="Submit"
-            size="large"
-            type="submit"
-        />
-    </form>
+                <Button
+                    label="Submit"
+                    size="large"
+                    class="flex-1"
+                    @click="submit"
+                />
+            </template>
+
+            <Button
+                v-else
+                label="Submit"
+                size="large"
+                @click="submit"
+            />
+        </template>
+    </component>
 </template>

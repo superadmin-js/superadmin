@@ -4190,6 +4190,7 @@ __metadata:
     "@nzyme/ioc": "npm:*"
     "@nzyme/types": "npm:*"
     "@nzyme/utils": "npm:*"
+    "@nzyme/vue": "npm:*"
     "@nzyme/vue-utils": "npm:*"
     "@superadmin/core": "npm:*"
     "@superadmin/schema": "npm:*"

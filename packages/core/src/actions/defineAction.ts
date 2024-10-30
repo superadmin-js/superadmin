@@ -1,7 +1,6 @@
 import { type Resolvable, type ServiceContext, defineService } from '@nzyme/ioc';
 import { createNamedFunction } from '@nzyme/utils';
 import * as s from '@superadmin/schema';
-import { prettifyName } from '@superadmin/utils';
 
 import type { Module } from '../defineModule.js';
 import { MODULE_SYMBOL } from '../defineModule.js';
@@ -25,15 +24,11 @@ export type ActionDefinition<
         name: string;
         params: P;
         result: R;
-        label: string;
-        icon?: string;
         handler?: Resolvable<ActionHandlerFunction<P, R>>;
     };
 
 interface ActionOptions<P extends s.Schema, R extends s.SchemaAny> {
     name: string;
-    label?: string;
-    icon?: string;
     params?: P;
     result?: R;
     handler?: (ctx: ServiceContext) => ActionHandlerFunction<P, R>;
@@ -51,10 +46,8 @@ export function defineAction<
     const action = factory as ActionDefinition<P, R>;
 
     action[MODULE_SYMBOL] = ACTION_SYMBOL;
-    action.params = options.params ?? (s.void() as P);
-    action.result = options.result ?? (s.void() as R);
-    action.label = options.label ?? prettifyName(name);
-    action.icon = options.icon;
+    action.params = options.params ?? (s.void({ nullable: true }) as P);
+    action.result = options.result ?? (s.void({ nullable: true }) as R);
 
     if (options.handler) {
         action.handler = defineService({

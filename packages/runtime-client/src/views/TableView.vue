@@ -7,6 +7,7 @@ import { useService } from '@nzyme/vue';
 import { ActionDispatcher, useViewProps } from '@superadmin/client';
 import type { TableView } from '@superadmin/core';
 import type { Schema } from '@superadmin/schema';
+import ActionButton from '@superadmin/ui/ActionButton.vue';
 import ActionMenu from '@superadmin/ui/ActionMenu.vue';
 import { prettifyName } from '@superadmin/utils';
 
@@ -21,6 +22,8 @@ type ColumnDef = {
     label: string;
     schema: Schema;
 };
+
+const headerActions = computed(() => props.view.headerActions?.(props.view.params));
 
 const columns = computed(() => {
     const columns: ColumnDef[] = [];
@@ -52,28 +55,43 @@ async function fetchData() {
 </script>
 
 <template>
-    <div class="p-6">
-        <DataTable
-            :value="rows"
-            show-gridlines
+    <component :is="layout">
+        <template
+            v-if="headerActions?.length"
+            #header
         >
-            <Column
-                v-for="column in columns"
-                :key="column.prop"
-                :field="column.prop"
-                :header="column.label"
-            ></Column>
+            <div class="flex gap-4">
+                <ActionButton
+                    v-for="(action, index) in headerActions"
+                    :key="index"
+                    :button="action"
+                />
+            </div>
+        </template>
 
-            <Column
-                v-if="view.rowActions"
-                class="w-0"
+        <template #body>
+            <DataTable
+                :value="rows"
+                show-gridlines
             >
-                <template #body="{ data }">
-                    <ActionMenu :actions="view.rowActions(data)" />
-                </template>
-            </Column>
-        </DataTable>
-    </div>
+                <Column
+                    v-for="column in columns"
+                    :key="column.prop"
+                    :field="column.prop"
+                    :header="column.label"
+                ></Column>
+
+                <Column
+                    v-if="view.rowMenu"
+                    class="w-0"
+                >
+                    <template #body="{ data }">
+                        <ActionMenu :items="view.rowMenu(data)" />
+                    </template>
+                </Column>
+            </DataTable>
+        </template>
+    </component>
 </template>
 
 <style lang="css" scoped>

@@ -2,6 +2,7 @@ import { defineService } from '@nzyme/ioc';
 
 import type { ActionDefinition } from './defineAction.js';
 import type { ActionHandler } from './defineActionHandler.js';
+import { Action } from '@superadmin/schema';
 
 export const ActionRegistry = defineService({
     name: 'ActionRegistry',
@@ -24,7 +25,8 @@ export const ActionRegistry = defineService({
             handlersPerName.set(handler.action.name, handler);
         }
 
-        function resolveAction(name: string) {
+        function resolveAction(action: string | Action) {
+            const name = typeof action === 'string' ? action : action.action;
             return actionsPerName.get(name);
         }
 

@@ -4,7 +4,8 @@ import { createRouter, createWebHistory } from 'vue-router';
 import type { Module } from '@superadmin/core';
 import { isView } from '@superadmin/core';
 
-import View from './components/View.vue';
+import ViewRenderer from './views/ViewRenderer.vue';
+import PageViewLayout from './views/layouts/PageViewLayout.vue';
 
 export function setupRouter(modules: Module[]) {
     const routes: RouteRecordRaw[] = [];
@@ -16,9 +17,11 @@ export function setupRouter(modules: Module[]) {
 
         routes.push({
             path: module.path,
-            component: View,
+            component: ViewRenderer,
             props: {
                 view: module,
+                params: null,
+                layout: PageViewLayout,
             },
         });
     }

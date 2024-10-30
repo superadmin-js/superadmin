@@ -32,7 +32,7 @@ export const formGenericView = defineGenericView({
 export function defineFormView<S extends s.ObjectSchemaAny, P extends s.Schema = s.Schema<void>>(
     config: FormViewConfig<S, P>,
 ): FormView<S, P> {
-    const params = config.params ?? (s.void() as P);
+    const params = config.params ?? (s.void({ nullable: true }) as P);
     const schema = config.schema;
 
     return defineView({

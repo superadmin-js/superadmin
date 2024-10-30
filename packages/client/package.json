@@ -19,6 +19,7 @@
         "@nzyme/ioc": "*",
         "@nzyme/types": "*",
         "@nzyme/utils": "*",
+        "@nzyme/vue": "*",
         "@nzyme/vue-utils": "*",
         "@superadmin/core": "*",
         "@superadmin/schema": "*",

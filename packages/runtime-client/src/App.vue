@@ -4,12 +4,13 @@ import SplitterPanel from 'primevue/splitterpanel';
 import Toast from 'primevue/toast';
 import { RouterView, useRoute } from 'vue-router';
 
+import { ModalHost } from '@nzyme/vue';
+
 const route = useRoute();
 const stateKey = 'superadmin.layout';
 </script>
 
 <template>
-    <Toast position="top-center" />
     <Splitter
         :class="css.layout"
         layout="horizontal"
@@ -43,6 +44,20 @@ const stateKey = 'superadmin.layout';
             </RouterView>
         </SplitterPanel>
     </Splitter>
+
+    <Toast position="top-center" />
+
+    <ModalHost>
+        <template #default="modals">
+            <Suspense>
+                <component
+                    :is="modal.component"
+                    v-for="modal in modals"
+                    :key="modal.id"
+                />
+            </Suspense>
+        </template>
+    </ModalHost>
 </template>
 
 <style lang="scss" module="css">

@@ -11,8 +11,9 @@ import { randomString } from '@nzyme/crypto-utils';
 import { mapNotNull } from '@nzyme/utils';
 import { useService } from '@nzyme/vue';
 import { ActionDispatcher } from '@superadmin/client';
+import type { ActionMenuItem } from '@superadmin/core';
 import { ActionRegistry } from '@superadmin/core';
-import type { Action } from '@superadmin/schema';
+import { prettifyName } from '@superadmin/utils';
 
 import Icon from './Icon.vue';
 
@@ -20,24 +21,24 @@ const actionDispatcher = useService(ActionDispatcher);
 const actionRegistry = useService(ActionRegistry);
 
 const props = defineProps({
-    actions: Array as PropType<Action[]>,
+    items: Array as PropType<ActionMenuItem[]>,
 });
 
 const menuRef = ref<MenuMethods & ComponentPublicInstance>();
 const menuId = `actions-${randomString(12)}`;
 const menuItems = computed<MenuItem[]>(() => {
-    const actions = props.actions ?? [];
+    const items = props.items ?? [];
 
-    return mapNotNull(actions, action => {
-        const actionDef = actionRegistry.resolveAction(action.action);
+    return mapNotNull(items, item => {
+        const actionDef = actionRegistry.resolveAction(item.action);
         if (!actionDef) {
             return;
         }
 
         return {
-            label: actionDef.label,
-            icon: actionDef.icon,
-            command: () => actionDispatcher(action),
+            label: item.label || prettifyName(actionDef.name),
+            icon: item.icon,
+            command: () => actionDispatcher(item.action),
         };
     });
 });

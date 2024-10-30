@@ -1,4 +1,5 @@
 import type { Schema, SchemaValue } from '@superadmin/schema';
+import { prettifyName } from '@superadmin/utils';
 
 import type { ActionDefinition } from '../actions/defineAction.js';
 import type { Module } from '../defineModule.js';
@@ -10,6 +11,7 @@ export const VIEW_SYMBOL = Symbol('view');
 
 export interface ViewBase {
     name: string;
+    title?: string;
     path?: string;
     generic?: GenericView;
     actions?: Record<string, ActionDefinition>;
@@ -19,6 +21,7 @@ export interface ViewBase {
 export interface View<P extends Schema = Schema> extends Module, ViewBase {
     [MODULE_SYMBOL]: typeof VIEW_SYMBOL;
     params: P;
+    title: string;
     path: string;
     generic?: GenericView;
 }
@@ -41,6 +44,7 @@ export function defineView<TView extends ViewBase>(view: TView) {
         }
     };
 
+    viewDef.title = view.title || prettifyName(view.name);
     viewDef.path = view.path ?? `/view/${view.name}`;
 
     return Object.freeze(viewDef);

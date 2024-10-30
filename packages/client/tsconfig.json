@@ -1,5 +1,5 @@
 {
-    "extends": "@superadmin/tsconfig/base.json",
+    "extends": "@superadmin/tsconfig/vue.json",
     "compilerOptions": {
         "outDir": "./dist",
         "rootDir": "./src",

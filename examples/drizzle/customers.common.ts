@@ -1,4 +1,4 @@
-import { defineAction, defineFormView, defineTableView } from '@superadmin/core';
+import { defineAction, defineFormView, defineTableView, openModal } from '@superadmin/core';
 import * as s from '@superadmin/schema';
 import { emailValidator, requiredValidator } from '@superadmin/validation';
 
@@ -13,12 +13,23 @@ export const customersTable = defineTableView({
             email: s.string(),
         },
     }),
-    rowActions: c => [syncCustomer({ id: c.id })],
+    rowMenu: c => [
+        {
+            icon: 'refresh-ccw',
+            action: syncCustomer({ id: c.id }),
+        },
+    ],
+    headerActions: () => [
+        {
+            label: 'New customer',
+            icon: 'plus',
+            action: openModal(newCustomerForm),
+        },
+    ],
 });
 
 export const syncCustomer = defineAction({
     name: 'syncCustomer',
-    icon: 'refresh-ccw',
     params: s.object({
         props: {
             id: s.bigint(),

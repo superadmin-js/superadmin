@@ -52,5 +52,6 @@ type ActionSchemaBase = {
 };
 
 export const action = defineSchema<ActionSchemaBase>({
+    name: 'action',
     proto: () => proto,
 });
