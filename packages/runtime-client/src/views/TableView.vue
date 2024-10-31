@@ -7,8 +7,7 @@ import { useService } from '@nzyme/vue';
 import { ActionDispatcher, useViewProps } from '@superadmin/client';
 import type { TableView } from '@superadmin/core';
 import type { Schema } from '@superadmin/schema';
-import ActionButton from '@superadmin/ui/ActionButton.vue';
-import ActionMenu from '@superadmin/ui/ActionMenu.vue';
+import ActionButtons from '@superadmin/ui/ActionButtons.vue';
 import { prettifyName } from '@superadmin/utils';
 
 const props = defineProps({
@@ -23,11 +22,11 @@ type ColumnDef = {
     schema: Schema;
 };
 
-const headerActions = computed(() => props.view.headerActions?.(props.view.params));
+const headerButtons = computed(() => props.view.headerButtons?.(props.view.params));
 
 const columns = computed(() => {
     const columns: ColumnDef[] = [];
-    const fields = props.view.rowSchema.props;
+    const fields = props.view.schema.props;
 
     for (const key of Object.keys(fields)) {
         const schema = fields[key];
@@ -57,15 +56,11 @@ async function fetchData() {
 <template>
     <component :is="layout">
         <template
-            v-if="headerActions?.length"
+            v-if="headerButtons?.length"
             #header
         >
             <div class="flex gap-4">
-                <ActionButton
-                    v-for="(action, index) in headerActions"
-                    :key="index"
-                    :button="action"
-                />
+                <ActionButtons :buttons="headerButtons" />
             </div>
         </template>
 
@@ -81,12 +76,11 @@ async function fetchData() {
                     :header="column.label"
                 ></Column>
 
-                <Column
-                    v-if="view.rowMenu"
-                    class="w-0"
-                >
+                <Column class="w-0">
                     <template #body="{ data }">
-                        <ActionMenu :items="view.rowMenu(data)" />
+                        <div class="flex justify-end gap-3">
+                            <ActionButtons :buttons="view.rowButtons?.(data)" />
+                        </div>
                     </template>
                 </Column>
             </DataTable>

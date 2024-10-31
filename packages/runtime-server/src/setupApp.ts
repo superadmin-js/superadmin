@@ -6,6 +6,7 @@ import type { Module } from '@superadmin/core';
 import { ActionRegistry, Modules, isModule } from '@superadmin/core';
 import { coerce, serialize, validateOrThrow } from '@superadmin/schema';
 import { ValidationError } from '@superadmin/validation';
+import { ActionHandlerRegistry } from '@superadmin/server';
 
 export interface SetupAppOptions {
     modules: unknown[];
@@ -30,7 +31,8 @@ export function setupApp(options: SetupAppOptions) {
     });
     const router = createRouter();
 
-    const actionRegistry = container.resolve(ActionRegistry);
+    const actions = container.resolve(ActionRegistry);
+    const handlers = container.resolve(ActionHandlerRegistry);
 
     const actionHandler = defineEventHandler(async event => {
         try {
@@ -80,12 +82,12 @@ export function setupApp(options: SetupAppOptions) {
     return app;
 
     function resolveActionHandler(actionName: string) {
-        const handler = actionRegistry.resolveHandler(actionName);
+        const handler = handlers.resolve(actionName);
         if (handler) {
             return handler;
         }
 
-        const action = actionRegistry.resolveAction(actionName);
+        const action = actions.resolve(actionName);
         if (action?.handler) {
             return {
                 action,

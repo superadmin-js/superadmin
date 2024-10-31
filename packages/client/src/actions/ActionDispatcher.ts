@@ -6,32 +6,37 @@ import type { ActionDefinition } from '@superadmin/core';
 import { ActionRegistry, RuntimeConfig } from '@superadmin/core';
 import * as s from '@superadmin/schema';
 
+import { ActionHandlerRegistry } from './ActionHandlerRegistry.js';
+
 export type ActionDispatcher = InjectableOf<typeof ActionDispatcher>;
 
 export const ActionDispatcher = defineService({
     name: 'ActionDispatcher',
     setup({ inject }) {
         const config = inject(RuntimeConfig);
-        const actionRegistry = inject(ActionRegistry);
+        const actions = inject(ActionRegistry);
+        const handlers = inject(ActionHandlerRegistry);
 
         return dispatch;
 
         async function dispatch<P extends s.Schema>(
             action: s.Action<P, s.ActionSchema>,
+            event?: Event,
         ): Promise<void>;
         async function dispatch<P extends s.Schema, R extends s.Schema>(
             action: s.Action<P, R>,
+            event?: Event,
         ): Promise<s.SchemaValue<R>>;
-        async function dispatch(action: s.Action) {
+        async function dispatch(action: s.Action, event?: Event) {
             do {
-                const actionDefinition = actionRegistry.resolveAction(action.action);
+                const actionDefinition = actions.resolve(action.action);
                 if (!actionDefinition) {
                     throw new Error(`Action ${action.action} not found`);
                 }
 
                 s.validateOrThrow(actionDefinition.params, action.params);
 
-                const result = await execute(action, actionDefinition);
+                const result = await execute(action, actionDefinition, event);
 
                 if (s.isSchema(actionDefinition.result, s.action)) {
                     action = result as s.Action;
@@ -42,12 +47,16 @@ export const ActionDispatcher = defineService({
             } while (action);
         }
 
-        async function execute(action: s.Action, actionDefinition: ActionDefinition) {
-            const handler = actionRegistry.resolveHandler(action.action);
+        async function execute(
+            action: s.Action,
+            actionDefinition: ActionDefinition,
+            event?: Event,
+        ) {
+            const handler = handlers.resolve(action.action);
             if (handler) {
                 const handlerFn = inject(handler.service);
                 // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-                return await handlerFn(action.params);
+                return await handlerFn(action.params, event);
             }
 
             const result = await fetchJson({

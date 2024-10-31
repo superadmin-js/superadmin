@@ -7,7 +7,7 @@ import { MODULE_SYMBOL } from '../defineModule.js';
 import { ViewRegistry } from './ViewRegistry.js';
 import type { GenericView } from './defineGenericView.js';
 
-export const VIEW_SYMBOL = Symbol('view');
+const VIEW_SYMBOL = Symbol('view');
 
 export interface ViewBase {
     name: string;

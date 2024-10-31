@@ -4,20 +4,13 @@ export * from './Modules.js';
 export * from './RuntimeConfig.js';
 
 export { goToView } from './actions/goToView.js';
+export { openMenu, type MenuItem } from './actions/openMenu.js';
 export { openModal } from './actions/openModal.js';
 export { showToast } from './actions/showToast.js';
 export { runInSequence } from './actions/runInSequence.js';
 export { runInParalell } from './actions/runInParalell.js';
 export { type ActionDefinition, defineAction } from './actions/defineAction.js';
 export { type ActionButton } from './actions/ActionButton.js';
-export { type ActionMenuItem } from './actions/ActionMenuItem.js';
-export {
-    type ActionHandler,
-    type ActionHandlerFunction,
-    type ActionHandlerOptions,
-    defineActionHandler,
-    isActionHandler,
-} from './actions/defineActionHandler.js';
 export * from './actions/ActionRegistry.js';
 
 export {

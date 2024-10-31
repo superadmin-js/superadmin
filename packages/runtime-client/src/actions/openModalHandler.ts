@@ -1,5 +1,6 @@
 import { ModalService } from '@nzyme/vue';
-import { ViewRegistry, defineActionHandler } from '@superadmin/core';
+import { defineActionHandler } from '@superadmin/client';
+import { ViewRegistry } from '@superadmin/core';
 import { openModalInternal } from '@superadmin/core/internal';
 
 import ViewRenderer from '../views/ViewRenderer.vue';
@@ -22,7 +23,7 @@ export const openModalHandler = defineActionHandler({
                 modal: ViewRenderer,
                 props: {
                     view: view,
-                    params: params.params as unknown,
+                    params: params.params,
                     layout: ModalLayout,
                 },
             });

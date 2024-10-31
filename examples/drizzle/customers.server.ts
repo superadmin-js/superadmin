@@ -1,4 +1,5 @@
-import { defineActionHandler, goToView, runInParalell, showToast } from '@superadmin/core';
+import { goToView, runInParalell, showToast } from '@superadmin/core';
+import { defineActionHandler } from '@superadmin/server';
 
 import { customersTable, newCustomerForm, syncCustomer } from './customers.common.js';
 

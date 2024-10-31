@@ -1,14 +1,14 @@
 import { type Resolvable, type ServiceContext, defineService } from '@nzyme/ioc';
+import type { ActionDefinition, Module } from '@superadmin/core';
+import { MODULE_SYMBOL } from '@superadmin/core/internal';
 import type { Schema, SchemaAny, SchemaValue } from '@superadmin/schema';
 
-import type { ActionDefinition } from './defineAction.js';
-import { MODULE_SYMBOL, type Module } from '../defineModule.js';
-import { ActionRegistry } from './ActionRegistry.js';
+import { ActionHandlerRegistry } from './ActionHandlerRegistry.js';
 
-export const ACTION_HANDLER_SYMBOL = Symbol('action-handler');
+const ACTION_HANDLER_SYMBOL = Symbol('action-handler');
 
 export interface ActionHandlerFunction<P extends SchemaAny, R extends SchemaAny> {
-    (params: SchemaValue<P>): SchemaValue<R> | Promise<SchemaValue<R>>;
+    (params: SchemaValue<P>, event?: Event): SchemaValue<R> | Promise<SchemaValue<R>>;
 }
 
 export interface ActionHandlerOptions<P extends SchemaAny, R extends SchemaAny> {
@@ -35,7 +35,7 @@ export function defineActionHandler<P extends SchemaAny, R extends SchemaAny>(
             setup: options.setup,
         }),
         install(container) {
-            container.resolve(ActionRegistry).registerHandler(this);
+            container.resolve(ActionHandlerRegistry).register(this);
         },
     };
 }

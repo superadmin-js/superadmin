@@ -5,7 +5,6 @@ import * as s from '@superadmin/schema';
 import type { Module } from '../defineModule.js';
 import { MODULE_SYMBOL } from '../defineModule.js';
 import { ActionRegistry } from './ActionRegistry.js';
-import type { ActionHandlerFunction } from './defineActionHandler.js';
 
 export const ACTION_SYMBOL = Symbol('action');
 const ACTION_SCHEMA = s.action();
@@ -14,6 +13,10 @@ type ActionFactory<P extends s.Schema = s.SchemaAny, R extends s.Schema = s.Sche
     s.SchemaValue<P> extends void
         ? () => s.Action<P, R>
         : (input: s.SchemaValue<P>) => s.Action<P, R>;
+
+type ActionHandler<P extends s.SchemaAny, R extends s.SchemaAny> = (
+    params: s.SchemaValue<P>,
+) => s.SchemaValue<R> | Promise<s.SchemaValue<R>>;
 
 export type ActionDefinition<
     P extends s.Schema = s.SchemaAny,
@@ -24,14 +27,14 @@ export type ActionDefinition<
         name: string;
         params: P;
         result: R;
-        handler?: Resolvable<ActionHandlerFunction<P, R>>;
+        handler?: Resolvable<ActionHandler<P, R>>;
     };
 
 interface ActionOptions<P extends s.Schema, R extends s.SchemaAny> {
     name: string;
     params?: P;
     result?: R;
-    handler?: (ctx: ServiceContext) => ActionHandlerFunction<P, R>;
+    handler?: (ctx: ServiceContext) => ActionHandler<P, R>;
 }
 
 export function defineAction<
@@ -57,7 +60,7 @@ export function defineAction<
     }
 
     action.install = function (container) {
-        container.resolve(ActionRegistry).registerAction(this);
+        container.resolve(ActionRegistry).register(this);
     };
 
     return Object.freeze(action);

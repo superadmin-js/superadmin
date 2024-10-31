@@ -9,8 +9,10 @@
         "dev": "superadmin start"
     },
     "dependencies": {
+        "@superadmin/client": "*",
         "@superadmin/core": "*",
         "@superadmin/schema": "*",
+        "@superadmin/server": "*",
         "@superadmin/validation": "*"
     },
     "devDependencies": {

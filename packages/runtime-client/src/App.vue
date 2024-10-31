@@ -6,6 +6,8 @@ import { RouterView, useRoute } from 'vue-router';
 
 import { ModalHost } from '@nzyme/vue';
 
+import MenuHost from './components/MenuHost.vue';
+
 const route = useRoute();
 const stateKey = 'superadmin.layout';
 </script>
@@ -47,6 +49,7 @@ const stateKey = 'superadmin.layout';
 
     <Toast position="top-center" />
 
+    <MenuHost />
     <ModalHost>
         <template #default="modals">
             <Suspense>

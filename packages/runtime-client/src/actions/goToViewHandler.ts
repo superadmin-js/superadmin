@@ -1,5 +1,5 @@
-import { Router } from '@superadmin/client';
-import { ViewRegistry, defineActionHandler } from '@superadmin/core';
+import { Router, defineActionHandler } from '@superadmin/client';
+import { ViewRegistry } from '@superadmin/core';
 import { goToViewInternal } from '@superadmin/core/internal';
 
 export const goToViewHandler = defineActionHandler({

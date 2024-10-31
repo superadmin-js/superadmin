@@ -16,7 +16,9 @@
         "@nzyme/ioc": "*",
         "@nzyme/types": "*",
         "@nzyme/utils": "*",
-        "@superadmin/core": "*"
+        "@superadmin/core": "*",
+        "@superadmin/schema": "*",
+        "@superadmin/utils": "*"
     },
     "devDependencies": {
         "@superadmin/eslint": "*",

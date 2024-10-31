@@ -3,6 +3,7 @@ import Button from 'primevue/button';
 import type { PropType } from 'vue';
 import { computed } from 'vue';
 
+import { randomString } from '@nzyme/crypto-utils';
 import { useService } from '@nzyme/vue';
 import { ActionDispatcher } from '@superadmin/client';
 import { type ActionButton, ActionRegistry } from '@superadmin/core';
@@ -23,21 +24,38 @@ const props = defineProps({
 const actionRegistry = useService(ActionRegistry);
 const actionDispatcher = useService(ActionDispatcher);
 
-const actionDef = computed(() => actionRegistry.resolveAction(props.button.action));
-const label = computed(
-    () => props.button.label || (actionDef.value ? prettifyName(actionDef.value.name) : ''),
-);
+const id = `button-${randomString(12)}`;
 
-async function onClick() {
-    await actionDispatcher(props.button.action);
+const actionDef = computed(() => actionRegistry.resolve(props.button.action));
+const label = computed(() => {
+    if (props.button.label) {
+        return props.button.label;
+    }
+
+    if (props.button.icon) {
+        return undefined;
+    }
+
+    if (actionDef.value) {
+        return prettifyName(actionDef.value.name);
+    }
+
+    return undefined;
+});
+
+async function onClick(e: Event) {
+    await actionDispatcher(props.button.action, e);
 }
 </script>
 
 <template>
     <Button
+        :id="id"
         :label="label"
         :size="size"
-        :severity="button.style"
+        :color="button.color"
+        :outlined="button.style === 'outline'"
+        :link="button.style === 'link'"
         @click="onClick"
     >
         <template

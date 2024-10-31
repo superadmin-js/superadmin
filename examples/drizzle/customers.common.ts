@@ -1,11 +1,17 @@
-import { defineAction, defineFormView, defineTableView, openModal } from '@superadmin/core';
+import {
+    defineAction,
+    defineFormView,
+    defineTableView,
+    openMenu,
+    openModal,
+} from '@superadmin/core';
 import * as s from '@superadmin/schema';
 import { emailValidator, requiredValidator } from '@superadmin/validation';
 
 export const customersTable = defineTableView({
     name: 'customers',
     path: '/customers',
-    rowSchema: s.object({
+    schema: s.object({
         props: {
             id: s.bigint(),
             firstName: s.string(),
@@ -13,17 +19,29 @@ export const customersTable = defineTableView({
             email: s.string(),
         },
     }),
-    rowMenu: c => [
-        {
-            icon: 'refresh-ccw',
-            action: syncCustomer({ id: c.id }),
-        },
-    ],
-    headerActions: () => [
+    headerButtons: () => [
         {
             label: 'New customer',
             icon: 'plus',
             action: openModal(newCustomerForm),
+        },
+    ],
+    rowButtons: c => [
+        {
+            icon: 'edit',
+            label: 'Edit',
+            action: openModal(newCustomerForm),
+            style: 'outline',
+        },
+        {
+            icon: 'more-vertical',
+            style: 'outline',
+            action: openMenu([
+                {
+                    icon: 'refresh-ccw',
+                    action: syncCustomer({ id: c.id }),
+                },
+            ]),
         },
     ],
 });

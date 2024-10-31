@@ -4,30 +4,29 @@ import { defineGenericView } from './defineGenericView.js';
 import type { View } from './defineView.js';
 import { defineView } from './defineView.js';
 import type { ActionButton } from '../actions/ActionButton.js';
-import type { ActionMenuItem } from '../actions/ActionMenuItem.js';
 import type { ActionDefinition } from '../actions/defineAction.js';
 import { defineAction } from '../actions/defineAction.js';
 
 export interface TableViewConfig<R extends s.ObjectSchemaAny, P extends s.SchemaAny> {
     name: string;
+    schema: R;
     params?: P;
     path?: string;
-    headerActions?: (params: s.SchemaValue<P>) => ActionButton[];
-    rowSchema: R;
-    rowMenu?: (data: s.SchemaValue<R>) => ActionMenuItem[];
+    headerButtons?: (params: s.SchemaValue<P>) => ActionButton[];
+    rowButtons?: (data: s.SchemaValue<R>) => ActionButton[];
 }
 
 export interface TableView<
-    D extends s.ObjectSchemaAny = s.ObjectSchemaAny,
+    R extends s.ObjectSchemaAny = s.ObjectSchemaAny,
     P extends s.SchemaAny = s.Schema<unknown>,
 > extends View<P> {
     name: string;
+    schema: R;
     actions: {
-        fetch: ActionDefinition<P, s.ArraySchema<{ of: D }>>;
+        fetch: ActionDefinition<P, s.ArraySchema<{ of: R }>>;
     };
-    headerActions?: (params: s.SchemaValue<P>) => ActionButton[];
-    rowSchema: D;
-    rowMenu?: (data: s.SchemaValue<D>) => ActionMenuItem[];
+    headerButtons?: (params: s.SchemaValue<P>) => ActionButton[];
+    rowButtons?: (data: s.SchemaValue<R>) => ActionButton[];
 }
 
 export const tableGenericView = defineGenericView({
@@ -39,23 +38,21 @@ export function defineTableView<
     TParams extends s.SchemaAny = s.Schema<void>,
 >(config: TableViewConfig<TRow, TParams>): TableView<TRow, TParams> {
     const params = config.params ?? (s.void({ nullable: true }) as TParams);
-    const rowSchema = config.rowSchema;
+    const schema = config.schema;
 
     return defineView({
         name: config.name,
+        schema,
         generic: tableGenericView,
         params,
         path: config.path,
-        headerActions: config.headerActions,
-        rowSchema,
-        rowMenu: config.rowMenu,
+        headerButtons: config.headerButtons,
+        rowButtons: config.rowButtons,
         actions: {
             fetch: defineAction({
                 name: `${config.name}.fetch`,
                 params: params,
-                result: s.array({
-                    of: rowSchema,
-                }),
+                result: s.array({ of: schema }),
             }),
         },
     });

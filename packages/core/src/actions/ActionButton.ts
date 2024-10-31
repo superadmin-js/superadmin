@@ -4,6 +4,6 @@ export interface ActionButton {
     action: Action;
     label?: string;
     icon?: string;
-    style?: 'primary' | 'secondary' | 'success' | 'info' | 'warn' | 'help' | 'danger' | 'contrast';
-    outlined?: boolean;
+    color?: 'primary' | 'secondary' | 'success' | 'info' | 'warn' | 'help' | 'danger' | 'contrast';
+    style?: 'outline' | 'link';
 }
