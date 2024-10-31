@@ -18,7 +18,8 @@
         "@nzyme/utils": "*",
         "@superadmin/core": "*",
         "@superadmin/schema": "*",
-        "@superadmin/utils": "*"
+        "@superadmin/utils": "*",
+        "h3": "^1.13.0"
     },
     "devDependencies": {
         "@superadmin/eslint": "*",

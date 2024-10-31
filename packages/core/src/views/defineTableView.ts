@@ -6,12 +6,14 @@ import { defineView } from './defineView.js';
 import type { ActionButton } from '../actions/ActionButton.js';
 import type { ActionDefinition } from '../actions/defineAction.js';
 import { defineAction } from '../actions/defineAction.js';
+import type { Authorizer } from '../auth/defineAuthorizer.js';
 
 export interface TableViewConfig<R extends s.ObjectSchemaAny, P extends s.SchemaAny> {
     name: string;
     schema: R;
     params?: P;
     path?: string;
+    auth?: Authorizer | false;
     headerButtons?: (params: s.SchemaValue<P>) => ActionButton[];
     rowButtons?: (data: s.SchemaValue<R>) => ActionButton[];
 }
@@ -46,6 +48,7 @@ export function defineTableView<
         generic: tableGenericView,
         params,
         path: config.path,
+        auth: config.auth,
         headerButtons: config.headerButtons,
         rowButtons: config.rowButtons,
         actions: {
@@ -53,6 +56,7 @@ export function defineTableView<
                 name: `${config.name}.fetch`,
                 params: params,
                 result: s.array({ of: schema }),
+                auth: config.auth,
             }),
         },
     });

@@ -9,14 +9,22 @@ export { openModal } from './actions/openModal.js';
 export { showToast } from './actions/showToast.js';
 export { runInSequence } from './actions/runInSequence.js';
 export { runInParalell } from './actions/runInParalell.js';
-export { type ActionDefinition, defineAction } from './actions/defineAction.js';
+export {
+    type ActionDefinition,
+    type ActionOf,
+    defineAction,
+    isAction,
+} from './actions/defineAction.js';
 export { type ActionButton } from './actions/ActionButton.js';
 export * from './actions/ActionRegistry.js';
 
 export * from './auth/AuthContext.js';
+export * from './auth/AuthData.js';
+export * from './auth/AuthRegistry.js';
 export * from './auth/defineAuthorizer.js';
 export * from './auth/defineLoginView.js';
 export * from './auth/defineUser.js';
+export { authenticate, type AuthenticateAction } from './auth/authenticate.js';
 
 export {
     type View,

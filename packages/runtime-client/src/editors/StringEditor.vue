@@ -20,6 +20,7 @@ const editor = useEditor(props);
             v-model="model"
             variant="filled"
             class="w-full"
+            :name="path"
             :invalid="!!errors?.[path]"
         />
         <label

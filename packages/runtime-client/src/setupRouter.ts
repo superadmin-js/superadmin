@@ -1,14 +1,18 @@
 import type { RouteRecordRaw } from 'vue-router';
 import { createRouter, createWebHistory } from 'vue-router';
 
-import type { Module } from '@superadmin/core';
-import { isView } from '@superadmin/core';
+import type { Container } from '@nzyme/ioc';
+import { AuthStore } from '@superadmin/client';
+import type { AuthContext, Module, View } from '@superadmin/core';
+import { isView, loginGenericView } from '@superadmin/core';
 
 import NavigationLayout from './components/NavigationLayout.vue';
 import ViewRenderer from './views/ViewRenderer.vue';
 import PageViewLayout from './views/layouts/PageViewLayout.vue';
 
-export function setupRouter(modules: Module[]) {
+export function setupRouter(container: Container, modules: Module[]) {
+    const authStore = container.resolve(AuthStore);
+
     const routes: RouteRecordRaw[] = [];
     const routesWithNavigation: RouteRecordRaw[] = [];
 
@@ -18,12 +22,18 @@ export function setupRouter(modules: Module[]) {
         children: routesWithNavigation,
     });
 
+    let loginView: View | undefined;
+
     for (const module of modules) {
         if (!isView(module)) {
             continue;
         }
 
         const routesToAddTo = module.navigation ? routesWithNavigation : routes;
+
+        if (module.generic === loginGenericView) {
+            loginView = module;
+        }
 
         routesToAddTo.push({
             path: module.path,
@@ -32,6 +42,34 @@ export function setupRouter(modules: Module[]) {
                 view: module,
                 params: null,
                 layout: PageViewLayout,
+            },
+            beforeEnter: (to, from, next) => {
+                const user = authStore.user;
+                const userType = authStore.auth?.userType;
+
+                let authCtx: AuthContext | null = null;
+                if (user && userType) {
+                    authCtx = {
+                        user,
+                        type: userType,
+                    };
+                }
+
+                const authorized = module.auth.isAuthorized(authCtx);
+                if (authorized) {
+                    return next();
+                }
+
+                if (loginView) {
+                    return next({
+                        path: loginView.path,
+                        query: {
+                            redirect: to.path,
+                        },
+                    });
+                }
+
+                return next(new Error('Unauthorized'));
             },
         });
     }

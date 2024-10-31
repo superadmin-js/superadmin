@@ -3,6 +3,8 @@ export * from './actions/useViewProps.js';
 export * from './actions/defineActionHandler.js';
 export * from './actions/ActionHandlerRegistry.js';
 
+export * from './auth/AuthStore.js';
+
 export * from './editors/EditorComponent.js';
 export * from './editors/EditorRegistry.js';
 export * from './editors/defineEditor.js';

@@ -34,7 +34,7 @@ container.set(Modules, modules);
 container.set(RuntimeConfig, config);
 
 const app = createApp(AppComponent);
-const router = setupRouter(modules);
+const router = setupRouter(container, modules);
 
 container.set(App, app);
 container.set(Router, router);

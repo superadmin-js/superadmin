@@ -7,3 +7,4 @@ export { openModalInternal } from './actions/openModal.js';
 export { runInSequence } from './actions/runInSequence.js';
 export { runInParalell } from './actions/runInParalell.js';
 export { MODULE_SYMBOL } from './defineModule.js';
+export { authenticateAction } from './auth/authenticate.js';

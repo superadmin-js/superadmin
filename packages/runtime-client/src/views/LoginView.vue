@@ -2,8 +2,10 @@
 import logo from '@logo';
 import Button from 'primevue/button';
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
-import { useViewProps } from '@superadmin/client';
+import { useService } from '@nzyme/vue';
+import { ActionDispatcher, useViewProps } from '@superadmin/client';
 import type { LoginView } from '@superadmin/core';
 import { coerce, validate } from '@superadmin/schema';
 import type { ValidationErrors } from '@superadmin/validation';
@@ -14,10 +16,14 @@ const props = defineProps({
     ...useViewProps<LoginView>(),
 });
 
+const router = useRouter();
+
+const actionDispatcher = useService(ActionDispatcher);
+
 const model = ref(props.view.form ? coerce(props.view.form) : undefined);
 const errors = ref<ValidationErrors | null>();
 
-function submit() {
+async function submit() {
     if (!props.view.form) {
         return;
     }
@@ -25,6 +31,14 @@ function submit() {
     errors.value = validate(props.view.form, model.value);
     if (errors.value) {
         return;
+    }
+
+    const action = props.view.actions.submit(model.value);
+    await actionDispatcher(action);
+
+    const redirect = router.currentRoute.value.query.redirect;
+    if (redirect) {
+        await router.replace(redirect as string);
     }
 }
 </script>

@@ -33,7 +33,7 @@
     "devDependencies": {
         "@superadmin/eslint": "*",
         "@superadmin/tsconfig": "*",
-        "@types/feather-icons": "^4",
+        "@types/feather-icons": "^4.29.4",
         "@types/node": "^22.7.7",
         "vitest": "^2.1.3"
     }

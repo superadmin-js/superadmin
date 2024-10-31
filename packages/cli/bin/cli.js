@@ -4,7 +4,9 @@ import { execute, settings } from '@oclif/core';
 import consola from 'consola';
 import sourceMap from 'source-map-support';
 import * as tsx from 'tsx/esm/api';
+import dotenv from 'dotenv';
 
+dotenv.config();
 consola.wrapAll();
 sourceMap.install();
 console.log(process.cwd());

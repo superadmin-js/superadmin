@@ -34,6 +34,7 @@ export const ActionDispatcher = defineService({
                     throw new Error(`Action ${action.action} not found`);
                 }
 
+                action.params = s.coerce(actionDefinition.params, action.params);
                 s.validateOrThrow(actionDefinition.params, action.params);
 
                 const result = await execute(action, actionDefinition, event);

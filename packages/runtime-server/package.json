@@ -13,6 +13,7 @@
         "build": "tsc --build"
     },
     "dependencies": {
+        "@nzyme/crypto-utils": "*",
         "@nzyme/ioc": "*",
         "@nzyme/rollup-utils": "*",
         "@nzyme/types": "*",
@@ -22,6 +23,7 @@
         "@superadmin/server": "*",
         "@superadmin/validation": "*",
         "h3": "^1.13.0",
+        "jose": "^5.9.6",
         "listhen": "^1.9.0"
     },
     "devDependencies": {

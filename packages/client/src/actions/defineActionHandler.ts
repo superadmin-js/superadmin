@@ -1,30 +1,28 @@
 import { type Resolvable, type ServiceContext, defineService } from '@nzyme/ioc';
 import type { ActionDefinition, Module } from '@superadmin/core';
 import { MODULE_SYMBOL } from '@superadmin/core/internal';
-import type { Schema, SchemaAny, SchemaValue } from '@superadmin/schema';
+import type { Schema, SchemaValue } from '@superadmin/schema';
 
 import { ActionHandlerRegistry } from './ActionHandlerRegistry.js';
 
 const ACTION_HANDLER_SYMBOL = Symbol('action-handler');
 
-export interface ActionHandlerFunction<P extends SchemaAny, R extends SchemaAny> {
+export interface ActionHandlerFunction<P extends Schema, R extends Schema> {
     (params: SchemaValue<P>, event?: Event): SchemaValue<R> | Promise<SchemaValue<R>>;
 }
 
-export interface ActionHandlerOptions<P extends SchemaAny, R extends SchemaAny> {
+export interface ActionHandlerOptions<P extends Schema, R extends Schema> {
     action: ActionDefinition<P, R>;
     setup: (ctx: ServiceContext) => ActionHandlerFunction<P, R>;
 }
 
-export interface ActionHandler<
-    P extends SchemaAny = Schema<unknown>,
-    R extends SchemaAny = Schema<unknown>,
-> extends Module {
+export interface ActionHandler<P extends Schema = Schema, R extends Schema = Schema>
+    extends Module {
     action: ActionDefinition<P, R>;
     service: Resolvable<ActionHandlerFunction<P, R>>;
 }
 
-export function defineActionHandler<P extends SchemaAny, R extends SchemaAny>(
+export function defineActionHandler<P extends Schema, R extends Schema>(
     options: ActionHandlerOptions<P, R>,
 ): ActionHandler<P, R> {
     return {

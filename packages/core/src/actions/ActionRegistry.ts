@@ -14,6 +14,10 @@ export const ActionRegistry = defineService({
         };
 
         function register(action: ActionDefinition) {
+            if (actions.has(action.name)) {
+                throw new Error(`Action ${action.name} already registered`);
+            }
+
             actions.set(action.name, action);
         }
 
