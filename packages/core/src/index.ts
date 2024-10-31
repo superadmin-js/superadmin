@@ -13,11 +13,16 @@ export { type ActionDefinition, defineAction } from './actions/defineAction.js';
 export { type ActionButton } from './actions/ActionButton.js';
 export * from './actions/ActionRegistry.js';
 
+export * from './auth/AuthContext.js';
+export * from './auth/defineAuthorizer.js';
+export * from './auth/defineLoginView.js';
+export * from './auth/defineUser.js';
+
 export {
     type View,
     defineView,
     isView,
-    type ViewBase,
+    type ViewConfig as ViewBase,
     type ViewParams,
 } from './views/defineView.js';
 export { type GenericView, defineGenericView } from './views/defineGenericView.js';

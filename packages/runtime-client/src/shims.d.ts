@@ -12,6 +12,11 @@ declare module '@config' {
     export default config;
 }
 
+declare module '@logo' {
+    const logo: string;
+    export default logo;
+}
+
 declare module '*.vue' {
     import type { DefineComponent } from 'vue';
 

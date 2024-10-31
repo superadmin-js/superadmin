@@ -85,9 +85,10 @@ export function createModulesRuntime(options: RuntimeOptions) {
 
         const script = createScript();
 
+        const modulesSorted = Array.from(moduleFiles).sort();
         const modules: string[] = [];
 
-        for (const file of moduleFiles) {
+        for (const file of modulesSorted) {
             const module = script.addImport({
                 from: path.relative(outputDir, file),
                 import: '*',

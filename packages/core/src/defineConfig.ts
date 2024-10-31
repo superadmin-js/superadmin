@@ -6,6 +6,7 @@ export interface ProjectConfigInit {
     port?: number;
     theme?: string;
     basePath?: string;
+    logo?: string;
 }
 
 export interface ProjectConfig {
@@ -14,6 +15,7 @@ export interface ProjectConfig {
     cwd: string;
     runtimePath: string;
     basePath: string;
+    logo: string;
 }
 
 export const ProjectConfig = defineInjectable<ProjectConfig>({
@@ -27,7 +29,8 @@ export function defineConfig(config: ProjectConfigInit): ProjectConfig {
 
     return {
         port: config.port || 3000,
-        theme: config.theme || '@primevue/themes/aura',
+        theme: config.theme || '@superadmin/ui/theme',
+        logo: config.logo || '@superadmin/ui/logo.svg',
         cwd,
         runtimePath,
         basePath,

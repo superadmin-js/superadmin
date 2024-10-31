@@ -44,7 +44,7 @@ async function submit() {
             >
                 <Editor
                     v-model="model"
-                    :schema="props.view.schema"
+                    :schema="view.schema"
                     :errors="errors"
                     path=""
                 />

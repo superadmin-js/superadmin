@@ -4,18 +4,28 @@ import { createRouter, createWebHistory } from 'vue-router';
 import type { Module } from '@superadmin/core';
 import { isView } from '@superadmin/core';
 
+import NavigationLayout from './components/NavigationLayout.vue';
 import ViewRenderer from './views/ViewRenderer.vue';
 import PageViewLayout from './views/layouts/PageViewLayout.vue';
 
 export function setupRouter(modules: Module[]) {
     const routes: RouteRecordRaw[] = [];
+    const routesWithNavigation: RouteRecordRaw[] = [];
+
+    routes.push({
+        path: '/',
+        component: NavigationLayout,
+        children: routesWithNavigation,
+    });
 
     for (const module of modules) {
         if (!isView(module)) {
             continue;
         }
 
-        routes.push({
+        const routesToAddTo = module.navigation ? routesWithNavigation : routes;
+
+        routesToAddTo.push({
             path: module.path,
             component: ViewRenderer,
             props: {

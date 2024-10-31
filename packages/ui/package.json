@@ -6,7 +6,8 @@
     "type": "module",
     "sideEffects": false,
     "exports": {
-        "./*": "./src/*"
+        "./*": "./src/*",
+        "./theme": "./src/Theme.ts"
     },
     "scripts": {
         "eslint": "eslint . --fix --cache",

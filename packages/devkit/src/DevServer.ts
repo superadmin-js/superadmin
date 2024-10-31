@@ -75,6 +75,7 @@ export const DevServer = defineService({
                             '@config': runtime.client.configPath,
                             '@modules': runtime.client.modulesPath,
                             '@theme': config.theme,
+                            '@logo': config.logo,
                         },
                     }),
                 ],
@@ -89,6 +90,7 @@ export const DevServer = defineService({
                                 content: [
                                     './**/*.vue',
                                     './**/*.tsx',
+                                    `${clientRoot}/**/*.html`,
                                     `${clientRoot}/src/**/*.vue`,
                                     `${clientRoot}/src/**/*.tsx`,
                                 ],

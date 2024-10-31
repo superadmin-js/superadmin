@@ -6,31 +6,36 @@ import type { Module } from '../defineModule.js';
 import { MODULE_SYMBOL } from '../defineModule.js';
 import { ViewRegistry } from './ViewRegistry.js';
 import type { GenericView } from './defineGenericView.js';
+import { type Authorizer, loggedIn, noAuth } from '../auth/defineAuthorizer.js';
 
 const VIEW_SYMBOL = Symbol('view');
 
-export interface ViewBase {
+export interface ViewConfig {
     name: string;
     title?: string;
     path?: string;
     generic?: GenericView;
     actions?: Record<string, ActionDefinition>;
     params?: Schema;
+    auth?: Authorizer | false;
+    navigation?: boolean;
 }
 
-export interface View<P extends Schema = Schema> extends Module, ViewBase {
+export interface View<P extends Schema = Schema> extends Module, ViewConfig {
     [MODULE_SYMBOL]: typeof VIEW_SYMBOL;
     params: P;
     title: string;
     path: string;
     generic?: GenericView;
+    auth: Authorizer;
+    navigation: boolean;
 }
 
-export type ViewParams<TView extends ViewBase> = TView['params'] extends Schema
+export type ViewParams<TView extends ViewConfig> = TView['params'] extends Schema
     ? SchemaValue<TView['params']>
     : never;
 
-export function defineView<TView extends ViewBase>(view: TView) {
+export function defineView<TView extends ViewConfig>(view: TView) {
     const viewDef = view as View & TView;
 
     viewDef[MODULE_SYMBOL] = VIEW_SYMBOL;
@@ -44,6 +49,13 @@ export function defineView<TView extends ViewBase>(view: TView) {
         }
     };
 
+    if (view.auth === false) {
+        viewDef.auth = noAuth;
+    } else {
+        viewDef.auth = view.auth ?? loggedIn;
+    }
+
+    viewDef.navigation = view.navigation ?? true;
     viewDef.title = view.title || prettifyName(view.name);
     viewDef.path = view.path ?? `/view/${view.name}`;
 
