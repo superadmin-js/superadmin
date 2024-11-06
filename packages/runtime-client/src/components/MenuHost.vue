@@ -4,7 +4,7 @@ import Menu from 'primevue/menu';
 import type { MenuItem as PrimeVueMenuItem } from 'primevue/menuitem';
 import vRipple from 'primevue/ripple';
 import type { ComponentPublicInstance } from 'vue';
-import { ref } from 'vue';
+import { nextTick, ref } from 'vue';
 
 import { mapNotNull } from '@nzyme/utils';
 import { useService } from '@nzyme/vue';
@@ -21,9 +21,10 @@ const actionRegistry = useService(ActionRegistry);
 const menuService = useService(MenuService);
 
 const menuItems = ref<PrimeVueMenuItem[]>([]);
+const menuTarget = ref<HTMLElement>();
 const menuRef = ref<MenuMethods & ComponentPublicInstance>();
 
-onEventEmitter(menuService, 'open', ({ items, event }) => {
+onEventEmitter(menuService, 'open', async ({ items, event }) => {
     menuItems.value = mapNotNull(items, item => {
         const actionDef = actionRegistry.resolve(item.action);
         if (!actionDef) {
@@ -39,7 +40,14 @@ onEventEmitter(menuService, 'open', ({ items, event }) => {
         return menuItem;
     });
 
-    menuRef.value?.toggle(event);
+    if (menuTarget.value === event.target) {
+        menuRef.value?.toggle(event);
+    } else {
+        menuRef.value?.hide();
+        menuTarget.value = event.target as HTMLElement;
+        await nextTick();
+        menuRef.value?.show(event);
+    }
 });
 </script>
 

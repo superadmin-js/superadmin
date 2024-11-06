@@ -1,21 +1,26 @@
+import type { H3Event } from 'h3';
 import { createError, defineEventHandler, readBody } from 'h3';
 
+import { parseBearerToken } from '@nzyme/crypto-utils';
 import type { Container } from '@nzyme/ioc';
 import { assertValue } from '@nzyme/utils';
 import type { ActionDefinition } from '@superadmin/core';
-import { ActionRegistry, isAction } from '@superadmin/core';
-import { authenticateAction } from '@superadmin/core/internal';
+import { ActionRegistry, FunctionRegistry } from '@superadmin/core';
 import * as s from '@superadmin/schema';
 import { ActionHandlerRegistry, Router } from '@superadmin/server';
 import { ValidationError } from '@superadmin/validation';
 
-import { signAuthentication } from './auth/signAuthentication.js';
+import { VerifyAuthToken } from './auth/VerifyAuthToken.js';
 
 export function setupActionHandler(container: Container) {
     const router = container.resolve(Router);
 
     const actions = container.resolve(ActionRegistry);
     const handlers = container.resolve(ActionHandlerRegistry);
+    const functions = container.resolve(FunctionRegistry);
+    const verifyAuthToken = container.resolve(VerifyAuthToken);
+
+    const actionSchema = s.action();
 
     const actionHandler = defineEventHandler(async event => {
         try {
@@ -29,18 +34,34 @@ export function setupActionHandler(container: Container) {
                 });
             }
 
-            const action = handler.action;
-            const body: unknown = await readBody(event);
-            const paramsSchema = action.params;
-            const params: unknown = s.coerce(paramsSchema, body);
+            const actionDef = handler.action;
+            const authCtx = await resolveAuthContext(event);
 
+            if (!actionDef.auth.isAuthorized(authCtx)) {
+                return createError({
+                    status: 401,
+                    message: 'Unauthorized',
+                });
+            }
+
+            const body: unknown = await readBody(event);
+
+            const action = s.coerce(actionSchema, {
+                action: actionDef.name,
+                params: body,
+            });
+
+            await processAction(action);
+
+            const paramsSchema = actionDef.params;
+            const params: unknown = s.coerce(paramsSchema, action.params);
             s.validateOrThrow(paramsSchema, params);
 
             const result = await container.resolve(handler.service)(params);
 
             await processResult(handler.action, result);
 
-            return s.serialize(action.result, result);
+            return s.serialize(actionDef.result, result);
         } catch (error) {
             if (error instanceof ValidationError) {
                 return createError({
@@ -73,24 +94,55 @@ export function setupActionHandler(container: Container) {
         }
     }
 
+    async function resolveAuthContext(event: H3Event) {
+        const authHeader = event.headers.get('authorization');
+        if (!authHeader) {
+            return null;
+        }
+
+        const authToken = parseBearerToken(authHeader);
+        if (!authToken) {
+            return null;
+        }
+
+        const result = await verifyAuthToken(authToken);
+        if (!result || result.type !== 'auth') {
+            return null;
+        }
+
+        return result.auth;
+    }
+
     async function processResult(actionDef: ActionDefinition, result: unknown) {
         if (!s.isSchema(actionDef.result, s.action)) {
             return;
         }
 
-        const action = result as s.Action;
-        const promises: Promise<unknown>[] = [];
-
-        processAction(action, promises);
-        await Promise.all(promises);
+        await processAction(result as s.Action);
     }
 
-    function processAction(action: s.Action, promises: Promise<unknown>[]) {
-        if (isAction(authenticateAction, action)) {
-            promises.push(signAuthentication(action));
+    async function processAction(action: s.Action) {
+        const actionDef = actions.resolve(action);
+        if (!actionDef) {
+            return;
         }
 
-        const actionDef = actions.resolve(action);
-        actionDef?.visit?.(action, action => processAction(action, promises));
+        if (actionDef.sst) {
+            const func = functions.resolve(actionDef.sst);
+            if (!func) {
+                throw new Error(`Function ${actionDef.sst.name} not found`);
+            }
+
+            const params: unknown = s.coerce(actionDef.sst.params, action.params);
+            s.validateOrThrow(actionDef.sst.params, params);
+
+            action.params = await container.resolve(func.service)(params);
+        }
+
+        if (actionDef.visit) {
+            const promises: Promise<unknown>[] = [];
+            actionDef.visit(action, action => promises.push(processAction(action)));
+            await Promise.all(promises);
+        }
     }
 }

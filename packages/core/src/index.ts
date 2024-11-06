@@ -24,7 +24,11 @@ export * from './auth/AuthRegistry.js';
 export * from './auth/defineAuthorizer.js';
 export * from './auth/defineLoginView.js';
 export * from './auth/defineUser.js';
-export { authenticate, type AuthenticateAction } from './auth/authenticate.js';
+export { authenticate, type AuthenticateInput } from './auth/authenticate.js';
+
+export * from './functions/defineFunction.js';
+export * from './functions/defineFunctionHandler.js';
+export * from './functions/FunctionRegistry.js';
 
 export {
     type View,

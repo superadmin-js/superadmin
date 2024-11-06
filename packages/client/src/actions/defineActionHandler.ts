@@ -1,30 +1,44 @@
 import { type Resolvable, type ServiceContext, defineService } from '@nzyme/ioc';
 import type { ActionDefinition, Module } from '@superadmin/core';
 import { MODULE_SYMBOL } from '@superadmin/core/internal';
-import type { Schema, SchemaValue } from '@superadmin/schema';
+import type * as s from '@superadmin/schema';
 
 import { ActionHandlerRegistry } from './ActionHandlerRegistry.js';
 
 const ACTION_HANDLER_SYMBOL = Symbol('action-handler');
 
-export interface ActionHandlerFunction<P extends Schema, R extends Schema> {
-    (params: SchemaValue<P>, event?: Event): SchemaValue<R> | Promise<SchemaValue<R>>;
+export interface ActionHandlerFunction<TParams extends s.Schema, TResult extends s.Schema> {
+    (
+        params: s.SchemaValue<TParams>,
+        event?: Event,
+    ): s.SchemaValue<TResult> | Promise<s.SchemaValue<TResult>>;
 }
 
-export interface ActionHandlerOptions<P extends Schema, R extends Schema> {
-    action: ActionDefinition<P, R>;
-    setup: (ctx: ServiceContext) => ActionHandlerFunction<P, R>;
+export interface ActionHandlerOptions<
+    TParams extends s.Schema = s.SchemaAny,
+    TResult extends s.Schema = s.Schema,
+    TInput extends s.Schema = TParams,
+> {
+    action: ActionDefinition<TParams, TResult, TInput>;
+    setup: (ctx: ServiceContext) => ActionHandlerFunction<TParams, TResult>;
 }
 
-export interface ActionHandler<P extends Schema = Schema, R extends Schema = Schema>
-    extends Module {
-    action: ActionDefinition<P, R>;
-    service: Resolvable<ActionHandlerFunction<P, R>>;
+export interface ActionHandler<
+    TParams extends s.Schema = s.SchemaAny,
+    TResult extends s.Schema = s.Schema,
+    TInput extends s.Schema = TParams,
+> extends Module {
+    action: ActionDefinition<TParams, TResult, TInput>;
+    service: Resolvable<ActionHandlerFunction<TParams, TResult>>;
 }
 
-export function defineActionHandler<P extends Schema, R extends Schema>(
-    options: ActionHandlerOptions<P, R>,
-): ActionHandler<P, R> {
+export function defineActionHandler<
+    TParams extends s.Schema = s.SchemaAny,
+    TResult extends s.Schema = s.Schema,
+    TInput extends s.Schema = TParams,
+>(
+    options: ActionHandlerOptions<TInput, TParams, TResult>,
+): ActionHandler<TInput, TParams, TResult> {
     return {
         [MODULE_SYMBOL]: ACTION_HANDLER_SYMBOL,
         action: options.action,

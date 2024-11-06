@@ -7,6 +7,7 @@ import { MODULE_SYMBOL } from '../defineModule.js';
 import { ActionRegistry } from './ActionRegistry.js';
 import type { Authorizer } from '../auth/defineAuthorizer.js';
 import { loggedIn, noAuth } from '../auth/defineAuthorizer.js';
+import type { FunctionDefinition } from '../functions/defineFunction.js';
 
 export const ACTION_SYMBOL = Symbol('action');
 const ACTION_SCHEMA = s.action();
@@ -21,16 +22,19 @@ type ActionHandler<P extends s.Schema, R extends s.Schema> = (
 ) => s.SchemaValue<R> | Promise<s.SchemaValue<R>>;
 
 export type ActionDefinition<
-    P extends s.Schema = s.SchemaAny,
-    R extends s.Schema = s.Schema,
+    TParams extends s.Schema = s.SchemaAny,
+    TResult extends s.Schema = s.Schema,
+    TInput extends s.Schema = TParams,
 > = Module &
-    ActionFactory<P, R> & {
+    ActionFactory<TInput, TResult> & {
         [MODULE_SYMBOL]: typeof ACTION_SYMBOL;
         name: string;
-        params: P;
-        result: R;
+        input: TInput;
+        params: TParams;
+        result: TResult;
         auth: Authorizer;
-        handler?: Resolvable<ActionHandler<P, R>>;
+        handler?: Resolvable<ActionHandler<TInput, TResult>>;
+        sst?: FunctionDefinition<TInput, TParams>;
         visit?: (action: s.Action, visitor: ActionVisitor) => void;
     };
 
@@ -40,29 +44,37 @@ export interface ActionVisitor {
 
 export type ActionOf<TDef extends ActionDefinition> = s.Action<TDef['params'], TDef['result']>;
 
-interface ActionOptions<P extends s.Schema, R extends s.Schema> {
+interface ActionOptions<
+    TParams extends s.Schema,
+    TResult extends s.Schema,
+    TInput extends s.Schema,
+> {
     name: string;
-    params?: P;
-    result?: R;
+    params?: TParams;
+    result?: TResult;
     auth?: Authorizer | false;
-    handler?: (ctx: ServiceContext) => ActionHandler<P, R>;
-    visit?: (action: s.Action<P, R>, visitor: ActionVisitor) => void;
+    sst?: FunctionDefinition<TInput, TParams>;
+    handler?: (ctx: ServiceContext) => ActionHandler<TInput, TResult>;
+    visit?: (action: s.Action<TInput, TResult>, visitor: ActionVisitor) => void;
 }
 
 export function defineAction<
-    P extends s.Schema = s.Schema<void>,
-    R extends s.Schema = s.Schema<void>,
->(options: ActionOptions<P, R>): ActionDefinition<P, R> {
+    TParams extends s.Schema = s.Schema<void>,
+    TResult extends s.Schema = s.Schema<void>,
+    TInput extends s.Schema = TParams,
+>(options: ActionOptions<TParams, TResult, TInput>): ActionDefinition<TParams, TResult, TInput> {
     const name = options.name;
     const factory = createNamedFunction<ActionFactory>(name, input => {
         return s.coerce(ACTION_SCHEMA, { action: name, params: input as unknown });
     });
 
-    const action = factory as ActionDefinition<P, R>;
+    const action = factory as ActionDefinition<TParams, TResult, TInput>;
 
     action[MODULE_SYMBOL] = ACTION_SYMBOL;
-    action.params = options.params ?? (s.void({ nullable: true }) as P);
-    action.result = options.result ?? (s.void({ nullable: true }) as R);
+    action.params = options.params ?? (s.void({ nullable: true }) as TParams);
+    action.sst = options.sst;
+    action.input = options.sst?.params ?? (action.params as unknown as TInput);
+    action.result = options.result ?? (s.void({ nullable: true }) as TResult);
 
     if (options.auth === false) {
         action.auth = noAuth;
@@ -88,9 +100,13 @@ export function isActionDefinition(value: unknown): value is ActionDefinition {
     return (value as ActionDefinition | undefined)?.[MODULE_SYMBOL] === ACTION_SYMBOL;
 }
 
-export function isAction<P extends s.Schema, R extends s.Schema>(
-    def: ActionDefinition<P, R>,
+export function isAction<
+    TInput extends s.Schema,
+    TParams extends s.Schema,
+    TResult extends s.Schema,
+>(
+    def: ActionDefinition<TInput, TParams, TResult>,
     action: s.Action,
-): action is s.Action<P, R> {
+): action is s.Action<TInput, TResult> {
     return def.name === action.action;
 }

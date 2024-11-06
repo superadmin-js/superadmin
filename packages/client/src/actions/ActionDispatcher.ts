@@ -7,6 +7,7 @@ import { ActionRegistry, RuntimeConfig } from '@superadmin/core';
 import * as s from '@superadmin/schema';
 
 import { ActionHandlerRegistry } from './ActionHandlerRegistry.js';
+import { AuthStore } from '../auth/AuthStore.js';
 
 export type ActionDispatcher = InjectableOf<typeof ActionDispatcher>;
 
@@ -16,6 +17,7 @@ export const ActionDispatcher = defineService({
         const config = inject(RuntimeConfig);
         const actions = inject(ActionRegistry);
         const handlers = inject(ActionHandlerRegistry);
+        const authStore = inject(AuthStore);
 
         return dispatch;
 
@@ -33,9 +35,6 @@ export const ActionDispatcher = defineService({
                 if (!actionDefinition) {
                     throw new Error(`Action ${action.action} not found`);
                 }
-
-                action.params = s.coerce(actionDefinition.params, action.params);
-                s.validateOrThrow(actionDefinition.params, action.params);
 
                 const result = await execute(action, actionDefinition, event);
 
@@ -55,15 +54,28 @@ export const ActionDispatcher = defineService({
         ) {
             const handler = handlers.resolve(action.action);
             if (handler) {
+                action.params = s.coerce(actionDefinition.params, action.params);
+                s.validateOrThrow(actionDefinition.params, action.params);
+
                 const handlerFn = inject(handler.service);
                 // eslint-disable-next-line @typescript-eslint/no-unsafe-return
                 return await handlerFn(action.params, event);
             }
 
+            action.params = s.coerce(actionDefinition.input, action.params);
+            s.validateOrThrow(actionDefinition.input, action.params);
+
+            const headers: Record<string, string> = {};
+            const authToken = authStore.authToken;
+            if (authToken) {
+                headers.Authorization = `Bearer ${authToken}`;
+            }
+
             const result = await fetchJson({
                 method: 'POST',
                 url: joinURL(config.basePath, 'api/action', action.action),
-                data: s.serialize(actionDefinition.params, action.params),
+                data: s.serialize(actionDefinition.input, action.params),
+                headers,
             });
 
             return s.coerce(actionDefinition.result, result);

@@ -43,19 +43,10 @@ export function setupRouter(container: Container, modules: Module[]) {
                 params: null,
                 layout: PageViewLayout,
             },
-            beforeEnter: (to, from, next) => {
-                const user = authStore.user;
-                const userType = authStore.auth?.userType;
+            beforeEnter: async (to, from, next) => {
+                await authStore.checkAuth();
 
-                let authCtx: AuthContext | null = null;
-                if (user && userType) {
-                    authCtx = {
-                        user,
-                        type: userType,
-                    };
-                }
-
-                const authorized = module.auth.isAuthorized(authCtx);
+                const authorized = module.auth.isAuthorized(authStore.auth);
                 if (authorized) {
                     return next();
                 }

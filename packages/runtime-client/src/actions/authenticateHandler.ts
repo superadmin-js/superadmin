@@ -7,7 +7,7 @@ export const authenticateHandler = defineActionHandler({
         const authStore = inject(AuthStore);
 
         return data => {
-            authStore.authenticate(data);
+            authStore.setAuth(data);
         };
     },
 });

@@ -4359,6 +4359,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@superadmin/server@workspace:packages/server"
   dependencies:
+    "@nzyme/crypto-utils": "npm:*"
     "@nzyme/ioc": "npm:*"
     "@nzyme/types": "npm:*"
     "@nzyme/utils": "npm:*"

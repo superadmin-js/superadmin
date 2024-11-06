@@ -6,7 +6,7 @@ import PrimeVue from 'primevue/config';
 import PrimeVueToastService from 'primevue/toastservice';
 import { type Plugin, createApp } from 'vue';
 
-import { CommonPlugin, VueContainer } from '@nzyme/vue';
+import { CommonPlugin, createContainer } from '@nzyme/vue';
 import { App, Router, ToastService } from '@superadmin/client';
 import type { Module } from '@superadmin/core';
 import { Modules, RuntimeConfig, isModule } from '@superadmin/core';
@@ -15,7 +15,7 @@ import AppComponent from './App.vue';
 import * as defaultModules from './modules.js';
 import { setupRouter } from './setupRouter.js';
 
-const container = new VueContainer();
+const container = createContainer();
 const modules: Module[] = [];
 
 for (const module of Object.values(defaultModules)) {

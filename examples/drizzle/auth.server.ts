@@ -5,7 +5,7 @@ import { LoginView, User } from './auth.common.js';
 
 export const LoginHandler = defineActionHandler({
     action: LoginView.actions.submit,
-    setup({ inject }) {
+    setup() {
         return form => {
             if (form.email === 'kedrzu@gmail.com' && form.password === 'asdasdasd') {
                 return authenticate(User, {
@@ -23,6 +23,17 @@ export const LoginHandler = defineActionHandler({
                 type: 'error',
                 time: 5000,
             });
+        };
+    },
+});
+
+export const RefreshHandler = defineActionHandler({
+    action: User.actions.refresh,
+    setup() {
+        return user => {
+            console.log('RefreshHandler', user);
+
+            return authenticate(User, user);
         };
     },
 });
