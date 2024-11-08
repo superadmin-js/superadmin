@@ -4,6 +4,7 @@ import { eq } from 'drizzle-orm';
 
 import {
     customersTable,
+    deleteCustomer,
     editCustomerForm,
     newCustomerForm,
     syncCustomer,
@@ -132,6 +133,33 @@ export const syncCustomerHandler = defineActionHandler({
                 type: 'success',
                 title: `Customer synced`,
                 message: `Synced customer ${params.id}`,
+                time: 3000,
+            });
+        };
+    },
+});
+
+export const deleteCustomerHandler = defineActionHandler({
+    action: deleteCustomer,
+    setup({ inject }) {
+        const dbClient = inject(DatabaseClient);
+
+        return async params => {
+            const result = await dbClient
+                .delete(db.customers)
+                .where(eq(db.customers.id, params.id))
+                .returning();
+
+            if (result.length === 0) {
+                throw new ApplicationError(`Customer with id ${params.id} not found`);
+            }
+
+            const customer = result[0];
+
+            return showToast({
+                type: 'success',
+                title: `Customer deleted`,
+                message: `Deleted customer ${customer.firstName} ${customer.lastName}`,
                 time: 3000,
             });
         };

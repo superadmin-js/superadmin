@@ -24,6 +24,9 @@
             "path": "../../nzyme/packages/utils/tsconfig.json"
         },
         {
+            "path": "../core/tsconfig.json"
+        },
+        {
             "path": "../devkit/tsconfig.json"
         }
     ]

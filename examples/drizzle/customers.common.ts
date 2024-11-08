@@ -2,6 +2,7 @@ import {
     defineAction,
     defineFormView,
     defineTableView,
+    openConfirmDialog,
     openMenu,
     openModal,
 } from '@superadmin/core';
@@ -40,6 +41,18 @@ export const customersTable = defineTableView({
                 {
                     icon: 'refresh-ccw',
                     action: syncCustomer({ id: c.id }),
+                },
+                {
+                    label: 'Delete customer',
+                    icon: 'trash',
+                    color: 'danger',
+                    action: openConfirmDialog({
+                        message: `Are you sure you want to delete customer ${c.firstName} ${c.lastName}?`,
+                        yes: {
+                            action: deleteCustomer({ id: c.id }),
+                            color: 'danger',
+                        },
+                    }),
                 },
             ]),
         },
@@ -90,6 +103,16 @@ export const editCustomerForm = defineFormView({
 
 export const syncCustomer = defineAction({
     name: 'syncCustomer',
+    params: s.object({
+        props: {
+            id: s.integer(),
+        },
+    }),
+    result: s.action({ optional: true }),
+});
+
+export const deleteCustomer = defineAction({
+    name: 'deleteCustomer',
     params: s.object({
         props: {
             id: s.integer(),

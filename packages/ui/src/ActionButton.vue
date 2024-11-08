@@ -23,6 +23,7 @@ const props = defineProps({
 });
 
 type Events = {
+    click: [event: Event];
     action: [event: Event];
 };
 
@@ -34,7 +35,9 @@ const actionDispatcher = useService(ActionDispatcher);
 
 const id = `button-${randomString(12)}`;
 
-const actionDef = computed(() => actionRegistry.resolve(props.button.action));
+const actionDef = computed(
+    () => props.button.action && actionRegistry.resolve(props.button.action),
+);
 const label = computed(() => {
     if (props.button.label) {
         return props.button.label;
@@ -52,6 +55,12 @@ const label = computed(() => {
 });
 
 async function onClick(e: Event) {
+    await emitAsync('click', e);
+
+    if (!props.button.action) {
+        return;
+    }
+
     await actionDispatcher(props.button.action, e);
     await emitAsync('action', e);
 }
@@ -62,7 +71,7 @@ async function onClick(e: Event) {
         :id="id"
         :label="label"
         :size="size"
-        :color="button.color"
+        :severity="button.color"
         :outlined="button.style === 'outline'"
         :link="button.style === 'link'"
         @click="onClick"

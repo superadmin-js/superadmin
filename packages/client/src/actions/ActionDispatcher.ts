@@ -5,10 +5,10 @@ import { type InjectableOf, defineService } from '@nzyme/ioc';
 import type { ActionDefinition, ActionError } from '@superadmin/core';
 import { ActionRegistry, ApplicationError, RuntimeConfig } from '@superadmin/core';
 import * as s from '@superadmin/schema';
+import { ValidationError } from '@superadmin/validation';
 
 import { ActionHandlerRegistry } from './ActionHandlerRegistry.js';
 import { AuthStore } from '../auth/AuthStore.js';
-import { ValidationError } from '@superadmin/validation';
 
 export type ActionDispatcher = InjectableOf<typeof ActionDispatcher>;
 

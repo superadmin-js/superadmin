@@ -8,6 +8,10 @@ export const MenuItem = s.object({
         action: s.action(),
         label: s.string({ optional: true }),
         icon: s.string({ optional: true }),
+        color: s.enum({
+            values: ['primary', 'success', 'danger'],
+            optional: true,
+        }),
     },
 });
 

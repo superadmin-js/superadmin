@@ -5,8 +5,10 @@ export * from './Modules.js';
 export * from './RuntimeConfig.js';
 
 export { goToView } from './actions/goToView.js';
+export { noAction } from './actions/noAction.js';
 export { openMenu, type MenuItem } from './actions/openMenu.js';
 export { openModal } from './actions/openModal.js';
+export { openConfirmDialog } from './actions/openConfirmDialog.js';
 export { showToast } from './actions/showToast.js';
 export { runInSequence } from './actions/runInSequence.js';
 export { runInParalell } from './actions/runInParalell.js';

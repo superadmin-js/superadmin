@@ -1,9 +1,11 @@
 export { tableGenericView } from './views/defineTableView.js';
 export { formGenericView } from './views/defineFormView.js';
 export { showToast } from './actions/showToast.js';
+export { noAction } from './actions/noAction.js';
 export { goToViewInternal } from './actions/goToView.js';
 export { openMenuInternal } from './actions/openMenu.js';
 export { openModalInternal } from './actions/openModal.js';
+export { openConfirmDialog } from './actions/openConfirmDialog.js';
 export { runInSequence } from './actions/runInSequence.js';
 export { runInParalell } from './actions/runInParalell.js';
 export { MODULE_SYMBOL } from './defineModule.js';

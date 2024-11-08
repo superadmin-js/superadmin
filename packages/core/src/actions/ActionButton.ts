@@ -1,9 +1,27 @@
-import type { Action } from '@superadmin/schema';
+import * as s from '@superadmin/schema';
 
-export interface ActionButton {
-    action: Action;
-    label?: string;
-    icon?: string;
-    color?: 'primary' | 'secondary' | 'success' | 'info' | 'warn' | 'help' | 'danger' | 'contrast';
-    style?: 'outline' | 'link';
-}
+export type ActionButton = s.SchemaValue<typeof ActionButton>;
+export const ActionButton = s.object({
+    props: {
+        action: s.action({ optional: true }),
+        label: s.string({ optional: true }),
+        icon: s.string({ optional: true }),
+        color: s.enum({
+            values: [
+                'primary',
+                'secondary',
+                'success',
+                'info',
+                'warn',
+                'help',
+                'danger',
+                'contrast',
+            ],
+            optional: true,
+        }),
+        style: s.enum({
+            values: ['outline', 'link'],
+            optional: true,
+        }),
+    },
+});

@@ -4612,6 +4612,7 @@ __metadata:
     "@oclif/core": "npm:^4.0.29"
     "@oclif/plugin-help": "npm:^6.2.16"
     "@oclif/plugin-version": "npm:^2.2.15"
+    "@superadmin/core": "npm:*"
     "@superadmin/devkit": "npm:*"
     "@superadmin/eslint": "npm:*"
     "@superadmin/tsconfig": "npm:*"
@@ -4647,7 +4648,6 @@ __metadata:
     "@superadmin/utils": "npm:*"
     "@superadmin/validation": "npm:*"
     "@types/node": "npm:^22.7.7"
-    h3: "npm:^1.13.0"
     ufo: "npm:^1.5.4"
     vitest: "npm:^2.1.3"
   languageName: unknown
@@ -4664,6 +4664,7 @@ __metadata:
     "@superadmin/schema": "npm:*"
     "@superadmin/tsconfig": "npm:*"
     "@superadmin/utils": "npm:*"
+    "@superadmin/validation": "npm:*"
     "@types/node": "npm:^22.7.7"
     vitest: "npm:^2.1.3"
   languageName: unknown
@@ -4891,6 +4892,7 @@ __metadata:
     "@superadmin/schema": "npm:*"
     "@superadmin/tsconfig": "npm:*"
     "@superadmin/utils": "npm:*"
+    "@superadmin/validation": "npm:*"
     "@types/feather-icons": "npm:^4.29.4"
     "@types/node": "npm:^22.7.7"
     feather-icons: "npm:^4.29.2"

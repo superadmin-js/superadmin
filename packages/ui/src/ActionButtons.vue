@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { PropType } from 'vue';
 
-import { useEmitAsync } from '@nzyme/vue-utils';
+import { classProp, useEmitAsync } from '@nzyme/vue-utils';
 import type { ActionButton } from '@superadmin/core';
 
 import Button from './ActionButton.vue';
@@ -13,6 +13,7 @@ defineProps({
     size: {
         type: String as PropType<'small' | 'large'>,
     },
+    class:classProp
 });
 
 type Events = {
@@ -26,6 +27,7 @@ const emitAsync = useEmitAsync<Events>();
 <template>
     <Button
         v-for="(button, index) in buttons"
+        :class="class"
         :key="index"
         :button="button"
         :size="size"

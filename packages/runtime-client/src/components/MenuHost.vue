@@ -39,6 +39,8 @@ onEventEmitter(menuService, 'open', async ({ items, event }) => {
     }
 
     menuRef.value?.hide();
+    await nextTick();
+
     menuState.value = {
         items: mapNotNull(items, item => {
             const actionDef = actionRegistry.resolve(item.action);
@@ -55,6 +57,7 @@ onEventEmitter(menuService, 'open', async ({ items, event }) => {
                 label: item.label || prettifyName(actionDef.name),
                 icon: item.icon,
                 command: handler as () => void,
+                style: getItemStyle(item),
             };
 
             return menuItem;
@@ -63,10 +66,26 @@ onEventEmitter(menuService, 'open', async ({ items, event }) => {
         promise,
     };
 
-    await nextTick();
     menuRef.value?.show(event);
     await promise.promise;
 });
+
+function getItemStyle(item: MenuItem) {
+    switch (item.color) {
+        case 'primary':
+            return {
+                '--p-menu-item-color': 'var(--p-primary-500)',
+            };
+        case 'success':
+            return {
+                '--p-menu-item-color': 'var(--p-green-500)',
+            };
+        case 'danger':
+            return {
+                '--p-menu-item-color': 'var(--p-red-500)',
+            };
+    }
+}
 </script>
 
 <template>
