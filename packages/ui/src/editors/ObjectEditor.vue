@@ -1,15 +1,20 @@
 <script lang="ts" setup>
+import { computed } from 'vue';
+
 import { useEditorProps } from '@superadmin/client';
 import { type ObjectSchema, coerceNonNull } from '@superadmin/schema';
 import { concatKeys } from '@superadmin/validation';
 
-import Editor from '../components/Editor.vue';
+import Editor from '../Editor.vue';
 
 const props = defineProps({
     ...useEditorProps<ObjectSchema>(),
 });
 
 const model = defineModel<Record<string, unknown> | null | undefined>();
+const fields = computed(() =>
+    Object.entries(props.schema.props).filter(([_, schema]) => !schema.hidden),
+);
 
 function setProp(prop: string, value: unknown) {
     if (!model.value) {
@@ -23,7 +28,7 @@ function setProp(prop: string, value: unknown) {
 <template>
     <div class="flex flex-col gap-4">
         <Editor
-            v-for="[prop, schema] in Object.entries(props.schema.props)"
+            v-for="[prop, schema] in fields"
             :key="prop"
             :model-value="model?.[prop]"
             :schema="schema"

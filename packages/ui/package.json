@@ -6,6 +6,7 @@
     "type": "module",
     "sideEffects": false,
     "exports": {
+        ".": "./src/index.ts",
         "./*": "./src/*",
         "./theme": "./src/Theme.ts"
     },
@@ -23,6 +24,7 @@
         "@superadmin/client": "*",
         "@superadmin/core": "*",
         "@superadmin/schema": "*",
+        "@superadmin/validation": "*",
         "@superadmin/utils": "*",
         "feather-icons": "^4.29.2",
         "primevue": "^4.1.1",

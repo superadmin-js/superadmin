@@ -1,8 +1,6 @@
 import { defineEditor } from '@superadmin/client';
 import * as s from '@superadmin/schema';
-
-import ObjectEditor from './ObjectEditor.vue';
-import StringEditor from './StringEditor.vue';
+import { IntegerEditor, ObjectEditor, StringEditor } from '@superadmin/ui';
 
 export const stringEditor = defineEditor({
     schema: s.string,
@@ -12,4 +10,9 @@ export const stringEditor = defineEditor({
 export const objectEditor = defineEditor({
     schema: s.object,
     component: ObjectEditor,
+});
+
+export const integerEditor = defineEditor({
+    schema: s.integer,
+    component: IntegerEditor,
 });

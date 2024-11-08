@@ -8,10 +8,8 @@ import { useService } from '@nzyme/vue';
 import { ActionDispatcher, useViewProps } from '@superadmin/client';
 import type { LoginView } from '@superadmin/core';
 import { coerce, validate } from '@superadmin/schema';
+import { Editor } from '@superadmin/ui';
 import type { ValidationErrors } from '@superadmin/validation';
-
-import Editor from '../components/Editor.vue';
-
 const props = defineProps({
     ...useViewProps<LoginView>(),
 });

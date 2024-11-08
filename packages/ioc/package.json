@@ -1,5 +1,5 @@
 {
-    "name": "@superadmin/core",
+    "name": "@superadmin/ioc",
     "version": "1.0.0",
     "repository": "https://github.com/kedrzu/superadmin.git",
     "author": "Michał Kędrzyński <m.kedrzynski@gmail.com>",
@@ -12,17 +12,8 @@
         "eslint": "eslint . --fix --cache",
         "build": "tsc --build"
     },
-    "exports": {
-        ".": "./dist/index.js",
-        "./internal": "./dist/internal.js"
-    },
     "dependencies": {
-        "@nzyme/ioc": "*",
-        "@nzyme/types": "*",
-        "@nzyme/utils": "*",
-        "@superadmin/schema": "*",
-        "@superadmin/utils": "*",
-        "@superadmin/validation": "*"
+        "@nzyme/ioc": "*"
     },
     "devDependencies": {
         "@superadmin/eslint": "*",

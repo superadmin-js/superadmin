@@ -1,12 +1,13 @@
 <script lang="ts" setup>
 import type { MenuMethods } from 'primevue/menu';
 import Menu from 'primevue/menu';
-import type { MenuItem as PrimeVueMenuItem } from 'primevue/menuitem';
+import type { MenuItem } from 'primevue/menuitem';
 import vRipple from 'primevue/ripple';
 import type { ComponentPublicInstance } from 'vue';
 import { nextTick, ref } from 'vue';
 
-import { mapNotNull } from '@nzyme/utils';
+import type { PromiseWrapper } from '@nzyme/utils';
+import { createPromise, mapNotNull } from '@nzyme/utils';
 import { useService } from '@nzyme/vue';
 import { onEventEmitter } from '@nzyme/vue-utils';
 import { ActionDispatcher } from '@superadmin/client';
@@ -20,42 +21,60 @@ const actionDispatcher = useService(ActionDispatcher);
 const actionRegistry = useService(ActionRegistry);
 const menuService = useService(MenuService);
 
-const menuItems = ref<PrimeVueMenuItem[]>([]);
-const menuTarget = ref<HTMLElement>();
+type MenuState = {
+    items: MenuItem[];
+    target: HTMLElement;
+    promise: PromiseWrapper<void>;
+};
+
+const menuState = ref<MenuState>();
 const menuRef = ref<MenuMethods & ComponentPublicInstance>();
 
 onEventEmitter(menuService, 'open', async ({ items, event }) => {
-    menuItems.value = mapNotNull(items, item => {
-        const actionDef = actionRegistry.resolve(item.action);
-        if (!actionDef) {
-            return;
-        }
+    const promise = createPromise();
 
-        const menuItem: PrimeVueMenuItem = {
-            label: item.label || prettifyName(actionDef.name),
-            icon: item.icon,
-            command: () => void actionDispatcher(item.action),
-        };
-
-        return menuItem;
-    });
-
-    if (menuTarget.value === event.target) {
-        menuRef.value?.toggle(event);
-    } else {
+    if (menuState.value?.target === event.target) {
         menuRef.value?.hide();
-        menuTarget.value = event.target as HTMLElement;
-        await nextTick();
-        menuRef.value?.show(event);
+        return;
     }
+
+    menuRef.value?.hide();
+    menuState.value = {
+        items: mapNotNull(items, item => {
+            const actionDef = actionRegistry.resolve(item.action);
+            if (!actionDef) {
+                return;
+            }
+
+            const handler = async () => {
+                await actionDispatcher(item.action);
+                promise.resolve();
+            };
+
+            const menuItem: MenuItem = {
+                label: item.label || prettifyName(actionDef.name),
+                icon: item.icon,
+                command: handler as () => void,
+            };
+
+            return menuItem;
+        }),
+        target: event.target as HTMLElement,
+        promise,
+    };
+
+    await nextTick();
+    menuRef.value?.show(event);
+    await promise.promise;
 });
 </script>
 
 <template>
     <Menu
         ref="menuRef"
-        :model="menuItems"
+        :model="menuState?.items"
         :popup="true"
+        @hide="menuState = undefined"
     >
         <template #item="{ item, props: { action } }">
             <a

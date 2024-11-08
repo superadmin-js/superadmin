@@ -9,7 +9,7 @@ export const LoginHandler = defineActionHandler({
         return form => {
             if (form.email === 'kedrzu@gmail.com' && form.password === 'asdasdasd') {
                 return authenticate(User, {
-                    id: 1n,
+                    id: 1,
                     email: form.email,
                     firstName: 'Michał',
                     lastName: 'Kędrzyński',
@@ -31,8 +31,6 @@ export const RefreshHandler = defineActionHandler({
     action: User.actions.refresh,
     setup() {
         return user => {
-            console.log('RefreshHandler', user);
-
             return authenticate(User, user);
         };
     },

@@ -5,6 +5,7 @@ import { computed } from 'vue';
 
 import { randomString } from '@nzyme/crypto-utils';
 import { useService } from '@nzyme/vue';
+import { useEmitAsync } from '@nzyme/vue-utils';
 import { ActionDispatcher } from '@superadmin/client';
 import { type ActionButton, ActionRegistry } from '@superadmin/core';
 import { prettifyName } from '@superadmin/utils';
@@ -20,6 +21,13 @@ const props = defineProps({
         type: String as PropType<'small' | 'large'>,
     },
 });
+
+type Events = {
+    action: [event: Event];
+};
+
+defineEmits<Events>();
+const emitAsync = useEmitAsync<Events>();
 
 const actionRegistry = useService(ActionRegistry);
 const actionDispatcher = useService(ActionDispatcher);
@@ -45,6 +53,7 @@ const label = computed(() => {
 
 async function onClick(e: Event) {
     await actionDispatcher(props.button.action, e);
+    await emitAsync('action', e);
 }
 </script>
 

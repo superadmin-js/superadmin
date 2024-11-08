@@ -1,13 +1,14 @@
 import { joinURL } from 'ufo';
 
-import { fetchJson } from '@nzyme/fetch-utils';
+import { FetchError, fetchJson } from '@nzyme/fetch-utils';
 import { type InjectableOf, defineService } from '@nzyme/ioc';
-import type { ActionDefinition } from '@superadmin/core';
-import { ActionRegistry, RuntimeConfig } from '@superadmin/core';
+import type { ActionDefinition, ActionError } from '@superadmin/core';
+import { ActionRegistry, ApplicationError, RuntimeConfig } from '@superadmin/core';
 import * as s from '@superadmin/schema';
 
 import { ActionHandlerRegistry } from './ActionHandlerRegistry.js';
 import { AuthStore } from '../auth/AuthStore.js';
+import { ValidationError } from '@superadmin/validation';
 
 export type ActionDispatcher = InjectableOf<typeof ActionDispatcher>;
 
@@ -71,14 +72,30 @@ export const ActionDispatcher = defineService({
                 headers.Authorization = `Bearer ${authToken}`;
             }
 
-            const result = await fetchJson({
-                method: 'POST',
-                url: joinURL(config.basePath, 'api/action', action.action),
-                data: s.serialize(actionDefinition.input, action.params),
-                headers,
-            });
+            try {
+                const result = await fetchJson({
+                    method: 'POST',
+                    url: joinURL(config.basePath, 'api/action', action.action),
+                    data: s.serialize(actionDefinition.input, action.params),
+                    headers,
+                });
 
-            return s.coerce(actionDefinition.result, result);
+                return s.coerce(actionDefinition.result, result);
+            } catch (error) {
+                if (error instanceof FetchError && error.status === 400) {
+                    const actionError = (await error.response.json()) as ActionError;
+
+                    if (actionError.type === 'validation') {
+                        throw new ValidationError(actionError.errors);
+                    }
+
+                    throw new ApplicationError(actionError.message, {
+                        cause: error,
+                    });
+                }
+
+                throw error;
+            }
         }
     },
 });

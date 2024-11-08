@@ -1,7 +1,7 @@
 {
     "name": "@superadmin/eslint",
     "version": "1.0.0",
-    "repository": "https://github.com/kedrzu/toyclub.git",
+    "repository": "https://github.com/kedrzu/superadmin.git",
     "author": "Michał Kędrzyński <m.kedrzynski@gmail.com>",
     "private": true,
     "sideEffects": false,

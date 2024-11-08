@@ -1,3 +1,4 @@
+export * from './ApplicationError.js';
 export * from './defineConfig.js';
 export { type Module, defineModule, isModule } from './defineModule.js';
 export * from './Modules.js';
@@ -17,6 +18,7 @@ export {
 } from './actions/defineAction.js';
 export { type ActionButton } from './actions/ActionButton.js';
 export * from './actions/ActionRegistry.js';
+export * from './actions/ActionError.js';
 
 export * from './auth/AuthContext.js';
 export * from './auth/AuthData.js';

@@ -1,9 +1,10 @@
 <script lang="ts" setup>
 import Column from 'primevue/column';
 import DataTable from 'primevue/datatable';
-import { computed, onMounted, ref } from 'vue';
+import { computed } from 'vue';
 
 import { useService } from '@nzyme/vue';
+import { useDataSource } from '@nzyme/vue-utils';
 import { ActionDispatcher, useViewProps } from '@superadmin/client';
 import type { TableView } from '@superadmin/core';
 import type { Schema } from '@superadmin/schema';
@@ -41,15 +42,18 @@ const columns = computed(() => {
     return columns;
 });
 
-const rows = ref<object[]>();
+const data = useDataSource({
+    load: fetchData,
+    behavior: 'eager',
+});
 
-onMounted(fetchData);
-
-async function fetchData() {
+function fetchData() {
     const action = props.view.actions.fetch(undefined);
-    const result = await actionDispatcher(action);
+    return actionDispatcher(action);
+}
 
-    rows.value = result;
+function reload() {
+    return data.reload();
 }
 </script>
 
@@ -60,13 +64,16 @@ async function fetchData() {
             #header
         >
             <div class="flex gap-4">
-                <ActionButtons :buttons="headerButtons" />
+                <ActionButtons
+                    :buttons="headerButtons"
+                    @action="reload"
+                />
             </div>
         </template>
 
         <template #body>
             <DataTable
-                :value="rows"
+                :value="data"
                 show-gridlines
             >
                 <Column
@@ -79,7 +86,10 @@ async function fetchData() {
                 <Column class="w-0">
                     <template #body="{ data }">
                         <div class="flex justify-end gap-3">
-                            <ActionButtons :buttons="view.rowButtons?.(data)" />
+                            <ActionButtons
+                                :buttons="view.rowButtons?.(data)"
+                                @action="reload"
+                            />
                         </div>
                     </template>
                 </Column>

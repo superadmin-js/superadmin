@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import type { PropType } from 'vue';
 
+import { useEmitAsync } from '@nzyme/vue-utils';
 import type { ActionButton } from '@superadmin/core';
 
 import Button from './ActionButton.vue';
@@ -13,6 +14,13 @@ defineProps({
         type: String as PropType<'small' | 'large'>,
     },
 });
+
+type Events = {
+    action: [event: Event];
+};
+
+defineEmits<Events>();
+const emitAsync = useEmitAsync<Events>();
 </script>
 
 <template>
@@ -21,5 +29,6 @@ defineProps({
         :key="index"
         :button="button"
         :size="size"
+        @action="emitAsync('action', $event)"
     />
 </template>

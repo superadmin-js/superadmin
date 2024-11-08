@@ -10,18 +10,6 @@
     "references": [
         {
             "path": "../../nzyme/packages/ioc/tsconfig.json"
-        },
-        {
-            "path": "../../nzyme/packages/types/tsconfig.json"
-        },
-        {
-            "path": "../../nzyme/packages/utils/tsconfig.json"
-        },
-        {
-            "path": "../schema/tsconfig.json"
-        },
-        {
-            "path": "../utils/tsconfig.json"
         }
     ]
 }

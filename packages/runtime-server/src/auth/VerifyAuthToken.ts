@@ -40,8 +40,6 @@ export const VerifyAuthToken = defineService({
                 type: userType.name,
             };
 
-            console.log('VerifyAuthToken', auth);
-
             return {
                 auth,
                 type: payload.type as 'auth' | 'refresh',

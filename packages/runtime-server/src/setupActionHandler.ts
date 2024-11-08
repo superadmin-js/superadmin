@@ -1,11 +1,11 @@
 import type { H3Event } from 'h3';
-import { createError, defineEventHandler, readBody } from 'h3';
+import { createError, defineEventHandler, readBody, setResponseStatus } from 'h3';
 
 import { parseBearerToken } from '@nzyme/crypto-utils';
 import type { Container } from '@nzyme/ioc';
 import { assertValue } from '@nzyme/utils';
-import type { ActionDefinition } from '@superadmin/core';
-import { ActionRegistry, FunctionRegistry } from '@superadmin/core';
+import type { ActionDefinition, ActionError } from '@superadmin/core';
+import { ActionRegistry, ApplicationError, FunctionRegistry } from '@superadmin/core';
 import * as s from '@superadmin/schema';
 import { ActionHandlerRegistry, Router } from '@superadmin/server';
 import { ValidationError } from '@superadmin/validation';
@@ -64,12 +64,17 @@ export function setupActionHandler(container: Container) {
             return s.serialize(actionDef.result, result);
         } catch (error) {
             if (error instanceof ValidationError) {
-                return createError({
-                    status: 400,
-                    statusMessage: error.name,
+                return createActionError(event, {
+                    type: 'validation',
+                    stack: error.stack,
+                    errors: error.errors,
+                });
+            }
+
+            if (error instanceof ApplicationError) {
+                return createActionError(event, {
                     message: error.message,
                     stack: error.stack,
-                    data: error.errors,
                 });
             }
 
@@ -144,5 +149,10 @@ export function setupActionHandler(container: Container) {
             actionDef.visit(action, action => promises.push(processAction(action)));
             await Promise.all(promises);
         }
+    }
+
+    function createActionError(event: H3Event, error: ActionError) {
+        setResponseStatus(event, 400);
+        return error;
     }
 }

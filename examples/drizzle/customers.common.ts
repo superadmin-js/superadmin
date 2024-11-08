@@ -13,7 +13,7 @@ export const customersTable = defineTableView({
     path: '/customers',
     schema: s.object({
         props: {
-            id: s.bigint(),
+            id: s.integer(),
             firstName: s.string(),
             lastName: s.string(),
             email: s.string(),
@@ -30,7 +30,7 @@ export const customersTable = defineTableView({
         {
             icon: 'edit',
             label: 'Edit',
-            action: openModal(newCustomerForm),
+            action: openModal(editCustomerForm, { id: c.id }),
             style: 'outline',
         },
         {
@@ -46,19 +46,8 @@ export const customersTable = defineTableView({
     ],
 });
 
-export const syncCustomer = defineAction({
-    name: 'syncCustomer',
-    params: s.object({
-        props: {
-            id: s.bigint(),
-        },
-    }),
-    result: s.action({ optional: true }),
-});
-
 export const newCustomerForm = defineFormView({
     name: 'newCustomer',
-    path: '/customers/new',
     schema: s.object({
         props: {
             firstName: s.string({
@@ -72,4 +61,39 @@ export const newCustomerForm = defineFormView({
             }),
         },
     }),
+});
+
+export const editCustomerForm = defineFormView({
+    name: 'editCustomer',
+    params: s.object({
+        props: {
+            id: s.integer(),
+        },
+    }),
+    schema: s.object({
+        props: {
+            id: s.integer({
+                hidden: true,
+            }),
+            firstName: s.string({
+                validators: [requiredValidator()],
+            }),
+            lastName: s.string({
+                validators: [requiredValidator()],
+            }),
+            email: s.string({
+                validators: [requiredValidator(), emailValidator()],
+            }),
+        },
+    }),
+});
+
+export const syncCustomer = defineAction({
+    name: 'syncCustomer',
+    params: s.object({
+        props: {
+            id: s.integer(),
+        },
+    }),
+    result: s.action({ optional: true }),
 });

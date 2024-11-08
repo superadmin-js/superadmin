@@ -2,11 +2,25 @@
 import Toast from 'primevue/toast';
 import { RouterView, useRoute } from 'vue-router';
 
-import { ModalHost } from '@nzyme/vue';
+import { ModalHost, useService } from '@nzyme/vue';
+import { onWindowEvent } from '@nzyme/vue-utils';
+import { ErrorEvent, ToastService } from '@superadmin/client';
 
 import MenuHost from './components/MenuHost.vue';
 
 const route = useRoute();
+const toastService = useService(ToastService);
+
+onWindowEvent('superadmin-error', event => {
+    if (event instanceof ErrorEvent) {
+        toastService.add({
+            summary: event.title,
+            detail: event.message,
+            severity: 'error',
+            life: 5000,
+        });
+    }
+});
 </script>
 
 <template>

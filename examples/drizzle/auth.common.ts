@@ -6,7 +6,7 @@ export const User = defineUser({
     name: 'user',
     schema: s.object({
         props: {
-            id: s.bigint(),
+            id: s.integer(),
             firstName: s.string(),
             lastName: s.string(),
             email: s.string(),

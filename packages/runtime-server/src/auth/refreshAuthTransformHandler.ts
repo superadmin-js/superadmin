@@ -14,8 +14,6 @@ export const refreshAuthTransformHandler = defineFunctionHandler({
                 return null;
             }
 
-            console.log('refreshAuthTransformHandler', result);
-
             if (result.type !== 'refresh') {
                 return null;
             }

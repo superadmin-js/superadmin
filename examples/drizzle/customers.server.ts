@@ -1,35 +1,49 @@
-import { goToView, runInParalell, showToast } from '@superadmin/core';
+import { ApplicationError, goToView, runInParalell, showToast } from '@superadmin/core';
 import { defineActionHandler } from '@superadmin/server';
+import { eq } from 'drizzle-orm';
 
-import { customersTable, newCustomerForm, syncCustomer } from './customers.common.js';
+import {
+    customersTable,
+    editCustomerForm,
+    newCustomerForm,
+    syncCustomer,
+} from './customers.common.js';
+import { DatabaseClient } from './db/client.js';
+import * as db from './db/schema.js';
 
 export const customersFetch = defineActionHandler({
     action: customersTable.actions.fetch,
-    setup() {
-        return () => {
-            return [
-                {
-                    id: 1n,
-                    firstName: 'John',
-                    lastName: 'Doe',
-                    email: 'john.doe@example.com',
-                },
-                {
-                    id: 2n,
-                    firstName: 'Jane',
-                    lastName: 'Doe',
-                    email: 'jane.doe@example.com',
-                },
-            ];
+    setup({ inject }) {
+        const dbClient = inject(DatabaseClient);
+
+        return async () => {
+            const customers = await dbClient.query.customers.findMany();
+
+            return customers;
         };
     },
 });
 
 export const newCustomerSubmit = defineActionHandler({
     action: newCustomerForm.actions.submit,
-    setup: () => {
-        return params => {
-            console.log(params);
+    setup({ inject }) {
+        const dbClient = inject(DatabaseClient);
+
+        return async params => {
+            const result = await dbClient
+                .insert(db.customers)
+                .values({
+                    id: undefined,
+                    firstName: params.firstName,
+                    lastName: params.lastName,
+                    email: params.email,
+                })
+                .onConflictDoNothing()
+                .returning({ id: db.customers.id });
+
+            if (result.length === 0) {
+                throw new ApplicationError(`Customer with email ${params.email} already exists`);
+            }
 
             return runInParalell([
                 showToast({
@@ -44,11 +58,68 @@ export const newCustomerSubmit = defineActionHandler({
     },
 });
 
+export const editCustomerFetch = defineActionHandler({
+    action: editCustomerForm.actions.fetch,
+    setup({ inject }) {
+        const dbClient = inject(DatabaseClient);
+
+        return async params => {
+            const customer = await dbClient.query.customers.findFirst({
+                where: eq(db.customers.id, params.id),
+            });
+
+            if (!customer) {
+                throw new ApplicationError(`Customer with id ${params.id} not found`);
+            }
+
+            return {
+                id: customer.id,
+                email: customer.email,
+                firstName: customer.firstName,
+                lastName: customer.lastName,
+            };
+        };
+    },
+});
+
+export const editCustomerSubmit = defineActionHandler({
+    action: editCustomerForm.actions.submit,
+    setup({ inject }) {
+        const dbClient = inject(DatabaseClient);
+
+        return async params => {
+            const result = await dbClient
+                .update(db.customers)
+                .set({
+                    firstName: params.firstName,
+                    lastName: params.lastName,
+                    email: params.email,
+                })
+                .where(eq(db.customers.id, params.id))
+                .returning({ id: db.customers.id });
+
+            if (result.length === 0) {
+                throw new ApplicationError(`Customer with email ${params.email} already exists`);
+            }
+
+            return runInParalell([
+                showToast({
+                    type: 'success',
+                    title: `Customer updated`,
+                    message: `Updated customer ${params.firstName} ${params.lastName}`,
+                    time: 3000,
+                }),
+                goToView(customersTable),
+            ]);
+        };
+    },
+});
+
 export const syncCustomerHandler = defineActionHandler({
     action: syncCustomer,
     setup: () => {
         return params => {
-            if (params.id === 1n) {
+            if (params.id === 1) {
                 return showToast({
                     type: 'error',
                     title: `Customer sync failed`,

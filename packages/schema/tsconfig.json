@@ -9,6 +9,9 @@
     "include": ["src"],
     "references": [
         {
+            "path": "../../nzyme/packages/utils/tsconfig.json"
+        },
+        {
             "path": "../../nzyme/packages/zchema/tsconfig.json"
         }
     ]

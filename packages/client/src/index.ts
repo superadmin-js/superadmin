@@ -5,6 +5,9 @@ export * from './actions/ActionHandlerRegistry.js';
 
 export * from './auth/AuthStore.js';
 
+export * from './events/ErrorEvent.js';
+export * from './events/RefetchEvent.js';
+
 export * from './editors/EditorComponent.js';
 export * from './editors/EditorRegistry.js';
 export * from './editors/defineEditor.js';
