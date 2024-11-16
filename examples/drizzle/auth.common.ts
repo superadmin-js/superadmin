@@ -25,7 +25,7 @@ export const LoginView = defineLoginView({
             email: s.string({
                 validators: [v.requiredValidator(), v.emailValidator()],
             }),
-            password: s.string({
+            password: s.password({
                 validators: [v.requiredValidator()],
             }),
         },

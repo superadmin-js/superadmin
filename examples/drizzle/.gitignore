@@ -1,3 +1,2 @@
 .superadmin
 db/db.sqlite
-db/migrations

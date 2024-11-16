@@ -6,7 +6,7 @@
     "author": "Michał Kędrzyński <m.kedrzynski@gmail.com>",
     "private": true,
     "scripts": {
-        "dev": "cd ../.. && tsc --build --watch --preserveWatchOutput",
+        "watch": "cd ../.. && tsc --build --watch --preserveWatchOutput",
         "tsc": "cd ../.. && tsc --build"
     }
 }

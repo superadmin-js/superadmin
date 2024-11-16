@@ -1,0 +1,31 @@
+{
+    "name": "@superadmin/drizzle-core",
+    "repository": "https://github.com/kedrzu/superadmin.git",
+    "author": "Michał Kędrzyński <m.kedrzynski@gmail.com>",
+    "version": "1.0.0",
+    "type": "module",
+    "main": "./dist/index.js",
+    "module": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "sideEffects": false,
+    "scripts": {
+        "eslint": "eslint . --fix --cache",
+        "build": "tsc --build"
+    },
+    "dependencies": {
+        "@nzyme/crypto-utils": "*",
+        "@nzyme/ioc": "*",
+        "@nzyme/types": "*",
+        "@nzyme/utils": "*",
+        "@superadmin/core": "*",
+        "@superadmin/schema": "*",
+        "@superadmin/utils": "*",
+        "drizzle-orm": "^0.36.2"
+    },
+    "devDependencies": {
+        "@superadmin/eslint": "*",
+        "@superadmin/tsconfig": "*",
+        "@types/node": "^22.7.7",
+        "vitest": "^2.1.3"
+    }
+}

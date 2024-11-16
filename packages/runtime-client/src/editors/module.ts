@@ -1,12 +1,16 @@
 import { defineEditor } from '@superadmin/client';
 import * as s from '@superadmin/schema';
-import { IntegerEditor, ObjectEditor, StringEditor } from '@superadmin/ui';
+import { IntegerEditor, ObjectEditor, PasswordEditor, StringEditor } from '@superadmin/ui';
 
 export const stringEditor = defineEditor({
     schema: s.string,
     component: StringEditor,
 });
 
+export const passwordEditor = defineEditor({
+    schema: s.password,
+    component: PasswordEditor,
+});
 export const objectEditor = defineEditor({
     schema: s.object,
     component: ObjectEditor,

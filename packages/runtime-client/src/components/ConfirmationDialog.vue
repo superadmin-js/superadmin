@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import Dialog from 'primevue/dialog';
 import type { PropType } from 'vue';
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 
 import { skipUndefinedProps } from '@nzyme/utils';
 import { useModalProps } from '@nzyme/vue';

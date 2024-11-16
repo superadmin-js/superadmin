@@ -13,11 +13,12 @@
         "build": "tsc --build"
     },
     "dependencies": {
-        "@nzyme/crypto-utils": "*",
         "@nzyme/ioc": "*",
         "@nzyme/types": "*",
         "@nzyme/utils": "*",
         "@superadmin/core": "*",
+        "@superadmin/drizzle-core": "*",
+        "@superadmin/drizzle-server": "*",
         "@superadmin/schema": "*",
         "@superadmin/utils": "*"
     },

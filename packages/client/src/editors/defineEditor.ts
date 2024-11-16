@@ -10,7 +10,10 @@ export interface EditorOptions<S extends Schema> {
 }
 
 export function defineEditor<S extends Schema>(options: EditorOptions<S>) {
-    return defineModule(container => {
-        container.resolve(EditorRegistry).register(options.schema, options.component);
+    return defineModule({
+        install(container) {
+            container.resolve(EditorRegistry).register(options.schema, options.component);
+        },
+        ...options,
     });
 }

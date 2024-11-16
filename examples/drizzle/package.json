@@ -6,22 +6,27 @@
     "type": "module",
     "sideEffects": false,
     "scripts": {
+        "codegen": "prisma generate --schema=./db/schema.prisma",
+        "watch": "prisma generate --watch --schema=./db/schema.prisma",
         "dev": "superadmin start",
-        "db:push": "drizzle-kit push"
+        "db:push": "prisma db push --skip-generate --schema=./db/schema.prisma"
     },
     "dependencies": {
         "@libsql/client": "^0.14.0",
         "@superadmin/client": "*",
         "@superadmin/core": "*",
+        "@superadmin/drizzle": "*",
         "@superadmin/ioc": "*",
         "@superadmin/schema": "*",
         "@superadmin/server": "*",
         "@superadmin/validation": "*",
-        "drizzle-orm": "^0.36.0"
+        "drizzle-orm": "^0.36.2"
     },
     "devDependencies": {
         "@superadmin/cli": "*",
         "@superadmin/tsconfig": "*",
-        "drizzle-kit": "^0.27.2"
+        "drizzle-kit": "^0.28.1",
+        "prisma": "5.19.0",
+        "prisma-generator-drizzle": "^0.7.6"
     }
 }

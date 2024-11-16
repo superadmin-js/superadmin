@@ -11,7 +11,7 @@ import { emailValidator, requiredValidator } from '@superadmin/validation';
 
 export const customersTable = defineTableView({
     name: 'customers',
-    path: '/customers',
+    path: '/customers_old',
     schema: s.object({
         props: {
             id: s.integer(),

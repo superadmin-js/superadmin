@@ -84,6 +84,12 @@
             "path": "./packages/devkit/tsconfig.json"
         },
         {
+            "path": "./packages/drizzle-core/tsconfig.json"
+        },
+        {
+            "path": "./packages/drizzle-server/tsconfig.json"
+        },
+        {
             "path": "./packages/drizzle/tsconfig.json"
         },
         {

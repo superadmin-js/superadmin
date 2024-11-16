@@ -46,7 +46,7 @@ async function submit() {
         class="bg-surface-50 dark:bg-surface-950 flex flex-1 flex-col items-center justify-center bg-gray-100 px-6 py-20 md:px-12 lg:px-20"
     >
         <div
-            class="bg-surface-0 dark:bg-surface-900 mb-[30%] w-full rounded-2xl bg-white p-10 shadow-lg lg:w-1/3"
+            class="bg-surface-0 dark:bg-surface-900 mb-[30%] w-full max-w-xl rounded-2xl bg-white p-10 shadow-lg"
         >
             <div class="mb-8 flex flex-col items-center">
                 <img

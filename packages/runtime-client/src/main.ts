@@ -33,8 +33,12 @@ for (const module of modulesImport) {
 container.set(Modules, modules);
 container.set(RuntimeConfig, config);
 
+for (const module of modules) {
+    module.install(container);
+}
+
 const app = createApp(AppComponent);
-const router = setupRouter(container, modules);
+const router = setupRouter(container);
 
 container.set(App, app);
 container.set(Router, router);
@@ -52,9 +56,5 @@ app.use(PrimeVue as unknown as Plugin, primeVueConfig);
 
 app.use(PrimeVueToastService as unknown as Plugin);
 container.set(ToastService, app.config.globalProperties.$toast);
-
-for (const module of modules) {
-    module.install(container);
-}
 
 app.mount('#root');

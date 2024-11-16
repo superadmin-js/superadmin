@@ -14,6 +14,7 @@ import tailwindcss from 'tailwindcss';
 import { createServer } from 'vite';
 import { checker } from 'vite-plugin-checker';
 import tsconfigPaths from 'vite-tsconfig-paths';
+import sourcemaps from 'rollup-plugin-sourcemaps';
 
 import { unwrapCjsDefaultImport } from '@nzyme/esm';
 import { defineService } from '@nzyme/ioc';
@@ -58,6 +59,7 @@ export const DevServer = defineService({
 
         function createViteServer() {
             const clientRoot = resolveProjectPath('@superadmin/runtime-client', import.meta);
+            const uiRoot = resolveProjectPath('@superadmin/ui', import.meta);
 
             return createServer({
                 configFile: false,
@@ -93,6 +95,8 @@ export const DevServer = defineService({
                                     `${clientRoot}/**/*.html`,
                                     `${clientRoot}/src/**/*.vue`,
                                     `${clientRoot}/src/**/*.tsx`,
+                                    `${uiRoot}/**/*.vue`,
+                                    `${uiRoot}/**/*.tsx`,
                                 ],
                             }),
                             autoprefixer(),
@@ -129,6 +133,10 @@ export const DevServer = defineService({
                             '@config': runtime.server.configPath,
                             '@modules': runtime.server.modulesPath,
                         },
+                    }),
+                    sourcemaps({
+                        // Sentry has some broken sourcemaps
+                        exclude: /@sentry/,
                     }),
                 ],
                 external: source => {

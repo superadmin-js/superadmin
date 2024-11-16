@@ -3,15 +3,16 @@ import { createRouter, createWebHistory } from 'vue-router';
 
 import type { Container } from '@nzyme/ioc';
 import { AuthStore } from '@superadmin/client';
-import type { AuthContext, Module, View } from '@superadmin/core';
-import { isView, loginGenericView } from '@superadmin/core';
+import type { View } from '@superadmin/core';
+import { ViewRegistry, loginGenericView } from '@superadmin/core';
 
 import NavigationLayout from './components/NavigationLayout.vue';
 import ViewRenderer from './views/ViewRenderer.vue';
 import PageViewLayout from './views/layouts/PageViewLayout.vue';
 
-export function setupRouter(container: Container, modules: Module[]) {
+export function setupRouter(container: Container) {
     const authStore = container.resolve(AuthStore);
+    const viewRegistry = container.resolve(ViewRegistry);
 
     const routes: RouteRecordRaw[] = [];
     const routesWithNavigation: RouteRecordRaw[] = [];
@@ -24,29 +25,25 @@ export function setupRouter(container: Container, modules: Module[]) {
 
     let loginView: View | undefined;
 
-    for (const module of modules) {
-        if (!isView(module)) {
-            continue;
-        }
+    for (const view of viewRegistry.getAll()) {
+        const routesToAddTo = view.navigation ? routesWithNavigation : routes;
 
-        const routesToAddTo = module.navigation ? routesWithNavigation : routes;
-
-        if (module.generic === loginGenericView) {
-            loginView = module;
+        if (view.generic === loginGenericView) {
+            loginView = view;
         }
 
         routesToAddTo.push({
-            path: module.path,
+            path: view.path,
             component: ViewRenderer,
             props: {
-                view: module,
+                view: view,
                 params: null,
                 layout: PageViewLayout,
             },
             beforeEnter: async (to, from, next) => {
                 await authStore.checkAuth();
 
-                const authorized = module.auth.isAuthorized(authStore.auth);
+                const authorized = view.auth.isAuthorized(authStore.auth);
                 if (authorized) {
                     return next();
                 }

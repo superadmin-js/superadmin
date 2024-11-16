@@ -25,6 +25,7 @@ const error = ref<string | null>(null);
 model.value = await actionDispatcher(props.view.actions.fetch(props.params));
 
 async function submit(e: Event) {
+    error.value = null;
     validation.value = validate(props.view.schema, model.value);
     if (validation.value) {
         return;

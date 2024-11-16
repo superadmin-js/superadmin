@@ -27,8 +27,8 @@
         "@superadmin/utils": "*",
         "@superadmin/validation": "*",
         "feather-icons": "^4.29.2",
-        "primevue": "^4.1.1",
-        "tailwindcss": "^3.4.14",
+        "primevue": "^4.2.2",
+        "tailwindcss": "^3.4.15",
         "vue": "^3.5.12",
         "vue-router": "^4.4.5"
     },

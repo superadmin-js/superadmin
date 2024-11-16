@@ -1,5 +1,6 @@
 export * from '@nzyme/zchema';
 export * from './action.js';
+export * from './password.js';
 
 declare module '@nzyme/zchema' {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars

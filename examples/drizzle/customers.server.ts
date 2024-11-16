@@ -10,7 +10,7 @@ import {
     syncCustomer,
 } from './customers.common.js';
 import { DatabaseClient } from './db/client.js';
-import * as db from './db/schema.js';
+import db from './db/schema.js';
 
 export const customersFetch = defineActionHandler({
     action: customersTable.actions.fetch,

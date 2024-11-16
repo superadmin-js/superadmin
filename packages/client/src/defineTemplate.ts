@@ -9,7 +9,9 @@ interface TemplateViewOptions {
 }
 
 export function defineTemplate(options: TemplateViewOptions) {
-    return defineModule(container => {
-        container.resolve(TemplateRegistry).register(options.view, options.component);
+    return defineModule({
+        install(container) {
+            container.resolve(TemplateRegistry).register(options.view, options.component);
+        },
     });
 }

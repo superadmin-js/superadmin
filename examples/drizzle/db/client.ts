@@ -1,7 +1,7 @@
 import { defineService } from '@superadmin/ioc';
 import { drizzle } from 'drizzle-orm/libsql';
 
-import * as schema from './schema.js';
+import schema from './schema.js';
 
 export const DatabaseClient = defineService({
     name: 'DatabaseClient',

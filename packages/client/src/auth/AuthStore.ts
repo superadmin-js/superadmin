@@ -1,4 +1,4 @@
-import { computed } from 'vue';
+import { computed, watch } from 'vue';
 
 import { defineService } from '@nzyme/ioc';
 import { reactive, storageRef } from '@nzyme/vue-utils';
@@ -53,6 +53,32 @@ export const AuthStore = defineService({
         });
 
         const authToken = computed(() => authData.value?.authToken);
+        let refreshTimeout: ReturnType<typeof setTimeout>;
+
+        watch(
+            authData,
+            auth => {
+                if (refreshTimeout) {
+                    clearTimeout(refreshTimeout);
+                }
+
+                if (!auth) {
+                    return;
+                }
+
+                const expireAt = auth.authExpiration.getTime();
+                const refreshAt = expireAt - 1000 * 60 * 5; // 5 minutes before expiry
+                const now = Date.now();
+
+                if (now >= refreshAt) {
+                    void checkAuth();
+                    return;
+                }
+
+                refreshTimeout = setTimeout(() => void checkAuth(), refreshAt - now);
+            },
+            { immediate: true },
+        );
 
         return reactive({
             auth,

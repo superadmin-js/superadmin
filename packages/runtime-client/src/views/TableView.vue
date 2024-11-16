@@ -8,7 +8,7 @@ import { useDataSource } from '@nzyme/vue-utils';
 import { ActionDispatcher, useViewProps } from '@superadmin/client';
 import type { TableView } from '@superadmin/core';
 import type { Schema } from '@superadmin/schema';
-import ActionButtons from '@superadmin/ui/ActionButtons.vue';
+import { ActionButtons } from '@superadmin/ui';
 import { prettifyName } from '@superadmin/utils';
 
 const props = defineProps({
@@ -83,11 +83,15 @@ function reload() {
                     :header="column.label"
                 ></Column>
 
-                <Column class="w-0">
+                <Column
+                    v-if="view.rowButtons"
+                    class="w-0"
+                >
                     <template #body="{ data }">
                         <div class="flex justify-end gap-3">
                             <ActionButtons
-                                :buttons="view.rowButtons?.(data)"
+                                :buttons="view.rowButtons(data)"
+                                size="small"
                                 @action="reload"
                             />
                         </div>
