@@ -5,4 +5,5 @@ export const customers = sqliteTable('Customer', {
     firstName: text('firstName').notNull(),
     lastName: text('lastName').notNull(),
     email: text('email').notNull(),
+    phone: text('phone'),
 });

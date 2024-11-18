@@ -43,7 +43,7 @@ export {
 } from './views/defineView.js';
 export { type GenericView, defineGenericView } from './views/defineGenericView.js';
 export { defineTableView } from './views/defineTableView.js';
-export type { TableView, TableViewConfig } from './views/defineTableView.js';
+export type { TableView, TableViewOptions } from './views/defineTableView.js';
 export { defineFormView } from './views/defineFormView.js';
 export type { FormView, FormViewConfig } from './views/defineFormView.js';
 

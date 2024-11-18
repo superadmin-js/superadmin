@@ -1,9 +1,9 @@
-import { type Resolvable, type ServiceContext, defineService } from '@nzyme/ioc';
+import { type Service, type ServiceContext, defineService } from '@nzyme/ioc';
+import type { Writable } from '@nzyme/types';
 import { createNamedFunction } from '@nzyme/utils';
 import * as s from '@superadmin/schema';
 
-import type { Module } from '../defineModule.js';
-import { MODULE_SYMBOL } from '../defineModule.js';
+import { MODULE_SYMBOL, type Module, isModule } from '../defineModule.js';
 import { ActionRegistry } from './ActionRegistry.js';
 import type { Authorizer } from '../auth/defineAuthorizer.js';
 import { loggedIn, noAuth } from '../auth/defineAuthorizer.js';
@@ -27,13 +27,12 @@ export type ActionDefinition<
     TInput extends s.Schema = TParams,
 > = Module &
     ActionFactory<TInput, TResult> & {
-        [MODULE_SYMBOL]: typeof ACTION_SYMBOL;
         name: string;
         input: TInput;
         params: TParams;
         result: TResult;
         auth: Authorizer;
-        handler?: Resolvable<ActionHandler<TInput, TResult>>;
+        handler?: Service<ActionHandler<TInput, TResult>>;
         sst?: FunctionDefinition<TInput, TParams>;
         visit?: (action: s.Action, visitor: ActionVisitor) => void;
     };
@@ -70,7 +69,7 @@ export function defineAction<
 
     const action = factory as ActionDefinition<TParams, TResult, TInput>;
 
-    action[MODULE_SYMBOL] = ACTION_SYMBOL;
+    (action as Writable<Module>)[MODULE_SYMBOL] = ACTION_SYMBOL;
     action.params = options.params ?? (s.void({ nullable: true }) as TParams);
     action.sst = options.sst;
     action.input = options.sst?.params ?? (action.params as unknown as TInput);
@@ -97,7 +96,7 @@ export function defineAction<
 }
 
 export function isActionDefinition(value: unknown): value is ActionDefinition {
-    return (value as ActionDefinition | undefined)?.[MODULE_SYMBOL] === ACTION_SYMBOL;
+    return isModule(value, ACTION_SYMBOL);
 }
 
 export function isAction<

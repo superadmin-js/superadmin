@@ -10,11 +10,11 @@ import vueJsx from '@vitejs/plugin-vue-jsx';
 import autoprefixer from 'autoprefixer';
 import chalk from 'chalk';
 import consola from 'consola';
+import sourcemaps from 'rollup-plugin-sourcemaps';
 import tailwindcss from 'tailwindcss';
 import { createServer } from 'vite';
 import { checker } from 'vite-plugin-checker';
 import tsconfigPaths from 'vite-tsconfig-paths';
-import sourcemaps from 'rollup-plugin-sourcemaps';
 
 import { unwrapCjsDefaultImport } from '@nzyme/esm';
 import { defineService } from '@nzyme/ioc';
@@ -22,14 +22,14 @@ import { resolveModulePath, resolveProjectPath } from '@nzyme/project-utils';
 import { devServerMiddleware } from '@nzyme/rollup-utils';
 import { ProjectConfig } from '@superadmin/core';
 
-import { RuntimeGenerator } from './RuntimeGenerator.js';
+import { RuntimeBuilder } from './RuntimeBuilder.js';
 import { getViteServerUrl } from './utils/getViteServerUrl.js';
 
 export const DevServer = defineService({
     name: 'DevServer',
-    async setup({ inject }) {
+    async setup({ inject, container }) {
         const config = inject(ProjectConfig);
-        const runtime = inject(RuntimeGenerator);
+        const runtime = inject(RuntimeBuilder);
 
         const vite = await createViteServer();
         const api = createApiServer();
@@ -47,6 +47,10 @@ export const DevServer = defineService({
 
             consola.success(`Started ${chalk.yellow('Superadmin')} on ${chalk.cyan(serverUrl)}`);
         });
+
+        for (const plugin of config.plugins) {
+            plugin.install(container);
+        }
 
         return {
             start,

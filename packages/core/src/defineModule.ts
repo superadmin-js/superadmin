@@ -41,9 +41,13 @@ export function defineModule(typeOrModule: symbol | ModuleBase, module?: ModuleB
 }
 
 export function isModule(value: unknown, type?: symbol): value is Module {
-    if (type != null) {
-        return (value as Module | undefined)?.[MODULE_SYMBOL] === type;
+    if (value == null) {
+        return false;
     }
 
-    return (value as Module | undefined)?.[MODULE_SYMBOL] != null;
+    if (type != null) {
+        return (value as Module)[MODULE_SYMBOL] === type;
+    }
+
+    return (value as Module)[MODULE_SYMBOL] != null;
 }

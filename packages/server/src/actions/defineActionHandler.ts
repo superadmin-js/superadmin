@@ -1,6 +1,5 @@
-import { type Resolvable, type ServiceContext, defineService } from '@nzyme/ioc';
-import type { ActionDefinition, Module } from '@superadmin/core';
-import { MODULE_SYMBOL } from '@superadmin/core/internal';
+import { type Service, type ServiceContext, defineService } from '@nzyme/ioc';
+import { type ActionDefinition, type Module, defineModule, isModule } from '@superadmin/core';
 import type * as s from '@superadmin/schema';
 
 import { ActionHandlerRegistry } from './ActionHandlerRegistry.js';
@@ -26,18 +25,15 @@ export interface ActionHandler<
     TInput extends s.Schema = TParams,
 > extends Module {
     action: ActionDefinition<TParams, TResult, TInput>;
-    service: Resolvable<ActionHandlerFunction<TParams, TResult>>;
+    service: Service<ActionHandlerFunction<TParams, TResult>>;
 }
 
 export function defineActionHandler<
     TParams extends s.Schema = s.SchemaAny,
     TResult extends s.Schema = s.Schema,
     TInput extends s.Schema = TParams,
->(
-    options: ActionHandlerOptions<TParams, TResult, TInput>,
-): ActionHandler<TParams, TResult, TInput> {
-    return {
-        [MODULE_SYMBOL]: ACTION_HANDLER_SYMBOL,
+>(options: ActionHandlerOptions<TParams, TResult, TInput>) {
+    return defineModule<ActionHandler<TParams, TResult, TInput>>(ACTION_HANDLER_SYMBOL, {
         action: options.action,
         service: defineService({
             name: options.action.name,
@@ -46,9 +42,9 @@ export function defineActionHandler<
         install(container) {
             container.resolve(ActionHandlerRegistry).register(this);
         },
-    };
+    });
 }
 
 export function isActionHandler(value: unknown): value is ActionHandler {
-    return (value as ActionHandler | undefined)?.[MODULE_SYMBOL] === ACTION_HANDLER_SYMBOL;
+    return isModule(value, ACTION_HANDLER_SYMBOL);
 }

@@ -8,6 +8,5 @@ export { openModalInternal } from './actions/openModal.js';
 export { openConfirmDialog } from './actions/openConfirmDialog.js';
 export { runInSequence } from './actions/runInSequence.js';
 export { runInParalell } from './actions/runInParalell.js';
-export { MODULE_SYMBOL } from './defineModule.js';
 export { authenticateAction, authenticateTransform } from './auth/authenticate.js';
 export { refreshAuthTransform } from './auth/refreshAuthTransform.js';

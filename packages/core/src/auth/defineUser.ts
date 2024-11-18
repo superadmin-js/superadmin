@@ -2,7 +2,7 @@ import * as s from '@superadmin/schema';
 
 import type { AuthContext } from './AuthContext.js';
 import type { Authorizer } from './defineAuthorizer.js';
-import { MODULE_SYMBOL, type Module } from '../defineModule.js';
+import { type Module, defineModule } from '../defineModule.js';
 import { AuthRegistry } from './AuthRegistry.js';
 import { refreshAuthTransform } from './refreshAuthTransform.js';
 import { type ActionDefinition, defineAction } from '../actions/defineAction.js';
@@ -39,8 +39,7 @@ export function defineUser<TSchema extends UserSchema>(config: UserConfig<TSchem
     const name = config.name;
     const schema = config.schema;
 
-    return Object.freeze<UserDefinition<TSchema>>({
-        [MODULE_SYMBOL]: USER_MODULE_SYMBOL,
+    return defineModule<UserDefinition<TSchema>>(USER_MODULE_SYMBOL, {
         name,
         schema,
         authExpiration: config.authExpiration ?? 15 * 60 * 1000,

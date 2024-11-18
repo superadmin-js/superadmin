@@ -10,8 +10,8 @@ import { ProjectConfig } from '@superadmin/core';
 
 import { createModulesRuntime } from './utils/createRuntime.js';
 
-export const RuntimeGenerator = defineService({
-    name: 'RuntimeGenerator',
+export const RuntimeBuilder = defineService({
+    name: 'RuntimeBuilder',
     setup({ inject }) {
         const projectConfig = inject(ProjectConfig);
         const runtimeConfig: RuntimeConfig = {
@@ -19,15 +19,15 @@ export const RuntimeGenerator = defineService({
         };
 
         const debug = createDebug('superadmin:runtime');
+        const serverRegex = /\.(server|common)\.ts$/;
+        const clientRegex = /\.(client|common)\.tsx?$/;
 
         const client = createModulesRuntime({
-            moduleRegex: /\.(client|common)\.tsx?$/,
             outputDir: path.join(projectConfig.runtimePath, 'client'),
             config: runtimeConfig,
         });
 
         const server = createModulesRuntime({
-            moduleRegex: /\.(server|common)\.ts$/,
             outputDir: path.join(projectConfig.runtimePath, 'server'),
             config: runtimeConfig,
         });
@@ -55,23 +55,36 @@ export const RuntimeGenerator = defineService({
             await Promise.all([client.start(), server.start()]);
         }
 
-        function onAddFile(path: string) {
+        function onAddFile(file: string) {
             let added = false;
+            const absolutePath = toAbsolute(file);
 
-            added = client.addFile(path) || added;
-            added = server.addFile(path) || added;
+            if (clientRegex.test(absolutePath)) {
+                client.addFile(absolutePath);
+                added = true;
+            }
+
+            if (serverRegex.test(absolutePath)) {
+                server.addFile(absolutePath);
+                added = true;
+            }
 
             if (added) {
-                debug('Added module file: %s', path);
+                debug('Added module file: %s', file);
             }
         }
 
-        function onDeleteFile(path: string) {
-            const removed = client.removeFile(path) || server.removeFile(path);
+        function onDeleteFile(file: string) {
+            const absolutePath = toAbsolute(file);
+            const removed = client.removeFile(absolutePath) || server.removeFile(absolutePath);
 
             if (removed) {
-                debug('Removed module file: %s', path);
+                debug('Removed module file: %s', file);
             }
+        }
+
+        function toAbsolute(file: string) {
+            return path.isAbsolute(file) ? file : path.join(projectConfig.cwd, file);
         }
     },
 });

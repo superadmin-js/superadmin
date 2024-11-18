@@ -3,35 +3,22 @@ import { defineActionHandler } from '@superadmin/server';
 import { eq } from 'drizzle-orm';
 
 import {
-    customersTable,
+    customers,
     deleteCustomer,
     editCustomerForm,
     newCustomerForm,
     syncCustomer,
 } from './customers.common.js';
-import { DatabaseClient } from './db/client.js';
-import db from './db/schema.js';
-
-export const customersFetch = defineActionHandler({
-    action: customersTable.actions.fetch,
-    setup({ inject }) {
-        const dbClient = inject(DatabaseClient);
-
-        return async () => {
-            const customers = await dbClient.query.customers.findMany();
-
-            return customers;
-        };
-    },
-});
+import db from '../db/schema.js';
+import { Drizzle } from '../drizzle.server.js';
 
 export const newCustomerSubmit = defineActionHandler({
     action: newCustomerForm.actions.submit,
     setup({ inject }) {
-        const dbClient = inject(DatabaseClient);
+        const drizzle = inject(Drizzle);
 
         return async params => {
-            const result = await dbClient
+            const result = await drizzle
                 .insert(db.customers)
                 .values({
                     id: undefined,
@@ -53,7 +40,7 @@ export const newCustomerSubmit = defineActionHandler({
                     message: `Created customer ${params.firstName} ${params.lastName}`,
                     time: 3000,
                 }),
-                goToView(customersTable),
+                goToView(customers.listView),
             ]);
         };
     },
@@ -62,10 +49,10 @@ export const newCustomerSubmit = defineActionHandler({
 export const editCustomerFetch = defineActionHandler({
     action: editCustomerForm.actions.fetch,
     setup({ inject }) {
-        const dbClient = inject(DatabaseClient);
+        const drizzle = inject(Drizzle);
 
         return async params => {
-            const customer = await dbClient.query.customers.findFirst({
+            const customer = await drizzle.query.customers.findFirst({
                 where: eq(db.customers.id, params.id),
             });
 
@@ -86,10 +73,10 @@ export const editCustomerFetch = defineActionHandler({
 export const editCustomerSubmit = defineActionHandler({
     action: editCustomerForm.actions.submit,
     setup({ inject }) {
-        const dbClient = inject(DatabaseClient);
+        const drizzle = inject(Drizzle);
 
         return async params => {
-            const result = await dbClient
+            const result = await drizzle
                 .update(db.customers)
                 .set({
                     firstName: params.firstName,
@@ -110,7 +97,7 @@ export const editCustomerSubmit = defineActionHandler({
                     message: `Updated customer ${params.firstName} ${params.lastName}`,
                     time: 3000,
                 }),
-                goToView(customersTable),
+                goToView(customers.listView),
             ]);
         };
     },
@@ -142,10 +129,10 @@ export const syncCustomerHandler = defineActionHandler({
 export const deleteCustomerHandler = defineActionHandler({
     action: deleteCustomer,
     setup({ inject }) {
-        const dbClient = inject(DatabaseClient);
+        const drizzle = inject(Drizzle);
 
         return async params => {
-            const result = await dbClient
+            const result = await drizzle
                 .delete(db.customers)
                 .where(eq(db.customers.id, params.id))
                 .returning();

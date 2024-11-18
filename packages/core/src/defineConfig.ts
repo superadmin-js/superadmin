@@ -2,11 +2,14 @@ import path from 'path';
 
 import { defineInjectable } from '@nzyme/ioc';
 
+import type { Module } from './defineModule.js';
+
 export interface ProjectConfigInit {
     port?: number;
     theme?: string;
     basePath?: string;
     logo?: string;
+    plugins?: Module[];
 }
 
 export interface ProjectConfig {
@@ -16,6 +19,7 @@ export interface ProjectConfig {
     runtimePath: string;
     basePath: string;
     logo: string;
+    plugins: Module[];
 }
 
 export const ProjectConfig = defineInjectable<ProjectConfig>({
@@ -34,5 +38,6 @@ export function defineConfig(config: ProjectConfigInit): ProjectConfig {
         cwd,
         runtimePath,
         basePath,
+        plugins: config.plugins || [],
     };
 }

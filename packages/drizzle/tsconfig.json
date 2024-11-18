@@ -21,6 +21,9 @@
             "path": "../core/tsconfig.json"
         },
         {
+            "path": "../devkit/tsconfig.json"
+        },
+        {
             "path": "../drizzle-core/tsconfig.json"
         },
         {

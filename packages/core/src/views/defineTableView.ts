@@ -8,7 +8,7 @@ import type { ActionDefinition } from '../actions/defineAction.js';
 import { defineAction } from '../actions/defineAction.js';
 import type { Authorizer } from '../auth/defineAuthorizer.js';
 
-export interface TableViewConfig<R extends s.ObjectSchemaAny, P extends s.SchemaAny> {
+export interface TableViewOptions<R extends s.NonNullable<s.ObjectSchema>, P extends s.SchemaAny> {
     name: string;
     schema: R;
     params?: P;
@@ -19,7 +19,7 @@ export interface TableViewConfig<R extends s.ObjectSchemaAny, P extends s.Schema
 }
 
 export interface TableView<
-    R extends s.ObjectSchemaAny = s.ObjectSchemaAny,
+    R extends s.NonNullable<s.ObjectSchema> = s.NonNullable<s.ObjectSchema>,
     P extends s.SchemaAny = s.Schema<unknown>,
 > extends View<P> {
     name: string;
@@ -36,9 +36,9 @@ export const tableGenericView = defineGenericView({
 });
 
 export function defineTableView<
-    TRow extends s.ObjectSchemaAny,
+    TRow extends s.NonNullable<s.ObjectSchema>,
     TParams extends s.SchemaAny = s.Schema<void>,
->(config: TableViewConfig<TRow, TParams>): TableView<TRow, TParams> {
+>(config: TableViewOptions<TRow, TParams>): TableView<TRow, TParams> {
     const params = config.params ?? (s.void({ nullable: true }) as TParams);
     const schema = config.schema;
 

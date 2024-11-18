@@ -9,15 +9,14 @@ import { createScript } from '@nzyme/project-utils';
 import type { RuntimeConfig } from '@superadmin/core';
 
 export interface RuntimeOptions {
-    moduleRegex: RegExp;
     outputDir: string;
     config: RuntimeConfig;
 }
 
 export function createModulesRuntime(options: RuntimeOptions) {
-    const { moduleRegex, outputDir } = options;
+    const { outputDir } = options;
 
-    const moduleFiles = new Set<string>();
+    const moduleFiles: { file: string; order: number }[] = [];
 
     const configPath = path.join(outputDir, 'config.ts');
     const modulesPath = path.join(outputDir, 'modules.ts');
@@ -33,26 +32,34 @@ export function createModulesRuntime(options: RuntimeOptions) {
         start,
     };
 
-    function addFile(path: string) {
-        if (!moduleRegex.test(path)) {
-            return false;
+    function addFile(path: string, options?: { order?: number }) {
+        const index = moduleFiles.findIndex(file => file.file === path);
+        if (index !== -1) {
+            return;
         }
 
-        moduleFiles.add(path);
+        moduleFiles.push({ file: path, order: options?.order ?? 0 });
+        moduleFiles.sort((a, b) => {
+            if (a.order === b.order) {
+                return a.file.localeCompare(b.file);
+            }
+
+            return a.order - b.order;
+        });
 
         if (started) {
             void generate();
         }
-
-        return true;
     }
 
     function removeFile(path: string) {
-        if (!moduleRegex.test(path)) {
+        const index = moduleFiles.findIndex(file => file.file === path);
+
+        if (index === -1) {
             return false;
         }
 
-        moduleFiles.delete(path);
+        moduleFiles.splice(index, 1);
 
         if (started) {
             void generate();
@@ -85,12 +92,11 @@ export function createModulesRuntime(options: RuntimeOptions) {
 
         const script = createScript();
 
-        const modulesSorted = Array.from(moduleFiles).sort();
         const modules: string[] = [];
 
-        for (const file of modulesSorted) {
+        for (const mod of moduleFiles) {
             const module = script.addImport({
-                from: path.relative(outputDir, file),
+                from: path.isAbsolute(mod.file) ? path.relative(outputDir, mod.file) : mod.file,
                 import: '*',
                 name: 'module',
             });
