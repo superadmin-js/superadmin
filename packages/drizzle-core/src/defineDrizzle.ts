@@ -36,6 +36,7 @@ export function defineDrizzle<TDrizzle extends DrizzleClient>(
 interface QueryParams {
     table: Table;
     columns: Record<string, SQLWrapper>;
+    sort?: SQL;
     where?: SQL;
     limit?: number;
     offset?: number;
@@ -63,6 +64,10 @@ export const DrizzleWrapper = defineService<DrizzleWrapper>({
 
                 if (params.offset) {
                     query = query.offset(params.offset) as typeof query;
+                }
+
+                if (params.sort) {
+                    query = query.orderBy(params.sort) as typeof query;
                 }
 
                 return query.execute();

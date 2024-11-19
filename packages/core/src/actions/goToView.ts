@@ -13,7 +13,7 @@ export const goToViewInternal = defineAction({
     }),
 });
 
-export function goToView<V extends View<s.Schema<void>>>(view: V): s.Action;
+export function goToView<V extends View<{ params: s.Schema<void> }>>(view: V): s.Action;
 export function goToView<V extends View>(view: V, params: ViewParams<V>): s.Action;
 export function goToView(view: View, params?: unknown) {
     return goToViewInternal({

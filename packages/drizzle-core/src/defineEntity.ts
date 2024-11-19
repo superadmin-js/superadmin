@@ -1,7 +1,7 @@
 import type { Column, GetColumnData, SQLWrapper, Table } from 'drizzle-orm';
 
 import type { IfLiteral } from '@nzyme/types';
-import type { Module, TableView, TableViewOptions } from '@superadmin/core';
+import type { Module, TableSortOptions, TableView, TableViewOptions } from '@superadmin/core';
 import { defineModule, defineTableView } from '@superadmin/core';
 import * as s from '@superadmin/schema';
 
@@ -46,45 +46,53 @@ export type EntitySchema<
 export type EntityViewOptions<
     TTable extends Table = Table,
     TColumns extends EntityColumnsOptions<TTable> = EntityColumnsOptions<TTable>,
+    TSort extends TableSortOptions<EntitySchema<TTable, TColumns>> = false,
 > = Pick<
-    TableViewOptions<EntitySchema<TTable, TColumns>, s.Schema<void>>,
-    'path' | 'auth' | 'headerButtons' | 'rowButtons'
+    TableViewOptions<EntitySchema<TTable, TColumns>, s.Schema<void>, TSort>,
+    'path' | 'auth' | 'headerButtons' | 'rowButtons' | 'sortColumns'
 > & {
     columns: TColumns;
 };
 
 export interface EntityOptions<
     TSchema extends DrizzleSchema = DrizzleSchema,
-    TTable extends string & keyof TablesOf<TSchema> = string & keyof TablesOf<TSchema>,
-    TColumns extends EntityColumnsOptions<TablesOf<TSchema>[TTable]> = EntityColumnsOptions<
-        TablesOf<TSchema>[TTable]
+    TTableName extends string & keyof TablesOf<TSchema> = string & keyof TablesOf<TSchema>,
+    TTable extends TablesOf<TSchema>[TTableName] = TablesOf<TSchema>[TTableName],
+    TColumns extends EntityColumnsOptions<TTable> = EntityColumnsOptions<TTable>,
+    TSort extends TableSortOptions<EntitySchema<TTable, TColumns>> = TableSortOptions<
+        EntitySchema<TTable, TColumns>
     >,
 > {
     name?: string;
     schema: TSchema;
-    table: TTable;
-    listView: EntityViewOptions<TablesOf<TSchema>[TTable], TColumns>;
+    table: TTableName;
+    listView: EntityViewOptions<TTable, TColumns, TSort>;
 }
 
 export interface Entity<
     TSchema extends DrizzleSchema = DrizzleSchema,
-    TTable extends string & keyof TablesOf<TSchema> = string & keyof TablesOf<TSchema>,
-    TColumns extends EntityColumnsOptions<TablesOf<TSchema>[TTable]> = EntityColumnsOptions<
-        TablesOf<TSchema>[TTable]
+    TTable extends Table = Table,
+    TColumns extends EntityColumnsOptions<TTable> = EntityColumnsOptions<TTable>,
+    TSort extends TableSortOptions<EntitySchema<TTable, TColumns>> = TableSortOptions<
+        EntitySchema<TTable, TColumns>
     >,
 > extends Module {
     name: string;
     schema: TSchema;
-    table: TablesOf<TSchema>[TTable];
-    listView: TableView<EntitySchema<TablesOf<TSchema>[TTable], TColumns>, s.Schema<void>>;
-    listViewOptions: EntityViewOptions<TablesOf<TSchema>[TTable], TColumns>;
+    table: TTable;
+    listView: TableView<EntitySchema<TTable, TColumns>, s.Schema<void>, TSort>;
+    listViewOptions: EntityViewOptions<TTable, TColumns, TSort>;
 }
 
 export function defineEntity<
     TSchema extends DrizzleSchema,
-    TTable extends string & keyof TablesOf<TSchema>,
-    TColumns extends EntityColumnsOptions<TablesOf<TSchema>[TTable]>,
->(options: EntityOptions<TSchema, TTable, TColumns>): Entity<TSchema, TTable, TColumns>;
+    TTableName extends string & keyof TablesOf<TSchema>,
+    TTable extends TablesOf<TSchema>[TTableName] = TablesOf<TSchema>[TTableName],
+    TColumns extends EntityColumnsOptions<TTable> = EntityColumnsOptions<TTable>,
+    TSort extends TableSortOptions<EntitySchema<TTable, TColumns>> = true,
+>(
+    options: EntityOptions<TSchema, TTableName, TTable, TColumns, TSort>,
+): Entity<TSchema, TTable, TColumns, TSort>;
 export function defineEntity(options: EntityOptions): Entity {
     const listProps = {} as EntitySchemaProps;
     const table = options.schema[options.table] as Table;
@@ -108,6 +116,7 @@ export function defineEntity(options: EntityOptions): Entity {
         name: `${name}.list`,
         path: options.listView.path,
         auth: options.listView.auth,
+        sortColumns: options.listView.sortColumns ?? true,
         headerButtons: options.listView.headerButtons,
         rowButtons: options.listView.rowButtons,
         schema: s.object({

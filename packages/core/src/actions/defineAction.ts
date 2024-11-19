@@ -44,9 +44,9 @@ export interface ActionVisitor {
 export type ActionOf<TDef extends ActionDefinition> = s.Action<TDef['params'], TDef['result']>;
 
 interface ActionOptions<
-    TParams extends s.Schema,
-    TResult extends s.Schema,
-    TInput extends s.Schema,
+    TParams extends s.Schema = s.Schema<void>,
+    TResult extends s.Schema = s.Schema<void>,
+    TInput extends s.Schema = TParams,
 > {
     name: string;
     params?: TParams;
@@ -60,20 +60,25 @@ interface ActionOptions<
 export function defineAction<
     TParams extends s.Schema = s.Schema<void>,
     TResult extends s.Schema = s.Schema<void>,
+>(options: ActionOptions<TParams, TResult, TParams>): ActionDefinition<TParams, TResult, TParams>;
+export function defineAction<
+    TParams extends s.Schema = s.Schema<void>,
+    TResult extends s.Schema = s.Schema<void>,
     TInput extends s.Schema = TParams,
->(options: ActionOptions<TParams, TResult, TInput>): ActionDefinition<TParams, TResult, TInput> {
+>(options: ActionOptions<TParams, TResult, TInput>): ActionDefinition<TParams, TResult, TInput>;
+export function defineAction(options: ActionOptions): ActionDefinition {
     const name = options.name;
     const factory = createNamedFunction<ActionFactory>(name, input => {
         return s.coerce(ACTION_SCHEMA, { action: name, params: input as unknown });
     });
 
-    const action = factory as ActionDefinition<TParams, TResult, TInput>;
+    const action = factory as ActionDefinition;
 
     (action as Writable<Module>)[MODULE_SYMBOL] = ACTION_SYMBOL;
-    action.params = options.params ?? (s.void({ nullable: true }) as TParams);
+    action.params = options.params ?? s.void({ nullable: true });
     action.sst = options.sst;
-    action.input = options.sst?.params ?? (action.params as unknown as TInput);
-    action.result = options.result ?? (s.void({ nullable: true }) as TResult);
+    action.input = options.sst?.params ?? action.params;
+    action.result = options.result ?? s.void({ nullable: true });
 
     if (options.auth === false) {
         action.auth = noAuth;

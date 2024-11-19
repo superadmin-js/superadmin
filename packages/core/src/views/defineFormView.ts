@@ -1,37 +1,30 @@
 import * as s from '@superadmin/schema';
 
 import { defineGenericView } from './defineGenericView.js';
-import type { View } from './defineView.js';
 import { defineView } from './defineView.js';
-import type { ActionDefinition } from '../actions/defineAction.js';
 import { defineAction } from '../actions/defineAction.js';
+import type { Authorizer } from '../auth/defineAuthorizer.js';
 
-export interface FormViewConfig<S extends s.ObjectSchemaAny, TParams extends s.SchemaAny> {
+export interface FormViewConfig<S extends s.ObjectSchema, TParams extends s.Schema> {
     name: string;
     params?: TParams;
     path?: string;
     schema: S;
+    auth?: Authorizer | false;
 }
 
-export interface FormView<
-    S extends s.ObjectSchemaAny = s.ObjectSchemaAny,
-    P extends s.SchemaAny = s.Schema<unknown>,
-> extends View<P> {
-    name: string;
-    actions: {
-        fetch: ActionDefinition<P, S>;
-        submit: ActionDefinition<S, s.ActionSchema<{ nullable: true; optional: true }>>;
-    };
-    schema: S;
-}
+export type FormView<
+    S extends s.ObjectSchema = s.ObjectSchema,
+    P extends s.Schema = s.Schema<unknown>,
+> = ReturnType<typeof defineFormView<S, P>>;
 
 export const formGenericView = defineGenericView({
     name: 'superadmin.form',
 });
 
-export function defineFormView<S extends s.ObjectSchemaAny, P extends s.Schema = s.Schema<void>>(
+export function defineFormView<S extends s.ObjectSchema, P extends s.Schema = s.Schema<void>>(
     config: FormViewConfig<S, P>,
-): FormView<S, P> {
+) {
     const params = config.params ?? (s.void({ nullable: true }) as P);
     const schema = config.schema;
 
@@ -40,6 +33,7 @@ export function defineFormView<S extends s.ObjectSchemaAny, P extends s.Schema =
         generic: formGenericView,
         params,
         path: config.path,
+        auth: config.auth,
         schema,
         actions: {
             fetch: defineAction({

@@ -1,4 +1,4 @@
-import type { SQLWrapper } from 'drizzle-orm';
+import { type SQL, type SQLWrapper, desc } from 'drizzle-orm';
 
 import type { Container } from '@nzyme/ioc';
 import { defineModule } from '@superadmin/core';
@@ -28,10 +28,21 @@ function setupEntityTableView(container: Container, entity: Entity) {
         setup({ inject }) {
             const drizzle = inject(DrizzleWrapper);
 
-            return () => {
+            return params => {
+                console.log(params);
+                let sort: SQL | undefined;
+                if (params.sort) {
+                    sort = columns[params.sort.by] as SQL;
+
+                    if (params.sort.direction === 'desc') {
+                        sort = desc(sort);
+                    }
+                }
+
                 return drizzle.query({
                     table: entity.table,
                     columns,
+                    sort,
                 });
             };
         },

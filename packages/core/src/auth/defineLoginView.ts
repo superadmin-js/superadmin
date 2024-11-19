@@ -1,9 +1,9 @@
 import * as s from '@superadmin/schema';
 
 import { noAuth } from './defineAuthorizer.js';
-import { type ActionDefinition, defineAction } from '../actions/defineAction.js';
+import { defineAction } from '../actions/defineAction.js';
 import { defineGenericView } from '../views/defineGenericView.js';
-import { type View, defineView } from '../views/defineView.js';
+import { defineView } from '../views/defineView.js';
 
 export interface LoginViewConfig<TForm extends s.Schema> {
     name: string;
@@ -12,12 +12,9 @@ export interface LoginViewConfig<TForm extends s.Schema> {
     form?: TForm;
 }
 
-export interface LoginView<TForm extends s.Schema = s.Schema> extends View {
-    form?: TForm;
-    actions: {
-        submit: ActionDefinition<TForm, s.ActionSchema>;
-    };
-}
+export type LoginView<TForm extends s.Schema = s.Schema> = ReturnType<
+    typeof defineLoginView<TForm>
+>;
 
 export const loginGenericView = defineGenericView({
     name: 'superadmin.login',
@@ -25,7 +22,7 @@ export const loginGenericView = defineGenericView({
 
 export function defineLoginView<TForm extends s.Schema = s.Schema<void>>(
     config: LoginViewConfig<TForm>,
-): LoginView<TForm> {
+) {
     return defineView({
         name: config.name,
         title: config.title,

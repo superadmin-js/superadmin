@@ -13,7 +13,7 @@ export const openModalInternal = defineAction({
     }),
 });
 
-export function openModal<V extends View<s.Schema<void>>>(view: V): s.Action;
+export function openModal<V extends View<{ params: s.Schema<void> }>>(view: V): s.Action;
 export function openModal<V extends View>(view: V, params: ViewParams<V>): s.Action;
 export function openModal(view: View, params?: unknown) {
     return openModalInternal({

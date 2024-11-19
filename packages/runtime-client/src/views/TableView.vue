@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import Column from 'primevue/column';
 import DataTable from 'primevue/datatable';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 
 import { useService } from '@nzyme/vue';
 import { useDataSource } from '@nzyme/vue-utils';
@@ -21,6 +21,7 @@ type ColumnDef = {
     prop: string;
     label: string;
     schema: Schema;
+    sortable: boolean;
 };
 
 const headerButtons = computed(() => props.view.headerButtons?.(props.view.params));
@@ -36,21 +37,40 @@ const columns = computed(() => {
             prop: key,
             label: schema.label || prettifyName(key),
             schema,
+            sortable: props.view.sortColumns.includes(key),
         });
     }
 
     return columns;
 });
 
-const data = useDataSource({
-    load: fetchData,
-    behavior: 'eager',
+const sortBy = ref<string>();
+const sortDirection = ref<number>();
+const sort = computed(() => {
+    if (!sortBy.value) {
+        return null;
+    }
+
+    const direction = sortDirection.value === -1 ? ('desc' as const) : ('asc' as const);
+
+    return {
+        by: sortBy.value,
+        direction: direction,
+    };
 });
 
-function fetchData() {
-    const action = props.view.actions.fetch(undefined);
-    return actionDispatcher(action);
-}
+const data = useDataSource({
+    params: computed(() => ({
+        sort: sort.value,
+    })),
+    load: params => {
+        const action = props.view.actions.fetch({
+            sort: params.sort,
+        });
+        return actionDispatcher(action);
+    },
+    behavior: 'eager',
+});
 
 function reload() {
     return data.reload();
@@ -73,14 +93,19 @@ function reload() {
 
         <template #body>
             <DataTable
+                v-model:sort-field="sortBy"
+                v-model:sort-order="sortDirection"
                 :value="data"
                 show-gridlines
+                lazy
+                removable-sort
             >
                 <Column
                     v-for="column in columns"
                     :key="column.prop"
                     :field="column.prop"
                     :header="column.label"
+                    :sortable="column.sortable"
                 ></Column>
 
                 <Column
