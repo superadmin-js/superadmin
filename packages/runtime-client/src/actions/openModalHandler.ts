@@ -17,7 +17,7 @@ export const openModalHandler = defineActionHandler({
                 throw new Error(`View ${params.view} not found`);
             }
 
-            const { default: ModalLayout } = await import('../views/layouts/ModalViewLayout.vue');
+            const { default: ModalLayout } = await import('../views/ModalViewLayout.vue');
 
             return await modalService.open({
                 modal: ViewRenderer,

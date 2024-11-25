@@ -5,6 +5,9 @@ export * from './actions/ActionHandlerRegistry.js';
 
 export * from './auth/AuthStore.js';
 
+export * from './components/ComponentRegistry.js';
+export * from './components/useComponent.js';
+
 export * from './events/ErrorEvent.js';
 export * from './events/RefetchEvent.js';
 
@@ -20,5 +23,4 @@ export * from './services/ToastService.js';
 
 export * from './views/ViewContext.js';
 export * from './views/ViewLayout.js';
-export * from './TemplateRegistry.js';
 export * from './defineTemplate.js';

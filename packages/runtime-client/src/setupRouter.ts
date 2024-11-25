@@ -4,11 +4,11 @@ import { createRouter, createWebHistory } from 'vue-router';
 import type { Container } from '@nzyme/ioc';
 import { AuthStore } from '@superadmin/client';
 import type { View } from '@superadmin/core';
-import { ViewRegistry, loginGenericView } from '@superadmin/core';
+import { ViewRegistry } from '@superadmin/core';
 
 import NavigationLayout from './components/NavigationLayout.vue';
-import ViewRenderer from './views/ViewRenderer.vue';
-import PageViewLayout from './views/layouts/PageViewLayout.vue';
+import { loginComponent } from './modules.js';
+import PageViewRenderer from './views/PageViewRenderer.vue';
 
 export function setupRouter(container: Container) {
     const authStore = container.resolve(AuthStore);
@@ -28,18 +28,14 @@ export function setupRouter(container: Container) {
     for (const view of viewRegistry.getAll()) {
         const routesToAddTo = view.navigation ? routesWithNavigation : routes;
 
-        if (view.generic === loginGenericView) {
+        if (view.component === loginComponent) {
             loginView = view;
         }
 
         routesToAddTo.push({
             path: view.path,
-            component: ViewRenderer,
-            props: {
-                view: view,
-                params: null,
-                layout: PageViewLayout,
-            },
+            component: PageViewRenderer,
+            props: { view },
             beforeEnter: async (to, from, next) => {
                 await authStore.checkAuth();
 

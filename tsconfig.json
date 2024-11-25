@@ -63,6 +63,9 @@
             "path": "./nzyme/packages/vitest/tsconfig.json"
         },
         {
+            "path": "./nzyme/packages/vue-ioc/tsconfig.json"
+        },
+        {
             "path": "./nzyme/packages/vue-utils/tsconfig.json"
         },
         {

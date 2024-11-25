@@ -1,8 +1,14 @@
 import type { Column, GetColumnData, SQLWrapper, Table } from 'drizzle-orm';
 
 import type { IfLiteral } from '@nzyme/types';
-import type { Module, TableSortOptions, TableView, TableViewOptions } from '@superadmin/core';
-import { defineModule, defineTableView } from '@superadmin/core';
+import type {
+    BasicPagination,
+    Module,
+    TableSortOptions,
+    TableView,
+    TableViewOptions,
+} from '@superadmin/core';
+import { defineBasicPagination, defineModule, defineTableView } from '@superadmin/core';
 import * as s from '@superadmin/schema';
 
 import { EntityRegistry } from './EntityRegistry.js';
@@ -52,6 +58,7 @@ export type EntityViewOptions<
     'path' | 'auth' | 'headerButtons' | 'rowButtons' | 'sortColumns'
 > & {
     columns: TColumns;
+    pageSizes?: number[];
 };
 
 export interface EntityOptions<
@@ -66,7 +73,7 @@ export interface EntityOptions<
     name?: string;
     schema: TSchema;
     table: TTableName;
-    listView: EntityViewOptions<TTable, TColumns, TSort>;
+    tableView: EntityViewOptions<TTable, TColumns, TSort>;
 }
 
 export interface Entity<
@@ -80,8 +87,7 @@ export interface Entity<
     name: string;
     schema: TSchema;
     table: TTable;
-    listView: TableView<EntitySchema<TTable, TColumns>, s.Schema<void>, TSort>;
-    listViewOptions: EntityViewOptions<TTable, TColumns, TSort>;
+    tableView: TableView<EntitySchema<TTable, TColumns>, s.Schema<void>, TSort, BasicPagination>;
 }
 
 export function defineEntity<
@@ -94,46 +100,49 @@ export function defineEntity<
     options: EntityOptions<TSchema, TTableName, TTable, TColumns, TSort>,
 ): Entity<TSchema, TTable, TColumns, TSort>;
 export function defineEntity(options: EntityOptions): Entity {
-    const listProps = {} as EntitySchemaProps;
+    const tableProps = {} as EntitySchemaProps;
     const table = options.schema[options.table] as Table;
     const name = options.name ?? options.table;
 
-    for (const [key, value] of Object.entries(options.listView.columns)) {
+    const tableViewOptions = options.tableView;
+    for (const [key, value] of Object.entries(tableViewOptions.columns)) {
         if (value === true) {
             const column = table[key as keyof typeof table] as Column;
             if (!column) {
                 throw new Error(`Column ${key} not found in table ${options.table}`);
             }
 
-            listProps[key] = getColumnSchema(column, {
+            tableProps[key] = getColumnSchema(column, {
                 nullable: !column.notNull,
                 sql: column,
             }) as EntityColumnSchema;
         }
     }
 
-    const listView = defineTableView({
-        name: `${name}.list`,
-        path: options.listView.path,
-        auth: options.listView.auth,
-        sortColumns: options.listView.sortColumns ?? true,
-        headerButtons: options.listView.headerButtons,
-        rowButtons: options.listView.rowButtons,
+    const tableView = defineTableView({
+        name: `${name}.table`,
+        path: tableViewOptions.path,
+        auth: tableViewOptions.auth,
+        sortColumns: tableViewOptions.sortColumns ?? true,
+        headerButtons: tableViewOptions.headerButtons,
+        rowButtons: tableViewOptions.rowButtons,
         schema: s.object({
-            props: listProps,
+            props: tableProps,
+        }),
+        pagination: defineBasicPagination({
+            pageSizes: tableViewOptions.pageSizes,
         }),
     });
 
     return defineModule<Entity>(ENTITY_SYMBOL, {
         install(container) {
             container.resolve(EntityRegistry).register(this as unknown as Entity);
-            listView.install(container);
+            tableView.install(container);
         },
         name,
         schema: options.schema,
         table: options.schema[options.table] as Table,
-        listView,
-        listViewOptions: options.listView,
+        tableView,
     });
 }
 

@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import { computed } from 'vue';
 
-import { useService } from '@nzyme/vue';
+import { useService } from '@nzyme/vue-ioc';
 import { provideContext } from '@nzyme/vue-utils';
-import { TemplateRegistry, ViewContext, useViewProps } from '@superadmin/client';
+import { ComponentRegistry, ViewContext, useViewProps } from '@superadmin/client';
 
 const props = defineProps({
     ...useViewProps(),
@@ -14,9 +14,9 @@ provideContext(
     computed(() => props.view),
 );
 
-const templateRegistry = useService(TemplateRegistry);
+const componentRegistry = useService(ComponentRegistry);
 const template = computed(() => {
-    return templateRegistry.resolve(props.view);
+    return componentRegistry.resolve(props.view.component);
 });
 </script>
 

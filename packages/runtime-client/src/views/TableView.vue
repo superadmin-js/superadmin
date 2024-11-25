@@ -1,13 +1,13 @@
 <script lang="ts" setup>
 import Column from 'primevue/column';
 import DataTable from 'primevue/datatable';
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 
-import { useService } from '@nzyme/vue';
+import { useService } from '@nzyme/vue-ioc';
 import { useDataSource } from '@nzyme/vue-utils';
-import { ActionDispatcher, useViewProps } from '@superadmin/client';
+import { ActionDispatcher, useComponent, useViewProps } from '@superadmin/client';
 import type { TableView } from '@superadmin/core';
-import type { Schema } from '@superadmin/schema';
+import * as s from '@superadmin/schema';
 import { ActionButtons } from '@superadmin/ui';
 import { prettifyName } from '@superadmin/utils';
 
@@ -15,20 +15,22 @@ const props = defineProps({
     ...useViewProps<TableView>(),
 });
 
+const params = defineModel<s.SchemaValue<TableView['params']>>('params');
+
 const actionDispatcher = useService(ActionDispatcher);
 
 type ColumnDef = {
     prop: string;
     label: string;
-    schema: Schema;
+    schema: s.Schema;
     sortable: boolean;
 };
 
-const headerButtons = computed(() => props.view.headerButtons?.(props.view.params));
+const headerButtons = computed(() => props.view.config.headerButtons?.(props.view.params));
 
 const columns = computed(() => {
     const columns: ColumnDef[] = [];
-    const fields = props.view.schema.props;
+    const fields = props.view.config.schema.props;
 
     for (const key of Object.keys(fields)) {
         const schema = fields[key];
@@ -37,40 +39,99 @@ const columns = computed(() => {
             prop: key,
             label: schema.label || prettifyName(key),
             schema,
-            sortable: props.view.sortColumns.includes(key),
+            sortable: props.view.config.sortColumns.includes(key),
         });
     }
 
     return columns;
 });
 
-const sortBy = ref<string>();
-const sortDirection = ref<number>();
-const sort = computed(() => {
-    if (!sortBy.value) {
-        return null;
-    }
+const sortBy = computed({
+    get() {
+        return params.value?.sort?.by;
+    },
+    set(value) {
+        if (!value) {
+            params.value = {
+                ...params.value,
+                sort: undefined,
+            };
 
-    const direction = sortDirection.value === -1 ? ('desc' as const) : ('asc' as const);
+            return;
+        }
 
-    return {
-        by: sortBy.value,
-        direction: direction,
-    };
+        if (params.value?.sort?.by === value) {
+            return;
+        }
+
+        params.value = {
+            ...params.value,
+            sort: {
+                by: value,
+                direction: 'asc',
+            },
+        };
+    },
+});
+
+const sortDirection = computed({
+    get() {
+        return params.value?.sort?.direction === 'desc' ? -1 : 1;
+    },
+    set(value) {
+        const direction = value === -1 ? ('desc' as const) : ('asc' as const);
+
+        if (!params.value?.sort) {
+            return;
+        }
+
+        if (params.value?.sort?.direction === direction) {
+            return;
+        }
+
+        params.value = {
+            ...params.value,
+            sort: {
+                ...params.value.sort,
+                direction,
+            },
+        };
+    },
+});
+
+const pagination = computed({
+    get() {
+        if (params.value?.pagination) {
+            return params.value.pagination;
+        }
+
+        const pagination = props.view.config.pagination;
+        if (!pagination) {
+            return undefined;
+        }
+
+        return s.coerce(pagination.params);
+    },
+    set(value) {
+        params.value = { ...params.value, pagination: value };
+    },
 });
 
 const data = useDataSource({
-    params: computed(() => ({
-        sort: sort.value,
-    })),
+    params,
     load: params => {
-        const action = props.view.actions.fetch({
-            sort: params.sort,
-        });
+        if (!params) {
+            params = s.coerce(props.view.params);
+        }
+
+        const action = props.view.actions.fetch(params);
+
         return actionDispatcher(action);
     },
     behavior: 'eager',
 });
+
+const Pagination = useComponent(() => props.view.config.pagination?.component);
 
 function reload() {
     return data.reload();
@@ -95,7 +156,7 @@ function reload() {
             <DataTable
                 v-model:sort-field="sortBy"
                 v-model:sort-order="sortDirection"
-                :value="data"
+                :value="data?.rows"
                 show-gridlines
                 lazy
                 removable-sort
@@ -109,13 +170,13 @@ function reload() {
                 ></Column>
 
                 <Column
-                    v-if="view.rowButtons"
+                    v-if="view.config.rowButtons"
                     class="w-0"
                 >
                     <template #body="{ data }">
                         <div class="flex justify-end gap-3">
                             <ActionButtons
-                                :buttons="view.rowButtons(data)"
+                                :buttons="view.config.rowButtons(data)"
                                 size="small"
                                 @action="reload"
                             />
@@ -123,6 +184,15 @@ function reload() {
                     </template>
                 </Column>
             </DataTable>
+        </template>
+
+        <template #footer>
+            <Pagination
+                v-if="view.config.pagination && Pagination"
+                v-model:value="pagination"
+                :result="data?.pagination"
+                :config="view.config.pagination.config"
+            />
         </template>
     </component>
 </template>

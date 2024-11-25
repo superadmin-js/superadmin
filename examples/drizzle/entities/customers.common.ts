@@ -14,7 +14,7 @@ import db from '../db/schema.js';
 export const customers = defineEntity({
     schema: db,
     table: 'customers',
-    listView: {
+    tableView: {
         path: '/customers',
         columns: {
             id: true,
@@ -23,6 +23,7 @@ export const customers = defineEntity({
             email: true,
             phone: true,
         },
+        pageSizes: [10, 25, 50, 100],
         headerButtons: () => [
             {
                 label: 'New customer',

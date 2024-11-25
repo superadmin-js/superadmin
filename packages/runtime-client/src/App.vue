@@ -2,7 +2,8 @@
 import Toast from 'primevue/toast';
 import { RouterView, useRoute } from 'vue-router';
 
-import { ModalHost, useService } from '@nzyme/vue';
+import { ModalHost } from '@nzyme/vue';
+import { useService } from '@nzyme/vue-ioc';
 import { onWindowEvent } from '@nzyme/vue-utils';
 import { ErrorEvent, ToastService } from '@superadmin/client';
 

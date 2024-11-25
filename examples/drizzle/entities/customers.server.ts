@@ -40,7 +40,7 @@ export const newCustomerSubmit = defineActionHandler({
                     message: `Created customer ${params.firstName} ${params.lastName}`,
                     time: 3000,
                 }),
-                goToView(customers.listView),
+                goToView(customers.tableView, {}),
             ]);
         };
     },
@@ -97,7 +97,7 @@ export const editCustomerSubmit = defineActionHandler({
                     message: `Updated customer ${params.firstName} ${params.lastName}`,
                     time: 3000,
                 }),
-                goToView(customers.listView),
+                goToView(customers.tableView, {}),
             ]);
         };
     },

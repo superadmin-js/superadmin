@@ -4,7 +4,7 @@ import type { PropType } from 'vue';
 import { computed } from 'vue';
 
 import { randomString } from '@nzyme/crypto-utils';
-import { useService } from '@nzyme/vue';
+import { useService } from '@nzyme/vue-ioc';
 import { useEmitAsync } from '@nzyme/vue-utils';
 import { ActionDispatcher } from '@superadmin/client';
 import { type ActionButton, ActionRegistry } from '@superadmin/core';

@@ -23,10 +23,9 @@ const editor = useEditor(props);
         <InputText
             :id="editor.id"
             v-model="model"
-            variant="filled"
-            class="w-full"
-            :name="path"
-            :invalid="!!errors?.[path]"
+            class="p-inputtext p-component p-filled p-variant-filled w-full"
+            :class="{ 'p-invalid': !!errors?.[path] }"
+            :pt:root:name="path"
         />
     </FormField>
 </template>

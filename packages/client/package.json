@@ -19,13 +19,15 @@
         "@nzyme/ioc": "*",
         "@nzyme/types": "*",
         "@nzyme/utils": "*",
-        "@nzyme/vue": "*",
+        "@nzyme/vue-ioc": "*",
         "@nzyme/vue-utils": "*",
         "@superadmin/core": "*",
         "@superadmin/schema": "*",
         "@superadmin/utils": "*",
         "@superadmin/validation": "*",
-        "ufo": "^1.5.4"
+        "ufo": "^1.5.4",
+        "vue": "^3.5.12",
+        "vue-router": "^4.4.5"
     },
     "devDependencies": {
         "@nzyme/eslint": "*",

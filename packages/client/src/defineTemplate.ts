@@ -1,17 +1,20 @@
-import type { Component } from '@nzyme/vue-utils';
-import { type GenericView, type View, defineModule } from '@superadmin/core';
+import type { Component } from '@superadmin/core';
+import { defineModule } from '@superadmin/core';
 
-import { TemplateRegistry } from './TemplateRegistry.js';
+import type { ComponentTemplate } from './components/ComponentRegistry.js';
+import { ComponentRegistry } from './components/ComponentRegistry.js';
 
-interface TemplateViewOptions {
-    view: View | GenericView;
-    component: Component;
+interface TemplateComponentOptions<TComponent extends Component> {
+    component: ComponentTemplate<TComponent>;
 }
 
-export function defineTemplate(options: TemplateViewOptions) {
+export function defineTemplate<TComponent extends Component>(
+    component: TComponent,
+    options: TemplateComponentOptions<TComponent>,
+) {
     return defineModule({
         install(container) {
-            container.resolve(TemplateRegistry).register(options.view, options.component);
+            container.resolve(ComponentRegistry).register(component, options.component);
         },
     });
 }

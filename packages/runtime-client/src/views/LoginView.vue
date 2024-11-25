@@ -4,7 +4,7 @@ import Button from 'primevue/button';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
-import { useService } from '@nzyme/vue';
+import { useService } from '@nzyme/vue-ioc';
 import { ActionDispatcher, useViewProps } from '@superadmin/client';
 import type { LoginView } from '@superadmin/core';
 import { coerce, validate } from '@superadmin/schema';
@@ -18,15 +18,15 @@ const router = useRouter();
 
 const actionDispatcher = useService(ActionDispatcher);
 
-const model = ref(props.view.form ? coerce(props.view.form) : undefined);
+const model = ref(props.view.config.form ? coerce(props.view.config.form) : undefined);
 const errors = ref<ValidationErrors | null>();
 
 async function submit() {
-    if (!props.view.form) {
+    if (!props.view.config.form) {
         return;
     }
 
-    errors.value = validate(props.view.form, model.value);
+    errors.value = validate(props.view.config.form, model.value);
     if (errors.value) {
         return;
     }
@@ -57,13 +57,13 @@ async function submit() {
             </div>
 
             <form
-                v-if="view.form"
+                v-if="view.config.form"
                 class="flex flex-col gap-4"
                 @submit.prevent="submit"
             >
                 <Editor
                     v-model="model"
-                    :schema="view.form"
+                    :schema="view.config.form"
                     :errors="errors"
                     path=""
                 />

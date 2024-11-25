@@ -21,6 +21,7 @@
         "@nzyme/utils": "*",
         "@nzyme/vue": "*",
         "@nzyme/vue-utils": "*",
+        "@primevue/forms": "^4.2.2",
         "@superadmin/client": "*",
         "@superadmin/core": "*",
         "@superadmin/schema": "*",

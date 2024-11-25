@@ -1,0 +1,61 @@
+import * as s from '@superadmin/schema';
+import * as v from '@superadmin/validation';
+
+import type { PaginationEvents, PaginationProps } from './definePagination.js';
+import { definePagination } from './definePagination.js';
+import type { ComponentAny } from '../components/defineComponent.js';
+import { defineComponent } from '../components/defineComponent.js';
+
+export interface BasicPaginationOptions {
+    pageSizes?: number[];
+}
+
+export type BasicPagination = ReturnType<typeof defineBasicPagination>;
+export type BasicPaginationProps = PaginationProps<
+    BasicPagination['params'],
+    BasicPagination['result'],
+    BasicPagination['config']
+>;
+export type BasicPaginationEvents = PaginationEvents<BasicPagination['params']>;
+export const basicPaginationComponent = defineComponent<BasicPagination['component']>();
+
+export function defineBasicPagination(options?: BasicPaginationOptions) {
+    const pageSizes = options?.pageSizes ?? [25, 50, 100];
+
+    const params = getParams(pageSizes);
+    const result = getResult();
+
+    const component = basicPaginationComponent as ComponentAny;
+
+    return definePagination({
+        params,
+        result,
+        component,
+        config: {
+            pageSizes,
+        },
+    });
+}
+
+function getParams(pageSizes: number[]) {
+    return s.object({
+        props: {
+            pageSize: s.enum(pageSizes),
+            page: s.number({
+                default: () => 1,
+                validators: [v.minValidator({ minValue: 1, exclusive: false })],
+            }),
+        },
+    });
+}
+
+function getResult() {
+    return s.object({
+        props: {
+            page: s.number(),
+            pageSize: s.number(),
+            hasMore: s.boolean(),
+            totalRows: s.number({ optional: true, nullable: true }),
+        },
+    });
+}

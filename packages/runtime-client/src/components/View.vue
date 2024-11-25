@@ -2,7 +2,7 @@
 import type { PropType } from 'vue';
 import { computed } from 'vue';
 
-import { useService } from '@nzyme/vue';
+import { useService } from '@nzyme/vue-ioc';
 import { TemplateRegistry } from '@superadmin/client';
 import type { View } from '@superadmin/core';
 import { coerce } from '@superadmin/schema';

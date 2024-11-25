@@ -8,7 +8,7 @@ import { nextTick, ref } from 'vue';
 
 import type { PromiseWrapper } from '@nzyme/utils';
 import { createPromise, mapNotNull } from '@nzyme/utils';
-import { useService } from '@nzyme/vue';
+import { useService } from '@nzyme/vue-ioc';
 import { onEventEmitter } from '@nzyme/vue-utils';
 import { ActionDispatcher } from '@superadmin/client';
 import { ActionRegistry } from '@superadmin/core';

@@ -1,9 +1,10 @@
 import * as s from '@superadmin/schema';
 
-import { defineGenericView } from './defineGenericView.js';
 import { defineView } from './defineView.js';
 import { defineAction } from '../actions/defineAction.js';
 import type { Authorizer } from '../auth/defineAuthorizer.js';
+import type { ComponentAny } from '../components/defineComponent.js';
+import { defineComponent } from '../components/defineComponent.js';
 
 export interface FormViewConfig<S extends s.ObjectSchema, TParams extends s.Schema> {
     name: string;
@@ -18,9 +19,7 @@ export type FormView<
     P extends s.Schema = s.Schema<unknown>,
 > = ReturnType<typeof defineFormView<S, P>>;
 
-export const formGenericView = defineGenericView({
-    name: 'superadmin.form',
-});
+export const formComponent = defineComponent<FormView['component']>();
 
 export function defineFormView<S extends s.ObjectSchema, P extends s.Schema = s.Schema<void>>(
     config: FormViewConfig<S, P>,
@@ -28,13 +27,16 @@ export function defineFormView<S extends s.ObjectSchema, P extends s.Schema = s.
     const params = config.params ?? (s.void({ nullable: true }) as P);
     const schema = config.schema;
 
+    const component = formComponent as ComponentAny;
     return defineView({
         name: config.name,
-        generic: formGenericView,
+        component,
         params,
         path: config.path,
         auth: config.auth,
-        schema,
+        config: {
+            schema,
+        },
         actions: {
             fetch: defineAction({
                 name: `${config.name}.fetch`,

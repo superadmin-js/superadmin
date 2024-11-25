@@ -26,22 +26,26 @@ export * from './auth/AuthContext.js';
 export * from './auth/AuthData.js';
 export * from './auth/AuthRegistry.js';
 export * from './auth/defineAuthorizer.js';
-export * from './auth/defineLoginView.js';
+export { type LoginView, type LoginViewConfig, defineLoginView } from './auth/defineLoginView.js';
 export * from './auth/defineUser.js';
 export { authenticate, type AuthenticateInput } from './auth/authenticate.js';
+
+export * from './components/defineComponent.js';
 
 export * from './functions/defineFunction.js';
 export * from './functions/defineFunctionHandler.js';
 export * from './functions/FunctionRegistry.js';
 
+export * from './pagination/definePagination.js';
 export {
-    type View,
-    defineView,
-    isView,
-    type ViewConfig as ViewBase,
-    type ViewParams,
-} from './views/defineView.js';
-export { type GenericView, defineGenericView } from './views/defineGenericView.js';
+    defineBasicPagination,
+    type BasicPagination,
+    type BasicPaginationOptions,
+    type BasicPaginationProps,
+    type BasicPaginationEvents,
+} from './pagination/defineBasicPagination.js';
+
+export { type View, defineView, isView } from './views/defineView.js';
 export { defineTableView } from './views/defineTableView.js';
 export type { TableView, TableViewOptions, TableSortOptions } from './views/defineTableView.js';
 export { defineFormView } from './views/defineFormView.js';

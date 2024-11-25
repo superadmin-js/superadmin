@@ -13,7 +13,7 @@
     "devDependencies": {
         "lerna": "^8.1.8",
         "prettier": "^3.3.3",
-        "prettier-plugin-tailwindcss": "^0.6.8",
+        "prettier-plugin-tailwindcss": "^0.6.9",
         "ts-node": "^10.9.2",
         "turbo": "^2.2.2",
         "typescript": "^5.6.3"

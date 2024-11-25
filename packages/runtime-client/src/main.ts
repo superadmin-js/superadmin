@@ -6,7 +6,8 @@ import PrimeVue from 'primevue/config';
 import PrimeVueToastService from 'primevue/toastservice';
 import { type Plugin, createApp } from 'vue';
 
-import { CommonPlugin, createContainer } from '@nzyme/vue';
+import { CommonPlugin } from '@nzyme/vue';
+import { createContainer } from '@nzyme/vue-ioc';
 import { App, Router, ToastService } from '@superadmin/client';
 import type { Module } from '@superadmin/core';
 import { Modules, RuntimeConfig, isModule } from '@superadmin/core';

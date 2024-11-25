@@ -3,7 +3,8 @@ import Button from 'primevue/button';
 import Message from 'primevue/message';
 import { ref } from 'vue';
 
-import { ModalContext, useService } from '@nzyme/vue';
+import { ModalContext } from '@nzyme/vue';
+import { useService } from '@nzyme/vue-ioc';
 import { injectContext } from '@nzyme/vue-utils';
 import { ActionDispatcher, useViewProps } from '@superadmin/client';
 import { ApplicationError, type FormView } from '@superadmin/core';
@@ -18,7 +19,7 @@ const props = defineProps({
 const actionDispatcher = useService(ActionDispatcher);
 const modal = injectContext(ModalContext, { optional: true });
 
-const model = ref<unknown>();
+const model = ref<Record<string, unknown> | null | undefined>(null);
 const validation = ref<ValidationErrors | null>();
 const error = ref<string | null>(null);
 
@@ -26,7 +27,7 @@ model.value = await actionDispatcher(props.view.actions.fetch(props.params));
 
 async function submit(e: Event) {
     error.value = null;
-    validation.value = validate(props.view.schema, model.value);
+    validation.value = validate(props.view.config.schema, model.value);
     if (validation.value) {
         return;
     }
@@ -67,7 +68,7 @@ async function submit(e: Event) {
 
                 <Editor
                     v-model="model"
-                    :schema="view.schema"
+                    :schema="view.config.schema"
                     :errors="validation"
                     path=""
                 />
@@ -86,6 +87,7 @@ async function submit(e: Event) {
                 />
 
                 <Button
+                    autofocus
                     label="Submit"
                     size="large"
                     class="flex-1"
