@@ -71,7 +71,7 @@ export const AuthStore = defineService({
                 const now = Date.now();
 
                 if (now >= refreshAt) {
-                    void checkAuth();
+                    setTimeout(() => void checkAuth());
                     return;
                 }
 
@@ -92,13 +92,19 @@ export const AuthStore = defineService({
         }
 
         async function checkAuth() {
-            const auth = authData.value;
+            let auth = authData.value;
             if (!auth) {
                 return false;
             }
 
-            const now = Date.now();
-            const expireAt = auth.authExpiration.getTime();
+            let now = Date.now();
+            let expireAt = auth.authExpiration.getTime();
+
+            if (now >= expireAt) {
+                setAuth(null);
+                return false;
+            }
+
             const checkAt = expireAt - 1000 * 60 * 5;
             if (now < checkAt) {
                 return true;
@@ -116,6 +122,21 @@ export const AuthStore = defineService({
             }
 
             await inject(ActionDispatcher)(userType.actions.refresh(auth.refreshToken));
+
+            auth = authData.value;
+            if (!auth) {
+                return false;
+            }
+
+            now = Date.now();
+            expireAt = auth.authExpiration.getTime();
+
+            if (now >= expireAt) {
+                setAuth(null);
+                return false;
+            }
+
+            return true;
         }
     },
 });

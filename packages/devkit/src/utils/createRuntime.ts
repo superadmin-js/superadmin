@@ -10,13 +10,15 @@ import type { RuntimeConfig } from '@superadmin/core';
 
 export interface RuntimeOptions {
     outputDir: string;
+    rootDir: string;
     config: RuntimeConfig;
 }
 
 export function createModulesRuntime(options: RuntimeOptions) {
-    const { outputDir } = options;
+    const { outputDir, rootDir } = options;
 
-    const moduleFiles: { file: string; order: number }[] = [];
+    type Module = { file: string; order: number; id?: string };
+    const modules: Module[] = [];
 
     const configPath = path.join(outputDir, 'config.ts');
     const modulesPath = path.join(outputDir, 'modules.ts');
@@ -32,14 +34,14 @@ export function createModulesRuntime(options: RuntimeOptions) {
         start,
     };
 
-    function addFile(path: string, options?: { order?: number }) {
-        const index = moduleFiles.findIndex(file => file.file === path);
+    function addFile(path: string, options?: { order?: number; id?: string }) {
+        const index = modules.findIndex(file => file.file === path);
         if (index !== -1) {
             return;
         }
 
-        moduleFiles.push({ file: path, order: options?.order ?? 0 });
-        moduleFiles.sort((a, b) => {
+        modules.push({ file: path, order: options?.order ?? 0, id: options?.id });
+        modules.sort((a, b) => {
             if (a.order === b.order) {
                 return a.file.localeCompare(b.file);
             }
@@ -53,13 +55,13 @@ export function createModulesRuntime(options: RuntimeOptions) {
     }
 
     function removeFile(path: string) {
-        const index = moduleFiles.findIndex(file => file.file === path);
+        const index = modules.findIndex(file => file.file === path);
 
         if (index === -1) {
             return false;
         }
 
-        moduleFiles.splice(index, 1);
+        modules.splice(index, 1);
 
         if (started) {
             void generate();
@@ -92,20 +94,27 @@ export function createModulesRuntime(options: RuntimeOptions) {
 
         const script = createScript();
 
-        const modules: string[] = [];
+        const modulesMap: Record<string, string> = {};
 
-        for (const mod of moduleFiles) {
-            const module = script.addImport({
-                from: path.isAbsolute(mod.file) ? path.relative(outputDir, mod.file) : mod.file,
+        for (const module of modules) {
+            const modulePath = path.isAbsolute(module.file)
+                ? path.relative(outputDir, module.file)
+                : module.file;
+
+            const moduleId = getModuleId(module);
+
+            modulesMap[moduleId] = script.addImport({
+                from: modulePath,
                 import: '*',
                 name: 'module',
             });
-
-            modules.push(module);
         }
 
-        const modulesDestructured = modules.map(module => `...Object.values(${module})`).join(', ');
-        script.addStatement(`export default [${modulesDestructured}];`);
+        const modulesDestructured = Object.entries(modulesMap)
+            .map(([path, module]) => `'${path}': ${module}`)
+            .join(', ');
+
+        script.addStatement(`export default {${modulesDestructured}};`);
 
         await saveScript(modulesPath, script);
     }
@@ -118,5 +127,19 @@ export function createModulesRuntime(options: RuntimeOptions) {
         });
 
         await fs.writeFile(filePath, formatted);
+    }
+
+    function getModuleId(module: Module) {
+        if (module.id) {
+            return module.id;
+        }
+
+        const modulePath = module.file.replace(/\.[^.]+$/, '').replace(/\.common$/, '');
+
+        if (path.isAbsolute(modulePath)) {
+            return path.relative(rootDir, modulePath);
+        }
+
+        return modulePath;
     }
 }

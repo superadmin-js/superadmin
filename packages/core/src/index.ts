@@ -1,7 +1,6 @@
 export * from './ApplicationError.js';
 export * from './defineConfig.js';
-export { type Module, type ModuleBase, defineModule, isModule } from './defineModule.js';
-export * from './Modules.js';
+export { type Submodule, defineSubmodule, isSubmodule } from './defineSubmodule.js';
 export * from './RuntimeConfig.js';
 
 export { goToView } from './actions/goToView.js';

@@ -16,7 +16,6 @@ export const MenuItem = s.object({
 });
 
 export const openMenuInternal = defineAction({
-    name: 'superadmin.openMenu',
     params: s.object({
         props: {
             items: s.array(MenuItem),

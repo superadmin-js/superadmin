@@ -23,6 +23,7 @@
         "@primevue/themes": "^4.2.2",
         "@superadmin/client": "*",
         "@superadmin/core": "*",
+        "@superadmin/runtime-common": "*",
         "@superadmin/schema": "*",
         "@superadmin/ui": "*",
         "@superadmin/utils": "*",

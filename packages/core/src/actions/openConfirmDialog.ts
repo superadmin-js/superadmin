@@ -1,10 +1,9 @@
 import * as s from '@superadmin/schema';
 
-import { defineAction } from './defineAction.js';
 import { ActionButton } from './ActionButton.js';
+import { defineAction } from './defineAction.js';
 
 export const openConfirmDialog = defineAction({
-    name: 'superadmin.openConfirmDialog',
     params: s.object({
         props: {
             title: s.string({ optional: true }),

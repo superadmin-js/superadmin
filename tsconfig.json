@@ -99,6 +99,9 @@
             "path": "./packages/ioc/tsconfig.json"
         },
         {
+            "path": "./packages/runtime-common/tsconfig.json"
+        },
+        {
             "path": "./packages/runtime-server/tsconfig.json"
         },
         {

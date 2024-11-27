@@ -1,5 +1,7 @@
 declare module '@modules' {
-    export default [];
+    import type { RuntimeModules } from '@superadmin/runtime-common';
+    const modules: RuntimeModules;
+    export default modules;
 }
 
 declare module '@theme' {

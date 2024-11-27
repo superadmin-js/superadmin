@@ -1,5 +1,5 @@
 import config from '@config';
-import modulesImport from '@modules';
+import modules from '@modules';
 import theme from '@theme';
 import type { PrimeVueConfiguration } from 'primevue/config';
 import PrimeVue from 'primevue/config';
@@ -9,34 +9,17 @@ import { type Plugin, createApp } from 'vue';
 import { CommonPlugin } from '@nzyme/vue';
 import { createContainer } from '@nzyme/vue-ioc';
 import { App, Router, ToastService } from '@superadmin/client';
-import type { Module } from '@superadmin/core';
-import { Modules, RuntimeConfig, isModule } from '@superadmin/core';
+import { RuntimeConfig } from '@superadmin/core';
+import { installModules } from '@superadmin/runtime-common';
 
 import AppComponent from './App.vue';
-import * as defaultModules from './modules.js';
 import { setupRouter } from './setupRouter.js';
 
 const container = createContainer();
-const modules: Module[] = [];
 
-for (const module of Object.values(defaultModules)) {
-    if (isModule(module)) {
-        modules.push(module);
-    }
-}
-
-for (const module of modulesImport) {
-    if (isModule(module)) {
-        modules.push(module);
-    }
-}
-
-container.set(Modules, modules);
 container.set(RuntimeConfig, config);
 
-for (const module of modules) {
-    module.install(container);
-}
+installModules(container, modules);
 
 const app = createApp(AppComponent);
 const router = setupRouter(container);

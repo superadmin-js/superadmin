@@ -1,5 +1,5 @@
 import type { Component } from '@superadmin/core';
-import { defineModule } from '@superadmin/core';
+import { defineSubmodule } from '@superadmin/core';
 
 import type { ComponentTemplate } from './components/ComponentRegistry.js';
 import { ComponentRegistry } from './components/ComponentRegistry.js';
@@ -12,7 +12,7 @@ export function defineTemplate<TComponent extends Component>(
     component: TComponent,
     options: TemplateComponentOptions<TComponent>,
 ) {
-    return defineModule({
+    return defineSubmodule({
         install(container) {
             container.resolve(ComponentRegistry).register(component, options.component);
         },

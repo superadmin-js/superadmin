@@ -5,8 +5,8 @@ import type { SelectedFields } from 'drizzle-orm/sqlite-core';
 
 import type { Service, ServiceSetup } from '@nzyme/ioc';
 import { defineInjectable, defineService } from '@nzyme/ioc';
-import type { Module } from '@superadmin/core';
-import { defineModule } from '@superadmin/core';
+import type { Submodule } from '@superadmin/core';
+import { defineSubmodule } from '@superadmin/core';
 
 import type { DrizzleSchema } from './types.js';
 
@@ -18,14 +18,14 @@ export const DrizzleClient = defineInjectable<DrizzleClient>({
 
 export function defineDrizzle<TDrizzle extends DrizzleClient>(
     setup: ServiceSetup<TDrizzle>,
-): Service<TDrizzle> & Module {
+): Service<TDrizzle> & Submodule {
     const service = defineService({
         name: 'DrizzleClient',
         for: DrizzleClient,
         setup,
     });
 
-    return defineModule({
+    return defineSubmodule({
         ...service,
         install(container) {
             container.set(DrizzleClient, service);

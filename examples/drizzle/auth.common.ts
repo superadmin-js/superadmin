@@ -18,7 +18,6 @@ export const User = defineUser({
 export const AdminUser = User.with(user => user.role === 'admin');
 
 export const LoginView = defineLoginView({
-    name: 'login',
     path: '/login',
     form: s.object({
         props: {

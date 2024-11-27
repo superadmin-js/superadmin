@@ -5,28 +5,19 @@ import type { Entity } from './defineEntity.js';
 export const EntityRegistry = defineService({
     name: 'EntityRegistry',
     setup() {
-        const entitiesByName = new Map<string, Entity>();
+        const entities: Entity[] = [];
 
         return {
             register,
-            getByName,
             getAll,
         };
 
         function register(entity: Entity) {
-            if (entitiesByName.has(entity.name)) {
-                throw new Error(`Entity ${entity.name} already registered`);
-            }
-
-            entitiesByName.set(entity.name, entity);
-        }
-
-        function getByName(name: string) {
-            return entitiesByName.get(name);
+            entities.push(entity);
         }
 
         function getAll() {
-            return entitiesByName.values();
+            return entities;
         }
     },
 });

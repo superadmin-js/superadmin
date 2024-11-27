@@ -1,23 +1,27 @@
 import { type SQL, type SQLWrapper, desc } from 'drizzle-orm';
 
-import type { Container } from '@nzyme/ioc';
-import { defineModule } from '@superadmin/core';
+import type { Submodule } from '@superadmin/core';
+import { defineSubmodule } from '@superadmin/core';
 import type { Entity } from '@superadmin/drizzle-core';
 import { DrizzleWrapper, EntityRegistry } from '@superadmin/drizzle-core';
 import * as s from '@superadmin/schema';
 import { defineActionHandler } from '@superadmin/server';
 
-export default defineModule({
+export const plugin = defineSubmodule({
     install(container) {
         const entities = container.resolve(EntityRegistry);
+        const submodules: Record<string, Submodule> = {};
 
         for (const entity of entities.getAll()) {
-            setupEntityTableView(container, entity);
+            const tableSubmodules = setupEntityTableView(entity);
+            Object.assign(submodules, tableSubmodules);
         }
+
+        return submodules;
     },
 });
 
-function setupEntityTableView(container: Container, entity: Entity) {
+function setupEntityTableView(entity: Entity) {
     const columns: Record<string, SQLWrapper> = {};
     const tableView = entity.tableView;
     const tableConfig = tableView.config;
@@ -26,7 +30,7 @@ function setupEntityTableView(container: Container, entity: Entity) {
         columns[key] = column.sql;
     }
 
-    const fetch = defineActionHandler({
+    const tableFetch = defineActionHandler({
         action: tableView.actions.fetch,
         setup({ inject }) {
             const drizzle = inject(DrizzleWrapper);
@@ -70,5 +74,7 @@ function setupEntityTableView(container: Container, entity: Entity) {
         },
     });
 
-    fetch.install(container);
+    return {
+        [`${entity.id}:table:fetch`]: tableFetch,
+    };
 }

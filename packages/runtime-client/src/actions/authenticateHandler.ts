@@ -1,5 +1,5 @@
 import { AuthStore, defineActionHandler } from '@superadmin/client';
-import { authenticateAction } from '@superadmin/core/internal';
+import { authenticateAction } from '@superadmin/core/module';
 
 export const authenticateHandler = defineActionHandler({
     action: authenticateAction,

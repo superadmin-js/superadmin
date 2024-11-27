@@ -20,7 +20,6 @@ export const authenticateTransform = defineFunction({
 });
 
 export const authenticateAction = defineAction({
-    name: 'superadmin.authenticate',
     params: s.nullable(AuthData),
     sst: authenticateTransform,
 });

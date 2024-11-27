@@ -9,20 +9,20 @@ export const ViewRegistry = defineService({
 
         return {
             register,
-            getByName,
+            getById,
             getAll,
         };
 
         function register(view: View) {
-            if (viewsByName.has(view.name)) {
-                throw new Error(`View ${view.name} already registered`);
+            if (viewsByName.has(view.id)) {
+                throw new Error(`View ${view.id} already registered`);
             }
 
-            viewsByName.set(view.name, view);
+            viewsByName.set(view.id, view);
         }
 
-        function getByName(name: string) {
-            return viewsByName.get(name);
+        function getById(id: string) {
+            return viewsByName.get(id);
         }
 
         function getAll() {

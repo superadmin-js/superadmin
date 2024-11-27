@@ -1,36 +1,16 @@
+import modules from '@modules';
 import { createApp, createRouter } from 'h3';
 
 import { createContainer } from '@nzyme/ioc';
-import type { Module } from '@superadmin/core';
-import { Modules, isModule } from '@superadmin/core';
+import { installModules } from '@superadmin/runtime-common';
 import { App, Router } from '@superadmin/server';
 
-import * as defaultModules from './modules.js';
 import { setupActionHandler } from './setupActionHandler.js';
-
-export interface SetupAppOptions {
-    modules: unknown[];
-}
 
 const DEBUG = true;
 
-export function setupApp(options: SetupAppOptions) {
+export function setupApp() {
     const container = createContainer();
-    const modules: Module[] = [];
-
-    for (const module of Object.values(defaultModules)) {
-        if (isModule(module)) {
-            modules.push(module);
-        }
-    }
-
-    for (const module of options.modules) {
-        if (isModule(module)) {
-            modules.push(module);
-        }
-    }
-
-    container.set(Modules, modules);
 
     const app = createApp({ debug: DEBUG });
     const router = createRouter();
@@ -38,10 +18,7 @@ export function setupApp(options: SetupAppOptions) {
     container.set(App, app);
     container.set(Router, router);
 
-    for (const module of modules) {
-        module.install(container);
-    }
-
+    installModules(container, modules);
     setupActionHandler(container);
 
     app.use(router);

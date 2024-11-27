@@ -3,13 +3,14 @@ import type { Column, GetColumnData, SQLWrapper, Table } from 'drizzle-orm';
 import type { IfLiteral } from '@nzyme/types';
 import type {
     BasicPagination,
-    Module,
+    Submodule,
     TableSortOptions,
     TableView,
     TableViewOptions,
 } from '@superadmin/core';
-import { defineBasicPagination, defineModule, defineTableView } from '@superadmin/core';
+import { defineBasicPagination, defineSubmodule, defineTableView } from '@superadmin/core';
 import * as s from '@superadmin/schema';
+import { prettifyName } from '@superadmin/utils';
 
 import { EntityRegistry } from './EntityRegistry.js';
 import type { DrizzleSchema, TablesOf } from './types.js';
@@ -55,7 +56,7 @@ export type EntityViewOptions<
     TSort extends TableSortOptions<EntitySchema<TTable, TColumns>> = false,
 > = Pick<
     TableViewOptions<EntitySchema<TTable, TColumns>, s.Schema<void>, TSort>,
-    'path' | 'auth' | 'headerButtons' | 'rowButtons' | 'sortColumns'
+    'title' | 'path' | 'auth' | 'headerButtons' | 'rowButtons' | 'sortColumns'
 > & {
     columns: TColumns;
     pageSizes?: number[];
@@ -70,7 +71,6 @@ export interface EntityOptions<
         EntitySchema<TTable, TColumns>
     >,
 > {
-    name?: string;
     schema: TSchema;
     table: TTableName;
     tableView: EntityViewOptions<TTable, TColumns, TSort>;
@@ -83,8 +83,7 @@ export interface Entity<
     TSort extends TableSortOptions<EntitySchema<TTable, TColumns>> = TableSortOptions<
         EntitySchema<TTable, TColumns>
     >,
-> extends Module {
-    name: string;
+> extends Submodule {
     schema: TSchema;
     table: TTable;
     tableView: TableView<EntitySchema<TTable, TColumns>, s.Schema<void>, TSort, BasicPagination>;
@@ -102,7 +101,6 @@ export function defineEntity<
 export function defineEntity(options: EntityOptions): Entity {
     const tableProps = {} as EntitySchemaProps;
     const table = options.schema[options.table] as Table;
-    const name = options.name ?? options.table;
 
     const tableViewOptions = options.tableView;
     for (const [key, value] of Object.entries(tableViewOptions.columns)) {
@@ -120,7 +118,7 @@ export function defineEntity(options: EntityOptions): Entity {
     }
 
     const tableView = defineTableView({
-        name: `${name}.table`,
+        title: tableViewOptions.title ?? prettifyName(options.table),
         path: tableViewOptions.path,
         auth: tableViewOptions.auth,
         sortColumns: tableViewOptions.sortColumns ?? true,
@@ -134,12 +132,14 @@ export function defineEntity(options: EntityOptions): Entity {
         }),
     });
 
-    return defineModule<Entity>(ENTITY_SYMBOL, {
+    return defineSubmodule<Entity>(ENTITY_SYMBOL, {
         install(container) {
             container.resolve(EntityRegistry).register(this as unknown as Entity);
-            tableView.install(container);
+
+            return {
+                tableView,
+            };
         },
-        name,
         schema: options.schema,
         table: options.schema[options.table] as Table,
         tableView,

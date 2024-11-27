@@ -5,15 +5,15 @@ import { eq } from 'drizzle-orm';
 import {
     customers,
     deleteCustomer,
-    editCustomerForm,
-    newCustomerForm,
+    editCustomer,
+    newCustomer,
     syncCustomer,
 } from './customers.common.js';
 import db from '../db/schema.js';
 import { Drizzle } from '../drizzle.server.js';
 
 export const newCustomerSubmit = defineActionHandler({
-    action: newCustomerForm.actions.submit,
+    action: newCustomer.actions.submit,
     setup({ inject }) {
         const drizzle = inject(Drizzle);
 
@@ -47,7 +47,7 @@ export const newCustomerSubmit = defineActionHandler({
 });
 
 export const editCustomerFetch = defineActionHandler({
-    action: editCustomerForm.actions.fetch,
+    action: editCustomer.actions.fetch,
     setup({ inject }) {
         const drizzle = inject(Drizzle);
 
@@ -71,7 +71,7 @@ export const editCustomerFetch = defineActionHandler({
 });
 
 export const editCustomerSubmit = defineActionHandler({
-    action: editCustomerForm.actions.submit,
+    action: editCustomer.actions.submit,
     setup({ inject }) {
         const drizzle = inject(Drizzle);
 

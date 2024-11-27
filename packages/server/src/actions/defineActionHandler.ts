@@ -1,5 +1,10 @@
 import { type Service, type ServiceContext, defineService } from '@nzyme/ioc';
-import { type ActionDefinition, type Module, defineModule, isModule } from '@superadmin/core';
+import {
+    type ActionDefinition,
+    type Submodule,
+    defineSubmodule,
+    isSubmodule,
+} from '@superadmin/core';
 import type * as s from '@superadmin/schema';
 
 import { ActionHandlerRegistry } from './ActionHandlerRegistry.js';
@@ -23,7 +28,7 @@ export interface ActionHandler<
     TParams extends s.Schema = s.SchemaAny,
     TResult extends s.Schema = s.Schema,
     TInput extends s.Schema = TParams,
-> extends Module {
+> extends Submodule {
     action: ActionDefinition<TParams, TResult, TInput>;
     service: Service<ActionHandlerFunction<TParams, TResult>>;
 }
@@ -33,7 +38,7 @@ export function defineActionHandler<
     TResult extends s.Schema = s.Schema,
     TInput extends s.Schema = TParams,
 >(options: ActionHandlerOptions<TParams, TResult, TInput>) {
-    return defineModule<ActionHandler<TParams, TResult, TInput>>(ACTION_HANDLER_SYMBOL, {
+    return defineSubmodule<ActionHandler<TParams, TResult, TInput>>(ACTION_HANDLER_SYMBOL, {
         action: options.action,
         service: defineService({
             name: options.action.name,
@@ -46,5 +51,5 @@ export function defineActionHandler<
 }
 
 export function isActionHandler(value: unknown): value is ActionHandler {
-    return isModule(value, ACTION_HANDLER_SYMBOL);
+    return isSubmodule(value, ACTION_HANDLER_SYMBOL);
 }

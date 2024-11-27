@@ -26,6 +26,7 @@ const editor = useEditor(props);
             variant="filled"
             class="w-full"
             type="password"
+            autocomplete="current-password"
             :name="path"
             :invalid="!!errors?.[path]"
         />

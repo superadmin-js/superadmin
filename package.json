@@ -8,6 +8,8 @@
         "monorepo": "node ./nzyme/packages/project-tools/dist/monorepo.js",
         "watch": "yarn && yarn monorepo && turbo run watch",
         "dev": "yarn && yarn monorepo && turbo run dev",
+        "clean": "tsc --build --clean",
+        "build": "tsc --build",
         "start": "yarn --cwd examples/drizzle dev"
     },
     "devDependencies": {

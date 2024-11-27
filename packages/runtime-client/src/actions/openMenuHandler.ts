@@ -1,5 +1,5 @@
 import { defineActionHandler } from '@superadmin/client';
-import { openMenuInternal } from '@superadmin/core/internal';
+import { openMenuInternal } from '@superadmin/core/module';
 
 import { MenuService } from '../components/MenuService.js';
 

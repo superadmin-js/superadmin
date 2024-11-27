@@ -1,5 +1,5 @@
 {
-    "name": "@superadmin/core",
+    "name": "@superadmin/runtime-common",
     "version": "1.0.0",
     "repository": "https://github.com/kedrzu/superadmin.git",
     "author": "Michał Kędrzyński <m.kedrzynski@gmail.com>",
@@ -13,17 +13,14 @@
         "build": "tsc --build"
     },
     "exports": {
-        ".": "./dist/index.js",
-        "./internal": "./dist/internal.js",
-        "./module": "./dist/module.js"
+        ".": "./dist/index.js"
     },
     "dependencies": {
         "@nzyme/ioc": "*",
         "@nzyme/types": "*",
         "@nzyme/utils": "*",
+        "@superadmin/core": "*",
         "@superadmin/schema": "*",
-        "@superadmin/utils": "*",
-        "@superadmin/validation": "*",
         "debug": "^4.3.7"
     },
     "devDependencies": {

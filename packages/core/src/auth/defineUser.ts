@@ -2,7 +2,7 @@ import * as s from '@superadmin/schema';
 
 import type { AuthContext } from './AuthContext.js';
 import type { Authorizer } from './defineAuthorizer.js';
-import { type Module, defineModule } from '../defineModule.js';
+import { type Submodule, defineSubmodule } from '../defineSubmodule.js';
 import { AuthRegistry } from './AuthRegistry.js';
 import { refreshAuthTransform } from './refreshAuthTransform.js';
 import { type ActionDefinition, defineAction } from '../actions/defineAction.js';
@@ -26,7 +26,7 @@ export interface UserConfig<TSchema extends UserSchema> {
 export interface UserDefinition<TSchema extends UserSchema = UserSchema>
     extends UserConfig<TSchema>,
         Authorizer,
-        Module {
+        Submodule {
     with: (condition: (user: s.SchemaValue<TSchema>) => boolean) => Authorizer;
     authExpiration: number;
     refreshExpiration: number;
@@ -39,7 +39,7 @@ export function defineUser<TSchema extends UserSchema>(config: UserConfig<TSchem
     const name = config.name;
     const schema = config.schema;
 
-    return defineModule<UserDefinition<TSchema>>(USER_MODULE_SYMBOL, {
+    return defineSubmodule<UserDefinition<TSchema>>(USER_MODULE_SYMBOL, {
         name,
         schema,
         authExpiration: config.authExpiration ?? 15 * 60 * 1000,
@@ -47,7 +47,8 @@ export function defineUser<TSchema extends UserSchema>(config: UserConfig<TSchem
         isAuthorized,
         install(container) {
             container.resolve(AuthRegistry).registerUserType(this);
-            this.actions.refresh.install(container);
+
+            return this.actions;
         },
         with(condition) {
             return {
@@ -58,7 +59,6 @@ export function defineUser<TSchema extends UserSchema>(config: UserConfig<TSchem
         },
         actions: {
             refresh: defineAction({
-                name: `${name}.refresh`,
                 auth: false,
                 params: schema,
                 result: s.action({ nullable: true }),

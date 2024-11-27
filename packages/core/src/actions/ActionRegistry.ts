@@ -14,16 +14,16 @@ export const ActionRegistry = defineService({
         };
 
         function register(action: ActionDefinition) {
-            if (actions.has(action.name)) {
-                throw new Error(`Action ${action.name} already registered`);
+            if (actions.has(action.id)) {
+                throw new Error(`Action ${action.id} already registered`);
             }
 
-            actions.set(action.name, action);
+            actions.set(action.id, action);
         }
 
         function resolve(action: string | Action) {
-            const name = typeof action === 'string' ? action : action.action;
-            return actions.get(name);
+            const id = typeof action === 'string' ? action : action.action;
+            return actions.get(id);
         }
     },
 });

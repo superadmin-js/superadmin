@@ -24,11 +24,13 @@ export const RuntimeBuilder = defineService({
 
         const client = createModulesRuntime({
             outputDir: path.join(projectConfig.runtimePath, 'client'),
+            rootDir: projectConfig.cwd,
             config: runtimeConfig,
         });
 
         const server = createModulesRuntime({
             outputDir: path.join(projectConfig.runtimePath, 'server'),
+            rootDir: projectConfig.cwd,
             config: runtimeConfig,
         });
 

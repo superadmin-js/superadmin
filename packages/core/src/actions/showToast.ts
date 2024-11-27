@@ -3,7 +3,6 @@ import * as s from '@superadmin/schema';
 import { defineAction } from './defineAction.js';
 
 export const showToast = defineAction({
-    name: 'superadmin.showToast',
     params: s.object({
         props: {
             title: s.string({ optional: true, nullable: true }),

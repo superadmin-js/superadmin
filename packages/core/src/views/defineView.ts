@@ -3,8 +3,8 @@ import * as s from '@superadmin/schema';
 import { prettifyName } from '@superadmin/utils';
 
 import type { ActionDefinition } from '../actions/defineAction.js';
-import type { Module } from '../defineModule.js';
-import { defineModule, isModule } from '../defineModule.js';
+import type { Submodule } from '../defineSubmodule.js';
+import { defineSubmodule, isSubmodule } from '../defineSubmodule.js';
 import { ViewRegistry } from './ViewRegistry.js';
 import { type Authorizer, loggedIn, noAuth } from '../auth/defineAuthorizer.js';
 import { type Component, defineComponent } from '../components/defineComponent.js';
@@ -35,7 +35,6 @@ export interface ViewOptions<
     TActions extends Record<string, ActionDefinition>,
     TConfig extends Record<string, unknown>,
 > {
-    name: string;
     title?: string;
     path?: string;
     auth?: Authorizer | false;
@@ -50,8 +49,7 @@ export interface View<
     TParams extends s.Schema = s.Schema,
     TActions extends Record<string, ActionDefinition> = Record<string, ActionDefinition>,
     TConfig extends Record<string, unknown> = Record<string, unknown>,
-> extends Module {
-    name: string;
+> extends Submodule {
     title: string;
     path: string;
     params: TParams;
@@ -67,28 +65,33 @@ export function defineView<
     TActions extends Record<string, ActionDefinition> = SomeObject,
     TConfig extends Record<string, unknown> = SomeObject,
 >(view: ViewOptions<TParams, TActions, TConfig>) {
-    return defineModule<View<TParams, TActions, TConfig>>(VIEW_SYMBOL, {
-        name: view.name,
+    return defineSubmodule<View<TParams, TActions, TConfig>>(VIEW_SYMBOL, {
         actions: (view.actions ?? {}) as TActions,
         params: (view.params ?? s.void({ nullable: true })) as TParams,
         config: (view.config ?? {}) as TConfig,
         auth: view.auth === false ? noAuth : (view.auth ?? loggedIn),
         navigation: view.navigation ?? true,
-        title: view.title || prettifyName(view.name),
-        path: view.path ?? `/view/${view.name}`,
+        title: view.title || '',
+        path: view.path ?? '',
         component: view.component ?? defineComponent<ViewComponent<TParams, TActions, TConfig>>(),
+        init(id) {
+            if (!this.path) {
+                this.path = `/view/${id}`;
+            }
+
+            if (!this.title) {
+                this.title = prettifyName(id, ':');
+            }
+
+            return this.actions;
+        },
+
         install(container) {
             container.resolve(ViewRegistry).register(this);
-
-            if (view.actions) {
-                for (const action of Object.values(view.actions)) {
-                    action.install(container);
-                }
-            }
         },
     });
 }
 
 export function isView(value: unknown): value is View {
-    return isModule(value, VIEW_SYMBOL);
+    return isSubmodule(value, VIEW_SYMBOL);
 }

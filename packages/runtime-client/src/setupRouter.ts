@@ -5,9 +5,9 @@ import type { Container } from '@nzyme/ioc';
 import { AuthStore } from '@superadmin/client';
 import type { View } from '@superadmin/core';
 import { ViewRegistry } from '@superadmin/core';
+import { loginComponent } from '@superadmin/core/internal';
 
 import NavigationLayout from './components/NavigationLayout.vue';
-import { loginComponent } from './modules.js';
 import PageViewRenderer from './views/PageViewRenderer.vue';
 
 export function setupRouter(container: Container) {

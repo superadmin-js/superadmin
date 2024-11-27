@@ -33,6 +33,9 @@
             "path": "../core/tsconfig.json"
         },
         {
+            "path": "../runtime-common/tsconfig.json"
+        },
+        {
             "path": "../schema/tsconfig.json"
         },
         {

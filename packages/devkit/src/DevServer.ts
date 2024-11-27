@@ -31,6 +31,29 @@ export const DevServer = defineService({
         const config = inject(ProjectConfig);
         const runtime = inject(RuntimeBuilder);
 
+        const clientRoot = resolveProjectPath('@superadmin/runtime-client', import.meta);
+        const uiRoot = resolveProjectPath('@superadmin/ui', import.meta);
+
+        runtime.client.addFile('@superadmin/core/module', {
+            id: '@superadmin/core',
+            order: -1,
+        });
+        runtime.client.addFile('@superadmin/runtime-client/src/module', {
+            id: '@superadmin/client',
+            order: -1,
+        });
+
+        runtime.server.addFile('@superadmin/core/module', {
+            id: '@superadmin/core',
+            order: -1,
+        });
+        runtime.server.addFile('@superadmin/runtime-server/module', {
+            id: '@superadmin/server',
+            order: -1,
+        });
+
+        await runtime.start();
+
         const vite = await createViteServer();
         const api = createApiServer();
 
@@ -49,7 +72,7 @@ export const DevServer = defineService({
         });
 
         for (const plugin of config.plugins) {
-            plugin.install(container);
+            plugin(container);
         }
 
         return {
@@ -57,14 +80,10 @@ export const DevServer = defineService({
         };
 
         async function start() {
-            await runtime.start();
             await vite.listen();
         }
 
         function createViteServer() {
-            const clientRoot = resolveProjectPath('@superadmin/runtime-client', import.meta);
-            const uiRoot = resolveProjectPath('@superadmin/ui', import.meta);
-
             return createServer({
                 configFile: false,
                 plugins: [
@@ -147,6 +166,15 @@ export const DevServer = defineService({
                     if (/^node:/.test(source) || /^[\w_-]+$/.test(source)) {
                         // Node built-in modules and third party modules
                         return true;
+                    }
+
+                    // TODO: make it configurable for library clients
+                    if (/@superadmin\/\w+/.test(source)) {
+                        return false;
+                    }
+
+                    if (/@nzyme\/\w+/.test(source)) {
+                        return false;
                     }
 
                     if (/node_modules/.test(source)) {

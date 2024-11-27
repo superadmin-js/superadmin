@@ -28,14 +28,14 @@ export const customers = defineEntity({
             {
                 label: 'New customer',
                 icon: 'plus',
-                action: openModal(newCustomerForm),
+                action: openModal(newCustomer),
             },
         ],
         rowButtons: c => [
             {
                 icon: 'edit',
                 label: 'Edit',
-                action: openModal(editCustomerForm, { id: c.id }),
+                action: openModal(editCustomer, { id: c.id }),
                 style: 'outline',
             },
             {
@@ -64,8 +64,7 @@ export const customers = defineEntity({
     },
 });
 
-export const newCustomerForm = defineFormView({
-    name: 'newCustomer',
+export const newCustomer = defineFormView({
     schema: s.object({
         props: {
             firstName: s.string({
@@ -81,8 +80,7 @@ export const newCustomerForm = defineFormView({
     }),
 });
 
-export const editCustomerForm = defineFormView({
-    name: 'editCustomer',
+export const editCustomer = defineFormView({
     params: s.object({
         props: {
             id: s.integer(),
@@ -107,7 +105,6 @@ export const editCustomerForm = defineFormView({
 });
 
 export const syncCustomer = defineAction({
-    name: 'syncCustomer',
     params: s.object({
         props: {
             id: s.integer(),
@@ -117,7 +114,6 @@ export const syncCustomer = defineAction({
 });
 
 export const deleteCustomer = defineAction({
-    name: 'deleteCustomer',
     params: s.object({
         props: {
             id: s.integer(),

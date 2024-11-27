@@ -17,7 +17,7 @@ export interface TableViewOptions<
     TSort extends TableSortOptions<TRow>,
     TPagination extends Pagination | undefined = undefined,
 > {
-    name: string;
+    title?: string;
     schema: TRow;
     params?: TParams;
     path?: string;
@@ -115,14 +115,13 @@ export function defineTableView<
     const component = tableComponent as ComponentAny;
 
     return defineView({
-        name: config.name,
         component,
         params,
         path: config.path,
         auth: config.auth,
+        title: config.title,
         actions: {
             fetch: defineAction({
-                name: `${config.name}.fetch`,
                 params: params,
                 result: fetchResult,
                 auth: config.auth,

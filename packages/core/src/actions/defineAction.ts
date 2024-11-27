@@ -1,9 +1,7 @@
 import { type Service, type ServiceContext, defineService } from '@nzyme/ioc';
-import type { Writable } from '@nzyme/types';
-import { createNamedFunction } from '@nzyme/utils';
 import * as s from '@superadmin/schema';
 
-import { MODULE_SYMBOL, type Module, isModule } from '../defineModule.js';
+import { type Submodule, defineSubmodule, isSubmodule } from '../defineSubmodule.js';
 import { ActionRegistry } from './ActionRegistry.js';
 import type { Authorizer } from '../auth/defineAuthorizer.js';
 import { loggedIn, noAuth } from '../auth/defineAuthorizer.js';
@@ -21,21 +19,25 @@ type ActionHandler<P extends s.Schema, R extends s.Schema> = (
     params: s.SchemaValue<P>,
 ) => s.SchemaValue<R> | Promise<s.SchemaValue<R>>;
 
+type ActionSubmodule<
+    TParams extends s.Schema = s.SchemaAny,
+    TResult extends s.Schema = s.Schema,
+    TInput extends s.Schema = TParams,
+> = Submodule & {
+    input: TInput;
+    params: TParams;
+    result: TResult;
+    auth: Authorizer;
+    handler?: Service<ActionHandler<TInput, TResult>>;
+    sst?: FunctionDefinition<TInput, TParams>;
+    visit?: (action: s.Action, visitor: ActionVisitor) => void;
+};
+
 export type ActionDefinition<
     TParams extends s.Schema = s.SchemaAny,
     TResult extends s.Schema = s.Schema,
     TInput extends s.Schema = TParams,
-> = Module &
-    ActionFactory<TInput, TResult> & {
-        name: string;
-        input: TInput;
-        params: TParams;
-        result: TResult;
-        auth: Authorizer;
-        handler?: Service<ActionHandler<TInput, TResult>>;
-        sst?: FunctionDefinition<TInput, TParams>;
-        visit?: (action: s.Action, visitor: ActionVisitor) => void;
-    };
+> = ActionSubmodule<TParams, TResult, TInput> & ActionFactory<TInput, TResult>;
 
 export interface ActionVisitor {
     (action: s.Action): void;
@@ -48,7 +50,6 @@ interface ActionOptions<
     TResult extends s.Schema = s.Schema<void>,
     TInput extends s.Schema = TParams,
 > {
-    name: string;
     params?: TParams;
     result?: TResult;
     auth?: Authorizer | false;
@@ -56,52 +57,45 @@ interface ActionOptions<
     handler?: (ctx: ServiceContext) => ActionHandler<TInput, TResult>;
     visit?: (action: s.Action<TInput, TResult>, visitor: ActionVisitor) => void;
 }
-
-export function defineAction<
-    TParams extends s.Schema = s.Schema<void>,
-    TResult extends s.Schema = s.Schema<void>,
->(options: ActionOptions<TParams, TResult, TParams>): ActionDefinition<TParams, TResult, TParams>;
 export function defineAction<
     TParams extends s.Schema = s.Schema<void>,
     TResult extends s.Schema = s.Schema<void>,
     TInput extends s.Schema = TParams,
 >(options: ActionOptions<TParams, TResult, TInput>): ActionDefinition<TParams, TResult, TInput>;
+export function defineAction<
+    TParams extends s.Schema = s.Schema<void>,
+    TResult extends s.Schema = s.Schema<void>,
+>(options: ActionOptions<TParams, TResult>): ActionDefinition<TParams, TResult>;
 export function defineAction(options: ActionOptions): ActionDefinition {
-    const name = options.name;
-    const factory = createNamedFunction<ActionFactory>(name, input => {
-        return s.coerce(ACTION_SCHEMA, { action: name, params: input as unknown });
-    });
+    const factory: ActionFactory = input => {
+        return s.coerce(ACTION_SCHEMA, { action: action.id, params: input as unknown });
+    };
 
     const action = factory as ActionDefinition;
 
-    (action as Writable<Module>)[MODULE_SYMBOL] = ACTION_SYMBOL;
-    action.params = options.params ?? s.void({ nullable: true });
-    action.sst = options.sst;
-    action.input = options.sst?.params ?? action.params;
-    action.result = options.result ?? s.void({ nullable: true });
+    const params = (options.params ?? s.void({ nullable: true })) as s.Schema;
+    const result = (options.result ?? s.void({ nullable: true })) as s.Schema;
 
-    if (options.auth === false) {
-        action.auth = noAuth;
-    } else {
-        action.auth = options.auth ?? loggedIn;
-    }
+    const submodule = defineSubmodule<ActionSubmodule>(ACTION_SYMBOL, {
+        params,
+        result,
+        sst: options.sst,
+        input: options.sst?.params ?? params,
+        auth: options.auth === false ? noAuth : (options.auth ?? loggedIn),
+        handler: options.handler ? defineService({ setup: options.handler }) : undefined,
+        visit: options.visit as ActionVisitor | undefined,
+        install(container) {
+            container.resolve(ActionRegistry).register(this as ActionDefinition);
+        },
+    });
 
-    if (options.handler) {
-        action.handler = defineService({
-            name: name,
-            setup: options.handler,
-        });
-    }
+    Object.assign(action, submodule);
 
-    action.install = function (container) {
-        container.resolve(ActionRegistry).register(this);
-    };
-
-    return Object.freeze(action);
+    return action;
 }
 
 export function isActionDefinition(value: unknown): value is ActionDefinition {
-    return isModule(value, ACTION_SYMBOL);
+    return isSubmodule(value, ACTION_SYMBOL);
 }
 
 export function isAction<

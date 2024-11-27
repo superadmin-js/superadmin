@@ -24,7 +24,7 @@ export function setupActionHandler(container: Container) {
 
     const actionHandler = defineEventHandler(async event => {
         try {
-            const actionName = assertValue(event.context.params?.action);
+            const actionName = assertValue(event.context.params?._);
             const handler = resolveHandler(actionName);
 
             if (!handler) {
@@ -47,7 +47,7 @@ export function setupActionHandler(container: Container) {
             const body: unknown = await readBody(event);
 
             const action = s.coerce(actionSchema, {
-                action: actionDef.name,
+                action: actionDef.id,
                 params: body,
             });
 
@@ -82,7 +82,7 @@ export function setupActionHandler(container: Container) {
         }
     });
 
-    router.post('/action/:action', actionHandler);
+    router.post('/action/**', actionHandler);
 
     function resolveHandler(actionName: string) {
         const handler = handlers.resolve(actionName);
@@ -120,6 +120,10 @@ export function setupActionHandler(container: Container) {
 
     async function processResult(actionDef: ActionDefinition, result: unknown) {
         if (!s.isSchema(actionDef.result, s.action)) {
+            return;
+        }
+
+        if (!result) {
             return;
         }
 

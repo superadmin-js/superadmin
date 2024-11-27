@@ -1,8 +1,6 @@
 import path from 'path';
 
-import { defineInjectable } from '@nzyme/ioc';
-
-import type { Module } from './defineModule.js';
+import { type Module, defineInjectable } from '@nzyme/ioc';
 
 export interface ProjectConfigInit {
     port?: number;

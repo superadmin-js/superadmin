@@ -5,7 +5,6 @@ import { defineAction } from './defineAction.js';
 import type { View } from '../views/defineView.js';
 
 export const openModalInternal = defineAction({
-    name: 'superadmin.openModal',
     params: s.object({
         props: {
             view: s.string(),
@@ -18,7 +17,7 @@ export function openModal<V extends View<s.Schema<void>>>(view: V): s.Action;
 export function openModal<V extends View>(view: V, params: SchemaValue<V['params']>): s.Action;
 export function openModal(view: View, params?: unknown) {
     return openModalInternal({
-        view: view.name,
+        view: view.id,
         params: s.serialize(view.params, params),
     });
 }

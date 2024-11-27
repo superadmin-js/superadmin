@@ -7,7 +7,7 @@ import type { ComponentAny } from '../components/defineComponent.js';
 import { defineComponent } from '../components/defineComponent.js';
 
 export interface FormViewConfig<S extends s.ObjectSchema, TParams extends s.Schema> {
-    name: string;
+    title?: string;
     params?: TParams;
     path?: string;
     schema: S;
@@ -29,7 +29,7 @@ export function defineFormView<S extends s.ObjectSchema, P extends s.Schema = s.
 
     const component = formComponent as ComponentAny;
     return defineView({
-        name: config.name,
+        title: config.title,
         component,
         params,
         path: config.path,
@@ -39,7 +39,6 @@ export function defineFormView<S extends s.ObjectSchema, P extends s.Schema = s.
         },
         actions: {
             fetch: defineAction({
-                name: `${config.name}.fetch`,
                 params: params,
                 result: schema,
                 handler: () => {
@@ -48,7 +47,6 @@ export function defineFormView<S extends s.ObjectSchema, P extends s.Schema = s.
                 },
             }),
             submit: defineAction({
-                name: `${config.name}.submit`,
                 params: schema,
                 result: s.action({ nullable: true, optional: true }),
             }),

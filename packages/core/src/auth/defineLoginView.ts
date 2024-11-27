@@ -7,7 +7,6 @@ import { defineComponent } from '../components/defineComponent.js';
 import { defineView } from '../views/defineView.js';
 
 export interface LoginViewConfig<TForm extends s.Schema> {
-    name: string;
     title?: string;
     path?: string;
     form?: TForm;
@@ -25,8 +24,7 @@ export function defineLoginView<TForm extends s.Schema = s.Schema<void>>(
     const component = loginComponent as ComponentAny;
 
     return defineView({
-        name: config.name,
-        title: config.title,
+        title: config.title || 'Login',
         path: config.path,
         auth: noAuth,
         component,
@@ -36,7 +34,6 @@ export function defineLoginView<TForm extends s.Schema = s.Schema<void>>(
         },
         actions: {
             submit: defineAction({
-                name: `${config.name}.submit`,
                 params: config.form,
                 result: s.action(),
                 auth: noAuth,

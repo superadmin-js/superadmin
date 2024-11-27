@@ -1,4 +1,4 @@
-import { defineModule } from '@superadmin/core';
+import { defineSubmodule } from '@superadmin/core';
 import type { Schema, SchemaBase } from '@superadmin/schema';
 
 import type { EditorComponent } from './EditorComponent.js';
@@ -10,7 +10,7 @@ export interface EditorOptions<S extends Schema> {
 }
 
 export function defineEditor<S extends Schema>(options: EditorOptions<S>) {
-    return defineModule({
+    return defineSubmodule({
         install(container) {
             container.resolve(EditorRegistry).register(options.schema, options.component);
         },

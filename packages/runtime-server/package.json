@@ -6,7 +6,8 @@
     "type": "module",
     "sideEffects": false,
     "exports": {
-        "./dev": "./dist/dev.js"
+        "./dev": "./dist/dev.js",
+        "./module": "./dist/module.js"
     },
     "scripts": {
         "eslint": "eslint . --fix --cache",
@@ -19,6 +20,7 @@
         "@nzyme/types": "*",
         "@nzyme/utils": "*",
         "@superadmin/core": "*",
+        "@superadmin/runtime-common": "*",
         "@superadmin/schema": "*",
         "@superadmin/server": "*",
         "@superadmin/validation": "*",
