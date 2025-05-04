@@ -13,7 +13,6 @@ import { onEventEmitter } from '@nzyme/vue-utils';
 import { ActionDispatcher } from '@superadmin/client';
 import { ActionRegistry } from '@superadmin/core';
 import Icon from '@superadmin/ui/Icon.vue';
-import { prettifyName } from '@superadmin/utils';
 
 import { MenuService } from './MenuService';
 
@@ -54,7 +53,7 @@ onEventEmitter(menuService, 'open', async ({ items, event }) => {
             };
 
             const menuItem: MenuItem = {
-                label: item.label || prettifyName(actionDef.name),
+                label: item.label || actionDef.title,
                 icon: item.icon,
                 command: handler as () => void,
                 style: getItemStyle(item),

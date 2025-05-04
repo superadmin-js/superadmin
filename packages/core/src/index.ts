@@ -29,7 +29,7 @@ export { type LoginView, type LoginViewConfig, defineLoginView } from './auth/de
 export * from './auth/defineUser.js';
 export { authenticate, type AuthenticateInput } from './auth/authenticate.js';
 
-export * from './components/defineComponent.js';
+export * from './defineComponent.js';
 
 export * from './functions/defineFunction.js';
 export * from './functions/defineFunctionHandler.js';

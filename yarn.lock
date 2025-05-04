@@ -3256,6 +3256,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@nzyme/validate@workspace:nzyme/packages/validate"
   dependencies:
+    "@nzyme/ioc": "npm:*"
     "@nzyme/types": "npm:*"
     "@nzyme/utils": "npm:*"
   languageName: unknown
@@ -3353,6 +3354,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@nzyme/zchema@workspace:nzyme/packages/zchema"
   dependencies:
+    "@nzyme/ioc": "npm:*"
     "@nzyme/types": "npm:*"
     "@nzyme/utils": "npm:*"
     "@nzyme/validate": "npm:*"
@@ -5328,7 +5330,9 @@ __metadata:
     "@superadmin/ui": "npm:*"
     "@superadmin/utils": "npm:*"
     "@superadmin/validation": "npm:*"
+    "@types/debug": "npm:^4.1.12"
     "@types/node": "npm:^22.7.7"
+    debug: "npm:^4.3.7"
     primevue: "npm:^4.2.2"
     tailwindcss: "npm:^3.4.15"
     vitest: "npm:^2.1.3"
@@ -5439,6 +5443,7 @@ __metadata:
     "@nzyme/types": "npm:*"
     "@nzyme/utils": "npm:*"
     "@nzyme/vue": "npm:*"
+    "@nzyme/vue-ioc": "npm:*"
     "@nzyme/vue-utils": "npm:*"
     "@primevue/forms": "npm:^4.2.2"
     "@superadmin/client": "npm:*"

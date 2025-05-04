@@ -3,8 +3,8 @@ import * as s from '@superadmin/schema';
 import { defineView } from './defineView.js';
 import { defineAction } from '../actions/defineAction.js';
 import type { Authorizer } from '../auth/defineAuthorizer.js';
-import type { ComponentAny } from '../components/defineComponent.js';
-import { defineComponent } from '../components/defineComponent.js';
+import type { ComponentAny } from '../defineComponent.js';
+import { defineComponent } from '../defineComponent.js';
 
 export interface FormViewConfig<S extends s.ObjectSchema, TParams extends s.Schema> {
     title?: string;

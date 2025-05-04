@@ -1,7 +1,7 @@
 import type { SomeObject } from '@nzyme/types';
 import type * as s from '@superadmin/schema';
 
-import { type Component, defineComponent } from '../components/defineComponent.js';
+import { type Component, defineComponent } from '../defineComponent.js';
 
 export type PaginationProps<
     TParams extends s.Schema = s.Schema,

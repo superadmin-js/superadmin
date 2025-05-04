@@ -1,1 +1,1 @@
-export * from '@nzyme/validate';
+export * from '@nzyme/validation';

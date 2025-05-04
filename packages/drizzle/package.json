@@ -20,9 +20,9 @@
         "build": "tsc --build"
     },
     "dependencies": {
-        "@nzyme/ioc": "*",
-        "@nzyme/types": "*",
-        "@nzyme/utils": "*",
+        "@nzyme/ioc": "^0.14.0",
+        "@nzyme/types": "^0.14.0",
+        "@nzyme/utils": "^0.14.0",
         "@superadmin/core": "*",
         "@superadmin/devkit": "*",
         "@superadmin/drizzle-core": "*",
@@ -31,7 +31,6 @@
         "@superadmin/utils": "*"
     },
     "devDependencies": {
-        "@superadmin/eslint": "*",
         "@superadmin/tsconfig": "*",
         "@types/node": "^22.7.7",
         "vitest": "^2.1.3"

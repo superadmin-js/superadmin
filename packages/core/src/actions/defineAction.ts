@@ -6,6 +6,7 @@ import { ActionRegistry } from './ActionRegistry.js';
 import type { Authorizer } from '../auth/defineAuthorizer.js';
 import { loggedIn, noAuth } from '../auth/defineAuthorizer.js';
 import type { FunctionDefinition } from '../functions/defineFunction.js';
+import { prettifyName } from '@superadmin/utils';
 
 export const ACTION_SYMBOL = Symbol('action');
 const ACTION_SCHEMA = s.action();
@@ -24,6 +25,7 @@ type ActionSubmodule<
     TResult extends s.Schema = s.Schema,
     TInput extends s.Schema = TParams,
 > = Submodule & {
+    title: string;
     input: TInput;
     params: TParams;
     result: TResult;
@@ -50,6 +52,7 @@ interface ActionOptions<
     TResult extends s.Schema = s.Schema<void>,
     TInput extends s.Schema = TParams,
 > {
+    title?: string;
     params?: TParams;
     result?: TResult;
     auth?: Authorizer | false;
@@ -80,10 +83,16 @@ export function defineAction(options: ActionOptions): ActionDefinition {
         params,
         result,
         sst: options.sst,
+        title: options.title ?? '',
         input: options.sst?.params ?? params,
         auth: options.auth === false ? noAuth : (options.auth ?? loggedIn),
         handler: options.handler ? defineService({ setup: options.handler }) : undefined,
         visit: options.visit as ActionVisitor | undefined,
+        init(id) {
+            if (!this.title) {
+                this.title = prettifyName(id, ':');
+            }
+        },
         install(container) {
             container.resolve(ActionRegistry).register(this as ActionDefinition);
         },

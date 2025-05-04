@@ -5,8 +5,8 @@ import { defineView } from './defineView.js';
 import type { ActionButton } from '../actions/ActionButton.js';
 import { defineAction } from '../actions/defineAction.js';
 import type { Authorizer } from '../auth/defineAuthorizer.js';
-import type { ComponentAny } from '../components/defineComponent.js';
-import { defineComponent } from '../components/defineComponent.js';
+import type { ComponentAny } from '../defineComponent.js';
+import { defineComponent } from '../defineComponent.js';
 import type { Pagination } from '../pagination/definePagination.js';
 
 export type TableSortOptions<TRow extends s.NonNullable<s.ObjectSchema>> = boolean | RowProps<TRow>;

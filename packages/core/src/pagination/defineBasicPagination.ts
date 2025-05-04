@@ -3,8 +3,8 @@ import * as v from '@superadmin/validation';
 
 import type { PaginationEvents, PaginationProps } from './definePagination.js';
 import { definePagination } from './definePagination.js';
-import type { ComponentAny } from '../components/defineComponent.js';
-import { defineComponent } from '../components/defineComponent.js';
+import type { ComponentAny } from '../defineComponent.js';
+import { defineComponent } from '../defineComponent.js';
 
 export interface BasicPaginationOptions {
     pageSizes?: number[];

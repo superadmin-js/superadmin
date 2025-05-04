@@ -7,7 +7,7 @@ import type { Submodule } from '../defineSubmodule.js';
 import { defineSubmodule, isSubmodule } from '../defineSubmodule.js';
 import { ViewRegistry } from './ViewRegistry.js';
 import { type Authorizer, loggedIn, noAuth } from '../auth/defineAuthorizer.js';
-import { type Component, defineComponent } from '../components/defineComponent.js';
+import { type Component, defineComponent } from '../defineComponent.js';
 
 const VIEW_SYMBOL = Symbol('view');
 

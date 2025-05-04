@@ -14,13 +14,13 @@
         "build": "tsc --build"
     },
     "dependencies": {
-        "@nzyme/crypto-utils": "*",
-        "@nzyme/fetch-utils": "*",
-        "@nzyme/ioc": "*",
-        "@nzyme/types": "*",
-        "@nzyme/utils": "*",
-        "@nzyme/vue-ioc": "*",
-        "@nzyme/vue-utils": "*",
+        "@nzyme/crypto-utils": "^0.14.0",
+        "@nzyme/fetch-utils": "^0.14.0",
+        "@nzyme/ioc": "^0.14.0",
+        "@nzyme/types": "^0.14.0",
+        "@nzyme/utils": "^0.14.0",
+        "@nzyme/vue-ioc": "^0.14.0",
+        "@nzyme/vue-utils": "^0.14.0",
         "@superadmin/core": "*",
         "@superadmin/schema": "*",
         "@superadmin/utils": "*",
@@ -30,7 +30,7 @@
         "vue-router": "^4.4.5"
     },
     "devDependencies": {
-        "@nzyme/eslint": "*",
+        "@nzyme/eslint": "^0.14.0",
         "@superadmin/tsconfig": "*",
         "@types/node": "^22.7.7",
         "vitest": "^2.1.3"

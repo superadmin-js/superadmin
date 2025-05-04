@@ -13,11 +13,10 @@
         "build": "tsc --build"
     },
     "dependencies": {
-        "@nzyme/utils": "*",
-        "@nzyme/zchema": "*"
+        "@nzyme/utils": "^0.14.0",
+        "@nzyme/zchema": "^0.14.0"
     },
     "devDependencies": {
-        "@superadmin/eslint": "*",
         "@superadmin/tsconfig": "*",
         "@types/node": "^22.7.7",
         "vitest": "^2.1.3"

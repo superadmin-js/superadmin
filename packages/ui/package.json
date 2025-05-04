@@ -15,12 +15,13 @@
         "build": "tsc --build"
     },
     "dependencies": {
-        "@nzyme/crypto-utils": "*",
-        "@nzyme/ioc": "*",
-        "@nzyme/types": "*",
-        "@nzyme/utils": "*",
-        "@nzyme/vue": "*",
-        "@nzyme/vue-utils": "*",
+        "@nzyme/crypto-utils": "^0.14.0",
+        "@nzyme/ioc": "^0.14.0",
+        "@nzyme/types": "^0.14.0",
+        "@nzyme/utils": "^0.14.0",
+        "@nzyme/vue": "^0.14.0",
+        "@nzyme/vue-ioc": "^0.14.0",
+        "@nzyme/vue-utils": "^0.14.0",
         "@primevue/forms": "^4.2.2",
         "@superadmin/client": "*",
         "@superadmin/core": "*",
@@ -34,7 +35,6 @@
         "vue-router": "^4.4.5"
     },
     "devDependencies": {
-        "@superadmin/eslint": "*",
         "@superadmin/tsconfig": "*",
         "@types/feather-icons": "^4.29.4",
         "@types/node": "^22.7.7",

@@ -13,13 +13,13 @@
         "build": "tsc --build"
     },
     "dependencies": {
-        "@nzyme/esm": "*",
-        "@nzyme/ioc": "*",
-        "@nzyme/logging": "*",
-        "@nzyme/project-utils": "*",
-        "@nzyme/rollup-utils": "*",
-        "@nzyme/types": "*",
-        "@nzyme/utils": "*",
+        "@nzyme/esm": "^0.14.0",
+        "@nzyme/ioc": "^0.14.0",
+        "@nzyme/logging": "^0.14.0",
+        "@nzyme/project-utils": "^0.14.0",
+        "@nzyme/rollup-utils": "^0.14.0",
+        "@nzyme/types": "^0.14.0",
+        "@nzyme/utils": "^0.14.0",
         "@rollup/plugin-alias": "^5.1.1",
         "@rollup/plugin-commonjs": "^26.0.1",
         "@rollup/plugin-json": "^6.1.0",
@@ -47,7 +47,6 @@
         "vue-tsc": "^2.1.6"
     },
     "devDependencies": {
-        "@superadmin/eslint": "*",
         "@superadmin/tsconfig": "*",
         "@types/debug": "^4.1.12",
         "@types/lodash.debounce": "^4.0.9",

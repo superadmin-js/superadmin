@@ -8,7 +8,6 @@ import { useService } from '@nzyme/vue-ioc';
 import { useEmitAsync } from '@nzyme/vue-utils';
 import { ActionDispatcher } from '@superadmin/client';
 import { type ActionButton, ActionRegistry } from '@superadmin/core';
-import { prettifyName } from '@superadmin/utils';
 
 import Icon from './Icon.vue';
 
@@ -48,7 +47,7 @@ const label = computed(() => {
     }
 
     if (actionDef.value) {
-        return prettifyName(actionDef.value.name);
+        return actionDef.value.title;
     }
 
     return undefined;

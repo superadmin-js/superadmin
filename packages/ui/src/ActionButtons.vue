@@ -6,14 +6,14 @@ import type { ActionButton } from '@superadmin/core';
 
 import Button from './ActionButton.vue';
 
-defineProps({
+const props = defineProps({
     buttons: {
         type: Array as PropType<ActionButton[]>,
     },
     size: {
         type: String as PropType<'small' | 'large'>,
     },
-    class:classProp
+    class: classProp,
 });
 
 type Events = {
@@ -27,8 +27,8 @@ const emitAsync = useEmitAsync<Events>();
 <template>
     <Button
         v-for="(button, index) in buttons"
-        :class="class"
         :key="index"
+        :class="props.class"
         :button="button"
         :size="size"
         @action="emitAsync('action', $event)"

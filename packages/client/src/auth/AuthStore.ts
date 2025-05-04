@@ -1,3 +1,4 @@
+import createDebug from 'debug';
 import { computed, watch } from 'vue';
 
 import { defineService } from '@nzyme/ioc';
@@ -12,6 +13,7 @@ export const AuthStore = defineService({
     name: 'AuthStore',
     setup({ inject }) {
         const authRegistry = inject(AuthRegistry);
+        const debug = createDebug('superadmin:auth');
 
         const authData = storageRef<AuthData | null>({
             key: 'superadmin:auth',
@@ -88,10 +90,18 @@ export const AuthStore = defineService({
         });
 
         function setAuth(auth: AuthData | null) {
+            if (auth) {
+                debug('Authenticated user %s %O', auth?.userType, auth?.userData);
+            } else {
+                debug('Unauthenticated');
+            }
+
             authData.value = auth;
         }
 
         async function checkAuth() {
+            debug('Checking authentication');
+
             let auth = authData.value;
             if (!auth) {
                 return false;
@@ -99,32 +109,32 @@ export const AuthStore = defineService({
 
             let now = Date.now();
             let expireAt = auth.authExpiration.getTime();
-
-            if (now >= expireAt) {
-                setAuth(null);
-                return false;
-            }
-
             const checkAt = expireAt - 1000 * 60 * 5;
+
             if (now < checkAt) {
+                debug('Authentication still valid');
                 return true;
             }
 
             if (now >= auth.refreshExpiration.getTime()) {
+                debug('Refresh token expired');
                 setAuth(null);
                 return false;
             }
 
             const userType = authRegistry.resolveUserType(auth.userType);
             if (!userType) {
+                debug('Invalid user type');
                 setAuth(null);
                 return false;
             }
 
+            debug('Refreshing authentication token');
             await inject(ActionDispatcher)(userType.actions.refresh(auth.refreshToken));
 
             auth = authData.value;
             if (!auth) {
+                debug('Failed to refresh authentication token');
                 return false;
             }
 
@@ -132,6 +142,7 @@ export const AuthStore = defineService({
             expireAt = auth.authExpiration.getTime();
 
             if (now >= expireAt) {
+                debug('Failed to refresh authentication token');
                 setAuth(null);
                 return false;
             }

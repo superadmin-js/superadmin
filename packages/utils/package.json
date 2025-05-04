@@ -17,11 +17,10 @@
         "./internal": "./dist/internal.js"
     },
     "dependencies": {
-        "@nzyme/types": "*",
-        "@nzyme/utils": "*"
+        "@nzyme/types": "^0.14.0",
+        "@nzyme/utils": "^0.14.0"
     },
     "devDependencies": {
-        "@superadmin/eslint": "*",
         "@superadmin/tsconfig": "*",
         "@types/node": "^22.7.7",
         "vitest": "^2.1.3"

@@ -14,11 +14,11 @@
         "build": "tsc --build"
     },
     "dependencies": {
-        "@nzyme/crypto-utils": "*",
-        "@nzyme/ioc": "*",
-        "@nzyme/rollup-utils": "*",
-        "@nzyme/types": "*",
-        "@nzyme/utils": "*",
+        "@nzyme/crypto-utils": "^0.14.0",
+        "@nzyme/ioc": "^0.14.0",
+        "@nzyme/rollup-utils": "^0.14.0",
+        "@nzyme/types": "^0.14.0",
+        "@nzyme/utils": "^0.14.0",
         "@superadmin/core": "*",
         "@superadmin/runtime-common": "*",
         "@superadmin/schema": "*",
@@ -30,7 +30,6 @@
         "source-map-support": "^0.5.21"
     },
     "devDependencies": {
-        "@superadmin/eslint": "*",
         "@superadmin/tsconfig": "*",
         "@types/node": "^22.7.7",
         "@types/source-map-support": "^0.5.10",

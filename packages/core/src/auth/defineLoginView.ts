@@ -2,8 +2,8 @@ import * as s from '@superadmin/schema';
 
 import { noAuth } from './defineAuthorizer.js';
 import { defineAction } from '../actions/defineAction.js';
-import type { ComponentAny } from '../components/defineComponent.js';
-import { defineComponent } from '../components/defineComponent.js';
+import type { ComponentAny } from '../defineComponent.js';
+import { defineComponent } from '../defineComponent.js';
 import { defineView } from '../views/defineView.js';
 
 export interface LoginViewConfig<TForm extends s.Schema> {

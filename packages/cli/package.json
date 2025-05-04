@@ -15,11 +15,11 @@
         "build": "tsc --build"
     },
     "dependencies": {
-        "@nzyme/ioc": "*",
-        "@nzyme/logging": "*",
-        "@nzyme/node-utils": "*",
-        "@nzyme/project-utils": "*",
-        "@nzyme/utils": "*",
+        "@nzyme/ioc": "^0.14.0",
+        "@nzyme/logging": "^0.14.0",
+        "@nzyme/node-utils": "^0.14.0",
+        "@nzyme/project-utils": "^0.14.0",
+        "@nzyme/utils": "^0.14.0",
         "@oclif/core": "^4.0.33",
         "@oclif/plugin-help": "^6.2.18",
         "@oclif/plugin-version": "^2.2.16",
@@ -33,7 +33,6 @@
         "tsx": "^4.19.2"
     },
     "devDependencies": {
-        "@superadmin/eslint": "*",
         "@superadmin/tsconfig": "*",
         "@types/node": "^22.7.7",
         "@types/source-map-support": "^0.5.10",
