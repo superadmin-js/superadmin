@@ -1,22 +1,31 @@
 import * as s from '@superadmin/schema';
-import type { SchemaValue } from '@superadmin/schema';
 
-import { defineAction } from './defineAction.js';
 import type { View } from '../views/defineView.js';
+import { defineAction } from './defineAction.js';
 
-export const goToViewInternal = defineAction({
+/**
+ *
+ */
+export const goToViewAction = defineAction({
     params: s.object({
-        props: {
-            view: s.string(),
-            params: s.unknown({ optional: true }),
-        },
+        view: s.string(),
+        params: s.unknown({ optional: true }),
     }),
 });
 
+/**
+ *
+ */
 export function goToView<V extends View<s.Schema<void>>>(view: V): s.Action;
-export function goToView<V extends View>(view: V, params: SchemaValue<V['params']>): s.Action;
+/**
+ *
+ */
+export function goToView<V extends View>(view: V, params: s.Infer<V['params']>): s.Action;
+/**
+ *
+ */
 export function goToView(view: View, params?: unknown) {
-    return goToViewInternal({
+    return goToViewAction({
         view: view.id,
         params: s.serialize(view.params, params),
     });

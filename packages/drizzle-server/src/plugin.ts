@@ -1,12 +1,18 @@
-import { type SQL, type SQLWrapper, desc } from 'drizzle-orm';
+import { desc } from 'drizzle-orm';
+import type { SQL, SQLWrapper } from 'drizzle-orm';
 
 import type { Submodule } from '@superadmin/core';
 import { defineSubmodule } from '@superadmin/core';
+import { defineActionHandler } from '@superadmin/core';
 import type { Entity } from '@superadmin/drizzle-core';
-import { DrizzleWrapper, EntityRegistry } from '@superadmin/drizzle-core';
+import { DrizzleClient, EntityRegistry } from '@superadmin/drizzle-core';
 import * as s from '@superadmin/schema';
-import { defineActionHandler } from '@superadmin/server';
 
+import { queryDrizzle } from './utils/queryDrizzle.js';
+
+/**
+ *
+ */
 export const plugin = defineSubmodule({
     install(container) {
         const entities = container.resolve(EntityRegistry);
@@ -23,6 +29,7 @@ export const plugin = defineSubmodule({
 
 function setupEntityTableView(entity: Entity) {
     const columns: Record<string, SQLWrapper> = {};
+    const table = entity.table;
     const tableView = entity.tableView;
     const tableConfig = tableView.config;
 
@@ -32,9 +39,10 @@ function setupEntityTableView(entity: Entity) {
 
     const tableFetch = defineActionHandler({
         action: tableView.actions.fetch,
-        setup({ inject }) {
-            const drizzle = inject(DrizzleWrapper);
-
+        deps: {
+            drizzle: DrizzleClient,
+        },
+        setup({ drizzle }) {
             return async params => {
                 let sort: SQL | undefined;
                 if (params.sort) {
@@ -49,8 +57,9 @@ function setupEntityTableView(entity: Entity) {
                 const offset = (pagination.page - 1) * pagination.pageSize;
                 const limit = pagination.pageSize + 1;
 
-                const rows = await drizzle.query({
-                    table: entity.table,
+                const rows = await queryDrizzle({
+                    drizzle,
+                    table,
                     columns,
                     sort,
                     offset,

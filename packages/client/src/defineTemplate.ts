@@ -8,6 +8,9 @@ interface TemplateComponentOptions<TComponent extends Component> {
     component: ComponentTemplate<TComponent>;
 }
 
+/**
+ *
+ */
 export function defineTemplate<TComponent extends Component>(
     component: TComponent,
     options: TemplateComponentOptions<TComponent>,

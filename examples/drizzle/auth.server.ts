@@ -1,5 +1,5 @@
-import { authenticate, showToast } from '@superadmin/core';
-import { defineActionHandler } from '@superadmin/server';
+import { authenticate, showToast } from 'superadmin';
+import { defineActionHandler } from 'superadmin';
 
 import { LoginView, User } from './auth.common.js';
 

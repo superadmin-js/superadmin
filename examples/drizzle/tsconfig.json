@@ -6,31 +6,5 @@
         "noEmit": true,
         "declaration": false
     },
-    "include": ["./**/*.ts", "./**/*.tsx", "./**/*.vue", "./**/*.json"],
-    "references": [
-        {
-            "path": "../../packages/client/tsconfig.json"
-        },
-        {
-            "path": "../../packages/core/tsconfig.json"
-        },
-        {
-            "path": "../../packages/drizzle/tsconfig.json"
-        },
-        {
-            "path": "../../packages/ioc/tsconfig.json"
-        },
-        {
-            "path": "../../packages/schema/tsconfig.json"
-        },
-        {
-            "path": "../../packages/server/tsconfig.json"
-        },
-        {
-            "path": "../../packages/validation/tsconfig.json"
-        },
-        {
-            "path": "../../packages/cli/tsconfig.json"
-        }
-    ]
+    "include": ["./**/*.ts", "./**/*.tsx", "./**/*.vue", "./**/*.json"]
 }

@@ -1,8 +1,11 @@
 import { defineService } from '@nzyme/ioc';
-import type { ActionDefinition } from '@superadmin/core';
 
+import type { ActionDefinition } from './defineAction.js';
 import type { ActionHandler } from './defineActionHandler.js';
 
+/**
+ *
+ */
 export const ActionHandlerRegistry = defineService({
     name: 'ActionHandlerRegistry',
     setup() {

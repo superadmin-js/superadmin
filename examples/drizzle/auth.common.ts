@@ -1,17 +1,15 @@
-import { defineLoginView, defineUser } from '@superadmin/core';
-import * as s from '@superadmin/schema';
-import * as v from '@superadmin/validation';
+import { defineLoginView, defineUser } from 'superadmin';
+import * as s from 'superadmin/schema';
+import * as v from 'superadmin/validation';
 
 export const User = defineUser({
     name: 'user',
     schema: s.object({
-        props: {
-            id: s.integer(),
-            firstName: s.string(),
-            lastName: s.string(),
-            email: s.string(),
-            role: s.enum(['admin', 'user']),
-        },
+        id: s.integer(),
+        firstName: s.string(),
+        lastName: s.string(),
+        email: s.string(),
+        role: s.enum(['admin', 'user']),
     }),
 });
 
@@ -20,13 +18,11 @@ export const AdminUser = User.with(user => user.role === 'admin');
 export const LoginView = defineLoginView({
     path: '/login',
     form: s.object({
-        props: {
-            email: s.string({
-                validators: [v.requiredValidator(), v.emailValidator()],
-            }),
-            password: s.password({
-                validators: [v.requiredValidator()],
-            }),
-        },
+        email: s.string({
+            validate: [v.required(), v.email()],
+        }),
+        password: s.password({
+            validate: [v.required()],
+        }),
     }),
 });

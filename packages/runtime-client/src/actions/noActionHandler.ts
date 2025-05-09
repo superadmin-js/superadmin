@@ -1,5 +1,5 @@
 import { noop } from '@nzyme/utils';
-import { defineActionHandler } from '@superadmin/client';
+import { defineActionHandler } from '@superadmin/core';
 import { noAction } from '@superadmin/core';
 
 export const noActionHandler = defineActionHandler({

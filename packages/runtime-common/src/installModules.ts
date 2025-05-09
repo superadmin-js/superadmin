@@ -1,13 +1,20 @@
 import type { Container } from '@nzyme/ioc';
+
 import type { Submodule } from '@superadmin/core';
 import { isSubmodule } from '@superadmin/core';
 import { initializeSubmodule, installSubmodule } from '@superadmin/core/internal';
 
 import type { RuntimeModules } from './RuntimeModules.js';
 
+/**
+ *
+ */
 export function installModules(container: Container, modules: RuntimeModules) {
     const rootSubmodules: Submodule[] = [];
-    const childSubmodules: { id: string; submodule: Submodule }[] = [];
+    const childSubmodules: {
+        id: string;
+        submodule: Submodule;
+    }[] = [];
 
     for (const [moduleName, module] of Object.entries(modules)) {
         for (const [submoduleName, submodule] of Object.entries(module)) {
@@ -31,7 +38,7 @@ export function installModules(container: Container, modules: RuntimeModules) {
     }
 
     for (let i = 0; i < childSubmodules.length; i++) {
-        const { id, submodule } = childSubmodules[i];
+        const { id, submodule } = childSubmodules[i]!;
         if (submodule.id) {
             continue;
         }
@@ -52,7 +59,7 @@ export function installModules(container: Container, modules: RuntimeModules) {
     }
 
     for (let i = 0; i < childSubmodules.length; i++) {
-        const { id, submodule } = childSubmodules[i];
+        const { id, submodule } = childSubmodules[i]!;
         const children = installSubmodule(submodule, container);
 
         processChildren(id, children, (childId, child) => {

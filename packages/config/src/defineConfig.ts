@@ -1,32 +1,81 @@
-import path from 'path';
+import { join as pathJoin } from 'path';
 
-import { type Module, defineInjectable } from '@nzyme/ioc';
+import { defineInterface } from '@nzyme/ioc';
+import type { Module } from '@nzyme/ioc';
 
+/**
+ *
+ */
 export interface ProjectConfigInit {
+    /**
+     *
+     */
     port?: number;
+    /**
+     *
+     */
     theme?: string;
+    /**
+     *
+     */
     basePath?: string;
+    /**
+     *
+     */
     logo?: string;
+    /**
+     *
+     */
     plugins?: Module[];
 }
 
+/**
+ *
+ */
 export interface ProjectConfig {
+    /**
+     *
+     */
     port: number;
+    /**
+     *
+     */
     theme: string;
+    /**
+     *
+     */
     cwd: string;
+    /**
+     *
+     */
     runtimePath: string;
+    /**
+     *
+     */
     basePath: string;
+    /**
+     *
+     */
     logo: string;
+    /**
+     *
+     */
     plugins: Module[];
 }
 
-export const ProjectConfig = defineInjectable<ProjectConfig>({
+/**
+ *
+ */
+export const ProjectConfig = defineInterface<ProjectConfig>({
     name: 'ProjectConfig',
 });
 
+/**
+ *
+ */
 export function defineConfig(config: ProjectConfigInit): ProjectConfig {
     const cwd = process.cwd();
-    const runtimePath = path.join(cwd, '.superadmin');
+    const runtimePath = pathJoin(cwd, '.superadmin');
     const basePath = config.basePath || '/';
 
     return {

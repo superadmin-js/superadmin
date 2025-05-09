@@ -1,8 +1,9 @@
+import type { Container } from '@nzyme/ioc';
+import createDebug from 'debug';
 import type { RouteRecordRaw } from 'vue-router';
 import { createRouter, createWebHistory } from 'vue-router';
 
-import type { Container } from '@nzyme/ioc';
-import { AuthStore } from '@superadmin/client';
+import { AuthChecker, AuthStore } from '@superadmin/client';
 import type { View } from '@superadmin/core';
 import { ViewRegistry } from '@superadmin/core';
 import { loginComponent } from '@superadmin/core/internal';
@@ -10,9 +11,14 @@ import { loginComponent } from '@superadmin/core/internal';
 import NavigationLayout from './components/NavigationLayout.vue';
 import PageViewRenderer from './views/PageViewRenderer.vue';
 
+/**
+ *
+ */
 export function setupRouter(container: Container) {
     const authStore = container.resolve(AuthStore);
+    const authChecker = container.resolve(AuthChecker);
     const viewRegistry = container.resolve(ViewRegistry);
+    const debug = createDebug('superadmin:router');
 
     const routes: RouteRecordRaw[] = [];
     const routesWithNavigation: RouteRecordRaw[] = [];
@@ -36,8 +42,8 @@ export function setupRouter(container: Container) {
             path: view.path,
             component: PageViewRenderer,
             props: { view },
-            beforeEnter: async (to, from, next) => {
-                await authStore.checkAuth();
+            beforeEnter: async (to, _from, next) => {
+                await authChecker();
 
                 const authorized = view.auth.isAuthorized(authStore.auth);
                 if (authorized) {
@@ -61,6 +67,15 @@ export function setupRouter(container: Container) {
     const router = createRouter({
         routes,
         history: createWebHistory(),
+    });
+
+    router.beforeEach((to, from, next) => {
+        debug(`before %s → %s`, from.path, to.path);
+        next();
+    });
+
+    router.afterEach((to, from) => {
+        debug(`after %s → %s`, from.path, to.path);
     });
 
     return router;

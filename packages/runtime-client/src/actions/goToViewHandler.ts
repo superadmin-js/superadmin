@@ -1,15 +1,16 @@
-import { Router, defineActionHandler } from '@superadmin/client';
-import { ViewRegistry } from '@superadmin/core';
-import { goToViewInternal } from '@superadmin/core/module';
+import { Router } from '@superadmin/client';
+import { defineActionHandler, ViewRegistry } from '@superadmin/core';
+import { goToViewAction } from '@superadmin/core/internal';
 
 export const goToViewHandler = defineActionHandler({
-    action: goToViewInternal,
-    setup: ({ inject }) => {
-        const router = inject(Router);
-        const viewRegistry = inject(ViewRegistry);
-
+    action: goToViewAction,
+    deps: {
+        router: Router,
+        viewRegistry: ViewRegistry,
+    },
+    setup({ router, viewRegistry }) {
         return async params => {
-            const view = viewRegistry.getByName(params.view);
+            const view = viewRegistry.getById(params.view);
             if (!view) {
                 throw new Error(`View ${params.view} not found`);
             }

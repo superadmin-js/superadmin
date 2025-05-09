@@ -1,13 +1,7 @@
-import {
-    defineAction,
-    defineFormView,
-    openConfirmDialog,
-    openMenu,
-    openModal,
-} from '@superadmin/core';
+import { defineAction, defineFormView, openConfirmDialog, openMenu, openModal } from 'superadmin';
 import { defineEntity } from '@superadmin/drizzle';
-import * as s from '@superadmin/schema';
-import { emailValidator, requiredValidator } from '@superadmin/validation';
+import * as s from 'superadmin/schema';
+import * as v from 'superadmin/validation';
 
 import db from '../db/schema.js';
 
@@ -33,13 +27,13 @@ export const customers = defineEntity({
         ],
         rowButtons: c => [
             {
-                icon: 'edit',
+                icon: 'pencil',
                 label: 'Edit',
                 action: openModal(editCustomer, { id: c.id }),
                 style: 'outline',
             },
             {
-                icon: 'more-vertical',
+                icon: 'ellipsis-vertical',
                 style: 'outline',
                 action: openMenu([
                     {
@@ -66,58 +60,48 @@ export const customers = defineEntity({
 
 export const newCustomer = defineFormView({
     schema: s.object({
-        props: {
-            firstName: s.string({
-                validators: [requiredValidator()],
-            }),
-            lastName: s.string({
-                validators: [requiredValidator()],
-            }),
-            email: s.string({
-                validators: [requiredValidator(), emailValidator()],
-            }),
-        },
+        firstName: s.string({
+            validate: [v.required()],
+        }),
+        lastName: s.string({
+            validate: [v.required()],
+        }),
+        email: s.string({
+            validate: [v.required(), v.email()],
+        }),
     }),
 });
 
 export const editCustomer = defineFormView({
     params: s.object({
-        props: {
-            id: s.integer(),
-        },
+        id: s.integer(),
     }),
     schema: s.object({
-        props: {
-            id: s.integer({
-                hidden: true,
-            }),
-            firstName: s.string({
-                validators: [requiredValidator()],
-            }),
-            lastName: s.string({
-                validators: [requiredValidator()],
-            }),
-            email: s.string({
-                validators: [requiredValidator(), emailValidator()],
-            }),
-        },
+        id: s.integer({
+            hidden: true,
+        }),
+        firstName: s.string({
+            validate: [v.required()],
+        }),
+        lastName: s.string({
+            validate: [v.required()],
+        }),
+        email: s.string({
+            validate: [v.required(), v.email()],
+        }),
     }),
 });
 
 export const syncCustomer = defineAction({
     params: s.object({
-        props: {
-            id: s.integer(),
-        },
+        id: s.integer(),
     }),
     result: s.action({ optional: true }),
 });
 
 export const deleteCustomer = defineAction({
     params: s.object({
-        props: {
-            id: s.integer(),
-        },
+        id: s.integer(),
     }),
     result: s.action({ optional: true }),
 });

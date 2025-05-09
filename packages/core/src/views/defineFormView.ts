@@ -1,26 +1,55 @@
+import { defineInjectable } from '@nzyme/ioc';
+
 import * as s from '@superadmin/schema';
 
-import { defineView } from './defineView.js';
 import { defineAction } from '../actions/defineAction.js';
 import type { Authorizer } from '../auth/defineAuthorizer.js';
 import type { ComponentAny } from '../defineComponent.js';
 import { defineComponent } from '../defineComponent.js';
+import { defineView } from './defineView.js';
 
+/**
+ *
+ */
 export interface FormViewConfig<S extends s.ObjectSchema, TParams extends s.Schema> {
+    /**
+     *
+     */
     title?: string;
+    /**
+     *
+     */
     params?: TParams;
+    /**
+     *
+     */
     path?: string;
+    /**
+     *
+     */
     schema: S;
+    /**
+     *
+     */
     auth?: Authorizer | false;
 }
 
+/**
+ *
+ */
 export type FormView<
     S extends s.ObjectSchema = s.ObjectSchema,
     P extends s.Schema = s.Schema<unknown>,
 > = ReturnType<typeof defineFormView<S, P>>;
 
+/**
+ *
+ */
 export const formComponent = defineComponent<FormView['component']>();
 
+/**
+ *
+ */
 export function defineFormView<S extends s.ObjectSchema, P extends s.Schema = s.Schema<void>>(
     config: FormViewConfig<S, P>,
 ) {
@@ -41,10 +70,9 @@ export function defineFormView<S extends s.ObjectSchema, P extends s.Schema = s.
             fetch: defineAction({
                 params: params,
                 result: schema,
-                handler: () => {
-                    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+                defaultHandler: defineInjectable(() => {
                     return () => s.coerce(schema);
-                },
+                }),
             }),
             submit: defineAction({
                 params: schema,

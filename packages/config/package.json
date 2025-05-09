@@ -1,0 +1,30 @@
+{
+    "name": "@superadmin/config",
+    "version": "1.0.0",
+    "repository": "https://github.com/kedrzu/superadmin.git",
+    "author": "Michał Kędrzyński <m.kedrzynski@gmail.com>",
+    "type": "module",
+    "main": "./dist/index.js",
+    "module": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "sideEffects": false,
+    "scripts": {
+        "eslint": "eslint . --fix --cache",
+        "build": "tsc --build"
+    },
+    "exports": {
+        ".": "./dist/index.js",
+        "./internal": "./dist/internal.js",
+        "./module": "./dist/module.js"
+    },
+    "dependencies": {
+        "@nzyme/ioc": "^0.14.0",
+        "@nzyme/types": "^0.14.0",
+        "@nzyme/utils": "^0.14.0"
+    },
+    "devDependencies": {
+        "@superadmin/tsconfig": "*",
+        "@types/node": "^22.15.14",
+        "vitest": "^3.1.3"
+    }
+}

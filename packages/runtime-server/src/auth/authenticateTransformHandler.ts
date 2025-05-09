@@ -5,19 +5,23 @@ import { AuthRegistry, defineFunctionHandler } from '@superadmin/core';
 import { authenticateTransform } from '@superadmin/core/internal';
 import { AuthSecret } from '@superadmin/server';
 
+/**
+ *
+ */
 export const authenticateTransformHandler = defineFunctionHandler({
     function: authenticateTransform,
-    setup({ inject }) {
-        const secretPromise = inject(AuthSecret);
-        const authRegistry = inject(AuthRegistry);
-
+    deps: {
+        authSecret: AuthSecret,
+        authRegistry: AuthRegistry,
+    },
+    setup({ authSecret, authRegistry }) {
         return async input => {
             if (!input) {
                 return null;
             }
 
             const timestamp = new Date();
-            const secret = await secretPromise;
+            const secret = await authSecret;
 
             const userType = authRegistry.resolveUserType(input.userType);
             if (!userType) {
@@ -55,11 +59,29 @@ export const authenticateTransformHandler = defineFunctionHandler({
             return authData;
         };
 
+        /**
+         *
+         */
         interface TokenParams {
+            /**
+             *
+             */
             auth: AuthenticateInput;
+            /**
+             *
+             */
             type: 'auth' | 'refresh';
+            /**
+             *
+             */
             secret: Uint8Array;
+            /**
+             *
+             */
             timestamp: Date;
+            /**
+             *
+             */
             expiration: Date;
         }
 
@@ -72,8 +94,10 @@ export const authenticateTransformHandler = defineFunctionHandler({
                 user: auth.userType,
             };
 
-            for (const [key, value] of Object.entries(auth.userData)) {
-                token[`user:${key}`] = value;
+            if (auth.userData) {
+                for (const [key, value] of Object.entries(auth.userData)) {
+                    token[`user:${key}`] = value;
+                }
             }
 
             return await new SignJWT(token)

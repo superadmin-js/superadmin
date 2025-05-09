@@ -7,5 +7,11 @@
     "endOfLine": "lf",
     "singleAttributePerLine": true,
     "bracketSpacing": true,
-    "plugins": ["prettier-plugin-tailwindcss"]
+    "plugins": ["prettier-plugin-tailwindcss"],
+    "overrides": [
+        {
+            "files": ["*.yml", "*.yaml", "*.html", "*.vue"],
+            "options": { "tabWidth": 2 }
+        }
+    ]
 }

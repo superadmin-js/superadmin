@@ -1,26 +1,40 @@
 import { identity } from '@nzyme/utils';
 import type {
+    Infer,
     Schema,
+    SchemaMeta,
     SchemaOptions,
-    SchemaOptionsSimlify,
+    SchemaOptionsBase,
+    SchemaOptionsSimplify,
     SchemaProto,
-    SchemaValue,
 } from '@nzyme/zchema';
 import { defineSchema } from '@nzyme/zchema';
 
 declare const ACTION_SYMBOL: unique symbol;
 
+/**
+ *
+ */
 export interface Action<P extends Schema = Schema, R extends Schema = Schema> {
+    /**
+     *
+     */
     action: string;
-    params: SchemaValue<P>;
+    /**
+     *
+     */
+    params: Infer<P>;
     // This is just a marker to preserve result type
+    /**
+     *
+     */
     [ACTION_SYMBOL]: R;
 }
 
-export type ActionSchema<O extends SchemaOptions<Action> = SchemaOptions<Action>> = Schema<
-    Action,
-    O
->;
+/**
+ *
+ */
+export type ActionSchema<O extends SchemaOptionsBase = SchemaOptionsBase> = Schema<Action, O>;
 
 const proto: SchemaProto<Action> = {
     coerce: (value: unknown) => {
@@ -46,11 +60,19 @@ const proto: SchemaProto<Action> = {
 
 type ActionSchemaBase = {
     // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-    <O extends SchemaOptions<Action> = {}>(
-        options?: O & SchemaOptions<Action>,
-    ): ActionSchema<SchemaOptionsSimlify<O>>;
+    (): ActionSchema<{}>;
+    <
+        TNullable extends boolean | undefined = undefined,
+        TOptional extends boolean | undefined = undefined,
+        TMeta extends SchemaMeta | undefined = undefined,
+    >(
+        options: SchemaOptions<Action, TNullable, TOptional, TMeta>,
+    ): ActionSchema<SchemaOptionsSimplify<TNullable, TOptional, TMeta>>;
 };
 
+/**
+ *
+ */
 export const action = defineSchema<ActionSchemaBase>({
     name: 'action',
     proto: () => proto,

@@ -1,19 +1,21 @@
 import config from '@config';
 import modules from '@modules';
+import { CommonPlugin } from '@nzyme/vue';
+import { createContainer } from '@nzyme/vue-ioc';
 import theme from '@theme';
 import type { PrimeVueConfiguration } from 'primevue/config';
 import PrimeVue from 'primevue/config';
 import PrimeVueToastService from 'primevue/toastservice';
-import { type Plugin, createApp } from 'vue';
+import { createApp } from 'vue';
+import type { Plugin } from 'vue';
 
-import { CommonPlugin } from '@nzyme/vue';
-import { createContainer } from '@nzyme/vue-ioc';
 import { App, Router, ToastService } from '@superadmin/client';
 import { RuntimeConfig } from '@superadmin/core';
 import { installModules } from '@superadmin/runtime-common';
 
 import AppComponent from './App.vue';
 import { setupRouter } from './setupRouter.js';
+import './index.css';
 
 const container = createContainer();
 

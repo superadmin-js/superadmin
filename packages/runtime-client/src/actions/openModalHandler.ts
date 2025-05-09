@@ -1,16 +1,21 @@
 import { ModalService } from '@nzyme/vue';
-import { defineActionHandler } from '@superadmin/client';
+
+import { defineActionHandler } from '@superadmin/core';
 import { ViewRegistry } from '@superadmin/core';
 import { openModalInternal } from '@superadmin/core/module';
 
 import ViewRenderer from '../views/ViewRenderer.vue';
 
+/**
+ *
+ */
 export const openModalHandler = defineActionHandler({
     action: openModalInternal,
-    setup: ({ inject }) => {
-        const viewRegistry = inject(ViewRegistry);
-        const modalService = inject(ModalService);
-
+    deps: {
+        viewRegistry: ViewRegistry,
+        modalService: ModalService,
+    },
+    setup({ viewRegistry, modalService }) {
         return async params => {
             const view = viewRegistry.getById(params.view);
             if (!view) {

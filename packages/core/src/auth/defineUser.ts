@@ -1,40 +1,93 @@
+import { defineInjectable } from '@nzyme/ioc';
+
 import * as s from '@superadmin/schema';
 
-import type { AuthContext } from './AuthContext.js';
-import type { Authorizer } from './defineAuthorizer.js';
-import { type Submodule, defineSubmodule } from '../defineSubmodule.js';
-import { AuthRegistry } from './AuthRegistry.js';
-import { refreshAuthTransform } from './refreshAuthTransform.js';
-import { type ActionDefinition, defineAction } from '../actions/defineAction.js';
+import { defineAction } from '../actions/defineAction.js';
+import type { ActionDefinition } from '../actions/defineAction.js';
+import { defineSubmodule } from '../defineSubmodule.js';
+import type { Submodule } from '../defineSubmodule.js';
 import type { FunctionDefinition } from '../functions/defineFunction.js';
+import type { AuthContext } from './AuthContext.js';
+import { AuthRegistry } from './AuthRegistry.js';
+import type { Authorizer } from './defineAuthorizer.js';
+import { refreshAuthTransform } from './refreshAuthTransform.js';
 
 const USER_MODULE_SYMBOL = Symbol('User');
 
+/**
+ *
+ */
 export type UserSchema = s.ObjectSchema<{
-    props: s.ObjectSchemaProps;
+    /**
+     *
+     */
     nullable: false;
+    /**
+     *
+     */
     optional: false;
+    /**
+     *
+     */
+    props: s.ObjectSchemaProps;
 }>;
 
+/**
+ *
+ */
 export interface UserConfig<TSchema extends UserSchema> {
+    /**
+     *
+     */
     name: string;
+    /**
+     *
+     */
     schema: TSchema;
+    /**
+     *
+     */
     authExpiration?: number;
+    /**
+     *
+     */
     refreshExpiration?: number;
 }
 
+/**
+ *
+ */
 export interface UserDefinition<TSchema extends UserSchema = UserSchema>
-    extends UserConfig<TSchema>,
-        Authorizer,
-        Submodule {
-    with: (condition: (user: s.SchemaValue<TSchema>) => boolean) => Authorizer;
+    extends Authorizer,
+        Submodule,
+        UserConfig<TSchema> {
+    /**
+     *
+     */
+    with: (condition: (user: s.Infer<TSchema>) => boolean) => Authorizer;
+    /**
+     *
+     */
     authExpiration: number;
+    /**
+     *
+     */
     refreshExpiration: number;
+    /**
+     *
+     */
     actions: {
+        /**
+         *
+         */
         refresh: ActionDefinition<TSchema, s.ActionSchema, s.Schema<string, object>>;
     };
 }
 
+/**
+ *
+ * @__NO_SIDE_EFFECTS__
+ */
 export function defineUser<TSchema extends UserSchema>(config: UserConfig<TSchema>) {
     const name = config.name;
     const schema = config.schema;
@@ -63,12 +116,14 @@ export function defineUser<TSchema extends UserSchema>(config: UserConfig<TSchem
                 params: schema,
                 result: s.action({ nullable: true }),
                 sst: refreshAuthTransform as FunctionDefinition<s.Schema<string, object>, TSchema>,
-                handler: () => () => null,
+                defaultHandler: defineInjectable(() => {
+                    return () => null;
+                }),
             }),
         },
     });
 
-    function isAuthorized(ctx: AuthContext | null): ctx is AuthContext<s.SchemaValue<TSchema>> {
+    function isAuthorized(ctx: AuthContext | null): ctx is AuthContext<s.Infer<TSchema>> {
         if (ctx === null) {
             return false;
         }

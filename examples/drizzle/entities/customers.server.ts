@@ -1,5 +1,5 @@
-import { ApplicationError, goToView, runInParalell, showToast } from '@superadmin/core';
-import { defineActionHandler } from '@superadmin/server';
+import { ApplicationError, goToView, runInParalell, showToast } from 'superadmin';
+import { defineActionHandler } from 'superadmin';
 import { eq } from 'drizzle-orm';
 
 import {
@@ -14,9 +14,10 @@ import { Drizzle } from '../drizzle.server.js';
 
 export const newCustomerSubmit = defineActionHandler({
     action: newCustomer.actions.submit,
-    setup({ inject }) {
-        const drizzle = inject(Drizzle);
-
+    deps: {
+        drizzle: Drizzle,
+    },
+    setup({ drizzle }) {
         return async params => {
             const result = await drizzle
                 .insert(db.customers)
@@ -48,9 +49,10 @@ export const newCustomerSubmit = defineActionHandler({
 
 export const editCustomerFetch = defineActionHandler({
     action: editCustomer.actions.fetch,
-    setup({ inject }) {
-        const drizzle = inject(Drizzle);
-
+    deps: {
+        drizzle: Drizzle,
+    },
+    setup({ drizzle }) {
         return async params => {
             const customer = await drizzle.query.customers.findFirst({
                 where: eq(db.customers.id, params.id),
@@ -72,9 +74,10 @@ export const editCustomerFetch = defineActionHandler({
 
 export const editCustomerSubmit = defineActionHandler({
     action: editCustomer.actions.submit,
-    setup({ inject }) {
-        const drizzle = inject(Drizzle);
-
+    deps: {
+        drizzle: Drizzle,
+    },
+    setup({ drizzle }) {
         return async params => {
             const result = await drizzle
                 .update(db.customers)
@@ -128,9 +131,10 @@ export const syncCustomerHandler = defineActionHandler({
 
 export const deleteCustomerHandler = defineActionHandler({
     action: deleteCustomer,
-    setup({ inject }) {
-        const drizzle = inject(Drizzle);
-
+    deps: {
+        drizzle: Drizzle,
+    },
+    setup({ drizzle }) {
         return async params => {
             const result = await drizzle
                 .delete(db.customers)
@@ -141,7 +145,7 @@ export const deleteCustomerHandler = defineActionHandler({
                 throw new ApplicationError(`Customer with id ${params.id} not found`);
             }
 
-            const customer = result[0];
+            const customer = result[0]!;
 
             return showToast({
                 type: 'success',

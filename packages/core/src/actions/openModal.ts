@@ -1,20 +1,18 @@
 import * as s from '@superadmin/schema';
-import type { SchemaValue } from '@superadmin/schema';
+import type { Infer } from '@superadmin/schema';
 
 import { defineAction } from './defineAction.js';
 import type { View } from '../views/defineView.js';
 
 export const openModalInternal = defineAction({
     params: s.object({
-        props: {
-            view: s.string(),
-            params: s.unknown({ optional: true }),
-        },
+        view: s.string(),
+        params: s.unknown({ optional: true }),
     }),
 });
 
 export function openModal<V extends View<s.Schema<void>>>(view: V): s.Action;
-export function openModal<V extends View>(view: V, params: SchemaValue<V['params']>): s.Action;
+export function openModal<V extends View>(view: V, params: Infer<V['params']>): s.Action;
 export function openModal(view: View, params?: unknown) {
     return openModalInternal({
         view: view.id,

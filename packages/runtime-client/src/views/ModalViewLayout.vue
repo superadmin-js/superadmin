@@ -1,12 +1,13 @@
 <script lang="ts" setup>
-import Dialog from 'primevue/dialog';
-
 import { ModalContext, useModalProps } from '@nzyme/vue';
 import { injectContext } from '@nzyme/vue-utils';
-import { ViewContext, type ViewLayoutSlots } from '@superadmin/client';
+import Dialog from 'primevue/dialog';
+
+import { ViewContext } from '@superadmin/client';
+import type { ViewLayoutSlots } from '@superadmin/client';
 
 defineProps({
-    ...useModalProps(),
+  ...useModalProps(),
 });
 defineSlots<ViewLayoutSlots>();
 
@@ -15,17 +16,17 @@ const modal = injectContext(ModalContext);
 </script>
 
 <template>
-    <Dialog
-        v-model:visible="modal.open"
-        modal
-        :header="view.title"
-        :style="{ width: '25rem' }"
-        dismissable-mask
-    >
-        <slot name="body" />
+  <Dialog
+    v-model:visible="modal.open"
+    modal
+    :header="view.title"
+    :style="{ width: '25rem' }"
+    dismissable-mask
+  >
+    <slot name="body" />
 
-        <template #footer>
-            <slot name="footer" />
-        </template>
-    </Dialog>
+    <template #footer>
+      <slot name="footer" />
+    </template>
+  </Dialog>
 </template>

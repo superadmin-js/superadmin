@@ -1,9 +1,9 @@
-export { showToast } from './actions/showToast.js';
+export { goToViewAction } from './actions/goToView.js';
 export { noAction } from './actions/noAction.js';
-export { goToViewInternal } from './actions/goToView.js';
+export { openConfirmDialog } from './actions/openConfirmDialog.js';
 export { openMenuInternal } from './actions/openMenu.js';
 export { openModalInternal } from './actions/openModal.js';
-export { openConfirmDialog } from './actions/openConfirmDialog.js';
-export { runInSequence } from './actions/runInSequence.js';
 export { runInParalell } from './actions/runInParalell.js';
+export { runInSequence } from './actions/runInSequence.js';
+export { showToast } from './actions/showToast.js';
 export { authenticateAction } from './auth/authenticate.js';

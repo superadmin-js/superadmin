@@ -8,13 +8,13 @@ export type PaginationProps<
     TResult extends s.Schema = s.Schema,
     TConfig extends Record<string, unknown> = Record<string, unknown>,
 > = {
-    value: s.SchemaValue<TParams>;
-    result: s.SchemaValue<TResult> | undefined;
+    value: s.Infer<TParams>;
+    result: s.Infer<TResult> | undefined;
     config: TConfig;
 };
 
 export type PaginationEvents<TParams extends s.Schema = s.Schema> = {
-    'update:value': [value: s.SchemaValue<TParams>];
+    'update:value': [value: s.Infer<TParams>];
 };
 
 export type PaginationComponent<

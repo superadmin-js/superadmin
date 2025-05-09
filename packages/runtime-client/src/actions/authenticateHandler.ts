@@ -1,11 +1,13 @@
-import { AuthStore, defineActionHandler } from '@superadmin/client';
+import { AuthStore } from '@superadmin/client';
+import { defineActionHandler } from '@superadmin/core';
 import { authenticateAction } from '@superadmin/core/module';
 
 export const authenticateHandler = defineActionHandler({
     action: authenticateAction,
-    setup: ({ inject }) => {
-        const authStore = inject(AuthStore);
-
+    deps: {
+        authStore: AuthStore,
+    },
+    setup: ({ authStore }) => {
         return data => {
             authStore.setAuth(data);
         };

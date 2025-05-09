@@ -1,7 +1,11 @@
 import { defineService } from '@nzyme/ioc';
 import type { Component as VueComponent } from '@nzyme/vue-utils';
+
 import type { Component, ComponentAny } from '@superadmin/core';
 
+/**
+ *
+ */
 export type ComponentTemplate<TComponent extends Component> = VueComponent<
     TComponent['$props'],
     // eslint-disable-next-line @typescript-eslint/no-empty-object-type
@@ -11,6 +15,9 @@ export type ComponentTemplate<TComponent extends Component> = VueComponent<
     }
 >;
 
+/**
+ *
+ */
 export const ComponentRegistry = defineService({
     name: 'ComponentRegistry',
     setup() {

@@ -1,4 +1,4 @@
-import { defineConfig } from '@superadmin/core';
+import { defineConfig } from 'superadmin/config';
 import drizzle from '@superadmin/drizzle/plugin';
 
 export default defineConfig({

@@ -5,10 +5,9 @@ export default [
     ...common(),
     ...typescript({
         target: 'browser',
-        project: ['./tsconfig.json', './tsconfig.tests.json'],
+        project: ['./tsconfig.json', './tsconfig.tests.json', './tsconfig.node.json'],
         internalImports: ['@superadmin/*'],
     }),
     ...packageJson(),
-    ...jsdoc(),
     ...vue(),
 ];

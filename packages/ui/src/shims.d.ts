@@ -18,3 +18,8 @@ declare module '*.vue' {
     const component: DefineComponent;
     export default component;
 }
+
+declare module 'lucide-static/sprite.svg' {
+    const sprite: string;
+    export default sprite;
+}

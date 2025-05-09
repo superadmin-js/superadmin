@@ -1,12 +1,16 @@
 import { defineService } from '@nzyme/ioc';
-import { type Schema, type SchemaBase, getBase } from '@superadmin/schema';
+
+import type { Schema, SchemaBase } from '@superadmin/schema';
 
 import type { EditorComponent } from './EditorComponent.js';
 
+/**
+ *
+ */
 export const EditorRegistry = defineService({
     name: 'EditorRegistry',
     setup() {
-        const registry = new Map<SchemaBase | Schema, EditorComponent>();
+        const registry = new Map<Schema | SchemaBase, EditorComponent>();
 
         return {
             register,
@@ -14,7 +18,7 @@ export const EditorRegistry = defineService({
         };
 
         function register<S extends Schema>(
-            schema: SchemaBase<S> | S,
+            schema: S | SchemaBase<S>,
             component: EditorComponent<S>,
         ) {
             registry.set(schema, component as EditorComponent);
@@ -23,7 +27,7 @@ export const EditorRegistry = defineService({
         function resolve<S extends Schema>(schema: S) {
             return (
                 registry.get(schema) ??
-                (registry.get(getBase(schema)) as EditorComponent<S> | undefined)
+                (registry.get(schema.type) as EditorComponent<S> | undefined)
             );
         }
     },

@@ -1,11 +1,12 @@
-import { ToastService, defineActionHandler } from '@superadmin/client';
-import { showToast } from '@superadmin/core';
+import { ToastService } from '@superadmin/client';
+import { defineActionHandler, showToast } from '@superadmin/core';
 
 export const showToastHandler = defineActionHandler({
     action: showToast,
-    setup: ({ inject }) => {
-        const toastService = inject(ToastService);
-
+    deps: {
+        toastService: ToastService,
+    },
+    setup({ toastService }) {
         return params => {
             toastService.add({
                 summary: params.title ?? undefined,

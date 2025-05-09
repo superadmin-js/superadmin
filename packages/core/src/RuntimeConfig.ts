@@ -1,9 +1,9 @@
-import { defineInjectable } from '@nzyme/ioc';
+import { defineInterface } from '@nzyme/ioc';
 
 export interface RuntimeConfig {
     basePath: string;
 }
 
-export const RuntimeConfig = defineInjectable<RuntimeConfig>({
+export const RuntimeConfig = defineInterface<RuntimeConfig>({
     name: 'RuntimeConfig',
 });

@@ -22,22 +22,21 @@
         "@nzyme/vue": "^0.14.0",
         "@nzyme/vue-ioc": "^0.14.0",
         "@nzyme/vue-utils": "^0.14.0",
-        "@primevue/forms": "^4.3.3",
+        "@primevue/forms": "^4.3.4",
         "@superadmin/client": "*",
         "@superadmin/core": "*",
         "@superadmin/schema": "*",
         "@superadmin/utils": "*",
         "@superadmin/validation": "*",
-        "feather-icons": "^4.29.2",
-        "primevue": "^4.3.3",
+        "lucide-static": "^0.508.0",
+        "primevue": "^4.3.4",
         "tailwindcss": "^4.1.5",
         "vue": "^3.5.13",
         "vue-router": "^4.5.1"
     },
     "devDependencies": {
         "@superadmin/tsconfig": "*",
-        "@types/feather-icons": "^4.29.4",
-        "@types/node": "^22.15.3",
-        "vitest": "^3.1.2"
+        "@types/node": "^22.15.14",
+        "vitest": "^3.1.3"
     }
 }

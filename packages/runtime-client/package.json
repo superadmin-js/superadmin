@@ -7,10 +7,18 @@
     "main": "./src/index.ts",
     "module": "./src/index.ts",
     "types": "./src/index.ts",
+    "exports": {
+        "./module": {
+            "import": "./dist/module.js",
+            "types": "./dist/module.d.ts"
+        },
+        "./package.json": "./package.json"
+    },
     "sideEffects": false,
     "scripts": {
         "eslint": "eslint . --fix --cache",
-        "build": "tsc --build"
+        "build": "vite build",
+        "watch": "vite build --watch"
     },
     "dependencies": {
         "@nzyme/crypto-utils": "^0.14.0",
@@ -20,7 +28,7 @@
         "@nzyme/vue": "^0.14.0",
         "@nzyme/vue-ioc": "^0.14.0",
         "@nzyme/vue-utils": "^0.14.0",
-        "@primevue/themes": "^4.3.3",
+        "@primevue/themes": "^4.3.4",
         "@superadmin/client": "*",
         "@superadmin/core": "*",
         "@superadmin/runtime-common": "*",
@@ -29,16 +37,18 @@
         "@superadmin/utils": "*",
         "@superadmin/validation": "*",
         "debug": "^4.4.0",
-        "primevue": "^4.3.3",
+        "primevue": "^4.3.4",
         "tailwindcss": "^4.1.5",
         "vue": "^3.5.13",
         "vue-router": "^4.5.1"
     },
     "devDependencies": {
+        "@nzyme/rollup-utils": "^0.14.0",
         "@superadmin/tsconfig": "*",
         "@types/debug": "^4.1.12",
-        "@types/node": "^22.15.3",
+        "@types/node": "^22.15.14",
         "@vue/tsconfig": "^0.7.0",
-        "vitest": "^3.1.2"
+        "vite": "^6.3.5",
+        "vitest": "^3.1.3"
     }
 }

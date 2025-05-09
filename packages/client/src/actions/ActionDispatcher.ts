@@ -1,25 +1,38 @@
+import { FetchError, fetchJson } from '@nzyme/fetch-utils';
+import { Container, defineService } from '@nzyme/ioc';
+import type { Injected } from '@nzyme/ioc';
 import { joinURL } from 'ufo';
 
-import { FetchError, fetchJson } from '@nzyme/fetch-utils';
-import { type InjectableOf, defineService } from '@nzyme/ioc';
 import type { ActionDefinition, ActionError } from '@superadmin/core';
-import { ActionRegistry, ApplicationError, RuntimeConfig } from '@superadmin/core';
+import {
+    ActionHandlerRegistry,
+    ActionRegistry,
+    ApplicationError,
+    RuntimeConfig,
+} from '@superadmin/core';
 import * as s from '@superadmin/schema';
 import { ValidationError } from '@superadmin/validation';
 
-import { ActionHandlerRegistry } from './ActionHandlerRegistry.js';
 import { AuthStore } from '../auth/AuthStore.js';
 
-export type ActionDispatcher = InjectableOf<typeof ActionDispatcher>;
+/**
+ *
+ */
+export type ActionDispatcher = Injected<typeof ActionDispatcher>;
 
+/**
+ *
+ */
 export const ActionDispatcher = defineService({
     name: 'ActionDispatcher',
-    setup({ inject }) {
-        const config = inject(RuntimeConfig);
-        const actions = inject(ActionRegistry);
-        const handlers = inject(ActionHandlerRegistry);
-        const authStore = inject(AuthStore);
-
+    deps: {
+        runtimeConfig: RuntimeConfig,
+        actionRegistry: ActionRegistry,
+        actionHandlers: ActionHandlerRegistry,
+        authStore: AuthStore,
+        container: Container,
+    },
+    setup({ runtimeConfig, actionRegistry, actionHandlers, authStore, container }) {
         return dispatch;
 
         async function dispatch<P extends s.Schema>(
@@ -29,10 +42,10 @@ export const ActionDispatcher = defineService({
         async function dispatch<P extends s.Schema, R extends s.Schema>(
             action: s.Action<P, R>,
             event?: Event,
-        ): Promise<s.SchemaValue<R>>;
+        ): Promise<s.Infer<R>>;
         async function dispatch(action: s.Action, event?: Event) {
             do {
-                const actionDefinition = actions.resolve(action.action);
+                const actionDefinition = actionRegistry.resolve(action.action);
                 if (!actionDefinition) {
                     throw new Error(`Action ${action.action} not found`);
                 }
@@ -53,13 +66,13 @@ export const ActionDispatcher = defineService({
             actionDefinition: ActionDefinition,
             event?: Event,
         ) {
-            const handler = handlers.resolve(action.action);
+            const handler = actionHandlers.resolve(action.action);
             if (handler) {
                 action.params = s.coerce(actionDefinition.params, action.params);
                 s.validateOrThrow(actionDefinition.params, action.params);
 
-                const handlerFn = inject(handler.service);
-                // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+                const handlerFn = container.resolve(handler.service);
+
                 return await handlerFn(action.params, event);
             }
 
@@ -75,7 +88,7 @@ export const ActionDispatcher = defineService({
             try {
                 const result = await fetchJson({
                     method: 'POST',
-                    url: joinURL(config.basePath, 'api/action', action.action),
+                    url: joinURL(runtimeConfig.basePath, 'api/action', action.action),
                     data: s.serialize(actionDefinition.input, action.params),
                     headers,
                 });

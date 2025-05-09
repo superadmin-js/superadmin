@@ -1,8 +1,8 @@
 import type { App as H3App } from 'h3';
 
-import { defineInjectable } from '@nzyme/ioc';
+import { defineInterface } from '@nzyme/ioc';
 
 export type App = H3App;
-export const App = defineInjectable<App>({
+export const App = defineInterface<App>({
     name: 'App',
 });

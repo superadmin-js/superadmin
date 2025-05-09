@@ -1,17 +1,25 @@
-import type { H3Event } from 'h3';
-import { createError, defineEventHandler, readBody, setResponseStatus } from 'h3';
-
 import { parseBearerToken } from '@nzyme/crypto-utils';
 import type { Container } from '@nzyme/ioc';
 import { assertValue } from '@nzyme/utils';
+import type { H3Event } from 'h3';
+import { createError, defineEventHandler, readBody, setResponseStatus } from 'h3';
+
 import type { ActionDefinition, ActionError } from '@superadmin/core';
-import { ActionRegistry, ApplicationError, FunctionRegistry } from '@superadmin/core';
+import {
+    ActionHandlerRegistry,
+    ActionRegistry,
+    ApplicationError,
+    FunctionRegistry,
+} from '@superadmin/core';
 import * as s from '@superadmin/schema';
-import { ActionHandlerRegistry, Router } from '@superadmin/server';
+import { Router } from '@superadmin/server';
 import { ValidationError } from '@superadmin/validation';
 
 import { VerifyAuthToken } from './auth/VerifyAuthToken.js';
 
+/**
+ *
+ */
 export function setupActionHandler(container: Container) {
     const router = container.resolve(Router);
 

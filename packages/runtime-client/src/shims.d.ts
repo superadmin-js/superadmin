@@ -25,3 +25,13 @@ declare module '*.vue' {
     const component: DefineComponent;
     export default component;
 }
+
+declare module '*.module.scss' {
+    const classes: { [key: string]: string };
+    export default classes;
+}
+
+declare module 'lucide-static/sprite.svg' {
+    const sprite: string;
+    export default sprite;
+}

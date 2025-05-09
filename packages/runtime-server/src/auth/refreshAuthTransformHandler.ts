@@ -3,11 +3,15 @@ import { refreshAuthTransform } from '@superadmin/core/internal';
 
 import { VerifyAuthToken } from './VerifyAuthToken.js';
 
+/**
+ *
+ */
 export const refreshAuthTransformHandler = defineFunctionHandler({
     function: refreshAuthTransform,
-    setup({ inject }) {
-        const verifyAuthToken = inject(VerifyAuthToken);
-
+    deps: {
+        verifyAuthToken: VerifyAuthToken,
+    },
+    setup({ verifyAuthToken }) {
         return async input => {
             const result = await verifyAuthToken(input);
             if (!result) {

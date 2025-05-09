@@ -1,28 +1,40 @@
-import type { SQL, SQLWrapper, Table } from 'drizzle-orm';
-import type { LibSQLDatabase } from 'drizzle-orm/libsql';
-import type { PgDatabase, PgQueryResultHKT } from 'drizzle-orm/pg-core';
-import type { SelectedFields } from 'drizzle-orm/sqlite-core';
+import type { Service, ServiceDependencies, ServiceSetup } from '@nzyme/ioc';
+import { defineService } from '@nzyme/ioc';
 
-import type { Service, ServiceSetup } from '@nzyme/ioc';
-import { defineInjectable, defineService } from '@nzyme/ioc';
 import type { Submodule } from '@superadmin/core';
 import { defineSubmodule } from '@superadmin/core';
 
-import type { DrizzleSchema } from './types.js';
+import { DrizzleClient } from './DrizzleClient.js';
 
-export type DrizzleClient = LibSQLDatabase<DrizzleSchema> | PgDatabase<PgQueryResultHKT>;
+/**
+ *
+ */
+export interface DrizzleOptions<TDrizzle extends DrizzleClient, TDeps extends ServiceDependencies> {
+    /**
+     *
+     */
+    readonly name?: string;
+    /**
+     *
+     */
+    readonly deps?: TDeps;
+    /**
+     *
+     */
+    readonly setup: ServiceSetup<TDeps, TDrizzle>;
+}
 
-export const DrizzleClient = defineInjectable<DrizzleClient>({
-    name: 'DrizzleClient',
-});
-
-export function defineDrizzle<TDrizzle extends DrizzleClient>(
-    setup: ServiceSetup<TDrizzle>,
-): Service<TDrizzle> & Submodule {
+/**
+ *
+ */
+export function defineDrizzle<TDrizzle extends DrizzleClient, TDeps extends ServiceDependencies>(
+    options: DrizzleOptions<TDrizzle, TDeps>,
+): Service<TDrizzle, TDeps> & Submodule {
     const service = defineService({
-        name: 'DrizzleClient',
-        for: DrizzleClient,
-        setup,
+        name: options.name || 'DrizzleClient',
+        implements: DrizzleClient,
+        deps: options.deps,
+        setup: options.setup,
     });
 
     return defineSubmodule({
@@ -32,46 +44,3 @@ export function defineDrizzle<TDrizzle extends DrizzleClient>(
         },
     });
 }
-
-interface QueryParams {
-    table: Table;
-    columns: Record<string, SQLWrapper>;
-    sort?: SQL;
-    where?: SQL;
-    limit?: number;
-    offset?: number;
-}
-
-export interface DrizzleWrapper {
-    query(params: QueryParams): Promise<Record<string, unknown>[]>;
-}
-
-export const DrizzleWrapper = defineService<DrizzleWrapper>({
-    name: 'DrizzleWrapper',
-    setup({ inject }) {
-        const drizzle = inject(DrizzleClient) as LibSQLDatabase<DrizzleSchema>;
-
-        return {
-            query: params => {
-                let query = drizzle
-                    .select(params.columns as SelectedFields)
-                    .from(params.table)
-                    .where(params.where);
-
-                if (params.limit) {
-                    query = query.limit(params.limit) as typeof query;
-                }
-
-                if (params.offset) {
-                    query = query.offset(params.offset) as typeof query;
-                }
-
-                if (params.sort) {
-                    query = query.orderBy(params.sort) as typeof query;
-                }
-
-                return query.execute();
-            },
-        };
-    },
-});

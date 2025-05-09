@@ -1,44 +1,49 @@
 import path from 'path';
 
+import { unwrapCjsDefaultImport } from '@nzyme/esm';
+import { Container, defineService } from '@nzyme/ioc';
+import { resolveModulePath, resolveProjectPath } from '@nzyme/project-utils';
+import { devServerMiddleware } from '@nzyme/rollup-utils';
 import alias from '@rollup/plugin-alias';
 import commonjs from '@rollup/plugin-commonjs';
 import json from '@rollup/plugin-json';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
+import tailwindcss from '@tailwindcss/vite';
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 import autoprefixer from 'autoprefixer';
 import chalk from 'chalk';
 import consola from 'consola';
 import sourcemaps from 'rollup-plugin-sourcemaps';
-import tailwindcss from 'tailwindcss';
 import { createServer } from 'vite';
 import { checker } from 'vite-plugin-checker';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
-import { unwrapCjsDefaultImport } from '@nzyme/esm';
-import { defineService } from '@nzyme/ioc';
-import { resolveModulePath, resolveProjectPath } from '@nzyme/project-utils';
-import { devServerMiddleware } from '@nzyme/rollup-utils';
-import { ProjectConfig } from '@superadmin/core';
+import { ProjectConfig } from '@superadmin/config';
 
 import { RuntimeBuilder } from './RuntimeBuilder.js';
 import { getViteServerUrl } from './utils/getViteServerUrl.js';
 
+/**
+ *
+ */
 export const DevServer = defineService({
     name: 'DevServer',
-    async setup({ inject, container }) {
-        const config = inject(ProjectConfig);
-        const runtime = inject(RuntimeBuilder);
-
+    deps: {
+        config: ProjectConfig,
+        runtime: RuntimeBuilder,
+        container: Container,
+    },
+    async setup({ config, runtime, container }) {
         const clientRoot = resolveProjectPath('@superadmin/runtime-client', import.meta);
-        const uiRoot = resolveProjectPath('@superadmin/ui', import.meta);
 
         runtime.client.addFile('@superadmin/core/module', {
             id: '@superadmin/core',
             order: -1,
         });
-        runtime.client.addFile('@superadmin/runtime-client/src/module', {
+
+        runtime.client.addFile('@superadmin/runtime-client/module', {
             id: '@superadmin/client',
             order: -1,
         });
@@ -47,6 +52,7 @@ export const DevServer = defineService({
             id: '@superadmin/core',
             order: -1,
         });
+
         runtime.server.addFile('@superadmin/runtime-server/module', {
             id: '@superadmin/server',
             order: -1,
@@ -92,42 +98,30 @@ export const DevServer = defineService({
                     tsconfigPaths(),
                     checker({
                         root: config.cwd,
-                        typescript: true,
+                        typescript: false,
                         vueTsc: true,
                     }),
-                    unwrapCjsDefaultImport(alias)({
-                        entries: {
-                            '@config': runtime.client.configPath,
-                            '@modules': runtime.client.modulesPath,
-                            '@theme': config.theme,
-                            '@logo': config.logo,
-                        },
-                    }),
+                    tailwindcss(),
                 ],
+                resolve: {
+                    alias: {
+                        '@config': runtime.client.configPath,
+                        '@modules': runtime.client.modulesPath,
+                        '@theme': config.theme,
+                        '@logo': config.logo,
+                    },
+                },
                 root: clientRoot,
                 server: {
                     port: config.port,
                 },
                 css: {
                     postcss: {
-                        plugins: [
-                            tailwindcss({
-                                content: [
-                                    './**/*.vue',
-                                    './**/*.tsx',
-                                    `${clientRoot}/**/*.html`,
-                                    `${clientRoot}/src/**/*.vue`,
-                                    `${clientRoot}/src/**/*.tsx`,
-                                    `${uiRoot}/**/*.vue`,
-                                    `${uiRoot}/**/*.tsx`,
-                                ],
-                            }),
-                            autoprefixer(),
-                        ],
+                        plugins: [autoprefixer()],
                     },
                     preprocessorOptions: {
                         scss: {
-                            //    additionalData: `@import 'primeflex/primeflex.scss';`,
+                            // additionalData: `@import "tailwind";\n`,
                         },
                     },
                 },
@@ -141,6 +135,15 @@ export const DevServer = defineService({
                     format: 'esm',
                     dir: path.join(config.runtimePath, 'server'),
                     sourcemap: true,
+                    entryFileNames: `[name].js`,
+                    chunkFileNames: `[name].js`,
+                    assetFileNames: chunkInfo => {
+                        if (chunkInfo.name?.endsWith('.css')) {
+                            return `[name].css`;
+                        }
+
+                        return `[name].[hash].[ext]`;
+                    },
                 },
                 plugins: [
                     nodeResolve({
@@ -163,14 +166,14 @@ export const DevServer = defineService({
                     }),
                 ],
                 external: source => {
+                    // TODO: make it configurable for library clients
+                    if (source === 'superadmin' || /@?superadmin\/\w+/.test(source)) {
+                        return false;
+                    }
+
                     if (/^node:/.test(source) || /^[\w_-]+$/.test(source)) {
                         // Node built-in modules and third party modules
                         return true;
-                    }
-
-                    // TODO: make it configurable for library clients
-                    if (/@superadmin\/\w+/.test(source)) {
-                        return false;
                     }
 
                     if (/@nzyme\/\w+/.test(source)) {

@@ -1,19 +1,24 @@
 import path from 'path';
 
+import { defineService } from '@nzyme/ioc';
+import { createPromise } from '@nzyme/utils';
 import { watch } from 'chokidar';
 import createDebug from 'debug';
 
-import { defineService } from '@nzyme/ioc';
-import { createPromise } from '@nzyme/utils';
+import { ProjectConfig } from '@superadmin/config';
 import type { RuntimeConfig } from '@superadmin/core';
-import { ProjectConfig } from '@superadmin/core';
 
 import { createModulesRuntime } from './utils/createRuntime.js';
 
+/**
+ *
+ */
 export const RuntimeBuilder = defineService({
     name: 'RuntimeBuilder',
-    setup({ inject }) {
-        const projectConfig = inject(ProjectConfig);
+    deps: {
+        projectConfig: ProjectConfig,
+    },
+    setup({ projectConfig }) {
         const runtimeConfig: RuntimeConfig = {
             basePath: projectConfig.basePath,
         };

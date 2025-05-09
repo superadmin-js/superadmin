@@ -1,28 +1,28 @@
 <script lang="ts" setup>
+import { useService } from '@nzyme/vue-ioc';
 import type { PropType } from 'vue';
 import { computed } from 'vue';
 
-import { useService } from '@nzyme/vue-ioc';
-import { TemplateRegistry } from '@superadmin/client';
+import { ComponentRegistry } from '@superadmin/client';
 import type { View } from '@superadmin/core';
 import { coerce } from '@superadmin/schema';
 
 const props = defineProps({
-    view: { type: Object as PropType<View>, required: true },
-    params: { type: Object, required: false },
+  view: { type: Object as PropType<View>, required: true },
+  params: { type: Object, required: false },
 });
 
-const templateRegistry = useService(TemplateRegistry);
+const componentRegistry = useService(ComponentRegistry);
 
 const template = computed(() => {
-    return templateRegistry.resolve(props.view);
+  return componentRegistry.resolve(props.view.component);
 });
 </script>
 
 <template>
-    <component
-        :is="template"
-        :params="props.params ?? coerce(props.view.params)"
-        :view="props.view"
-    />
+  <component
+    :is="template"
+    :params="props.params ?? coerce(props.view.params)"
+    :view="props.view"
+  />
 </template>

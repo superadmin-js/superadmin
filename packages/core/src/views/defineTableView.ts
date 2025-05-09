@@ -22,8 +22,8 @@ export interface TableViewOptions<
     params?: TParams;
     path?: string;
     auth?: Authorizer | false;
-    headerButtons?: (params: s.SchemaValue<TParams>) => ActionButton[];
-    rowButtons?: (data: s.SchemaValue<TRow>) => ActionButton[];
+    headerButtons?: (params: s.Infer<TParams>) => ActionButton[];
+    rowButtons?: (data: s.Infer<TRow>) => ActionButton[];
     sortColumns?: TSort;
     pagination?: TPagination;
 }
@@ -62,6 +62,10 @@ type TablePaginationParams<TPagination extends Pagination | undefined> =
 type TablePaginationResult<TPagination extends Pagination | undefined> =
     TPagination extends Pagination ? TPagination['result'] : s.VoidSchema;
 
+/**
+ *
+ * @__NO_SIDE_EFFECTS__
+ */
 export function defineTableView<
     TRow extends s.NonNullable<s.ObjectSchema>,
     TParams extends s.SchemaAny = s.Schema<void>,

@@ -1,6 +1,6 @@
+import type { IfLiteral } from '@nzyme/types';
 import type { Column, GetColumnData, SQLWrapper, Table } from 'drizzle-orm';
 
-import type { IfLiteral } from '@nzyme/types';
 import type {
     BasicPagination,
     Submodule,
@@ -17,24 +17,45 @@ import type { DrizzleSchema, TablesOf } from './types.js';
 
 const ENTITY_SYMBOL = Symbol('entity');
 
+/**
+ *
+ */
 export type EntityColumnsOptions<T extends Table = Table> = {
     [K in keyof T['_']['columns']]?: boolean;
 };
 
+/**
+ *
+ */
 export type EntityColumnProps = {
+    /**
+     *
+     */
     sql: SQLWrapper;
 };
 
-export type EntityColumnSchema<T = unknown> = s.SchemaOf<T> & EntityColumnProps;
+/**
+ *
+ */
+export type EntityColumnSchema<T = unknown> = EntityColumnProps & s.SchemaOf<T>;
 
+/**
+ *
+ */
 export type EntitySchemaProps = Record<string, EntityColumnSchema>;
 
+/**
+ *
+ */
 export type EntitySchema<
     TTable extends Table,
     TColumns extends EntityColumnsOptions<TTable>,
 > = IfLiteral<
     keyof TColumns,
     s.ObjectSchema<{
+        /**
+         *
+         */
         props: {
             [K in keyof TColumns]: TColumns[K] extends true
                 ? K extends keyof TTable['_']['columns']
@@ -45,37 +66,64 @@ export type EntitySchema<
     }>,
     s.NonNullable<
         s.ObjectSchema<{
+            /**
+             *
+             */
             props: EntitySchemaProps;
         }>
     >
 >;
 
+/**
+ *
+ */
 export type EntityViewOptions<
     TTable extends Table = Table,
     TColumns extends EntityColumnsOptions<TTable> = EntityColumnsOptions<TTable>,
     TSort extends TableSortOptions<EntitySchema<TTable, TColumns>> = false,
 > = Pick<
     TableViewOptions<EntitySchema<TTable, TColumns>, s.Schema<void>, TSort>,
-    'title' | 'path' | 'auth' | 'headerButtons' | 'rowButtons' | 'sortColumns'
+    'auth' | 'headerButtons' | 'path' | 'rowButtons' | 'sortColumns' | 'title'
 > & {
+    /**
+     *
+     */
     columns: TColumns;
+    /**
+     *
+     */
     pageSizes?: number[];
 };
 
+/**
+ *
+ */
 export interface EntityOptions<
     TSchema extends DrizzleSchema = DrizzleSchema,
-    TTableName extends string & keyof TablesOf<TSchema> = string & keyof TablesOf<TSchema>,
+    TTableName extends keyof TablesOf<TSchema> & string = keyof TablesOf<TSchema> & string,
     TTable extends TablesOf<TSchema>[TTableName] = TablesOf<TSchema>[TTableName],
     TColumns extends EntityColumnsOptions<TTable> = EntityColumnsOptions<TTable>,
     TSort extends TableSortOptions<EntitySchema<TTable, TColumns>> = TableSortOptions<
         EntitySchema<TTable, TColumns>
     >,
 > {
+    /**
+     *
+     */
     schema: TSchema;
+    /**
+     *
+     */
     table: TTableName;
+    /**
+     *
+     */
     tableView: EntityViewOptions<TTable, TColumns, TSort>;
 }
 
+/**
+ *
+ */
 export interface Entity<
     TSchema extends DrizzleSchema = DrizzleSchema,
     TTable extends Table = Table,
@@ -84,20 +132,37 @@ export interface Entity<
         EntitySchema<TTable, TColumns>
     >,
 > extends Submodule {
+    /**
+     *
+     */
     schema: TSchema;
+    /**
+     *
+     */
     table: TTable;
+    /**
+     *
+     */
     tableView: TableView<EntitySchema<TTable, TColumns>, s.Schema<void>, TSort, BasicPagination>;
 }
 
+/**
+ *
+ * @__NO_SIDE_EFFECTS__
+ */
 export function defineEntity<
     TSchema extends DrizzleSchema,
-    TTableName extends string & keyof TablesOf<TSchema>,
+    TTableName extends keyof TablesOf<TSchema> & string,
     TTable extends TablesOf<TSchema>[TTableName] = TablesOf<TSchema>[TTableName],
     TColumns extends EntityColumnsOptions<TTable> = EntityColumnsOptions<TTable>,
     TSort extends TableSortOptions<EntitySchema<TTable, TColumns>> = true,
 >(
     options: EntityOptions<TSchema, TTableName, TTable, TColumns, TSort>,
 ): Entity<TSchema, TTable, TColumns, TSort>;
+/**
+ *
+ * @__NO_SIDE_EFFECTS__
+ */
 export function defineEntity(options: EntityOptions): Entity {
     const tableProps = {} as EntitySchemaProps;
     const table = options.schema[options.table] as Table;
@@ -146,10 +211,16 @@ export function defineEntity(options: EntityOptions): Entity {
     });
 }
 
-function getColumnSchema(column: Column, options: s.SchemaOptionsBase & EntityColumnProps) {
+function getColumnSchema(column: Column, options: EntityColumnProps & s.SchemaOptionsBase) {
     switch (column.dataType) {
+        case 'array':
+            return s.array(s.unknown(options));
+        case 'bigint':
+            return s.bigint(options);
         case 'boolean':
             return s.boolean(options);
+        case 'date':
+            return s.date(options);
         case 'number':
             if (column.columnType === 'integer') {
                 return s.integer(options);
@@ -158,12 +229,6 @@ function getColumnSchema(column: Column, options: s.SchemaOptionsBase & EntityCo
             return s.number(options);
         case 'string':
             return s.string(options);
-        case 'date':
-            return s.date(options);
-        case 'bigint':
-            return s.bigint(options);
-        case 'array':
-            return s.array(s.unknown(options));
         default:
             return s.unknown(options);
     }

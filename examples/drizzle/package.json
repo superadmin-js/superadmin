@@ -1,6 +1,5 @@
 {
     "name": "@superadmin/example-drizzle",
-    "version": "1.0.0",
     "repository": "https://github.com/kedrzu/superadmin.git",
     "author": "Michał Kędrzyński <m.kedrzynski@gmail.com>",
     "type": "module",
@@ -8,22 +7,16 @@
     "scripts": {
         "codegen": "prisma generate --schema=./db/schema.prisma",
         "watch": "prisma generate --watch --schema=./db/schema.prisma",
-        "dev": "superadmin start",
+        "dev": "superadmin",
         "db:push": "prisma db push --skip-generate --schema=./db/schema.prisma"
     },
     "dependencies": {
         "@libsql/client": "^0.15.4",
-        "@superadmin/client": "*",
-        "@superadmin/core": "*",
         "@superadmin/drizzle": "*",
-        "@superadmin/ioc": "*",
-        "@superadmin/schema": "*",
-        "@superadmin/server": "*",
-        "@superadmin/validation": "*",
-        "drizzle-orm": "^0.43.1"
+        "drizzle-orm": "^0.43.1",
+        "superadmin": "*"
     },
     "devDependencies": {
-        "@superadmin/cli": "*",
         "@superadmin/tsconfig": "*",
         "drizzle-kit": "^0.31.1",
         "prisma": "6.7.0",

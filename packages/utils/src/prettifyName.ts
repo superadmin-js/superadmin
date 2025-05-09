@@ -1,4 +1,11 @@
+/**
+ *
+ */
 export function prettifyName(name: string, separator = '.') {
+    if (!name) {
+        return '';
+    }
+
     const separatorIndex = name.lastIndexOf(separator);
     if (separatorIndex !== -1) {
         name = name.slice(separatorIndex + 1);
@@ -9,7 +16,7 @@ export function prettifyName(name: string, separator = '.') {
     name = name.replace(/[A-Z]/g, char => ` ${char}`);
     name = name.toLowerCase();
     // Uppercase first letter
-    name = `${name[0].toUpperCase()}${name.slice(1)}`;
+    name = `${name[0]!.toUpperCase()}${name.slice(1)}`;
 
     return name;
 }

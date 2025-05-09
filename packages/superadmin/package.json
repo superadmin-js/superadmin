@@ -1,0 +1,65 @@
+{
+    "name": "superadmin",
+    "version": "1.0.0",
+    "repository": "https://github.com/kedrzu/superadmin.git",
+    "author": "Michał Kędrzyński <m.kedrzynski@gmail.com>",
+    "type": "module",
+    "main": "./dist/core.js",
+    "module": "./dist/core.js",
+    "types": "./dist/core.d.ts",
+    "sideEffects": false,
+    "scripts": {
+        "eslint": "eslint . --fix --cache",
+        "build": "tsc --build"
+    },
+    "bin": "./dist/cli.js",
+    "exports": {
+        ".": {
+            "default": "./dist/core.js",
+            "types": "./dist/core.d.ts"
+        },
+        "./client": {
+            "default": "./dist/client.js",
+            "types": "./dist/client.d.ts"
+        },
+        "./server": {
+            "default": "./dist/server.js",
+            "types": "./dist/server.d.ts"
+        },
+        "./schema": {
+            "default": "./dist/schema.js",
+            "types": "./dist/schema.d.ts"
+        },
+        "./validation": {
+            "default": "./dist/validation.js",
+            "types": "./dist/validation.d.ts"
+        },
+        "./ioc": {
+            "default": "./dist/ioc.js",
+            "types": "./dist/ioc.d.ts"
+        },
+        "./config": {
+            "default": "./dist/config.js",
+            "types": "./dist/config.d.ts"
+        }
+    },
+    "dependencies": {
+        "@nzyme/cli": "^0.14.0",
+        "@nzyme/ioc": "^0.14.0",
+        "@nzyme/utils": "^0.14.0",
+        "@superadmin/client": "*",
+        "@superadmin/config": "*",
+        "@superadmin/core": "*",
+        "@superadmin/devkit": "*",
+        "@superadmin/ioc": "*",
+        "@superadmin/schema": "*",
+        "@superadmin/server": "*",
+        "@superadmin/ui": "*",
+        "@superadmin/validation": "*"
+    },
+    "devDependencies": {
+        "@superadmin/tsconfig": "*",
+        "@types/node": "^22.15.14",
+        "vitest": "^3.1.3"
+    }
+}

@@ -1,16 +1,20 @@
+import { defineService } from '@nzyme/ioc';
 import { jwtVerify } from 'jose';
 
-import { defineService } from '@nzyme/ioc';
 import type { AuthContext } from '@superadmin/core';
 import { AuthRegistry } from '@superadmin/core';
 import { coerce } from '@superadmin/schema';
 import { AuthSecret } from '@superadmin/server';
 
+/**
+ *
+ */
 export const VerifyAuthToken = defineService({
-    setup({ inject }) {
-        const authRegistry = inject(AuthRegistry);
-        const secret = inject(AuthSecret);
-
+    deps: {
+        authRegistry: AuthRegistry,
+        authSecret: AuthSecret,
+    },
+    setup({ authRegistry, authSecret }) {
         return async (token: string | null | undefined) => {
             if (!token) {
                 return null;
@@ -48,7 +52,7 @@ export const VerifyAuthToken = defineService({
 
         async function verifyToken(token: string) {
             try {
-                const { payload } = await jwtVerify(token, await secret);
+                const { payload } = await jwtVerify(token, await authSecret);
                 return payload;
             } catch {
                 return null;
