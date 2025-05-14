@@ -11,7 +11,7 @@
         "db:push": "prisma db push --skip-generate --schema=./db/schema.prisma"
     },
     "dependencies": {
-        "@libsql/client": "^0.15.4",
+        "@libsql/client": "^0.15.5",
         "@superadmin/drizzle": "*",
         "drizzle-orm": "^0.43.1",
         "superadmin": "*"

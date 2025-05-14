@@ -20,12 +20,12 @@
         "@nzyme/utils": "^0.14.0",
         "@superadmin/core": "*",
         "@superadmin/schema": "*",
-        "debug": "^4.4.0"
+        "debug": "^4.4.1"
     },
     "devDependencies": {
         "@superadmin/tsconfig": "*",
         "@types/debug": "^4.1.12",
-        "@types/node": "^22.15.14",
+        "@types/node": "^22.15.18",
         "vitest": "^3.1.3"
     }
 }
