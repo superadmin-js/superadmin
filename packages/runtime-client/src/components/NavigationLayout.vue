@@ -4,6 +4,8 @@ import Splitter from 'primevue/splitter';
 import SplitterPanel from 'primevue/splitterpanel';
 import { RouterView, useRoute } from 'vue-router';
 
+import NavigationMenu from '../navigation/NavigationMenu.vue';
+
 const route = useRoute();
 const stateKey = 'superadmin.layout';
 </script>
@@ -17,6 +19,7 @@ const stateKey = 'superadmin.layout';
   >
     <SplitterPanel
       :size="20"
+      :min-size="20"
       :class="css.panel"
     >
       <img
@@ -25,7 +28,7 @@ const stateKey = 'superadmin.layout';
         class="h-full max-h-24 self-start p-6"
       />
 
-      Navigation
+      <NavigationMenu />
     </SplitterPanel>
     <SplitterPanel
       :size="80"
@@ -55,7 +58,7 @@ const stateKey = 'superadmin.layout';
   height: 100vh;
   border: none;
   border-radius: 0;
-  --p-splitter-gutter-background: transparent;
+  // --p-splitter-gutter-background: transparent;
 }
 
 .menu {

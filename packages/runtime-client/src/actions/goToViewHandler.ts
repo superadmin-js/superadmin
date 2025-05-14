@@ -1,4 +1,5 @@
 import { Router } from '@superadmin/client';
+import { getViewRoute } from '@superadmin/client';
 import { defineActionHandler, ViewRegistry } from '@superadmin/core';
 import { goToViewAction } from '@superadmin/core/internal';
 
@@ -15,12 +16,8 @@ export const goToViewHandler = defineActionHandler({
                 throw new Error(`View ${params.view} not found`);
             }
 
-            await router.push({
-                path: view.path,
-                query: {
-                    p: JSON.stringify(params.params),
-                },
-            });
+            const route = getViewRoute(view, params.params);
+            await router.push(route);
         };
     },
 });

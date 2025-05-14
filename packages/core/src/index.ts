@@ -31,6 +31,8 @@ export { defineSubmodule, isSubmodule, type Submodule } from './defineSubmodule.
 export * from './functions/defineFunction.js';
 export * from './functions/defineFunctionHandler.js';
 export * from './functions/FunctionRegistry.js';
+export * from './navigation/defineNavigation.js';
+export * from './navigation/NavigationRegistry.js';
 export {
     type BasicPagination,
     type BasicPaginationEvents,

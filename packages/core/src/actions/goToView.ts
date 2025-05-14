@@ -26,7 +26,10 @@ export function goToView<V extends View>(view: V, params: s.Infer<V['params']>):
  */
 export function goToView(view: View, params?: unknown) {
     return goToViewAction({
-        view: view.id,
+        get view() {
+            // Lazy resolution of view id
+            return view.id;
+        },
         params: s.serialize(view.params, params),
     });
 }

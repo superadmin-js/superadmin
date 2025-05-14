@@ -17,8 +17,10 @@ defineProps({
 
 <style lang="css" module="css">
 .icon {
+  font-size: 1.25em;
   width: 1em;
   height: 1em;
+  flex: 0 0 1em;
   stroke: currentColor;
   stroke-width: 2;
   stroke-linecap: round;

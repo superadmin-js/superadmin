@@ -14,7 +14,6 @@ import { ActionRegistry } from './ActionRegistry.js';
  *
  */
 export const ACTION_SYMBOL = Symbol('action');
-const ACTION_SCHEMA = s.action();
 
 /**
  *
@@ -94,8 +93,16 @@ export function defineAction<
  *
  */
 export function defineAction(options: ActionOptions): ActionDefinition {
-    const factory: ActionFactory = input => {
-        return s.coerce(ACTION_SCHEMA, { action: action.id, params: input as unknown });
+    const factory: ActionFactory = (input: unknown) => {
+        const actionPayload: s.ActionPayload = {
+            get action() {
+                // Lazy resolution of action id
+                return action.id;
+            },
+            params: input,
+        };
+
+        return actionPayload as s.Action;
     };
 
     const action = factory as ActionDefinition;

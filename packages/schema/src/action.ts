@@ -15,20 +15,27 @@ declare const ACTION_SYMBOL: unique symbol;
 /**
  *
  */
-export interface Action<P extends Schema = Schema, R extends Schema = Schema> {
+export interface Action<P extends Schema = Schema, R extends Schema = Schema>
+    extends ActionPayload<P> {
     /**
-     *
+     * This is just a marker to preserve result type
+     * @internal
+     */
+    [ACTION_SYMBOL]: R;
+}
+
+/**
+ *
+ */
+export interface ActionPayload<P extends Schema = Schema> {
+    /**
+     * ID of the action
      */
     action: string;
     /**
-     *
+     * Parameters of the action
      */
     params: Infer<P>;
-    // This is just a marker to preserve result type
-    /**
-     *
-     */
-    [ACTION_SYMBOL]: R;
 }
 
 /**

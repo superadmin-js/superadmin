@@ -1,4 +1,12 @@
-import { defineAction, defineFormView, openConfirmDialog, openMenu, openModal } from 'superadmin';
+import {
+    defineAction,
+    defineFormView,
+    defineNavigation,
+    goToView,
+    openConfirmDialog,
+    openMenu,
+    openModal,
+} from 'superadmin';
 import { defineEntity } from '@superadmin/drizzle';
 import * as s from 'superadmin/schema';
 import * as v from 'superadmin/validation';
@@ -104,4 +112,15 @@ export const deleteCustomer = defineAction({
         id: s.integer(),
     }),
     result: s.action({ optional: true }),
+});
+
+export const navigation = defineNavigation({
+    title: 'Customers',
+    items: [
+        {
+            title: 'Customers',
+            icon: 'users',
+            action: goToView(customers.tableView, {}),
+        },
+    ],
 });
