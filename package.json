@@ -5,7 +5,6 @@
     "scripts": {
         "dev": "turbo run dev",
         "start": "yarn --cwd examples/drizzle dev",
-        "build": "tsc --build",
         "build:turbo": "turbo run build",
         "clean": "del \"**/dist\" \"**/dist-cjs\" \"**/.turbo\" \"**/.nzyme\" \"**/.tsbuildinfo\" \"**/*.tsbuildinfo\" \"**/.rollup.cache\" \"!**/node_modules/**\"",
         "clean:npm": "del \"**/node_modules\" \"**/yarn.lock\"",

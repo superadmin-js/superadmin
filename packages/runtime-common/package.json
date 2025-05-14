@@ -9,8 +9,7 @@
     "types": "./dist/index.d.ts",
     "sideEffects": false,
     "scripts": {
-        "eslint": "eslint . --fix --cache",
-        "build": "tsc --build"
+        "eslint": "eslint . --fix --cache"
     },
     "exports": {
         ".": "./dist/index.js"

@@ -10,8 +10,7 @@
         "./internal": "./dist/internal.js"
     },
     "scripts": {
-        "eslint": "eslint . --fix --cache",
-        "build": "tsc --build"
+        "eslint": "eslint . --fix --cache"
     },
     "dependencies": {
         "@nzyme/crypto-utils": "^0.14.0",

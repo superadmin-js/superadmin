@@ -43,3 +43,6 @@ dist-cjs/
 tsconfig.json
 tsconfig.cjs.json
 *.loc.ts
+
+# Not needed for a library, messes up with monorepo
+yarn.lock
