@@ -11,19 +11,46 @@
     "scripts": {
         "eslint": "eslint . --fix --cache"
     },
+    "exports": {
+        ".": {
+            "import": "./dist/index.js",
+            "types": "./dist/index.d.ts"
+        },
+        "./entry": {
+            "import": "./dist/entry.js",
+            "types": "./dist/entry.d.ts"
+        },
+        "./entry-dev": {
+            "import": "./dist/entry-dev.js",
+            "types": "./dist/entry-dev.d.ts"
+        },
+        "./module": {
+            "import": "./dist/module.js",
+            "types": "./dist/module.d.ts"
+        }
+    },
     "dependencies": {
+        "@nzyme/api-core": "^0.14.0",
+        "@nzyme/api-server": "^0.14.0",
         "@nzyme/crypto-utils": "^0.14.0",
         "@nzyme/ioc": "^0.14.0",
+        "@nzyme/rollup-utils": "^0.14.0",
         "@nzyme/types": "^0.14.0",
         "@nzyme/utils": "^0.14.0",
         "@superadmin/core": "*",
+        "@superadmin/runtime-common": "*",
         "@superadmin/schema": "*",
         "@superadmin/utils": "*",
-        "h3": "^1.15.3"
+        "@superadmin/validation": "*",
+        "chalk": "^5.4.1",
+        "connect": "^3.7.0",
+        "jose": "^6.0.11"
     },
     "devDependencies": {
         "@superadmin/tsconfig": "*",
+        "@types/connect": "^3.4.38",
         "@types/node": "^22.15.18",
+        "typescript": "^5.8.3",
         "vitest": "^3.1.3"
     }
 }

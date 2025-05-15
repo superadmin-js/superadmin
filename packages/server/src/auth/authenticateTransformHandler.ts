@@ -3,7 +3,8 @@ import { SignJWT } from 'jose';
 import type { AuthData, AuthenticateInput } from '@superadmin/core';
 import { AuthRegistry, defineFunctionHandler } from '@superadmin/core';
 import { authenticateTransform } from '@superadmin/core/internal';
-import { AuthSecret } from '@superadmin/server';
+
+import { AuthSecret } from './AuthSecret.js';
 
 /**
  *

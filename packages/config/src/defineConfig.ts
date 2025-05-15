@@ -8,25 +8,37 @@ import type { Module } from '@nzyme/ioc';
  */
 export interface ProjectConfigInit {
     /**
-     *
+     * Port to run the server on.
+     * @example 3000
+     * @default 3000
      */
     port?: number;
     /**
-     *
+     * Path to the theme file.
+     * @example '@superadmin/ui/theme'
+     * @default '@superadmin/ui/theme'
      */
     theme?: string;
     /**
-     *
+     * Application base path.
+     * @example '/admin'
+     * @default '/'
      */
     basePath?: string;
     /**
-     *
+     * Path to the logo file.
+     * @example './logo.svg'
+     * @default '@superadmin/ui/logo.svg'
      */
     logo?: string;
     /**
-     *
+     * List of plugins to use.
      */
     plugins?: Module[];
+    /**
+     * Watch for changes in the following files.
+     */
+    watch?: (string | RegExp)[];
 }
 
 /**
@@ -34,33 +46,37 @@ export interface ProjectConfigInit {
  */
 export interface ProjectConfig {
     /**
-     *
+     * Port to run the server on.
      */
     port: number;
     /**
-     *
+     * Path to the theme file.
      */
     theme: string;
     /**
-     *
+     * Path to the current working directory.
      */
     cwd: string;
     /**
-     *
+     * Path to the runtime.
      */
     runtimePath: string;
     /**
-     *
+     * Application base path.
      */
     basePath: string;
     /**
-     *
+     * Path to the logo file.
      */
     logo: string;
     /**
-     *
+     * List of plugins to use.
      */
     plugins: Module[];
+    /**
+     * Watch for changes in the following files.
+     */
+    watch: (string | RegExp)[];
 }
 
 /**
@@ -86,5 +102,6 @@ export function defineConfig(config: ProjectConfigInit): ProjectConfig {
         runtimePath,
         basePath,
         plugins: config.plugins || [],
+        watch: config.watch || [],
     };
 }

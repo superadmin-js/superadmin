@@ -5,7 +5,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 
 import { AuthChecker, AuthStore } from '@superadmin/client';
 import type { View } from '@superadmin/core';
-import { ViewRegistry } from '@superadmin/core';
+import { RuntimeConfig, ViewRegistry } from '@superadmin/core';
 import { loginComponent } from '@superadmin/core/internal';
 
 import NavigationLayout from './components/NavigationLayout.vue';
@@ -18,6 +18,7 @@ export function setupRouter(container: Container) {
     const authStore = container.resolve(AuthStore);
     const authChecker = container.resolve(AuthChecker);
     const viewRegistry = container.resolve(ViewRegistry);
+    const config = container.resolve(RuntimeConfig);
     const debug = createDebug('superadmin:router');
 
     const routes: RouteRecordRaw[] = [];
@@ -66,7 +67,7 @@ export function setupRouter(container: Container) {
 
     const router = createRouter({
         routes,
-        history: createWebHistory(),
+        history: createWebHistory(config.basePath),
     });
 
     router.beforeEach((to, from, next) => {

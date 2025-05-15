@@ -15,6 +15,7 @@
         ".": "./dist/index.js"
     },
     "dependencies": {
+        "@nzyme/api-core": "^0.14.0",
         "@nzyme/ioc": "^0.14.0",
         "@nzyme/types": "^0.14.0",
         "@nzyme/utils": "^0.14.0",

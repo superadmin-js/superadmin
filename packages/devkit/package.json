@@ -27,7 +27,6 @@
         "@superadmin/config": "*",
         "@superadmin/core": "*",
         "@superadmin/runtime-client": "*",
-        "@superadmin/runtime-server": "*",
         "@tailwindcss/vite": "^4.1.6",
         "@types/fs-extra": "^11.0.4",
         "@vitejs/plugin-vue": "^5.2.4",
@@ -43,8 +42,10 @@
         "rollup-plugin-sourcemaps": "^0.6.3",
         "tailwindcss": "^4.1.6",
         "typescript": "^5.8.3",
+        "ufo": "^1.6.1",
         "vite": "^6.3.5",
         "vite-plugin-checker": "^0.9.3",
+        "vite-plugin-node-polyfills": "^0.23.0",
         "vite-tsconfig-paths": "^5.1.4",
         "vue-tsc": "^2.2.10"
     },

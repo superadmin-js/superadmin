@@ -3,7 +3,7 @@ import path from 'path';
 import { unwrapCjsDefaultImport } from '@nzyme/esm';
 import { Container, defineService } from '@nzyme/ioc';
 import { resolveModulePath, resolveProjectPath } from '@nzyme/project-utils';
-import { devServerMiddleware } from '@nzyme/rollup-utils';
+import { devServerMiddleware, normalizeBuiltinsPlugin } from '@nzyme/rollup-utils';
 import alias from '@rollup/plugin-alias';
 import commonjs from '@rollup/plugin-commonjs';
 import json from '@rollup/plugin-json';
@@ -16,8 +16,10 @@ import autoprefixer from 'autoprefixer';
 import chalk from 'chalk';
 import consola from 'consola';
 import sourcemaps from 'rollup-plugin-sourcemaps';
+import { joinURL } from 'ufo';
 import { createServer } from 'vite';
 import { checker } from 'vite-plugin-checker';
+import { nodePolyfills } from 'vite-plugin-node-polyfills';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
 import { ProjectConfig } from '@superadmin/config';
@@ -53,7 +55,7 @@ export const DevServer = defineService({
             order: -1,
         });
 
-        runtime.server.addFile('@superadmin/runtime-server/module', {
+        runtime.server.addFile('@superadmin/server/module', {
             id: '@superadmin/server',
             order: -1,
         });
@@ -64,7 +66,7 @@ export const DevServer = defineService({
         const api = createApiServer();
 
         vite.middlewares.stack.unshift({
-            route: '/api',
+            route: joinURL(config.basePath, '/api'),
             handle: api,
         });
 
@@ -102,6 +104,11 @@ export const DevServer = defineService({
                         vueTsc: true,
                     }),
                     tailwindcss(),
+                    nodePolyfills({
+                        globals: {
+                            Buffer: true,
+                        },
+                    }),
                 ],
                 resolve: {
                     alias: {
@@ -111,6 +118,7 @@ export const DevServer = defineService({
                         '@logo': config.logo,
                     },
                 },
+                base: config.basePath,
                 root: clientRoot,
                 server: {
                     port: config.port,
@@ -120,9 +128,7 @@ export const DevServer = defineService({
                         plugins: [autoprefixer()],
                     },
                     preprocessorOptions: {
-                        scss: {
-                            // additionalData: `@import "tailwind";\n`,
-                        },
+                        scss: {},
                     },
                 },
             });
@@ -130,7 +136,7 @@ export const DevServer = defineService({
 
         function createApiServer() {
             return devServerMiddleware({
-                input: resolveModulePath('@superadmin/runtime-server/dev', import.meta),
+                input: resolveModulePath('@superadmin/server/entry-dev', import.meta),
                 output: {
                     format: 'esm',
                     dir: path.join(config.runtimePath, 'server'),
@@ -145,12 +151,22 @@ export const DevServer = defineService({
                         return `[name].[hash].[ext]`;
                     },
                 },
+                preserveSymlinks: true,
                 plugins: [
+                    normalizeBuiltinsPlugin(),
                     nodeResolve({
                         preferBuiltins: true,
                         extensions: ['.js', '.mjs', '.ts', '.tsx', '.json'],
                         exportConditions: ['node', 'module', 'import', 'require'],
                     }),
+                    {
+                        name: 'watch-files',
+                        transform(_code, id) {
+                            if (shouldWatch(id)) {
+                                this.addWatchFile(id);
+                            }
+                        },
+                    },
                     unwrapCjsDefaultImport(commonjs)(),
                     unwrapCjsDefaultImport(json)(),
                     unwrapCjsDefaultImport(typescript)(),
@@ -166,8 +182,11 @@ export const DevServer = defineService({
                     }),
                 ],
                 external: source => {
-                    // TODO: make it configurable for library clients
-                    if (source === 'superadmin' || /@?superadmin\/\w+/.test(source)) {
+                    if (source.startsWith('./') || source.startsWith('../')) {
+                        return false;
+                    }
+
+                    if (shouldWatch(source)) {
                         return false;
                     }
 
@@ -176,17 +195,29 @@ export const DevServer = defineService({
                         return true;
                     }
 
-                    if (/@nzyme\/\w+/.test(source)) {
-                        return false;
-                    }
-
-                    if (/node_modules/.test(source)) {
+                    if (source.includes('/node_modules/')) {
                         return true;
                     }
 
                     return false;
                 },
             });
+        }
+
+        function shouldWatch(source: string) {
+            for (const watch of config.watch) {
+                if (typeof watch === 'string') {
+                    if (watch === source) {
+                        return true;
+                    }
+                } else {
+                    if (watch.test(source)) {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
     },
 });

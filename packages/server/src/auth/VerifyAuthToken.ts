@@ -4,7 +4,8 @@ import { jwtVerify } from 'jose';
 import type { AuthContext } from '@superadmin/core';
 import { AuthRegistry } from '@superadmin/core';
 import { coerce } from '@superadmin/schema';
-import { AuthSecret } from '@superadmin/server';
+
+import { AuthSecret } from './AuthSecret.js';
 
 /**
  *

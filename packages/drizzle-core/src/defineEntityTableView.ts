@@ -1,5 +1,6 @@
 import type { IfLiteral } from '@nzyme/types';
 import type { Column, GetColumnData, SQLWrapper, Table } from 'drizzle-orm';
+import { getTableName } from 'drizzle-orm';
 
 import type {
     BasicPagination,
@@ -10,10 +11,9 @@ import type {
 } from '@superadmin/core';
 import { defineBasicPagination, defineSubmodule, defineTableView } from '@superadmin/core';
 import * as s from '@superadmin/schema';
-import { prettifyName } from '@superadmin/utils';
 
 import { EntityRegistry } from './EntityRegistry.js';
-import type { DrizzleSchema, TablesOf } from './types.js';
+import type { TableAny } from './types.js';
 
 const ENTITY_SYMBOL = Symbol('entity');
 
@@ -22,6 +22,17 @@ const ENTITY_SYMBOL = Symbol('entity');
  */
 export type EntityColumnsOptions<T extends Table = Table> = {
     [K in keyof T['_']['columns']]?: boolean;
+};
+
+/**
+ *
+ */
+export type EntityColumnsOptionsCheck<T extends Table, TColumns extends EntityColumnsOptions<T>> = {
+    [K in keyof TColumns]: TColumns[K] extends true
+        ? K extends keyof T['_']['columns']
+            ? true
+            : never
+        : never;
 };
 
 /**
@@ -48,7 +59,7 @@ export type EntitySchemaProps = Record<string, EntityColumnSchema>;
  *
  */
 export type EntitySchema<
-    TTable extends Table,
+    TTable extends TableAny,
     TColumns extends EntityColumnsOptions<TTable>,
 > = IfLiteral<
     keyof TColumns,
@@ -77,10 +88,12 @@ export type EntitySchema<
 /**
  *
  */
-export type EntityViewOptions<
-    TTable extends Table = Table,
+export type EntityTableViewOptions<
+    TTable extends TableAny = Table,
     TColumns extends EntityColumnsOptions<TTable> = EntityColumnsOptions<TTable>,
-    TSort extends TableSortOptions<EntitySchema<TTable, TColumns>> = false,
+    TSort extends TableSortOptions<EntitySchema<TTable, TColumns>> = TableSortOptions<
+        EntitySchema<TTable, TColumns>
+    >,
 > = Pick<
     TableViewOptions<EntitySchema<TTable, TColumns>, s.Schema<void>, TSort>,
     'auth' | 'headerButtons' | 'path' | 'rowButtons' | 'sortColumns' | 'title'
@@ -88,54 +101,27 @@ export type EntityViewOptions<
     /**
      *
      */
-    columns: TColumns;
+    columns: EntityColumnsOptionsCheck<TTable, TColumns> & TColumns;
     /**
      *
      */
     pageSizes?: number[];
+    /**
+     *
+     */
+    table: TTable;
 };
 
 /**
  *
  */
-export interface EntityOptions<
-    TSchema extends DrizzleSchema = DrizzleSchema,
-    TTableName extends keyof TablesOf<TSchema> & string = keyof TablesOf<TSchema> & string,
-    TTable extends TablesOf<TSchema>[TTableName] = TablesOf<TSchema>[TTableName],
-    TColumns extends EntityColumnsOptions<TTable> = EntityColumnsOptions<TTable>,
-    TSort extends TableSortOptions<EntitySchema<TTable, TColumns>> = TableSortOptions<
-        EntitySchema<TTable, TColumns>
-    >,
-> {
-    /**
-     *
-     */
-    schema: TSchema;
-    /**
-     *
-     */
-    table: TTableName;
-    /**
-     *
-     */
-    tableView: EntityViewOptions<TTable, TColumns, TSort>;
-}
-
-/**
- *
- */
 export interface Entity<
-    TSchema extends DrizzleSchema = DrizzleSchema,
-    TTable extends Table = Table,
+    TTable extends TableAny = Table,
     TColumns extends EntityColumnsOptions<TTable> = EntityColumnsOptions<TTable>,
     TSort extends TableSortOptions<EntitySchema<TTable, TColumns>> = TableSortOptions<
         EntitySchema<TTable, TColumns>
     >,
 > extends Submodule {
-    /**
-     *
-     */
-    schema: TSchema;
     /**
      *
      */
@@ -147,32 +133,25 @@ export interface Entity<
 }
 
 /**
- *
  * @__NO_SIDE_EFFECTS__
  */
-export function defineEntity<
-    TSchema extends DrizzleSchema,
-    TTableName extends keyof TablesOf<TSchema> & string,
-    TTable extends TablesOf<TSchema>[TTableName] = TablesOf<TSchema>[TTableName],
+export function defineEntityTableView<
+    TTable extends TableAny = Table,
     TColumns extends EntityColumnsOptions<TTable> = EntityColumnsOptions<TTable>,
     TSort extends TableSortOptions<EntitySchema<TTable, TColumns>> = true,
->(
-    options: EntityOptions<TSchema, TTableName, TTable, TColumns, TSort>,
-): Entity<TSchema, TTable, TColumns, TSort>;
+>(options: EntityTableViewOptions<TTable, TColumns, TSort>): Entity<TTable, TColumns, TSort>;
 /**
- *
  * @__NO_SIDE_EFFECTS__
  */
-export function defineEntity(options: EntityOptions): Entity {
+export function defineEntityTableView(options: EntityTableViewOptions): Entity {
     const tableProps = {} as EntitySchemaProps;
-    const table = options.schema[options.table] as Table;
+    const table = options.table;
 
-    const tableViewOptions = options.tableView;
-    for (const [key, value] of Object.entries(tableViewOptions.columns)) {
+    for (const [key, value] of Object.entries(options.columns)) {
         if (value === true) {
             const column = table[key as keyof typeof table] as Column;
             if (!column) {
-                throw new Error(`Column ${key} not found in table ${options.table}`);
+                throw new Error(`Column ${key} not found in table "${getTableName(table)}"`);
             }
 
             tableProps[key] = getColumnSchema(column, {
@@ -183,17 +162,17 @@ export function defineEntity(options: EntityOptions): Entity {
     }
 
     const tableView = defineTableView({
-        title: tableViewOptions.title ?? prettifyName(options.table),
-        path: tableViewOptions.path,
-        auth: tableViewOptions.auth,
-        sortColumns: tableViewOptions.sortColumns ?? true,
-        headerButtons: tableViewOptions.headerButtons,
-        rowButtons: tableViewOptions.rowButtons,
+        title: options.title,
+        path: options.path,
+        auth: options.auth,
+        sortColumns: options.sortColumns ?? true,
+        headerButtons: options.headerButtons,
+        rowButtons: options.rowButtons,
         schema: s.object({
             props: tableProps,
         }),
         pagination: defineBasicPagination({
-            pageSizes: tableViewOptions.pageSizes,
+            pageSizes: options.pageSizes,
         }),
     });
 
@@ -205,8 +184,7 @@ export function defineEntity(options: EntityOptions): Entity {
                 tableView,
             };
         },
-        schema: options.schema,
-        table: options.schema[options.table] as Table,
+        table,
         tableView,
     });
 }

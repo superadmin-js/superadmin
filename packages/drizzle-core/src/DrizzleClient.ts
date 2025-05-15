@@ -1,13 +1,27 @@
 import { defineInterface } from '@nzyme/ioc';
-import type { LibSQLDatabase } from 'drizzle-orm/libsql';
-import type { PgDatabase, PgQueryResultHKT } from 'drizzle-orm/pg-core';
-
-import type { DrizzleSchema } from './types.js';
+import type { Func } from '@nzyme/types';
 
 /**
  *
  */
-export type DrizzleClient = LibSQLDatabase<DrizzleSchema> | PgDatabase<PgQueryResultHKT>;
+export type DrizzleClient = {
+    /**
+     *
+     */
+    delete: Func;
+    /**
+     *
+     */
+    insert: Func;
+    /**
+     *
+     */
+    select: Func;
+    /**
+     *
+     */
+    update: Func;
+};
 
 /**
  *
