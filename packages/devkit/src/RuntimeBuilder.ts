@@ -8,7 +8,7 @@ import createDebug from 'debug';
 import { ProjectConfig } from '@superadmin/config';
 import type { RuntimeConfig } from '@superadmin/core';
 
-import { createModulesRuntime } from './utils/createRuntime.js';
+import { generateRuntime } from './runtime/generateModules.js';
 
 /**
  *
@@ -19,24 +19,35 @@ export const RuntimeBuilder = defineService({
         projectConfig: ProjectConfig,
     },
     setup({ projectConfig }) {
-        const runtimeConfig: RuntimeConfig = {
-            basePath: projectConfig.basePath,
-        };
-
         const debug = createDebug('superadmin:runtime');
         const serverRegex = /\.(server|common)\.ts$/;
         const clientRegex = /\.(client|common)\.tsx?$/;
 
-        const client = createModulesRuntime({
-            outputDir: path.join(projectConfig.runtimePath, 'client'),
+        const clientDir = path.join(projectConfig.runtimePath, 'client');
+        const serverDir = path.join(projectConfig.runtimePath, 'server');
+
+        const runtimeConfig: RuntimeConfig = {
+            basePath: projectConfig.basePath,
+        };
+
+        const client = generateRuntime({
+            outputDir: clientDir,
             rootDir: projectConfig.cwd,
-            config: runtimeConfig,
+            runtimeConfig,
+            tsConfig: {
+                extends: '@superadmin/tsconfig/vue.json',
+                compilerOptions: {
+                    moduleResolution: 'Bundler',
+                    module: 'ESNext',
+                },
+                include: ['../../**/*.ts', '../../**/*.tsx', '../../**/*.vue', '../../**/*.json'],
+            },
         });
 
-        const server = createModulesRuntime({
-            outputDir: path.join(projectConfig.runtimePath, 'server'),
+        const server = generateRuntime({
+            outputDir: serverDir,
             rootDir: projectConfig.cwd,
-            config: runtimeConfig,
+            runtimeConfig,
         });
 
         return {

@@ -1,40 +1,85 @@
 import path from 'path';
 
-import fs from 'fs-extra';
+import { createScript, saveFile } from '@nzyme/project-utils';
 import debounce from 'lodash.debounce';
-import { format, resolveConfig } from 'prettier';
+import type { TsConfigJson } from 'type-fest';
 
-import type { ScriptBuilder } from '@nzyme/project-utils';
-import { createScript } from '@nzyme/project-utils';
 import type { RuntimeConfig } from '@superadmin/core';
+import { saveTsConfig } from './saveTsConfig.js';
 
-export interface RuntimeOptions {
+/**
+ *
+ */
+export interface GenerateRuntimeOptions {
+    /**
+     *
+     */
     outputDir: string;
+    /**
+     *
+     */
     rootDir: string;
-    config: RuntimeConfig;
+    /**
+     *
+     */
+    runtimeConfig: RuntimeConfig;
+    /**
+     *
+     */
+    tsConfig?: TsConfigJson;
 }
 
-export function createModulesRuntime(options: RuntimeOptions) {
-    const { outputDir, rootDir } = options;
+/**
+ *
+ */
+export function generateRuntime(options: GenerateRuntimeOptions) {
+    const { outputDir, rootDir, runtimeConfig, tsConfig } = options;
 
-    type Module = { file: string; order: number; id?: string };
+    /**
+     *
+     */
+    type Module = {
+        /**
+         *
+         */
+        file: string /**
+         *
+         */;
+        id?: string /**
+         *
+         */;
+        order: number;
+    };
     const modules: Module[] = [];
 
-    const configPath = path.join(outputDir, 'config.ts');
     const modulesPath = path.join(outputDir, 'modules.ts');
+    const configPath = path.join(outputDir, 'config.ts');
+    const tsConfigPath = options.tsConfig ? path.join(outputDir, 'tsconfig.json') : undefined;
 
     const generate = debounce(generateModules, 200);
     let started = false;
 
     return {
-        configPath,
         modulesPath,
+        configPath,
+        tsConfigPath,
         addFile,
         removeFile,
         start,
     };
 
-    function addFile(path: string, options?: { order?: number; id?: string }) {
+    function addFile(
+        path: string,
+        options?: {
+            /**
+             *
+             */
+            id?: string /**
+             *
+             */;
+            order?: number;
+        },
+    ) {
         const index = modules.findIndex(file => file.file === path);
         if (index !== -1) {
             return;
@@ -77,21 +122,18 @@ export function createModulesRuntime(options: RuntimeOptions) {
 
         started = true;
         await generateConfig();
+        if (tsConfigPath && tsConfig) {
+            await saveTsConfig(tsConfigPath, tsConfig);
+        }
         await generateModules();
     }
 
     async function generateConfig() {
-        await fs.ensureDir(outputDir);
-
-        const script = createScript();
-        script.addStatement(`export default ${JSON.stringify(options.config)};`);
-
-        await saveScript(configPath, script);
+        const configContent = `export default ${JSON.stringify(runtimeConfig)};`;
+        await saveFile(configPath, configContent);
     }
 
     async function generateModules() {
-        await fs.ensureDir(outputDir);
-
         const script = createScript();
 
         const modulesMap: Record<string, string> = {};
@@ -116,17 +158,7 @@ export function createModulesRuntime(options: RuntimeOptions) {
 
         script.addStatement(`export default {${modulesDestructured}};`);
 
-        await saveScript(modulesPath, script);
-    }
-
-    async function saveScript(filePath: string, script: ScriptBuilder) {
-        const prettierConfig = await resolveConfig(filePath);
-        const formatted = await format(script.getCode(), {
-            ...prettierConfig,
-            parser: 'typescript',
-        });
-
-        await fs.writeFile(filePath, formatted);
+        await saveFile(modulesPath, script.getCode());
     }
 
     function getModuleId(module: Module) {

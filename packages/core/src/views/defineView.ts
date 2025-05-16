@@ -4,7 +4,7 @@ import * as s from '@superadmin/schema';
 import { prettifyName } from '@superadmin/utils';
 
 import type { ActionDefinition } from '../actions/defineAction.js';
-import { loggedIn, noAuth } from '../auth/defineAuthorizer.js';
+import { resolveAuthorizer } from '../auth/defineAuthorizer.js';
 import type { Authorizer } from '../auth/defineAuthorizer.js';
 import { defineComponent } from '../defineComponent.js';
 import type { Component } from '../defineComponent.js';
@@ -148,7 +148,7 @@ export function defineView<
         actions: (view.actions ?? {}) as TActions,
         params: (view.params ?? s.void({ nullable: true })) as TParams,
         config: (view.config ?? {}) as TConfig,
-        auth: view.auth === false ? noAuth : (view.auth ?? loggedIn),
+        auth: resolveAuthorizer(view.auth),
         navigation: view.navigation ?? true,
         title: view.title || '',
         path: view.path ?? '',

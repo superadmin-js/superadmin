@@ -41,6 +41,7 @@
         "rollup": "^4.40.2",
         "rollup-plugin-sourcemaps": "^0.6.3",
         "tailwindcss": "^4.1.6",
+        "type-fest": "^4.41.0",
         "typescript": "^5.8.3",
         "ufo": "^1.6.1",
         "vite": "^6.3.5",

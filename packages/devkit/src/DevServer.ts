@@ -101,7 +101,9 @@ export const DevServer = defineService({
                     checker({
                         root: config.cwd,
                         typescript: false,
-                        vueTsc: true,
+                        vueTsc: {
+                            tsconfigPath: runtime.client.tsConfigPath,
+                        },
                     }),
                     tailwindcss(),
                     nodePolyfills({

@@ -1,6 +1,7 @@
 import { FetchError, fetchJson } from '@nzyme/fetch-utils';
 import { Container, defineService } from '@nzyme/ioc';
 import type { Injected } from '@nzyme/ioc';
+import { Logger } from '@nzyme/logging';
 import { joinURL } from 'ufo';
 
 import type { ActionDefinition, ActionError } from '@superadmin/core';
@@ -9,6 +10,7 @@ import {
     ActionRegistry,
     ApplicationError,
     RuntimeConfig,
+    showToast,
 } from '@superadmin/core';
 import * as s from '@superadmin/schema';
 import { ValidationError } from '@superadmin/validation';
@@ -31,8 +33,9 @@ export const ActionDispatcher = defineService({
         actionHandlers: ActionHandlerRegistry,
         authStore: AuthStore,
         container: Container,
+        logger: Logger,
     },
-    setup({ runtimeConfig, actionRegistry, actionHandlers, authStore, container }) {
+    setup({ runtimeConfig, actionRegistry, actionHandlers, authStore, container, logger }) {
         return dispatch;
 
         async function dispatch<P extends s.Schema>(
@@ -97,16 +100,40 @@ export const ActionDispatcher = defineService({
 
                 return s.coerce(actionDefinition.result, result);
             } catch (error) {
-                if (error instanceof FetchError && error.status === 400) {
-                    const actionError = (await error.response.json()) as ActionError;
+                if (error instanceof FetchError) {
+                    if (error.status === 401) {
+                        if (event) {
+                            return showToast({
+                                title: 'Error',
+                                message: 'You are not authorized to perform this action',
+                                type: 'error',
+                            });
+                        }
 
-                    if (actionError.type === 'validation') {
-                        throw new ValidationError(actionError.errors);
+                        throw new ApplicationError('Unauthorized', { cause: error });
                     }
 
-                    throw new ApplicationError(actionError.message, {
-                        cause: error,
-                    });
+                    if (error.status === 400) {
+                        const actionError = (await error.response.json()) as ActionError;
+
+                        if (actionError.type === 'validation') {
+                            throw new ValidationError(actionError.errors);
+                        }
+
+                        if (event) {
+                            logger.error(`Action ${action.action} failed`, { error });
+
+                            return showToast({
+                                title: 'Error',
+                                message: actionError.message,
+                                type: 'error',
+                            });
+                        }
+
+                        throw new ApplicationError(actionError.message, {
+                            cause: error,
+                        });
+                    }
                 }
 
                 throw error;

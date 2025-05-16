@@ -70,6 +70,7 @@ export function defineFormView<S extends s.ObjectSchema, P extends s.Schema = s.
             fetch: defineAction({
                 params: params,
                 result: schema,
+                auth: config.auth,
                 defaultHandler: defineInjectable(() => {
                     return () => s.coerce(schema);
                 }),
@@ -77,6 +78,7 @@ export function defineFormView<S extends s.ObjectSchema, P extends s.Schema = s.
             submit: defineAction({
                 params: schema,
                 result: s.action({ nullable: true, optional: true }),
+                auth: config.auth,
             }),
         },
     });

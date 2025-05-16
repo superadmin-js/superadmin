@@ -53,11 +53,11 @@
         "@superadmin/ioc": "*",
         "@superadmin/schema": "*",
         "@superadmin/server": "*",
+        "@superadmin/tsconfig": "*",
         "@superadmin/ui": "*",
         "@superadmin/validation": "*"
     },
     "devDependencies": {
-        "@superadmin/tsconfig": "*",
         "@types/node": "^22.15.18",
         "vitest": "^3.1.3"
     }

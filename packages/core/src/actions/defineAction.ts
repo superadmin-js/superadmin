@@ -4,11 +4,12 @@ import * as s from '@superadmin/schema';
 import { prettifyName } from '@superadmin/utils';
 
 import type { Authorizer } from '../auth/defineAuthorizer.js';
-import { loggedIn, noAuth } from '../auth/defineAuthorizer.js';
+import { resolveAuthorizer } from '../auth/defineAuthorizer.js';
 import { defineSubmodule, isSubmodule } from '../defineSubmodule.js';
 import type { Submodule } from '../defineSubmodule.js';
 import type { FunctionDefinition } from '../functions/defineFunction.js';
 import { ActionRegistry } from './ActionRegistry.js';
+import { AuthContext } from '../auth/AuthContext.js';
 
 /**
  *
@@ -116,7 +117,7 @@ export function defineAction(options: ActionOptions): ActionDefinition {
         sst: options.sst,
         title: options.title ?? '',
         input: options.sst?.params ?? params,
-        auth: options.auth === false ? noAuth : (options.auth ?? loggedIn),
+        auth: resolveAuthorizer(options.auth),
         handler: options.defaultHandler,
         visit: options.visit as ActionVisitor | undefined,
         init(id) {
