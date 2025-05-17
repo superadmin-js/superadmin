@@ -10,6 +10,8 @@ You carefully provide accurate, factual, thoughtful answers, and are a genius at
 
 When importing .ts files always add .js extension.
 
+Use context7 to consult docs.
+
 ## Schemas
 
 For schemas use @nzyme/zchema package, not zod. Import it like this: 
@@ -34,14 +36,21 @@ Do not add unnecessary type declarations for jsdoc.
 Do not remove existing eslind disable comments (like `// eslint-disable-next-line @typescript-eslint/no-explicit-any`), leave them under jsdoc as is.
 If function has multiple overloads, document each of them.
 
-## Pure functions
+## Functions
+
+When generating functions place them in the file in order from high to low abstraction.
+Also if function A uses B, A should be above B if possible.
 
 For pure functions like those which start with get.. or define.. add a following comment right above function implementation, but below jsdoc:
-// /**
- * 
- * @__NO_SIDE_EFFECTS__
- */
+// #__NO_SIDE_EFFECTS__
 
+## Code quality
 
+Do not repeat code, write utility functions instead.
+
+## File operations
+
+Use fs-extra when needed, but remember that it does not re-export fs functions (although types say differently).
+Use fs/promises for everything else.
 
 Don't be lazy, write all the code to implement features I ask for.
