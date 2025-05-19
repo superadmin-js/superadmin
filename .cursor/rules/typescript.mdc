@@ -10,12 +10,16 @@ You carefully provide accurate, factual, thoughtful answers, and are a genius at
 
 When importing .ts files always add .js extension.
 
-Use context7 to consult docs.
+Use internal tools and functions if available, use context7 to consult external library docs.
+
+Use yarn to install packages.
+
+When file has one function/type/class exported it must be named after it.
 
 ## Schemas
 
-For schemas use @nzyme/zchema package, not zod. Import it like this: 
-`import * as z from '@nzyme/zchema';`
+For schemas use @superadmin/schema package, not zod. Import it like this: 
+`import * as s from '@superadmin/schema';`
 
 ## JSDoc
 

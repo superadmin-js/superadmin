@@ -57,7 +57,7 @@ export function generateRuntime(options: GenerateRuntimeOptions) {
     const tsConfigPath = options.tsConfig ? path.join(outputDir, 'tsconfig.json') : undefined;
 
     const generate = debounce(generateModules, 200);
-    let started = false;
+    let watching = false;
 
     return {
         modulesPath,
@@ -65,21 +65,22 @@ export function generateRuntime(options: GenerateRuntimeOptions) {
         tsConfigPath,
         addFile,
         removeFile,
-        start,
+        watch,
+        render,
     };
 
-    function addFile(
-        path: string,
-        options?: {
-            /**
-             *
-             */
-            id?: string /**
-             *
-             */;
-            order?: number;
-        },
-    ) {
+    type AddFileOptions = {
+        /**
+         *
+         */
+        id?: string;
+        /**
+         *
+         */
+        order?: number;
+    };
+
+    function addFile(path: string, options?: AddFileOptions) {
         const index = modules.findIndex(file => file.file === path);
         if (index !== -1) {
             return;
@@ -94,7 +95,7 @@ export function generateRuntime(options: GenerateRuntimeOptions) {
             return a.order - b.order;
         });
 
-        if (started) {
+        if (watching) {
             void generate();
         }
     }
@@ -108,19 +109,23 @@ export function generateRuntime(options: GenerateRuntimeOptions) {
 
         modules.splice(index, 1);
 
-        if (started) {
+        if (watching) {
             void generate();
         }
 
         return true;
     }
 
-    async function start() {
-        if (started) {
+    async function watch() {
+        if (watching) {
             return;
         }
 
-        started = true;
+        watching = true;
+        await render();
+    }
+
+    async function render() {
         await generateConfig();
         if (tsConfigPath && tsConfig) {
             await saveTsConfig(tsConfigPath, tsConfig);

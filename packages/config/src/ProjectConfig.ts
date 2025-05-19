@@ -39,6 +39,23 @@ export interface ProjectConfigInit {
      * Watch for changes in the following files.
      */
     watch?: (string | RegExp)[];
+
+    /**
+     * Server configuration.
+     */
+    server?: ProjectServerConfig;
+}
+
+/**
+ * Project server configuration.
+ */
+export interface ProjectServerConfig {
+    /**
+     * Path to the server entry file.
+     * @example './server/entry.ts'
+     * @default '@superadmin/server/entry'
+     */
+    entry?: string;
 }
 
 /**
@@ -77,6 +94,10 @@ export interface ProjectConfig {
      * Watch for changes in the following files.
      */
     watch: (string | RegExp)[];
+    /**
+     * Server configuration.
+     */
+    server: ProjectServerConfig;
 }
 
 /**
@@ -103,5 +124,6 @@ export function defineConfig(config: ProjectConfigInit): ProjectConfig {
         basePath,
         plugins: config.plugins || [],
         watch: config.watch || [],
+        server: config.server || {},
     };
 }

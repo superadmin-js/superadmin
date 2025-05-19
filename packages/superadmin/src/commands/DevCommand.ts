@@ -1,9 +1,9 @@
 import { Command } from '@nzyme/cli';
-import { createContainer } from '@nzyme/ioc';
 import { waitForever } from '@nzyme/utils';
 
-import { ProjectConfig } from '@superadmin/config';
-import { DevServer, resolveConfig } from '@superadmin/devkit';
+import { DevServer } from '@superadmin/devkit';
+
+import { loadProject } from '../utils/loadProject.js';
 
 /**
  *
@@ -18,10 +18,7 @@ export class DevCommand extends Command {
      *
      */
     async run() {
-        const container = createContainer();
-        const config = await resolveConfig(process.cwd());
-
-        container.set(ProjectConfig, config);
+        const container = await loadProject();
 
         const devServer = await container.resolve(DevServer);
         await devServer.start();
