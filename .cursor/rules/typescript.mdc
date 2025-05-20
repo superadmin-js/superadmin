@@ -45,8 +45,7 @@ If function has multiple overloads, document each of them.
 When generating functions place them in the file in order from high to low abstraction.
 Also if function A uses B, A should be above B if possible.
 
-For pure functions like those which start with get.. or define.. add a following comment right above function implementation, but below jsdoc:
-// #__NO_SIDE_EFFECTS__
+For pure functions like those which start with get.. or define.. add a following comment at the end of jsdoc: @__NO_SIDE_EFFECTS__
 
 ## Code quality
 

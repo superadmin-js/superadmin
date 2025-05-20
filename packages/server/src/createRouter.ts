@@ -1,11 +1,11 @@
 import modules from '@modules';
-import { ApiRouter } from '@nzyme/api-server';
 import type { Container } from '@nzyme/ioc';
 import { createContainer } from '@nzyme/ioc';
 
 import { installModules } from '@superadmin/runtime-common';
 
 import { ActionEndpointHandler } from './endpoints/ActionEndpointHandler.js';
+import { ApiRouter } from './server.js';
 
 /**
  *
@@ -21,7 +21,7 @@ export interface CreateRouterOptions {
 /**
  *
  */
-export function createRouter(options: CreateRouterOptions = {}) {
+export function createRouter(options: CreateRouterOptions = {}): ApiRouter {
     const container = options.container ?? createContainer();
     installModules(container, modules);
 

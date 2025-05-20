@@ -13,49 +13,81 @@ export interface ProjectConfigInit {
      * @default 3000
      */
     port?: number;
+
     /**
      * Path to the theme file.
      * @example '@superadmin/ui/theme'
      * @default '@superadmin/ui/theme'
      */
     theme?: string;
+
     /**
      * Application base path.
      * @example '/admin'
      * @default '/'
      */
     basePath?: string;
+
     /**
      * Path to the logo file.
      * @example './logo.svg'
      * @default '@superadmin/ui/logo.svg'
      */
     logo?: string;
+
     /**
      * List of plugins to use.
      */
     plugins?: Module[];
+
     /**
      * Watch for changes in the following files.
      */
     watch?: (string | RegExp)[];
 
     /**
-     * Server configuration.
+     * Build configuration.
      */
-    server?: ProjectServerConfig;
+    build?: ProjectBuildConfig;
 }
 
 /**
- * Project server configuration.
+ * Project build configuration.
  */
-export interface ProjectServerConfig {
+export interface ProjectBuildConfig {
+    /**
+     * Server build configuration.
+     */
+    server?: ProjectBuildServerConfig;
+
+    /**
+     * Client build configuration.
+     */
+    client?: ProjectBuildClientConfig;
+}
+
+/**
+ * Project build server configuration.
+ */
+export interface ProjectBuildServerConfig {
     /**
      * Path to the server entry file.
      * @example './server/entry.ts'
      * @default '@superadmin/server/entry'
      */
     entry?: string;
+}
+
+/**
+ * Project build client configuration.
+ */
+export interface ProjectBuildClientConfig {
+    /**
+     * Path to the client entry file.
+     * @example 'custom/path'
+     * @default 'assets'
+     */
+    assetsPath?: string;
 }
 
 /**
@@ -95,9 +127,9 @@ export interface ProjectConfig {
      */
     watch: (string | RegExp)[];
     /**
-     * Server configuration.
+     * Build configuration.
      */
-    server: ProjectServerConfig;
+    build: ProjectBuildConfig;
 }
 
 /**
@@ -124,6 +156,6 @@ export function defineConfig(config: ProjectConfigInit): ProjectConfig {
         basePath,
         plugins: config.plugins || [],
         watch: config.watch || [],
-        server: config.server || {},
+        build: config.build || {},
     };
 }

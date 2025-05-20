@@ -41,6 +41,11 @@ export const ProjectBuilder = defineService({
             const clientOutDir = path.join(outputDir, 'client');
             consola.info(`Building ${chalk.yellow('SuperAdmin client')}...`);
 
+            let assetsPath = config.build.client?.assetsPath || 'assets';
+            if (assetsPath.startsWith('/')) {
+                assetsPath = assetsPath.slice(1);
+            }
+
             const viteConfigBase = clientViteConfigProvider();
             const viteConfigOverrides: ViteConfig = {
                 build: {
@@ -49,9 +54,9 @@ export const ProjectBuilder = defineService({
 
                     rollupOptions: {
                         output: {
-                            entryFileNames: `assets/[hash].js`,
-                            chunkFileNames: `assets/[hash].js`,
-                            assetFileNames: `assets/[hash].[ext]`,
+                            entryFileNames: `${assetsPath}/[hash].js`,
+                            chunkFileNames: `${assetsPath}/[hash].js`,
+                            assetFileNames: `${assetsPath}/[hash].[ext]`,
                         },
                     },
                 },
@@ -73,7 +78,7 @@ export const ProjectBuilder = defineService({
             const rollupConfigBase = serverRollupConfigProvider();
             const rollupConfigOverrides: RollupOptions = {
                 input:
-                    config.server.entry ||
+                    config.build.server?.entry ||
                     resolveModulePath('@superadmin/server/entry', import.meta),
                 output: {
                     format: 'esm',

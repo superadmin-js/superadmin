@@ -2,8 +2,8 @@
 
 import { execute, initialize } from '@nzyme/cli';
 
-import { DevCommand } from './commands/DevCommand.js';
 import { BuildCommand } from './commands/BuildCommand.js';
+import { DevCommand } from './commands/DevCommand.js';
 
 initialize();
 
