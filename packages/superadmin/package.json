@@ -58,7 +58,7 @@
         "@superadmin/validation": "*"
     },
     "devDependencies": {
-        "@types/node": "^22.15.18",
-        "vitest": "^3.1.3"
+        "@types/node": "^22.15.21",
+        "vitest": "^3.1.4"
     }
 }
