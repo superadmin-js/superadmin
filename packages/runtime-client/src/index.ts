@@ -1,7 +1,7 @@
 import config from '@config';
 import modules from '@modules';
 import { CommonPlugin } from '@nzyme/vue';
-import { createContainer } from '@nzyme/vue-ioc';
+import { createContainer, IocPlugin } from '@nzyme/vue-ioc';
 import theme from '@theme';
 import type { PrimeVueConfiguration } from 'primevue/config';
 import PrimeVue from 'primevue/config';
@@ -30,7 +30,8 @@ container.set(App, app);
 container.set(Router, router);
 
 app.use(router);
-app.use(CommonPlugin, { container });
+app.use(CommonPlugin);
+app.use(IocPlugin, { container });
 
 const primeVueConfig: PrimeVueConfiguration = {
     theme: {
@@ -39,8 +40,8 @@ const primeVueConfig: PrimeVueConfiguration = {
 };
 
 app.use(PrimeVue as unknown as Plugin, primeVueConfig);
-
 app.use(PrimeVueToastService as unknown as Plugin);
+
 container.set(ToastService, app.config.globalProperties.$toast);
 
 app.mount('#root');
