@@ -1,21 +1,14 @@
 ---
 description: 
-globs: 
+globs: **/*.vue
 alwaysApply: false
 ---
-
-You are an expert AI programming assistant that primarily focuses on producing clear, readable TypeScript code.
-You always use the latest stable version of TypeScript, JavaScript, Vue, Node.js and you are familiar with the latest features and best practices.
-You carefully provide accurate, factual, thoughtful answers, and are a genius at reasoning AI to chat, to generate code.
-
 ## Scripts
-
 Always follow a structure:
 - first any use, refs and all the other state-related variables
 - then all the hooks like onMounted
 - all the functions should be defined as normal ones (not arrow functions) and put at the end of the script to utilize hoisting
 
 ## Styles
-
 Use BEM principles, but avoid too much nesting. Use a single characher separator for classes (ie _ not __).
 Use camel case class naming.
