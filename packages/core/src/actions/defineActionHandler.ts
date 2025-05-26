@@ -1,5 +1,5 @@
 import { defineService } from '@nzyme/ioc';
-import type { Service, ServiceDependencies, ServiceSetup } from '@nzyme/ioc';
+import type { Service, Dependencies, ServiceSetup } from '@nzyme/ioc';
 
 import type * as s from '@superadmin/schema';
 
@@ -25,7 +25,7 @@ export interface ActionHandlerOptions<
     TParams extends s.Schema,
     TResult extends s.Schema,
     TInput extends s.Schema,
-    TDeps extends ServiceDependencies,
+    TDeps extends Dependencies,
 > {
     /**
      *
@@ -66,7 +66,7 @@ export function defineActionHandler<
     TParams extends s.Schema = s.SchemaAny,
     TResult extends s.Schema = s.Schema,
     TInput extends s.Schema = TParams,
-    TDeps extends ServiceDependencies = EmptyObject,
+    TDeps extends Dependencies = EmptyObject,
 >(options: ActionHandlerOptions<TParams, TResult, TInput, TDeps>) {
     return defineSubmodule<ActionHandler<TParams, TResult, TInput>>(ACTION_HANDLER_SYMBOL, {
         action: options.action,

@@ -1,5 +1,5 @@
 import { defineService } from '@nzyme/ioc';
-import type { Service, ServiceDependencies, ServiceSetup } from '@nzyme/ioc';
+import type { Service, Dependencies, ServiceSetup } from '@nzyme/ioc';
 import type { EmptyObject } from '@nzyme/types';
 
 import type { Infer, Schema } from '@superadmin/schema';
@@ -24,7 +24,7 @@ export interface FunctionHandlerFunction<P extends Schema, R extends Schema> {
 export interface FunctionHandlerOptions<
     P extends Schema,
     R extends Schema,
-    TDeps extends ServiceDependencies,
+    TDeps extends Dependencies,
 > {
     /**
      *
@@ -61,7 +61,7 @@ export interface FunctionHandler<P extends Schema = Schema, R extends Schema = S
 export function defineFunctionHandler<
     P extends Schema,
     R extends Schema,
-    TDeps extends ServiceDependencies = EmptyObject,
+    TDeps extends Dependencies = EmptyObject,
 >(options: FunctionHandlerOptions<P, R, TDeps>) {
     return defineSubmodule<FunctionHandler<P, R>>(FUNCTION_HANDLER_SYMBOL, {
         function: options.function,

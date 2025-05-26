@@ -1,6 +1,6 @@
 import { FetchError, fetchJson } from '@nzyme/fetch-utils';
 import { Container, defineService } from '@nzyme/ioc';
-import type { Injected } from '@nzyme/ioc';
+import type { Resolved } from '@nzyme/ioc';
 import { Logger } from '@nzyme/logging';
 import { joinURL } from 'ufo';
 
@@ -20,7 +20,7 @@ import { AuthStore } from '../auth/AuthStore.js';
 /**
  *
  */
-export type ActionDispatcher = Injected<typeof ActionDispatcher>;
+export type ActionDispatcher = Resolved<typeof ActionDispatcher>;
 
 /**
  *

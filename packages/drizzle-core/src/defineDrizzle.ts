@@ -1,4 +1,4 @@
-import type { Service, ServiceDependencies, ServiceSetup } from '@nzyme/ioc';
+import type { Service, Dependencies, ServiceSetup } from '@nzyme/ioc';
 import { defineService } from '@nzyme/ioc';
 
 import type { Submodule } from '@superadmin/core';
@@ -9,7 +9,7 @@ import { DrizzleClient } from './DrizzleClient.js';
 /**
  *
  */
-export interface DrizzleOptions<TDrizzle extends DrizzleClient, TDeps extends ServiceDependencies> {
+export interface DrizzleOptions<TDrizzle extends DrizzleClient, TDeps extends Dependencies> {
     /**
      *
      */
@@ -27,7 +27,7 @@ export interface DrizzleOptions<TDrizzle extends DrizzleClient, TDeps extends Se
 /**
  *
  */
-export function defineDrizzle<TDrizzle extends DrizzleClient, TDeps extends ServiceDependencies>(
+export function defineDrizzle<TDrizzle extends DrizzleClient, TDeps extends Dependencies>(
     options: DrizzleOptions<TDrizzle, TDeps>,
 ): Service<TDrizzle, TDeps> & Submodule {
     const service = defineService({
