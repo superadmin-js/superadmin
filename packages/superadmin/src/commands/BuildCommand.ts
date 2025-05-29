@@ -1,5 +1,4 @@
 import { Command } from '@nzyme/cli';
-import { consola } from 'consola';
 
 import { ProjectBuilder } from '@superadmin/devkit';
 
@@ -24,6 +23,6 @@ export class BuildCommand extends Command {
         const builder = container.resolve(ProjectBuilder);
         await builder.build();
 
-        consola.success('Build completed successfully!');
+        console.info('Build completed successfully!');
     }
 }

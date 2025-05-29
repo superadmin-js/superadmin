@@ -5,7 +5,6 @@ import { resolveModulePath } from '@nzyme/project-utils';
 import { rollupCompile } from '@nzyme/rollup-utils';
 import type { RollupOptions } from '@nzyme/rollup-utils';
 import chalk from 'chalk';
-import { consola } from 'consola';
 import type { UserConfig as ViteConfig } from 'vite';
 import { mergeConfig, build as viteBuild } from 'vite';
 
@@ -39,7 +38,7 @@ export const ProjectBuilder = defineService({
 
         async function buildClient() {
             const clientOutDir = path.join(outputDir, 'client');
-            consola.info(`Building ${chalk.yellow('SuperAdmin client')}...`);
+            console.info(`Building ${chalk.yellow('SuperAdmin client')}...`);
 
             let assetsPath = config.build.client?.assetsPath || 'assets';
             if (assetsPath.startsWith('/')) {
@@ -66,14 +65,14 @@ export const ProjectBuilder = defineService({
 
             await viteBuild(viteConfig);
 
-            consola.success(`Client build complete!`);
-            consola.info(`Output: ${chalk.cyan(clientOutDir)}`);
+            console.info(`Client build complete! 🎉`);
+            console.info(`Output: ${chalk.cyan(clientOutDir)}`);
         }
 
         async function buildServer() {
             const serverOutDir = path.join(outputDir, 'server');
 
-            consola.info(`Building ${chalk.yellow('SuperAdmin server')}...`);
+            console.info(`Building ${chalk.yellow('SuperAdmin server')}...`);
 
             const rollupConfigBase = serverRollupConfigProvider();
             const rollupConfigOverrides: RollupOptions = {
@@ -97,8 +96,8 @@ export const ProjectBuilder = defineService({
 
             await rollupCompile(rollupConfig);
 
-            consola.success(`Server build complete!`);
-            consola.info(`Output: ${chalk.cyan(serverOutDir)}`);
+            console.info(`Server build complete! 🎉`);
+            console.info(`Output: ${chalk.cyan(serverOutDir)}`);
         }
     },
 });

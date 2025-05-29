@@ -4,7 +4,6 @@ import { defineService } from '@nzyme/ioc';
 import { resolveModulePath } from '@nzyme/project-utils';
 import { devServerMiddleware } from '@nzyme/rollup-utils';
 import chalk from 'chalk';
-import consola from 'consola';
 import type { RollupOptions, Plugin as RollupPlugin } from 'rollup';
 import { joinURL } from 'ufo';
 import type { UserConfig as ViteConfig } from 'vite';
@@ -45,7 +44,7 @@ export const DevServer = defineService({
                 return;
             }
 
-            consola.success(`Started ${chalk.yellow('Superadmin')} on ${chalk.cyan(serverUrl)}`);
+            console.info(`Started ${chalk.yellow('Superadmin')} on ${chalk.cyan(serverUrl)}`);
         });
 
         return {
