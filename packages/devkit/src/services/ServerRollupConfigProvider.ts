@@ -22,7 +22,6 @@ export const ServerRollupConfigProvider = defineService({
     setup({ runtime }) {
         return (): InputOptions => {
             return {
-                preserveSymlinks: true,
                 plugins: [
                     normalizeBuiltinsPlugin(),
                     nodeResolve({

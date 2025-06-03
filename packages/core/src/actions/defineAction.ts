@@ -9,7 +9,6 @@ import { defineSubmodule, isSubmodule } from '../defineSubmodule.js';
 import type { Submodule } from '../defineSubmodule.js';
 import type { FunctionDefinition } from '../functions/defineFunction.js';
 import { ActionRegistry } from './ActionRegistry.js';
-import { AuthContext } from '../auth/AuthContext.js';
 
 /**
  *

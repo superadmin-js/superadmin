@@ -1,4 +1,5 @@
 import { defineService } from '@nzyme/ioc';
+import { withSingleExecution } from '@nzyme/utils';
 import createDebug from 'debug';
 import { watch } from 'vue';
 
@@ -21,6 +22,7 @@ export const AuthChecker = defineService({
         const debug = createDebug('superadmin:auth');
 
         let refreshTimeout: ReturnType<typeof setTimeout>;
+        const checkAuthOnce = withSingleExecution(checkAuth);
 
         watch(
             () => authStore.authData,
@@ -38,16 +40,16 @@ export const AuthChecker = defineService({
                 const now = Date.now();
 
                 if (now >= refreshAt) {
-                    setTimeout(() => void checkAuth());
+                    setTimeout(() => void checkAuthOnce());
                     return;
                 }
 
-                refreshTimeout = setTimeout(() => void checkAuth(), refreshAt - now);
+                refreshTimeout = setTimeout(() => void checkAuthOnce(), refreshAt - now);
             },
             { immediate: true },
         );
 
-        return checkAuth;
+        return checkAuthOnce;
 
         async function checkAuth() {
             debug('Checking authentication');

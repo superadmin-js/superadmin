@@ -1,3 +1,5 @@
+import { HttpError } from '@nzyme/api-core';
+
 import { defineFunctionHandler } from '@superadmin/core';
 import { refreshAuthTransform } from '@superadmin/core/internal';
 
@@ -14,12 +16,8 @@ export const refreshAuthTransformHandler = defineFunctionHandler({
     setup({ verifyAuthToken }) {
         return async input => {
             const result = await verifyAuthToken(input);
-            if (!result) {
-                return null;
-            }
-
-            if (result.type !== 'refresh') {
-                return null;
+            if (!result || result.type !== 'refresh') {
+                throw new HttpError(401, 'Unauthorized');
             }
 
             return result.auth.user;

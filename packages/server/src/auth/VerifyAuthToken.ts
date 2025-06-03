@@ -53,7 +53,8 @@ export const VerifyAuthToken = defineService({
 
         async function verifyToken(token: string) {
             try {
-                const { payload } = await jwtVerify(token, await authSecret);
+                const secret = await authSecret;
+                const { payload } = await jwtVerify(token, secret);
                 return payload;
             } catch {
                 return null;
