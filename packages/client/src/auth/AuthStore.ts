@@ -7,6 +7,8 @@ import type { AuthContext } from '@superadmin/core';
 import { AuthData, AuthRegistry } from '@superadmin/core';
 import * as s from '@superadmin/schema';
 
+import { RuntimeConfig } from '../RuntimeConfig.js';
+
 /**
  *
  */
@@ -14,12 +16,13 @@ export const AuthStore = defineService({
     name: 'AuthStore',
     deps: {
         authRegistry: AuthRegistry,
+        runtimeConfig: RuntimeConfig,
     },
-    setup({ authRegistry }) {
+    setup({ authRegistry, runtimeConfig }) {
         const debug = createDebug('superadmin:auth');
 
         const authData = storageRef<AuthData | null>({
-            key: 'superadmin:auth',
+            key: `${runtimeConfig.storagePrefix}:auth`,
             storage: 'local',
             sync: 'always',
             serialize: v => {

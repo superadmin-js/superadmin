@@ -1,7 +1,6 @@
 import path from 'path';
 
 import { defineService } from '@nzyme/ioc';
-import { resolveModulePath } from '@nzyme/project-utils';
 import { devServerMiddleware } from '@nzyme/rollup-utils';
 import chalk from 'chalk';
 import type { RollupOptions, Plugin as RollupPlugin } from 'rollup';
@@ -12,6 +11,7 @@ import { createServer, mergeConfig } from 'vite';
 import { ProjectConfig } from '@superadmin/config';
 
 import { getViteServerUrl } from '../utils/getViteServerUrl.js';
+import { normalizePath } from '../utils/normalizePath.js';
 import { ClientViteConfigProvider } from './ClientViteConfigProvider.js';
 import { RuntimeBuilder } from './RuntimeBuilder.js';
 import { ServerRollupConfigProvider } from './ServerRollupConfigProvider.js';
@@ -93,7 +93,7 @@ export const DevServer = defineService({
 
             const rollupConfigBase = serverRollupConfigProvider();
             const rollupConfigOverrides: RollupOptions = {
-                input: resolveModulePath('@superadmin/server/entry-dev', import.meta),
+                input: normalizePath(config.server.devEntry),
                 output: {
                     format: 'esm',
                     dir: path.join(config.runtimePath, 'server'),

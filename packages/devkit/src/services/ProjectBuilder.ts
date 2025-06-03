@@ -1,7 +1,6 @@
 import path from 'path';
 
 import { defineService } from '@nzyme/ioc';
-import { resolveModulePath } from '@nzyme/project-utils';
 import { rollupCompile } from '@nzyme/rollup-utils';
 import type { RollupOptions } from '@nzyme/rollup-utils';
 import chalk from 'chalk';
@@ -10,6 +9,7 @@ import { mergeConfig, build as viteBuild } from 'vite';
 
 import { ProjectConfig } from '@superadmin/config';
 
+import { normalizePath } from '../utils/normalizePath.js';
 import { ClientViteConfigProvider } from './ClientViteConfigProvider.js';
 import { RuntimeBuilder } from './RuntimeBuilder.js';
 import { ServerRollupConfigProvider } from './ServerRollupConfigProvider.js';
@@ -40,7 +40,7 @@ export const ProjectBuilder = defineService({
             const clientOutDir = path.join(outputDir, 'client');
             console.info(`Building ${chalk.yellow('SuperAdmin client')}...`);
 
-            let assetsPath = config.build.client?.assetsPath || 'assets';
+            let assetsPath = config.client.assetsPath;
             if (assetsPath.startsWith('/')) {
                 assetsPath = assetsPath.slice(1);
             }
@@ -76,9 +76,7 @@ export const ProjectBuilder = defineService({
 
             const rollupConfigBase = serverRollupConfigProvider();
             const rollupConfigOverrides: RollupOptions = {
-                input:
-                    config.build.server?.entry ||
-                    resolveModulePath('@superadmin/server/entry', import.meta),
+                input: normalizePath(config.server.buildEntry),
                 output: {
                     format: 'esm',
                     dir: serverOutDir,

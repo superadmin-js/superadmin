@@ -153,5 +153,5 @@ export function isAction<
     def: ActionDefinition<TInput, TParams, TResult>,
     action: s.Action,
 ): action is s.Action<TInput, TResult> {
-    return def.name === action.action;
+    return def.id === action.action;
 }

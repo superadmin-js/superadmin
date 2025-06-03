@@ -41,7 +41,6 @@ export {
     defineBasicPagination,
 } from './pagination/defineBasicPagination.js';
 export * from './pagination/definePagination.js';
-export * from './RuntimeConfig.js';
 export { defineFormView } from './views/defineFormView.js';
 export type { FormView, FormViewConfig } from './views/defineFormView.js';
 export { defineTableView } from './views/defineTableView.js';

@@ -4,7 +4,6 @@ import { createScript, saveFile } from '@nzyme/project-utils';
 import debounce from 'lodash.debounce';
 import type { TsConfigJson } from 'type-fest';
 
-import type { RuntimeConfig } from '@superadmin/core';
 import { saveTsConfig } from './saveTsConfig.js';
 
 /**
@@ -22,7 +21,7 @@ export interface GenerateRuntimeOptions {
     /**
      *
      */
-    runtimeConfig: RuntimeConfig;
+    runtimeConfig: object;
     /**
      *
      */

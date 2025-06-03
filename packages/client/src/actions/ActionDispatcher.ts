@@ -9,13 +9,13 @@ import {
     ActionHandlerRegistry,
     ActionRegistry,
     ApplicationError,
-    RuntimeConfig,
     showToast,
 } from '@superadmin/core';
 import * as s from '@superadmin/schema';
 import { ValidationError } from '@superadmin/validation';
 
 import { AuthStore } from '../auth/AuthStore.js';
+import { RuntimeConfig } from '../RuntimeConfig.js';
 
 /**
  *

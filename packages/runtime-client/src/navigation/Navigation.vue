@@ -54,7 +54,7 @@ function mapMenuItem(item: NavigationItem): MenuItem {
     <template #item="{ item, props: { action } }">
       <router-link
         v-if="item.route"
-        v-slot="{ href, navigate }"
+        v-slot="{ href, navigate, isActive }"
         :to="item.route"
         custom
       >
@@ -62,6 +62,7 @@ function mapMenuItem(item: NavigationItem): MenuItem {
           v-ripple
           class="text-surface-700 dark:text-surface-0 flex cursor-pointer items-center px-4 py-2"
           :href="href"
+          :class="{ 'bg-primary-50 text-primary-700!': isActive }"
           @click="navigate"
         >
           <Icon

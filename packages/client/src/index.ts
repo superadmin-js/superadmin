@@ -12,6 +12,7 @@ export * from './editors/useEditor.js';
 export * from './editors/useEditorProps.js';
 export * from './events/ErrorEvent.js';
 export * from './events/RefetchEvent.js';
+export * from './RuntimeConfig.js';
 export * from './services/App.js';
 export * from './services/Router.js';
 export * from './services/ToastService.js';

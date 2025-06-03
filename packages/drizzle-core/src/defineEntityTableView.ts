@@ -27,9 +27,12 @@ export type EntityColumnsOptions<T extends Table = Table> = {
 /**
  *
  */
-export type EntityColumnsOptionsCheck<T extends Table, TColumns extends EntityColumnsOptions<T>> = {
+export type EntityColumnsOptionsCheck<
+    TTable extends Table,
+    TColumns extends EntityColumnsOptions<TTable>,
+> = EntityColumnsOptions<TTable> & {
     [K in keyof TColumns]: TColumns[K] extends true
-        ? K extends keyof T['_']['columns']
+        ? K extends keyof TTable['_']['columns']
             ? true
             : never
         : never;

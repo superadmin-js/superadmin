@@ -6,8 +6,9 @@ import { watch } from 'chokidar';
 import createDebug from 'debug';
 import fastGlob from 'fast-glob';
 
+import type { RuntimeConfig as ClientRuntimeConfig } from '@superadmin/client';
 import { ProjectConfig } from '@superadmin/config';
-import type { RuntimeConfig } from '@superadmin/core';
+import type { RuntimeConfig as ServerRuntimeConfig } from '@superadmin/server';
 
 import { generateRuntime } from '../runtime/generateModules.js';
 
@@ -28,14 +29,15 @@ export const RuntimeBuilder = defineService({
         const clientDir = path.join(projectConfig.runtimePath, 'client');
         const serverDir = path.join(projectConfig.runtimePath, 'server');
 
-        const runtimeConfig: RuntimeConfig = {
+        const clientRuntimeConfig: ClientRuntimeConfig = {
             basePath: projectConfig.basePath,
+            storagePrefix: projectConfig.client.storagePrefix,
         };
 
         const client = generateRuntime({
             outputDir: clientDir,
             rootDir: projectConfig.cwd,
-            runtimeConfig,
+            runtimeConfig: clientRuntimeConfig,
             tsConfig: {
                 extends: '@superadmin/tsconfig/vue.json',
                 compilerOptions: {
@@ -46,10 +48,14 @@ export const RuntimeBuilder = defineService({
             },
         });
 
+        const serverRuntimeConfig: ServerRuntimeConfig = {
+            basePath: projectConfig.basePath,
+        };
+
         const server = generateRuntime({
             outputDir: serverDir,
             rootDir: projectConfig.cwd,
-            runtimeConfig,
+            runtimeConfig: serverRuntimeConfig,
         });
 
         client.addFile('@superadmin/core/module', {

@@ -9,8 +9,7 @@ import PrimeVueToastService from 'primevue/toastservice';
 import { createApp } from 'vue';
 import type { Plugin } from 'vue';
 
-import { App, Router, ToastService } from '@superadmin/client';
-import { RuntimeConfig } from '@superadmin/core';
+import { App, Router, RuntimeConfig, ToastService } from '@superadmin/client';
 import { installModules } from '@superadmin/runtime-common';
 
 import AppComponent from './App.vue';

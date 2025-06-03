@@ -3,9 +3,9 @@ import createDebug from 'debug';
 import type { RouteRecordRaw } from 'vue-router';
 import { createRouter, createWebHistory } from 'vue-router';
 
-import { AuthChecker, AuthStore } from '@superadmin/client';
+import { AuthChecker, AuthStore, RuntimeConfig } from '@superadmin/client';
 import type { View } from '@superadmin/core';
-import { RuntimeConfig, ViewRegistry } from '@superadmin/core';
+import { ViewRegistry } from '@superadmin/core';
 import { loginComponent } from '@superadmin/core/internal';
 
 import NavigationLayout from './components/NavigationLayout.vue';

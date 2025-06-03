@@ -46,42 +46,27 @@ export interface ProjectConfigInit {
     watch?: (string | RegExp)[];
 
     /**
-     * Build configuration.
+     * Client configuration.
      */
-    build?: ProjectBuildConfig;
-}
+    client?: ProjectClientConfig;
 
-/**
- * Project build configuration.
- */
-export interface ProjectBuildConfig {
     /**
      * Server build configuration.
      */
-    server?: ProjectBuildServerConfig;
-
-    /**
-     * Client build configuration.
-     */
-    client?: ProjectBuildClientConfig;
+    server?: ProjectServerConfig;
 }
 
 /**
- * Project build server configuration.
+ * Project client configuration.
  */
-export interface ProjectBuildServerConfig {
+export interface ProjectClientConfig {
     /**
-     * Path to the server entry file.
-     * @example './server/entry.ts'
-     * @default '@superadmin/server/entry'
+     * Prefix to use for storage keys.
+     * @example 'superadmin'
+     * @default 'admin'
      */
-    entry?: string;
-}
+    storagePrefix?: string;
 
-/**
- * Project build client configuration.
- */
-export interface ProjectBuildClientConfig {
     /**
      * Path to the client entry file.
      * @example 'custom/path'
@@ -91,45 +76,47 @@ export interface ProjectBuildClientConfig {
 }
 
 /**
+ * Project server configuration.
+ */
+export interface ProjectServerConfig {
+    /**
+     * Path to the server entry file.
+     * @example './server/entry.ts'
+     * @default '@superadmin/server/entry'
+     */
+    buildEntry?: string;
+
+    /**
+     * Path to the server entry file for development.
+     * @example './server/entry-dev.ts'
+     * @default '@superadmin/server/entry-dev'
+     */
+    devEntry?: string;
+}
+
+/**
  *
  */
-export interface ProjectConfig {
-    /**
-     * Port to run the server on.
-     */
-    port: number;
-    /**
-     * Path to the theme file.
-     */
-    theme: string;
+export interface ProjectConfig extends Required<ProjectConfigInit> {
     /**
      * Path to the current working directory.
      */
     cwd: string;
+
     /**
      * Path to the runtime.
      */
     runtimePath: string;
+
     /**
-     * Application base path.
+     * Client configuration.
      */
-    basePath: string;
+    client: Required<ProjectClientConfig>;
+
     /**
-     * Path to the logo file.
+     * Server configuration.
      */
-    logo: string;
-    /**
-     * List of plugins to use.
-     */
-    plugins: Module[];
-    /**
-     * Watch for changes in the following files.
-     */
-    watch: (string | RegExp)[];
-    /**
-     * Build configuration.
-     */
-    build: ProjectBuildConfig;
+    server: Required<ProjectServerConfig>;
 }
 
 /**
@@ -144,18 +131,23 @@ export const ProjectConfig = defineInterface<ProjectConfig>({
  */
 export function defineConfig(config: ProjectConfigInit): ProjectConfig {
     const cwd = process.cwd();
-    const runtimePath = pathJoin(cwd, '.superadmin');
-    const basePath = config.basePath || '/';
 
     return {
         port: config.port || 3000,
         theme: config.theme || '@superadmin/ui/theme',
         logo: config.logo || '@superadmin/ui/logo.svg',
         cwd,
-        runtimePath,
-        basePath,
+        runtimePath: pathJoin(cwd, '.superadmin'),
         plugins: config.plugins || [],
         watch: config.watch || [],
-        build: config.build || {},
+        basePath: config.basePath || '/',
+        client: {
+            storagePrefix: config.client?.storagePrefix || 'superadmin',
+            assetsPath: config.client?.assetsPath || 'assets',
+        },
+        server: {
+            buildEntry: config.server?.buildEntry || '@superadmin/server/entry',
+            devEntry: config.server?.devEntry || '@superadmin/server/entry-dev',
+        },
     };
 }

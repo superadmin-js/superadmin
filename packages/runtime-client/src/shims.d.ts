@@ -9,7 +9,7 @@ declare module '@theme' {
 }
 
 declare module '@config' {
-    import type { RuntimeConfig } from '@superadmin/core';
+    import type { RuntimeConfig } from '@superadmin/client';
     const config: RuntimeConfig;
     export default config;
 }

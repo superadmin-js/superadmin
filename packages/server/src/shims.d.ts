@@ -5,7 +5,7 @@ declare module '@modules' {
 }
 
 declare module '@config' {
-    import type { RuntimeConfig } from '@superadmin/core';
+    import type { RuntimeConfig } from './RuntimeConfig.js';
     const config: RuntimeConfig;
     export default config;
 }
