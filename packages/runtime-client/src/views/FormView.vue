@@ -27,7 +27,7 @@ const error = ref<string | null>(null);
 
 model.value = await actionDispatcher(props.view.actions.fetch(props.params));
 
-async function submit(e: Event) {
+async function submit(event: Event) {
   error.value = null;
   validation.value = validate(props.view.config.schema, model.value);
   if (validation.value) {
@@ -36,20 +36,20 @@ async function submit(e: Event) {
 
   try {
     const action = props.view.actions.submit(model.value);
-    await actionDispatcher(action, e);
+    await actionDispatcher(action, { event });
     modal?.done(null);
-  } catch (e) {
-    if (e instanceof ApplicationError) {
-      error.value = e.message;
+  } catch (err) {
+    if (err instanceof ApplicationError) {
+      error.value = err.message;
       return;
     }
 
-    if (e instanceof ValidationError) {
-      validation.value = e.errors;
+    if (err instanceof ValidationError) {
+      validation.value = err.errors;
       return;
     }
 
-    throw e;
+    throw err;
   }
 }
 </script>

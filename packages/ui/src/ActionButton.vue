@@ -4,7 +4,7 @@ import { useService } from '@nzyme/vue-ioc';
 import { useEmitAsync } from '@nzyme/vue-utils';
 import Button from 'primevue/button';
 import type { PropType } from 'vue';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 
 import { ActionDispatcher, AuthStore } from '@superadmin/client';
 import { ActionRegistry } from '@superadmin/core';
@@ -19,6 +19,10 @@ const props = defineProps({
   },
   size: {
     type: String as PropType<'large' | 'small'>,
+  },
+  earlyExit: {
+    type: Boolean,
+    default: false,
   },
 });
 
@@ -35,6 +39,7 @@ const actionRegistry = useService(ActionRegistry);
 const actionDispatcher = useService(ActionDispatcher);
 
 const id = `button-${randomString(12)}`;
+const loading = ref(false);
 
 const actionDef = computed(
   () => props.button.action && actionRegistry.resolve(props.button.action),
@@ -65,14 +70,27 @@ const label = computed(() => {
 });
 
 async function onClick(e: Event) {
-  await emitAsync('click', e);
-
-  if (!props.button.action) {
+  if (loading.value) {
     return;
   }
 
-  await actionDispatcher(props.button.action, e);
-  await emitAsync('action', e);
+  loading.value = true;
+  try {
+    await emitAsync('click', e);
+
+    if (!props.button.action) {
+      return;
+    }
+
+    await actionDispatcher(props.button.action, {
+      event: e,
+      earlyExit: props.earlyExit,
+    });
+
+    await emitAsync('action', e);
+  } finally {
+    loading.value = false;
+  }
 }
 </script>
 
@@ -85,6 +103,7 @@ async function onClick(e: Event) {
     :severity="button.color"
     :outlined="button.style === 'outline'"
     :link="button.style === 'link'"
+    :loading="loading"
     @click="onClick"
   >
     <template

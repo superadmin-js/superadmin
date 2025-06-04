@@ -13,6 +13,7 @@ export * from './actions/defineActionHandler.js';
 export { goToView } from './actions/goToView.js';
 export { noAction } from './actions/noAction.js';
 export { openConfirmDialog } from './actions/openConfirmDialog.js';
+export { openDialog } from './actions/openDialog.js';
 export { type MenuItem, openMenu } from './actions/openMenu.js';
 export { openModal } from './actions/openModal.js';
 export { runInParalell } from './actions/runInParalell.js';

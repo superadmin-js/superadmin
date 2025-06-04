@@ -1,6 +1,7 @@
 export { goToViewAction } from './actions/goToView.js';
 export { noAction } from './actions/noAction.js';
 export { openConfirmDialog } from './actions/openConfirmDialog.js';
+export { openDialog } from './actions/openDialog.js';
 export { openMenuInternal } from './actions/openMenu.js';
 export { openModalInternal } from './actions/openModal.js';
 export { runInParalell } from './actions/runInParalell.js';

@@ -42,7 +42,7 @@ function mapMenuItem(item: NavigationItem): MenuItem {
 
     menuItem.route = getViewRoute(view, action.params.params);
   } else if (action) {
-    menuItem.command = () => void actionDispatcher(action);
+    menuItem.command = event => void actionDispatcher(action, { event: event.originalEvent });
   }
 
   return menuItem;

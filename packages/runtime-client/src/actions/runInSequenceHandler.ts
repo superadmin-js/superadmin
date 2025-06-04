@@ -9,7 +9,7 @@ export const runInSequenceHandler = defineActionHandler({
     setup({ actionDispatcher }) {
         return async (actions, event) => {
             for (const action of actions) {
-                await actionDispatcher(action, event);
+                await actionDispatcher(action, { event });
             }
         };
     },

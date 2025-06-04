@@ -47,11 +47,13 @@ const yes = computed<ActionButton>(() => ({
       <ActionButtonUI
         :button="no"
         class="flex-1"
+        early-exit
         @action="modal.close"
       />
       <ActionButtonUI
         :button="yes"
         class="flex-1"
+        early-exit
         @action="modal.done"
       />
     </template>

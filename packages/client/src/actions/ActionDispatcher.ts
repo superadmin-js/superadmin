@@ -23,6 +23,21 @@ import { RuntimeConfig } from '../RuntimeConfig.js';
 export type ActionDispatcher = Resolved<typeof ActionDispatcher>;
 
 /**
+ * Options for the action dispatcher.
+ */
+export interface ActionDispatcherOptions {
+    /**
+     * Event that triggered the action.
+     */
+    event?: Event;
+
+    /**
+     * If true, the action dispatcher will exit after the first action is dispatched.
+     */
+    earlyExit?: boolean;
+}
+
+/**
  *
  */
 export const ActionDispatcher = defineService({
@@ -40,22 +55,27 @@ export const ActionDispatcher = defineService({
 
         async function dispatch<P extends s.Schema>(
             action: s.Action<P, s.ActionSchema>,
-            event?: Event,
+            options?: ActionDispatcherOptions,
         ): Promise<void>;
         async function dispatch<P extends s.Schema, R extends s.Schema>(
             action: s.Action<P, R>,
-            event?: Event,
+            options?: ActionDispatcherOptions,
         ): Promise<s.Infer<R>>;
-        async function dispatch(action: s.Action, event?: Event) {
+        async function dispatch(action: s.Action, options: ActionDispatcherOptions = {}) {
             do {
                 const actionDefinition = actionRegistry.resolve(action.action);
                 if (!actionDefinition) {
                     throw new Error(`Action ${action.action} not found`);
                 }
 
-                const result = await execute(action, actionDefinition, event);
+                const result = await execute(action, actionDefinition, options.event);
 
                 if (s.isSchema(actionDefinition.result, s.action)) {
+                    if (options.earlyExit) {
+                        void dispatch(result as s.Action, options);
+                        return;
+                    }
+
                     action = result as s.Action;
                     continue;
                 }
