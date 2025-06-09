@@ -30,10 +30,11 @@
         }
     },
     "dependencies": {
-        "@nzyme/api-core": "^0.14.0",
         "@nzyme/crypto-utils": "^0.14.0",
+        "@nzyme/fetch-utils": "^0.14.0",
         "@nzyme/ioc": "^0.14.0",
         "@nzyme/rollup-utils": "^0.14.0",
+        "@nzyme/rpc": "^0.14.0",
         "@nzyme/types": "^0.14.0",
         "@nzyme/utils": "^0.14.0",
         "@superadmin/core": "*",
@@ -41,6 +42,7 @@
         "@superadmin/schema": "*",
         "@superadmin/utils": "*",
         "@superadmin/validation": "*",
+        "@zod/mini": "4.0.0-beta.0",
         "chalk": "^5.4.1",
         "connect": "^3.7.0",
         "jose": "^6.0.11"

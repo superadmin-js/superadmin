@@ -1,5 +1,5 @@
-import type { CreateMiddlewareOptions } from '@nzyme/api-server';
-import { createMiddleware } from '@nzyme/api-server';
+import type { CreateMiddlewareOptions } from '@nzyme/rpc';
+import { createMiddleware } from '@nzyme/rpc';
 import type { OmitProps } from '@nzyme/types';
 import connect from 'connect';
 

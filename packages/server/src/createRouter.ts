@@ -1,11 +1,11 @@
 import modules from '@modules';
 import type { Container } from '@nzyme/ioc';
 import { createContainer } from '@nzyme/ioc';
+import { createRouter as createRpcRouter, defaultSerializer } from '@nzyme/rpc';
 
 import { installModules } from '@superadmin/runtime-common';
 
-import { ActionEndpointHandler } from './endpoints/ActionEndpointHandler.js';
-import { ApiRouter } from './server.js';
+import { ExecuteAction } from './endpoints/ExecuteAction.js';
 
 /**
  *
@@ -21,13 +21,13 @@ export interface CreateRouterOptions {
 /**
  *
  */
-export function createRouter(options: CreateRouterOptions = {}): ApiRouter {
+export function createRouter(options: CreateRouterOptions = {}) {
     const container = options.container ?? createContainer();
     installModules(container, modules);
 
-    const router = container.resolve(ApiRouter);
-
-    router.addEndpoint(ActionEndpointHandler);
-
-    return router;
+    return createRpcRouter({
+        container,
+        endpoints: [ExecuteAction],
+        serializer: defaultSerializer,
+    });
 }

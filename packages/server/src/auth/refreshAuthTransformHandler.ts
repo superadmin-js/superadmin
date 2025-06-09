@@ -1,4 +1,4 @@
-import { HttpError } from '@nzyme/api-core';
+import { HttpError } from '@nzyme/fetch-utils';
 
 import { defineFunctionHandler } from '@superadmin/core';
 import { refreshAuthTransform } from '@superadmin/core/internal';

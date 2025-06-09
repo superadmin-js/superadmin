@@ -1,5 +1,5 @@
 import { defineService } from '@nzyme/ioc';
-import { storageRef, reactive } from '@nzyme/vue-utils';
+import { reactive, storageRef } from '@nzyme/vue-utils';
 import createDebug from 'debug';
 import { computed } from 'vue';
 

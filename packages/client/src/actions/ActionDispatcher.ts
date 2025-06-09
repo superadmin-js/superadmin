@@ -111,8 +111,9 @@ export const ActionDispatcher = defineService({
             try {
                 const result = await fetchJson({
                     method: 'POST',
-                    url: joinURL(runtimeConfig.basePath, 'api/action', action.action),
+                    url: joinURL(runtimeConfig.basePath, 'api/ExecuteAction'),
                     data: {
+                        action: action.action,
                         params: s.serialize(actionDefinition.input, action.params),
                     },
                     headers,

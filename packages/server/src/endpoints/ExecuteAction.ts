@@ -1,13 +1,14 @@
-import { HttpError } from '@nzyme/api-core';
-import type { HttpRequest } from '@nzyme/api-server';
-import { defineEndpointHandler } from '@nzyme/api-server';
 import { parseBearerToken } from '@nzyme/crypto-utils';
+import { HttpError } from '@nzyme/fetch-utils';
 import { Container } from '@nzyme/ioc';
+import type { HttpRequest } from '@nzyme/rpc';
+import { defineEndpoint, HttpContextProvider } from '@nzyme/rpc';
+import { assert } from '@nzyme/utils';
+import * as z from '@zod/mini';
 
 import type { ActionDefinition } from '@superadmin/core';
 import { ActionHandlerRegistry, ActionRegistry, FunctionRegistry } from '@superadmin/core';
 import { ApplicationError } from '@superadmin/core';
-import { ActionEndpoint } from '@superadmin/runtime-common';
 import * as s from '@superadmin/schema';
 import { ValidationError } from '@superadmin/validation';
 
@@ -16,19 +17,27 @@ import { VerifyAuthToken } from '../auth/VerifyAuthToken.js';
 /**
  *
  */
-export const ActionEndpointHandler = defineEndpointHandler({
-    endpoint: ActionEndpoint,
+export const ExecuteAction = defineEndpoint({
+    name: 'ExecuteAction',
+    input: z.object({
+        action: z.string(),
+        params: z.unknown(),
+    }),
     deps: {
         container: Container,
+        httpContextProvider: HttpContextProvider,
         actions: ActionRegistry,
         actionHandlers: ActionHandlerRegistry,
         functions: FunctionRegistry,
         verifyAuthToken: VerifyAuthToken,
     },
-    setup: ({ container, actions, actionHandlers, functions, verifyAuthToken }) => {
+    setup({ container, httpContextProvider, actions, actionHandlers, functions, verifyAuthToken }) {
         const actionSchema = s.action();
 
-        return async (input, request) => {
+        return async input => {
+            const request = httpContextProvider.get()?.request;
+            assert(request, 'Request not provided');
+
             try {
                 const handler = resolveHandler(input.action);
                 if (!handler) {
