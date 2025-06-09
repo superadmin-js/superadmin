@@ -24,11 +24,11 @@
         "@superadmin/schema": "*",
         "@superadmin/server": "*",
         "@superadmin/utils": "*",
-        "drizzle-orm": "^0.43.1"
+        "drizzle-orm": "^0.44.2"
     },
     "devDependencies": {
         "@superadmin/tsconfig": "*",
-        "@types/node": "^22.15.21",
-        "vitest": "^3.1.4"
+        "@types/node": "^22.15.30",
+        "vitest": "^3.2.2"
     }
 }

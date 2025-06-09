@@ -11,15 +11,15 @@
         "db:push": "prisma db push --skip-generate --schema=./db/schema.prisma"
     },
     "dependencies": {
-        "@libsql/client": "^0.15.7",
+        "@libsql/client": "^0.15.9",
         "@superadmin/drizzle": "*",
-        "drizzle-orm": "^0.43.1",
+        "drizzle-orm": "^0.44.2",
         "superadmin": "*"
     },
     "devDependencies": {
         "@superadmin/tsconfig": "*",
         "drizzle-kit": "^0.31.1",
-        "prisma": "6.8.2",
+        "prisma": "6.9.0",
         "prisma-generator-drizzle": "^0.7.6"
     }
 }
