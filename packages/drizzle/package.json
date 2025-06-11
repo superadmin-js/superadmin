@@ -31,7 +31,7 @@
     },
     "devDependencies": {
         "@superadmin/tsconfig": "*",
-        "@types/node": "^22.15.30",
-        "vitest": "^3.2.2"
+        "@types/node": "^24.0.0",
+        "vitest": "^3.2.3"
     }
 }
