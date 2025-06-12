@@ -9,13 +9,13 @@ export const openMenuHandler = defineActionHandler({
         menuService: MenuService,
     },
     setup({ menuService }) {
-        return async (params, event) => {
+        return (params, event) => {
             if (!event) {
                 console.warn('Opening menu requires user interaction event.');
                 return;
             }
 
-            await menuService.emitAsync('open', {
+            menuService.emit('open', {
                 event,
                 items: params.items,
             });
