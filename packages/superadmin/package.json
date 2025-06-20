@@ -46,6 +46,7 @@
         "@nzyme/cli": "^0.14.0",
         "@nzyme/ioc": "^0.14.0",
         "@nzyme/utils": "^0.14.0",
+        "@nzyme/project-utils": "^0.14.0",
         "@superadmin/client": "*",
         "@superadmin/config": "*",
         "@superadmin/core": "*",
