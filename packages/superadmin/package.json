@@ -56,7 +56,8 @@
         "@superadmin/server": "*",
         "@superadmin/tsconfig": "*",
         "@superadmin/ui": "*",
-        "@superadmin/validation": "*"
+        "@superadmin/validation": "*",
+        "ts-node": "^10.9.2"
     },
     "devDependencies": {
         "@types/node": "^24.0.0",
