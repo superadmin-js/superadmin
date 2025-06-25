@@ -17,7 +17,6 @@
         "@nzyme/fetch-utils": "^0.14.0",
         "@nzyme/ioc": "^0.14.0",
         "@nzyme/logging": "^0.14.0",
-        "@nzyme/types": "^0.14.0",
         "@nzyme/utils": "^0.14.0",
         "@nzyme/vue-ioc": "^0.14.0",
         "@nzyme/vue-utils": "^0.14.0",
@@ -25,14 +24,14 @@
         "@superadmin/schema": "*",
         "@superadmin/utils": "*",
         "@superadmin/validation": "*",
+        "debug": "^4.4.1",
+        "primevue": "^4.3.5",
         "ufo": "^1.6.1",
         "vue": "^3.5.17",
         "vue-router": "^4.5.1"
     },
     "devDependencies": {
         "@nzyme/eslint": "^0.14.0",
-        "@superadmin/tsconfig": "*",
-        "@types/node": "^24.0.4",
-        "vitest": "^3.2.4"
+        "@superadmin/tsconfig": "*"
     }
 }

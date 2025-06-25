@@ -20,10 +20,10 @@
         "@superadmin/schema": "*",
         "@superadmin/utils": "*",
         "@superadmin/validation": "*",
-        "debug": "^4.4.1",
-        "type-fest": "^4.41.0"
+        "debug": "^4.4.1"
     },
     "devDependencies": {
+        "@nzyme/eslint": "0.14.0",
         "@superadmin/tsconfig": "*",
         "@types/debug": "^4.1.12",
         "@types/node": "^24.0.4",
