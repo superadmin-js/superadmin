@@ -7,7 +7,6 @@
     "endOfLine": "lf",
     "singleAttributePerLine": true,
     "bracketSpacing": true,
-    "plugins": ["prettier-plugin-tailwindcss"],
     "overrides": [
         {
             "files": ["*.yml", "*.yaml", "*.html", "*.vue"],

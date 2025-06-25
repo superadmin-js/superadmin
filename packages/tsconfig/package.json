@@ -4,8 +4,5 @@
     "repository": "https://github.com/kedrzu/superadmin.git",
     "author": "Michał Kędrzyński <m.kedrzynski@gmail.com>",
     "sideEffects": false,
-    "main": "./base.json",
-    "dependencies": {
-        "@nzyme/tsconfig": "^0.14.0"
-    }
+    "main": "./base.json"
 }

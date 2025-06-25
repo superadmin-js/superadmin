@@ -47,20 +47,13 @@
         "@nzyme/ioc": "^0.14.0",
         "@nzyme/project-utils": "^0.14.0",
         "@nzyme/utils": "^0.14.0",
-        "@superadmin/client": "*",
         "@superadmin/config": "*",
-        "@superadmin/core": "*",
         "@superadmin/devkit": "*",
-        "@superadmin/ioc": "*",
-        "@superadmin/schema": "*",
-        "@superadmin/server": "*",
         "@superadmin/tsconfig": "*",
-        "@superadmin/ui": "*",
-        "@superadmin/validation": "*",
         "ts-node": "^10.9.2"
     },
     "devDependencies": {
-        "@types/node": "^24.0.0",
-        "vitest": "^3.2.4"
+        "@nzyme/eslint": "^0.14.0",
+        "@types/node": "^24.0.0"
     }
 }

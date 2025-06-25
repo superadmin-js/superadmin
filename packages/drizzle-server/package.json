@@ -15,20 +15,13 @@
         "eslint": "eslint . --fix --cache"
     },
     "dependencies": {
-        "@nzyme/crypto-utils": "^0.14.0",
-        "@nzyme/ioc": "^0.14.0",
-        "@nzyme/types": "^0.14.0",
-        "@nzyme/utils": "^0.14.0",
         "@superadmin/core": "*",
         "@superadmin/drizzle-core": "*",
         "@superadmin/schema": "*",
-        "@superadmin/server": "*",
-        "@superadmin/utils": "*",
         "drizzle-orm": "^0.44.2"
     },
     "devDependencies": {
-        "@superadmin/tsconfig": "*",
-        "@types/node": "^24.0.0",
-        "vitest": "^3.2.4"
+        "@nzyme/eslint": "^0.14.0",
+        "@superadmin/tsconfig": "*"
     }
 }
