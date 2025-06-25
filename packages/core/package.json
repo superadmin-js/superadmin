@@ -26,7 +26,7 @@
     "devDependencies": {
         "@superadmin/tsconfig": "*",
         "@types/debug": "^4.1.12",
-        "@types/node": "^24.0.0",
+        "@types/node": "^24.0.4",
         "vitest": "^3.2.4"
     }
 }

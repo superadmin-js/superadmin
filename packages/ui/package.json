@@ -27,15 +27,15 @@
         "@superadmin/schema": "*",
         "@superadmin/utils": "*",
         "@superadmin/validation": "*",
-        "lucide-static": "^0.522.0",
+        "lucide-static": "^0.523.0",
         "primevue": "^4.3.5",
-        "tailwindcss": "^4.1.8",
-        "vue": "^3.5.16",
+        "tailwindcss": "^4.1.10",
+        "vue": "^3.5.17",
         "vue-router": "^4.5.1"
     },
     "devDependencies": {
         "@superadmin/tsconfig": "*",
-        "@types/node": "^24.0.0",
+        "@types/node": "^24.0.4",
         "vitest": "^3.2.4"
     }
 }
