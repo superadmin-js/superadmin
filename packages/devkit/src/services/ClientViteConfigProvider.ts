@@ -55,6 +55,7 @@ export const ClientViteConfigProvider = defineService({
                     },
                 },
                 base: config.basePath,
+                clearScreen: false,
                 root: resolveProjectPath('@superadmin/runtime-client', import.meta),
                 css: {
                     postcss: {
