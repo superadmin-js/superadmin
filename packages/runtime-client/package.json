@@ -47,7 +47,7 @@
         "@nzyme/rollup-utils": "^0.14.0",
         "@superadmin/tsconfig": "*",
         "@types/debug": "^4.1.12",
-        "@types/node": "^24.0.4",
+        "@types/node": "^24.0.12",
         "@vue/tsconfig": "^0.7.0",
         "vite": "^7.0.0",
         "vitest": "^3.2.4"

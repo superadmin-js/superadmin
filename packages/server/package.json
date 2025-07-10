@@ -50,7 +50,7 @@
     "devDependencies": {
         "@superadmin/tsconfig": "*",
         "@types/connect": "^3.4.38",
-        "@types/node": "^24.0.4",
+        "@types/node": "^24.0.12",
         "typescript": "^5.8.3",
         "vitest": "^3.2.4"
     }

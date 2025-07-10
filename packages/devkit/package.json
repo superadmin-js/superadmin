@@ -27,7 +27,7 @@
         "@superadmin/server": "*",
         "@tailwindcss/vite": "^4.1.10",
         "@vitejs/plugin-vue": "^6.0.0",
-        "@vitejs/plugin-vue-jsx": "^5.0.0",
+        "@vitejs/plugin-vue-jsx": "^5.0.1",
         "autoprefixer": "^10.4.21",
         "chalk": "^5.4.1",
         "chokidar": "^4.0.3",
@@ -51,7 +51,7 @@
         "@superadmin/tsconfig": "*",
         "@types/debug": "^4.1.12",
         "@types/lodash.debounce": "^4.0.9",
-        "@types/node": "^24.0.4"
+        "@types/node": "^24.0.12"
     },
     "depcheck": {
         "ignoreDeps": [

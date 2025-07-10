@@ -22,6 +22,6 @@
     "devDependencies": {
         "@nzyme/eslint": "0.14.0",
         "@superadmin/tsconfig": "*",
-        "@types/node": "^24.0.4"
+        "@types/node": "^24.0.12"
     }
 }
