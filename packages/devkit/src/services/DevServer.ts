@@ -31,11 +31,11 @@ export const DevServer = defineService({
         await runtime.start();
 
         const vite = await createVite();
-        const api = createApiMiddleware();
+        const { middleware } = createApiMiddleware();
 
         vite.middlewares.stack.unshift({
             route: joinURL(config.basePath, '/api'),
-            handle: api,
+            handle: middleware,
         });
 
         vite.httpServer?.addListener('listening', () => {
