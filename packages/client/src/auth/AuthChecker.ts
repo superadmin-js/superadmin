@@ -1,9 +1,9 @@
 import { defineService } from '@nzyme/ioc';
+import { Logger } from '@nzyme/logging';
 import { withSingleExecution } from '@nzyme/utils';
-import createDebug from 'debug';
 import { watch } from 'vue';
 
-import { AuthRegistry, createAction } from '@superadmin/core';
+import { ApplicationError, AuthRegistry, createAction } from '@superadmin/core';
 
 import { ActionDispatcher } from '../actions/ActionDispatcher.js';
 import { AuthStore } from './AuthStore.js';
@@ -17,10 +17,9 @@ export const AuthChecker = defineService({
         authRegistry: AuthRegistry,
         authStore: AuthStore,
         actionDispatcher: ActionDispatcher,
+        logger: Logger,
     },
-    setup({ authRegistry, authStore, actionDispatcher }) {
-        const debug = createDebug('superadmin:auth');
-
+    setup({ authRegistry, authStore, actionDispatcher, logger }) {
         let refreshTimeout: ReturnType<typeof setTimeout>;
         const checkAuthOnce = withSingleExecution(checkAuth);
 
@@ -52,7 +51,7 @@ export const AuthChecker = defineService({
         return checkAuthOnce;
 
         async function checkAuth() {
-            debug('Checking authentication');
+            logger.debug('Checking authentication');
 
             let auth = authStore.authData;
             if (!auth) {
@@ -64,30 +63,40 @@ export const AuthChecker = defineService({
             const checkAt = expireAt - 1000 * 60 * 5;
 
             if (now < checkAt) {
-                debug('Authentication still valid');
+                logger.debug('Authentication still valid');
                 return true;
             }
 
             if (now >= auth.refreshExpiration.getTime()) {
-                debug('Refresh token expired');
+                logger.debug('Refresh token expired');
                 authStore.setAuth(null);
                 return false;
             }
 
             const userType = authRegistry.resolveUserType(auth.userType);
             if (!userType) {
-                debug('Invalid user type');
+                logger.debug('Invalid user type');
                 authStore.setAuth(null);
                 return false;
             }
 
-            debug('Refreshing authentication token');
+            logger.debug('Refreshing authentication token');
             const action = createAction(userType.actions.refresh, auth.refreshToken);
-            await actionDispatcher(action);
+            try {
+                await actionDispatcher(action);
+            } catch (error) {
+                authStore.setAuth(null);
+                if (error instanceof ApplicationError && error.name === 'Unauthorized') {
+                    return false;
+                }
+
+                logger.error('Failed to refresh authentication token', { error });
+                return false;
+            }
 
             auth = authStore.authData;
             if (!auth) {
-                debug('Failed to refresh authentication token');
+                logger.debug('Failed to refresh authentication token');
                 return false;
             }
 
@@ -95,7 +104,7 @@ export const AuthChecker = defineService({
             expireAt = auth.authExpiration.getTime();
 
             if (now >= expireAt) {
-                debug('Failed to refresh authentication token');
+                logger.debug('Failed to refresh authentication token');
                 authStore.setAuth(null);
                 return false;
             }

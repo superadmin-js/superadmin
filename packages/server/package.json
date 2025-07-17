@@ -45,12 +45,12 @@
         "@zod/mini": "4.0.0-beta.20250505T195954",
         "chalk": "^5.4.1",
         "connect": "^3.7.0",
-        "jose": "^6.0.11"
+        "jose": "^6.0.12"
     },
     "devDependencies": {
         "@superadmin/tsconfig": "*",
         "@types/connect": "^3.4.38",
-        "@types/node": "^24.0.12",
+        "@types/node": "^24.0.14",
         "typescript": "^5.8.3",
         "vitest": "^3.2.4"
     }
