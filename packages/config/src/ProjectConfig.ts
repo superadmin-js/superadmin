@@ -2,6 +2,7 @@ import { join as pathJoin } from 'path';
 
 import { defineInterface } from '@nzyme/ioc';
 import type { Module } from '@nzyme/ioc';
+import type { InputOptions } from 'rollup';
 
 /**
  *
@@ -92,6 +93,11 @@ export interface ProjectServerConfig {
      * @default '@superadmin/server/entry-dev'
      */
     devEntry?: string;
+
+    /**
+     * Rollup options.
+     */
+    rollupOptions?: InputOptions;
 }
 
 /**
@@ -148,6 +154,7 @@ export function defineConfig(config: ProjectConfigInit): ProjectConfig {
         server: {
             buildEntry: config.server?.buildEntry || '@superadmin/server/entry',
             devEntry: config.server?.devEntry || '@superadmin/server/entry-dev',
+            rollupOptions: config.server?.rollupOptions || {},
         },
     };
 }

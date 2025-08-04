@@ -4,6 +4,7 @@ import { defineService } from '@nzyme/ioc';
 import { rollupCompile } from '@nzyme/rollup-utils';
 import type { RollupOptions } from '@nzyme/rollup-utils';
 import chalk from 'chalk';
+import type { InputOptions } from 'rollup';
 import type { UserConfig as ViteConfig } from 'vite';
 import { mergeConfig, build as viteBuild } from 'vite';
 
@@ -50,7 +51,6 @@ export const ProjectBuilder = defineService({
                 build: {
                     outDir: clientOutDir,
                     emptyOutDir: true,
-
                     rollupOptions: {
                         output: {
                             entryFileNames: `${assetsPath}/[hash].js`,
@@ -82,20 +82,28 @@ export const ProjectBuilder = defineService({
                     dir: serverOutDir,
                     sourcemap: true,
                     entryFileNames: `index.js`,
-                    chunkFileNames: `[hash].js`,
-                    assetFileNames: `[hash].[ext]`,
+                    chunkFileNames: `[name].[hash].mjs`,
+                    assetFileNames: `[name].[hash].[ext]`,
                 },
             };
 
-            const rollupConfig = mergeConfig(
+            const rollupConfig = mergeRollupConfig(
                 rollupConfigBase,
+                config.server.rollupOptions,
                 rollupConfigOverrides,
-            ) as RollupOptions;
+            );
 
             await rollupCompile(rollupConfig);
 
             console.info(`Server build complete! 🎉`);
             console.info(`Output: ${chalk.cyan(serverOutDir)}`);
+        }
+
+        function mergeRollupConfig(...configs: (InputOptions | RollupOptions)[]) {
+            return configs.reduce(
+                (acc, config) => mergeConfig(acc, config) as RollupOptions,
+                {} as RollupOptions,
+            ) as RollupOptions;
         }
     },
 });

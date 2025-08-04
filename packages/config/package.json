@@ -17,7 +17,8 @@
         "./module": "./dist/module.js"
     },
     "dependencies": {
-        "@nzyme/ioc": "^0.14.0"
+        "@nzyme/ioc": "^0.14.0",
+        "rollup": "^4.46.2"
     },
     "devDependencies": {
         "@nzyme/eslint": "0.14.0",
