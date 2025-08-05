@@ -21,6 +21,13 @@ const editor = useEditor(props);
     </label>
 
     <small
+      v-if="schema.help"
+      class="text-gray-600"
+    >
+      {{ schema.help }}
+    </small>
+
+    <small
       v-for="error in errors?.[path]"
       class="text-red-600"
     >

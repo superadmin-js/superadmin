@@ -93,7 +93,7 @@ export const DevServer = defineService({
 
             const rollupConfigBase = serverRollupConfigProvider();
             const rollupConfigOverrides: RollupOptions = {
-                input: normalizePath(config.server.devEntry),
+                input: normalizePath(config.server.devEntry, config.cwd),
                 output: {
                     format: 'esm',
                     dir: path.join(config.runtimePath, 'server'),

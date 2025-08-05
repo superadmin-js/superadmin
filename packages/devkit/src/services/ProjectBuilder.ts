@@ -76,7 +76,7 @@ export const ProjectBuilder = defineService({
 
             const rollupConfigBase = serverRollupConfigProvider();
             const rollupConfigOverrides: RollupOptions = {
-                input: normalizePath(config.server.buildEntry),
+                input: normalizePath(config.server.buildEntry, config.cwd),
                 output: {
                     format: 'esm',
                     dir: serverOutDir,

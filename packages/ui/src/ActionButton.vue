@@ -9,7 +9,6 @@ import { computed, ref } from 'vue';
 import { ActionDispatcher, AuthStore } from '@superadmin/client';
 import { ActionRegistry } from '@superadmin/core';
 import type { ActionButton } from '@superadmin/core';
-
 import Icon from './Icon.vue';
 
 const props = defineProps({

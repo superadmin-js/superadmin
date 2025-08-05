@@ -35,6 +35,12 @@ export interface ActionDispatcherOptions {
      * If true, the action dispatcher will exit after the first action is dispatched.
      */
     earlyExit?: boolean;
+
+    /**
+     * If true, the action dispatcher will handle errors and show a toast.
+     * @default true
+     */
+    handleErrors?: boolean;
 }
 
 /**
@@ -68,7 +74,12 @@ export const ActionDispatcher = defineService({
                     throw new Error(`Action ${action.action} not found`);
                 }
 
-                const result = await execute(action, actionDefinition, options.event);
+                const result = await execute({
+                    action,
+                    actionDefinition,
+                    event: options.event,
+                    handleErrors: options.handleErrors ?? true,
+                });
 
                 if (s.isSchema(actionDefinition.result, s.action)) {
                     if (options.earlyExit) {
@@ -84,11 +95,15 @@ export const ActionDispatcher = defineService({
             } while (action);
         }
 
-        async function execute(
-            action: s.Action,
-            actionDefinition: ActionDefinition,
-            event?: Event,
-        ) {
+        interface ExecuteOptions {
+            action: s.Action;
+            actionDefinition: ActionDefinition;
+            event: Event | undefined;
+            handleErrors: boolean;
+        }
+
+        async function execute(options: ExecuteOptions) {
+            const { action, actionDefinition, event, handleErrors } = options;
             const handler = actionHandlers.resolve(action.action);
             if (handler) {
                 action.params = s.coerce(actionDefinition.params, action.params);
@@ -123,7 +138,7 @@ export const ActionDispatcher = defineService({
             } catch (error) {
                 if (error instanceof FetchError) {
                     if (error.status === 401) {
-                        if (event) {
+                        if (handleErrors) {
                             return showToast({
                                 title: 'Error',
                                 message: 'You are not authorized to perform this action',
@@ -141,7 +156,7 @@ export const ActionDispatcher = defineService({
                             throw new ValidationError(actionError.errors);
                         }
 
-                        if (event) {
+                        if (handleErrors) {
                             logger.error(`Action ${action.action} failed`, { error });
 
                             return showToast({

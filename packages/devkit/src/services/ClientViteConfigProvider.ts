@@ -11,8 +11,8 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 
 import { ProjectConfig } from '@superadmin/config';
 
+import { normalizePath } from '../utils/normalizePath.js';
 import { RuntimeBuilder } from './RuntimeBuilder.js';
-
 /**
  * Service that provides the base Vite config for the Superadmin client build.
  */
@@ -37,7 +37,7 @@ export const ClientViteConfigProvider = defineService({
                         root: config.cwd,
                         typescript: false,
                         vueTsc: {
-                            tsconfigPath: runtime.client.tsConfigPath,
+                            tsconfigPath: runtime.client.additionalFiles['tsconfig.json'],
                         },
                     }),
                     tailwindcss(),
@@ -50,8 +50,9 @@ export const ClientViteConfigProvider = defineService({
                     alias: {
                         '@config': runtime.client.configPath,
                         '@modules': runtime.client.modulesPath,
-                        '@theme': config.theme,
-                        '@logo': config.logo,
+                        '@theme': normalizePath(config.theme, config.cwd),
+                        '@logo': normalizePath(config.logo, config.cwd),
+                        '@tailwind': runtime.client.additionalFiles['tailwind.css'],
                     },
                 },
                 base: config.basePath,

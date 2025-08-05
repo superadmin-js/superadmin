@@ -14,6 +14,9 @@ import { installModules } from '@superadmin/runtime-common';
 
 import AppComponent from './App.vue';
 import { setupRouter } from './setupRouter.js';
+
+import '@tailwind';
+
 import './index.css';
 
 const container = createContainer();

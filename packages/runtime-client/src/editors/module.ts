@@ -1,6 +1,17 @@
 import { defineEditor } from '@superadmin/client';
 import * as s from '@superadmin/schema';
-import { IntegerEditor, ObjectEditor, PasswordEditor, StringEditor } from '@superadmin/ui';
+import {
+    BooleanEditor,
+    IntegerEditor,
+    ObjectEditor,
+    PasswordEditor,
+    StringEditor,
+} from '@superadmin/ui';
+
+export const booleanEditor = defineEditor({
+    schema: s.boolean,
+    component: BooleanEditor,
+});
 
 export const stringEditor = defineEditor({
     schema: s.string,

@@ -1,16 +1,19 @@
 import path from 'path';
 
 import { defineService } from '@nzyme/ioc';
-import { createPromise } from '@nzyme/utils';
+import { resolveProjectPath } from '@nzyme/project-utils';
+import { createPromise, joinLines } from '@nzyme/utils';
 import { watch } from 'chokidar';
 import createDebug from 'debug';
 import fastGlob from 'fast-glob';
+import type { TsConfigJson } from 'type-fest';
 
 import type { RuntimeConfig as ClientRuntimeConfig } from '@superadmin/client';
 import { ProjectConfig } from '@superadmin/config';
 import type { RuntimeConfig as ServerRuntimeConfig } from '@superadmin/server';
 
-import { generateRuntime } from '../runtime/generateModules.js';
+import { generateRuntime } from '../runtime/createRuntime.js';
+import { normalizePath } from '../utils/normalizePath.js';
 
 /**
  *
@@ -34,17 +37,27 @@ export const RuntimeBuilder = defineService({
             storagePrefix: projectConfig.client.storagePrefix,
         };
 
+        const clientTsConfig: TsConfigJson = {
+            extends: '@superadmin/tsconfig/vue.json',
+            compilerOptions: {
+                moduleResolution: 'Bundler',
+                module: 'ESNext',
+            },
+            include: ['../../**/*.ts', '../../**/*.tsx', '../../**/*.vue', '../../**/*.json'],
+        };
+
         const client = generateRuntime({
             outputDir: clientDir,
             rootDir: projectConfig.cwd,
             runtimeConfig: clientRuntimeConfig,
-            tsConfig: {
-                extends: '@superadmin/tsconfig/vue.json',
-                compilerOptions: {
-                    moduleResolution: 'Bundler',
-                    module: 'ESNext',
-                },
-                include: ['../../**/*.ts', '../../**/*.tsx', '../../**/*.vue', '../../**/*.json'],
+            additionalFiles: {
+                'tsconfig.json': JSON.stringify(clientTsConfig, null, 2),
+                'tailwind.css': joinLines([
+                    `@import 'tailwindcss';`,
+                    `@import 'tailwindcss-primeui';`,
+                    `@source '${normalizePath('.', projectConfig.cwd)}';`,
+                    `@source '${resolveProjectPath('@superadmin/ui')}';`,
+                ]),
             },
         });
 

@@ -32,6 +32,11 @@ export interface FormViewConfig<S extends s.ObjectSchema, TParams extends s.Sche
      *
      */
     auth?: Authorizer | false;
+
+    /**
+     * A function that fetches the data for the form.
+     */
+    fetch?: (params: s.Infer<TParams>) => Promise<s.Infer<S>> | s.Infer<S>;
 }
 
 /**
@@ -72,7 +77,13 @@ export function defineFormView<S extends s.ObjectSchema, P extends s.Schema = s.
                 result: schema,
                 auth: config.auth,
                 defaultHandler: defineInjectable(() => {
-                    return () => s.coerce(schema);
+                    return async (params: s.Infer<P>) => {
+                        if (config.fetch) {
+                            return await config.fetch(params);
+                        }
+
+                        return s.coerce(schema);
+                    };
                 }),
             }),
             submit: defineAction({

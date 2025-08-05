@@ -24,6 +24,7 @@ const modal = injectContext(ModalContext, { optional: true });
 const model = ref<Record<string, unknown> | null | undefined>(null);
 const validation = ref<ValidationErrors | null>();
 const error = ref<string | null>(null);
+const submitting = ref(false);
 
 model.value = await actionDispatcher(props.view.actions.fetch(props.params));
 
@@ -35,8 +36,14 @@ async function submit(event: Event) {
   }
 
   try {
+    submitting.value = true;
     const action = props.view.actions.submit(model.value);
-    await actionDispatcher(action, { event });
+    await actionDispatcher(action, {
+      event,
+      handleErrors: false,
+      earlyExit: !!modal,
+    });
+
     modal?.done(null);
   } catch (err) {
     if (err instanceof ApplicationError) {
@@ -50,6 +57,8 @@ async function submit(event: Event) {
     }
 
     throw err;
+  } finally {
+    submitting.value = false;
   }
 }
 </script>
@@ -92,6 +101,7 @@ async function submit(event: Event) {
           autofocus
           label="Submit"
           size="large"
+          :loading="submitting"
           class="flex-1"
           @click="submit"
         />

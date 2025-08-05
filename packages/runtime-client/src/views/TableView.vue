@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { useService } from '@nzyme/vue-ioc';
 import { useDataSource } from '@nzyme/vue-utils';
+import Button from 'primevue/button';
 import Column from 'primevue/column';
 import DataTable from 'primevue/datatable';
 import { computed } from 'vue';
@@ -8,9 +9,8 @@ import { computed } from 'vue';
 import { ActionDispatcher, useComponent, useViewProps } from '@superadmin/client';
 import type { TableView } from '@superadmin/core';
 import * as s from '@superadmin/schema';
-import { ActionButtons } from '@superadmin/ui';
+import { ActionButtons, Icon } from '@superadmin/ui';
 import { prettifyName } from '@superadmin/utils';
-
 const props = defineProps({
   ...useViewProps<TableView>(),
 });
@@ -145,6 +145,15 @@ function reload() {
       #header
     >
       <div class="flex gap-4">
+        <Button
+          severity="primary"
+          outlined
+          @click="reload"
+        >
+          <template #icon>
+            <Icon icon="refresh-cw" />
+          </template>
+        </Button>
         <ActionButtons
           :buttons="headerButtons"
           @action="reload"
@@ -173,10 +182,10 @@ function reload() {
           v-if="view.config.rowButtons"
           class="w-0"
         >
-          <template #body="{ data }">
+          <template #body="{ data: row }">
             <div class="flex justify-end gap-3">
               <ActionButtons
-                :buttons="view.config.rowButtons(data)"
+                :buttons="view.config.rowButtons(row)"
                 size="small"
                 @action="reload"
               />

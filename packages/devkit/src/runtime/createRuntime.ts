@@ -2,14 +2,12 @@ import path from 'path';
 
 import { createScript, saveFile } from '@nzyme/project-utils';
 import debounce from 'lodash.debounce';
-import type { TsConfigJson } from 'type-fest';
-
-import { saveTsConfig } from './saveTsConfig.js';
+import type { EmptyObject } from 'type-fest';
 
 /**
  *
  */
-export interface GenerateRuntimeOptions {
+export interface GenerateRuntimeOptions<T extends Record<string, string> = EmptyObject> {
     /**
      *
      */
@@ -23,16 +21,18 @@ export interface GenerateRuntimeOptions {
      */
     runtimeConfig: object;
     /**
-     *
+     * Additional files to be added to the runtime.
      */
-    tsConfig?: TsConfigJson;
+    additionalFiles?: T;
 }
 
 /**
  *
  */
-export function generateRuntime(options: GenerateRuntimeOptions) {
-    const { outputDir, rootDir, runtimeConfig, tsConfig } = options;
+export function generateRuntime<T extends Record<string, string> = EmptyObject>(
+    options: GenerateRuntimeOptions<T>,
+) {
+    const { outputDir, rootDir, runtimeConfig, additionalFiles } = options;
 
     /**
      *
@@ -53,15 +53,20 @@ export function generateRuntime(options: GenerateRuntimeOptions) {
 
     const modulesPath = path.join(outputDir, 'modules.ts');
     const configPath = path.join(outputDir, 'config.ts');
-    const tsConfigPath = options.tsConfig ? path.join(outputDir, 'tsconfig.json') : undefined;
-
     const generate = debounce(generateModules, 200);
+    const additionalFilesPaths: Record<string, string> = {};
+
+    for (const filePath of Object.keys(additionalFiles ?? {})) {
+        additionalFilesPaths[filePath] = path.join(outputDir, filePath);
+    }
+
     let watching = false;
 
     return {
         modulesPath,
         configPath,
-        tsConfigPath,
+        outputDir,
+        additionalFiles: additionalFilesPaths as Record<keyof T, string>,
         addFile,
         removeFile,
         watch,
@@ -126,9 +131,12 @@ export function generateRuntime(options: GenerateRuntimeOptions) {
 
     async function render() {
         await generateConfig();
-        if (tsConfigPath && tsConfig) {
-            await saveTsConfig(tsConfigPath, tsConfig);
+
+        for (const [path, content] of Object.entries(additionalFiles ?? {})) {
+            const filePath = additionalFilesPaths[path]!;
+            await saveFile(filePath, content);
         }
+
         await generateModules();
     }
 

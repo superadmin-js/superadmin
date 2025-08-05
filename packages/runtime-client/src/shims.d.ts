@@ -19,6 +19,11 @@ declare module '@logo' {
     export default logo;
 }
 
+declare module '@tailwind' {
+    const tailwind: string;
+    export default tailwind;
+}
+
 declare module '*.vue' {
     import type { DefineComponent } from 'vue';
 
