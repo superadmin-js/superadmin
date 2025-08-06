@@ -20,7 +20,7 @@ export interface NavigationItem {
     /**
      * Icon for the menu item
      */
-    icon?: s.Icon;
+    icon?: string;
 
     /**
      * Action to be executed when menu item is clicked
