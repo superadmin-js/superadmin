@@ -1,7 +1,7 @@
 import modules from '@modules';
 import type { Container } from '@nzyme/ioc';
 import { createContainer } from '@nzyme/ioc';
-import { createRouter as createRpcRouter, defaultSerializer } from '@nzyme/rpc';
+import { createRouter as createRpcRouter } from '@nzyme/rpc';
 
 import { installModules } from '@superadmin/runtime-common';
 
@@ -28,6 +28,5 @@ export function createRouter(options: CreateRouterOptions = {}) {
     return createRpcRouter({
         container,
         endpoints: [ExecuteAction],
-        serializer: defaultSerializer,
     });
 }
