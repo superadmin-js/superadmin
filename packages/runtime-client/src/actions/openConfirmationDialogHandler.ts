@@ -14,11 +14,8 @@ export const openConfirmationDialogHandler = defineActionHandler({
                 '../components/ConfirmationDialog.vue'
             );
 
-            return await modalService.open({
-                modal: ConfirmationDialog,
-                props: {
-                    params,
-                },
+            return await modalService.open(ConfirmationDialog, {
+                params,
             });
         };
     },

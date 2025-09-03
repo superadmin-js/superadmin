@@ -1,16 +1,12 @@
 <script lang="ts" setup>
-import { ModalContext, useModalProps } from '@nzyme/vue';
+import { ModalContext } from '@nzyme/vue';
 import { injectContext } from '@nzyme/vue-utils';
 import Dialog from 'primevue/dialog';
 
 import { ViewContext } from '@superadmin/client';
 import type { ViewLayoutSlots } from '@superadmin/client';
 
-defineProps({
-  ...useModalProps(),
-});
 defineSlots<ViewLayoutSlots>();
-
 const view = injectContext(ViewContext);
 const modal = injectContext(ModalContext);
 </script>

@@ -11,10 +11,7 @@ export const openDialogHandler = defineActionHandler({
     setup({ modalService }) {
         return async params => {
             const { default: Dialog } = await import('../components/Dialog.vue');
-            return await modalService.open({
-                modal: Dialog,
-                props: { params },
-            });
+            return await modalService.open(Dialog, { params });
         };
     },
 });

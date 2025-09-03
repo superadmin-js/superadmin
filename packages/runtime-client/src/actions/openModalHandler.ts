@@ -24,13 +24,10 @@ export const openModalHandler = defineActionHandler({
 
             const { default: ModalLayout } = await import('../views/ModalViewLayout.vue');
 
-            return await modalService.open({
-                modal: ViewRenderer,
-                props: {
-                    view: view,
-                    params: params.params,
-                    layout: ModalLayout,
-                },
+            return await modalService.open(ViewRenderer, {
+                view: view,
+                params: params.params,
+                layout: ModalLayout,
             });
         };
     },
