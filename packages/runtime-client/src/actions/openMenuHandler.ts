@@ -15,7 +15,7 @@ export const openMenuHandler = defineActionHandler({
                 return;
             }
 
-            menuService.emit('open', {
+            menuService.open({
                 event,
                 items: params.items,
             });

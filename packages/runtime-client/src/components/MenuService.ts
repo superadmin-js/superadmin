@@ -6,15 +6,14 @@ import type { MenuItem } from '@superadmin/core';
 export const MenuService = defineService({
     name: 'MenuService',
     setup: () => {
-        type MenuEvents = {
-            open: {
-                event: Event;
-                items: MenuItem[];
-            };
+        const onOpen = createEventEmitter<{
+            event: Event;
+            items: MenuItem[];
+        }>();
+
+        return {
+            open: onOpen.emit,
+            onOpen: onOpen.event,
         };
-
-        const events = createEventEmitter<MenuEvents>();
-
-        return events;
     },
 });

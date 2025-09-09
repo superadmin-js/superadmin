@@ -29,7 +29,7 @@ type MenuState = {
 const menuState = ref<MenuState>();
 const menuRef = ref<ComponentPublicInstance & MenuMethods>();
 
-onEventEmitter(menuService, 'open', async ({ items, event }) => {
+onEventEmitter(menuService.onOpen, async ({ items, event }) => {
   const promise = createPromise();
 
   if (menuState.value?.target === event.target) {
