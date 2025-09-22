@@ -2,12 +2,11 @@ import path from 'path';
 
 import { createScript, saveFile } from '@nzyme/project-utils';
 import debounce from 'lodash.debounce';
-import type { EmptyObject } from 'type-fest';
 
 /**
  *
  */
-export interface GenerateRuntimeOptions<T extends Record<string, string> = EmptyObject> {
+export interface GenerateRuntimeOptions<T extends Record<string, string> = Record<string, never>> {
     /**
      *
      */
@@ -29,7 +28,7 @@ export interface GenerateRuntimeOptions<T extends Record<string, string> = Empty
 /**
  *
  */
-export function generateRuntime<T extends Record<string, string> = EmptyObject>(
+export function generateRuntime<T extends Record<string, string> = Record<string, never>>(
     options: GenerateRuntimeOptions<T>,
 ) {
     const { outputDir, rootDir, runtimeConfig, additionalFiles } = options;

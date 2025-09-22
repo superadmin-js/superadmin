@@ -33,7 +33,7 @@ const columns = computed(() => {
   const fields = props.view.config.schema.props;
 
   for (const key of Object.keys(fields)) {
-    const schema = fields[key];
+    const schema = fields[key]!;
 
     columns.push({
       prop: key,
