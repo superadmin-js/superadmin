@@ -7,7 +7,7 @@ export const runInSequenceHandler = defineActionHandler({
         actionDispatcher: ActionDispatcher,
     },
     setup({ actionDispatcher }) {
-        return async (actions, event) => {
+        return async (actions, { event }) => {
             for (const action of actions) {
                 await actionDispatcher(action, { event });
             }

@@ -10,7 +10,7 @@ export const runInParalellHandler = defineActionHandler({
         actionDispatcher: ActionDispatcher,
     },
     setup({ actionDispatcher }) {
-        return async (actions, event) => {
+        return async (actions, { event }) => {
             await Promise.all(actions.map(action => actionDispatcher(action, { event })));
         };
     },

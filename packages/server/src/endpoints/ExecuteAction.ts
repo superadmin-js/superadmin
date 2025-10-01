@@ -3,7 +3,7 @@ import { HttpError } from '@nzyme/fetch-utils';
 import { Container } from '@nzyme/ioc';
 import type { HttpRequest } from '@nzyme/rpc';
 import { defineEndpoint, HttpContextProvider } from '@nzyme/rpc';
-import { assert } from '@nzyme/utils';
+import { assert, identity } from '@nzyme/utils';
 import * as z from '@zod/mini';
 
 import type { ActionDefinition } from '@superadmin/core';
@@ -62,7 +62,11 @@ export const ExecuteAction = defineEndpoint({
                 const params: unknown = s.coerce(paramsSchema, action.params);
                 s.validateOrThrow(paramsSchema, params);
 
-                const result = await container.resolve(handler.service)(params);
+                const handlerFn = container.resolve(handler.service);
+                const result = await handlerFn(params, {
+                    request,
+                    result: identity,
+                });
 
                 await processResult(handler.action, result);
 

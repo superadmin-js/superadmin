@@ -1,5 +1,7 @@
 import { defineService } from '@nzyme/ioc';
-import type { Service, Dependencies, ServiceSetup } from '@nzyme/ioc';
+import type { Dependencies, Service, ServiceSetup } from '@nzyme/ioc';
+import type { HttpRequest } from '@nzyme/rpc';
+import type { EmptyObject } from '@nzyme/types';
 
 import type * as s from '@superadmin/schema';
 
@@ -7,15 +9,39 @@ import type { Submodule } from '../defineSubmodule.js';
 import { defineSubmodule, isSubmodule } from '../defineSubmodule.js';
 import { ActionHandlerRegistry } from './ActionHandlerRegistry.js';
 import type { ActionDefinition } from './defineAction.js';
-import { EmptyObject } from '@nzyme/types';
 
 const ACTION_HANDLER_SYMBOL = Symbol('action-handler');
 
 /**
  *
  */
+export interface ActionHandlerContext<TResult extends s.Schema> {
+    /**
+     * Event that triggered the action handler.
+     * Only available in client runtime.
+     */
+    event?: Event;
+
+    /**
+     * Request object that triggered the action handler.
+     * Only available in server runtime.
+     */
+    request?: HttpRequest;
+
+    /**
+     * Helper function to set the result of the action handler.
+     */
+    result: (result: s.Infer<TResult>) => s.Infer<TResult>;
+}
+
+/**
+ *
+ */
 export interface ActionHandlerFunction<TParams extends s.Schema, TResult extends s.Schema> {
-    (params: s.Infer<TParams>, event?: Event): Promise<s.Infer<TResult>> | s.Infer<TResult>;
+    (
+        params: s.Infer<TParams>,
+        ctx: ActionHandlerContext<TResult>,
+    ): Promise<s.Infer<TResult>> | s.Infer<TResult>;
 }
 
 /**

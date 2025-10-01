@@ -37,7 +37,7 @@ const yes = computed<ActionButton>(() => ({
 <template>
   <Dialog
     v-model:visible="modal.open"
-    modal
+    :modal="true"
     :header="title"
     :style="{ width: '25rem' }"
   >

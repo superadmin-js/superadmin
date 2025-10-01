@@ -19,7 +19,7 @@ defineProps({
 <template>
   <Dialog
     v-model:visible="modal.open"
-    modal
+    :modal="true"
     :header="params.title"
     :style="{ width: '25rem' }"
   >

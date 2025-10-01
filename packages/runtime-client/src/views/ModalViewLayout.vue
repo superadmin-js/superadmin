@@ -14,7 +14,7 @@ const modal = injectContext(ModalContext);
 <template>
   <Dialog
     v-model:visible="modal.open"
-    modal
+    :modal="true"
     :header="view.title"
     :style="{ width: '25rem' }"
     dismissable-mask

@@ -9,7 +9,7 @@ export const openMenuHandler = defineActionHandler({
         menuService: MenuService,
     },
     setup({ menuService }) {
-        return (params, event) => {
+        return (params, { event }) => {
             if (!event) {
                 console.warn('Opening menu requires user interaction event.');
                 return;

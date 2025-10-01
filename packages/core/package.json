@@ -16,6 +16,7 @@
     "dependencies": {
         "@nzyme/ioc": "^0.14.0",
         "@nzyme/types": "^0.14.0",
+        "@nzyme/rpc": "^0.14.0",
         "@nzyme/utils": "^0.14.0",
         "@superadmin/schema": "*",
         "@superadmin/utils": "*",

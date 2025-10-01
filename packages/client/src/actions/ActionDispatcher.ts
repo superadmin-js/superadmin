@@ -2,6 +2,7 @@ import { FetchError, fetchJson } from '@nzyme/fetch-utils';
 import { Container, defineService } from '@nzyme/ioc';
 import type { Resolved } from '@nzyme/ioc';
 import { Logger } from '@nzyme/logging';
+import { identity } from '@nzyme/utils';
 import { joinURL } from 'ufo';
 
 import type { ActionDefinition, ActionError } from '@superadmin/core';
@@ -111,7 +112,10 @@ export const ActionDispatcher = defineService({
 
                 const handlerFn = container.resolve(handler.service);
 
-                return await handlerFn(action.params, event);
+                return await handlerFn(action.params, {
+                    event,
+                    result: identity,
+                });
             }
 
             action.params = s.coerce(actionDefinition.input, action.params);

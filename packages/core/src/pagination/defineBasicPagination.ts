@@ -20,6 +20,7 @@ export interface BasicPaginationOptions {
  *
  */
 export type BasicPagination = ReturnType<typeof defineBasicPagination>;
+
 /**
  *
  */
@@ -28,14 +29,16 @@ export type BasicPaginationProps = PaginationProps<
     BasicPagination['result'],
     BasicPagination['config']
 >;
+
 /**
  *
  */
 export type BasicPaginationEvents = PaginationEvents<BasicPagination['params']>;
-export /**
+
+/**
  *
  */
-const basicPaginationComponent = defineComponent<BasicPagination['component']>();
+export const basicPaginationComponent = defineComponent<BasicPagination['component']>();
 
 /**
  *
@@ -63,7 +66,7 @@ function getParams(pageSizes: number[]) {
         pageSize: s.enum(pageSizes),
         page: s.number({
             default: () => 1,
-            validate: v.minValue({ minValue: 1, exclusive: false }),
+            validate: v.minValue(1, { exclusive: false }),
         }),
     });
 }
