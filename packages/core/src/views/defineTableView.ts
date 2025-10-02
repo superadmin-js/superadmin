@@ -35,7 +35,7 @@ export interface TableViewOptions<
     /**
      *
      */
-    params?: TParams;
+    filters?: TParams;
     /**
      *
      */
@@ -72,10 +72,10 @@ export type TableView<
     TPagination extends Pagination | undefined = Pagination | undefined,
 > = ReturnType<typeof defineTableView<TRow, TParams, TSort, TPagination>>;
 
-export /**
+/**
  *
  */
-const tableComponent = defineComponent<TableView['component']>();
+export const tableComponent = defineComponent<TableView['component']>();
 
 type RowProps<TRow extends s.NonNullable<s.ObjectSchema>> = Simplify<(keyof TRow['props'])[]>;
 
@@ -97,6 +97,9 @@ type TableSortParams<
 }>;
 
 type TablePaginationParams<TPagination extends Pagination | undefined> =
+    TPagination extends Pagination ? TPagination['params'] : s.VoidSchema;
+
+type TablePaginationParamsNullish<TPagination extends Pagination | undefined> =
     TPagination extends Pagination ? s.Nullish<TPagination['params']> : s.VoidSchema;
 
 type TablePaginationResult<TPagination extends Pagination | undefined> =
@@ -111,7 +114,7 @@ export function defineTableView<
     TSort extends TableSortOptions<TRow> = false,
     TPagination extends Pagination | undefined = undefined,
 >(config: TableViewOptions<TRow, TParams, TSort, TPagination>) {
-    const customParams = config.params ?? (s.void({ nullable: true }) as TParams);
+    const filters = config.filters ?? (s.void({ nullable: true }) as TParams);
     const schema = config.schema;
 
     let sortColumns: TableSort<TRow, TSort>;
@@ -133,16 +136,28 @@ export function defineTableView<
     });
 
     const paginationParams: TablePaginationParams<TPagination> = config.pagination
-        ? (s.nullish(config.pagination.params) as TablePaginationParams<TPagination>)
+        ? (config.pagination.params as TablePaginationParams<TPagination>)
         : (s.void() as TablePaginationParams<TPagination>);
+
+    const paginationParamsNullish: TablePaginationParamsNullish<TPagination> = config.pagination
+        ? (s.nullish(config.pagination.params) as TablePaginationParamsNullish<TPagination>)
+        : (s.void() as TablePaginationParamsNullish<TPagination>);
 
     const paginationResult: TablePaginationResult<TPagination> = config.pagination
         ? (config.pagination.result as TablePaginationResult<TPagination>)
         : (s.void() as TablePaginationResult<TPagination>);
 
-    const params = s.object({
+    const viewParams = s.object({
         props: {
-            params: customParams,
+            filters: filters,
+            sort: sortParams,
+            pagination: paginationParamsNullish,
+        },
+    });
+
+    const fetchParams = s.object({
+        props: {
+            filters: filters,
             sort: sortParams,
             pagination: paginationParams,
         },
@@ -159,13 +174,13 @@ export function defineTableView<
 
     return defineView({
         component,
-        params,
+        params: viewParams,
         path: config.path,
         auth: config.auth,
         title: config.title,
         actions: {
             fetch: defineAction({
-                params: params,
+                params: fetchParams,
                 result: fetchResult,
                 auth: config.auth,
             }),
