@@ -38,7 +38,9 @@ export {
     type BasicPagination,
     type BasicPaginationEvents,
     type BasicPaginationOptions,
+    type BasicPaginationParams,
     type BasicPaginationProps,
+    type BasicPaginationResult,
     defineBasicPagination,
 } from './pagination/defineBasicPagination.js';
 export * from './pagination/definePagination.js';

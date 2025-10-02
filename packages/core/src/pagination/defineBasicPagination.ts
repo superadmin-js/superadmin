@@ -33,6 +33,16 @@ export type BasicPaginationProps = PaginationProps<
 /**
  *
  */
+export type BasicPaginationParams = s.Infer<BasicPagination['params']>;
+
+/**
+ *
+ */
+export type BasicPaginationResult = s.Infer<BasicPagination['result']>;
+
+/**
+ *
+ */
 export type BasicPaginationEvents = PaginationEvents<BasicPagination['params']>;
 
 /**

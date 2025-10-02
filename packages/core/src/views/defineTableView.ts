@@ -1,33 +1,70 @@
 import type { Simplify } from '@nzyme/types';
+
 import * as s from '@superadmin/schema';
 
-import { defineView } from './defineView.js';
 import type { ActionButton } from '../actions/ActionButton.js';
 import { defineAction } from '../actions/defineAction.js';
 import type { Authorizer } from '../auth/defineAuthorizer.js';
 import type { ComponentAny } from '../defineComponent.js';
 import { defineComponent } from '../defineComponent.js';
 import type { Pagination } from '../pagination/definePagination.js';
+import { defineView } from './defineView.js';
 
+/**
+ *
+ */
 export type TableSortOptions<TRow extends s.NonNullable<s.ObjectSchema>> = boolean | RowProps<TRow>;
 
+/**
+ *
+ */
 export interface TableViewOptions<
     TRow extends s.NonNullable<s.ObjectSchema>,
     TParams extends s.SchemaAny,
     TSort extends TableSortOptions<TRow>,
     TPagination extends Pagination | undefined = undefined,
 > {
+    /**
+     *
+     */
     title?: string;
+    /**
+     *
+     */
     schema: TRow;
+    /**
+     *
+     */
     params?: TParams;
+    /**
+     *
+     */
     path?: string;
+    /**
+     *
+     */
     auth?: Authorizer | false;
+    /**
+     *
+     */
     headerButtons?: (params: s.Infer<TParams>) => ActionButton[];
+    /**
+     *
+     */
     rowButtons?: (data: s.Infer<TRow>) => ActionButton[];
+    /**
+     *
+     */
     sortColumns?: TSort;
+    /**
+     *
+     */
     pagination?: TPagination;
 }
 
+/**
+ *
+ */
 export type TableView<
     TRow extends s.NonNullable<s.ObjectSchema> = s.NonNullable<s.ObjectSchema>,
     TParams extends s.Schema = s.Schema<unknown>,
@@ -35,7 +72,10 @@ export type TableView<
     TPagination extends Pagination | undefined = Pagination | undefined,
 > = ReturnType<typeof defineTableView<TRow, TParams, TSort, TPagination>>;
 
-export const tableComponent = defineComponent<TableView['component']>();
+export /**
+ *
+ */
+const tableComponent = defineComponent<TableView['component']>();
 
 type RowProps<TRow extends s.NonNullable<s.ObjectSchema>> = Simplify<(keyof TRow['props'])[]>;
 
@@ -63,7 +103,6 @@ type TablePaginationResult<TPagination extends Pagination | undefined> =
     TPagination extends Pagination ? TPagination['result'] : s.VoidSchema;
 
 /**
- *
  * @__NO_SIDE_EFFECTS__
  */
 export function defineTableView<
@@ -98,7 +137,7 @@ export function defineTableView<
         : (s.void() as TablePaginationParams<TPagination>);
 
     const paginationResult: TablePaginationResult<TPagination> = config.pagination
-        ? (s.nullable(config.pagination.result) as TablePaginationResult<TPagination>)
+        ? (config.pagination.result as TablePaginationResult<TPagination>)
         : (s.void() as TablePaginationResult<TPagination>);
 
     const params = s.object({
