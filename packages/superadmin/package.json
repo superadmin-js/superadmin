@@ -54,6 +54,6 @@
     },
     "devDependencies": {
         "@nzyme/eslint": "^0.14.0",
-        "@types/node": "^24.5.2"
+        "@types/node": "^24.6.2"
     }
 }

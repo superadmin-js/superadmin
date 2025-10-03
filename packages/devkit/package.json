@@ -39,20 +39,20 @@
         "rollup": "^4.46.2",
         "rollup-plugin-sourcemaps": "^0.6.3",
         "type-fest": "^5.0.1",
-        "typescript": "^5.9.2",
+        "typescript": "^5.9.3",
         "ufo": "^1.6.1",
         "vite": "^7.1.7",
-        "vite-plugin-checker": "^0.10.3",
+        "vite-plugin-checker": "^0.11.0",
         "vite-plugin-node-polyfills": "^0.24.0",
         "vite-tsconfig-paths": "^5.1.4",
-        "vue-tsc": "^3.0.8"
+        "vue-tsc": "^3.1.0"
     },
     "devDependencies": {
         "@nzyme/eslint": "0.14.0",
         "@superadmin/tsconfig": "*",
         "@types/debug": "^4.1.12",
         "@types/lodash.debounce": "^4.0.9",
-        "@types/node": "^24.5.2"
+        "@types/node": "^24.6.2"
     },
     "depcheck": {
         "ignoreDeps": [
