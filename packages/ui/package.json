@@ -27,7 +27,7 @@
         "@superadmin/schema": "*",
         "@superadmin/utils": "*",
         "@superadmin/validation": "*",
-        "lucide-static": "^0.544.0",
+        "lucide-static": "^0.545.0",
         "primevue": "^4.3.6",
         "tailwindcss": "^4.1.11",
         "vue": "^3.5.22",
