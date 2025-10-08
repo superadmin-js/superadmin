@@ -28,6 +28,22 @@ export function setupRouter(container: Container) {
         path: '/',
         component: NavigationLayout,
         children: routesWithNavigation,
+        beforeEnter: async (to, _from, next) => {
+            await authChecker();
+
+            if (authStore.auth) {
+                return next();
+            }
+
+            if (loginView) {
+                return next({
+                    path: loginView.path,
+                    query: { redirect: to.path },
+                });
+            }
+
+            return next(new Error('Unauthorized'));
+        },
     });
 
     let loginView: View | undefined;
@@ -54,9 +70,7 @@ export function setupRouter(container: Container) {
                 if (loginView) {
                     return next({
                         path: loginView.path,
-                        query: {
-                            redirect: to.path,
-                        },
+                        query: { redirect: to.path },
                     });
                 }
 
