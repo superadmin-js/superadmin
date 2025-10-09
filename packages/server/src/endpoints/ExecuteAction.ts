@@ -1,4 +1,4 @@
-import { parseBearerToken } from '@nzyme/crypto-utils';
+import { parseBearerToken } from '@nzyme/crypto';
 import { HttpError } from '@nzyme/fetch-utils';
 import { Container } from '@nzyme/ioc';
 import type { HttpRequest } from '@nzyme/rpc';

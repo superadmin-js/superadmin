@@ -21,7 +21,7 @@
         "watch": "vite build --watch"
     },
     "dependencies": {
-        "@nzyme/crypto-utils": "^0.14.0",
+        "@nzyme/crypto": "^0.14.0",
         "@nzyme/ioc": "^0.14.0",
         "@nzyme/types": "^0.14.0",
         "@nzyme/utils": "^0.14.0",

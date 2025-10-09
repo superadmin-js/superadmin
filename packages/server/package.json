@@ -30,7 +30,7 @@
         }
     },
     "dependencies": {
-        "@nzyme/crypto-utils": "^0.14.0",
+        "@nzyme/crypto": "^0.14.0",
         "@nzyme/fetch-utils": "^0.14.0",
         "@nzyme/ioc": "^0.14.0",
         "@nzyme/rollup-utils": "^0.14.0",

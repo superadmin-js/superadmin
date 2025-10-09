@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { randomString } from '@nzyme/crypto-utils';
+import { randomString } from '@nzyme/crypto';
 import { useService } from '@nzyme/vue-ioc';
 import { useEmitAsync } from '@nzyme/vue-utils';
 import Button from 'primevue/button';

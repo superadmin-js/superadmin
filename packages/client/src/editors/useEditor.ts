@@ -1,6 +1,6 @@
 import { computed, reactive } from 'vue';
 
-import { randomString } from '@nzyme/crypto-utils';
+import { randomString } from '@nzyme/crypto';
 import type { Schema } from '@superadmin/schema';
 import { prettifyName } from '@superadmin/utils';
 

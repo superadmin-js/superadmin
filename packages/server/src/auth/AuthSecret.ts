@@ -1,4 +1,4 @@
-import { randomString } from '@nzyme/crypto-utils';
+import { randomString } from '@nzyme/crypto';
 import { defineInterface } from '@nzyme/ioc';
 
 /**
