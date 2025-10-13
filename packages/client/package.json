@@ -25,7 +25,7 @@
         "@superadmin/utils": "*",
         "@superadmin/validation": "*",
         "debug": "^4.4.3",
-        "primevue": "^4.3.6",
+        "primevue": "^4.4.1",
         "ufo": "^1.6.1",
         "vue": "^3.5.22",
         "vue-router": "^4.5.1"
