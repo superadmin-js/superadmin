@@ -140,10 +140,7 @@ function reload() {
 
 <template>
   <component :is="layout">
-    <template
-      v-if="headerButtons?.length"
-      #header
-    >
+    <template #header>
       <div class="flex gap-4">
         <Button
           severity="primary"
@@ -155,6 +152,7 @@ function reload() {
           </template>
         </Button>
         <ActionButtons
+          v-if="headerButtons?.length"
           :buttons="headerButtons"
           @action="reload"
         />
