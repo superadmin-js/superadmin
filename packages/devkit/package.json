@@ -52,7 +52,7 @@
         "@superadmin/tsconfig": "*",
         "@types/debug": "^4.1.12",
         "@types/lodash.debounce": "^4.0.9",
-        "@types/node": "^24.7.2"
+        "@types/node": "^24.9.1"
     },
     "depcheck": {
         "ignoreDeps": [
