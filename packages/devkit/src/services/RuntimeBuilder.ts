@@ -4,6 +4,7 @@ import { defineService } from '@nzyme/ioc';
 import { resolveProjectPath } from '@nzyme/project-utils';
 import { createPromise, joinLines } from '@nzyme/utils';
 import { watch } from 'chokidar';
+import type { Matcher } from 'chokidar';
 import createDebug from 'debug';
 import fastGlob from 'fast-glob';
 import type { TsConfigJson } from 'type-fest';
@@ -103,7 +104,16 @@ export const RuntimeBuilder = defineService({
 
             const watcher = watch('.', {
                 cwd: projectConfig.cwd,
-                ignored,
+                ignored: ignored.map(pattern => {
+                    pattern = `/${pattern}/`;
+                    const matcher: Matcher = path => {
+                        return path.includes(pattern);
+                    };
+
+                    return matcher;
+                }),
+                persistent: true,
+                ignoreInitial: true,
             });
 
             watcher.on('add', onAddFile);
