@@ -28,7 +28,7 @@ export const RuntimeBuilder = defineService({
         const debug = createDebug('superadmin:runtime');
         const serverRegex = /\.(server|common)\.ts$/;
         const clientRegex = /\.(client|common)\.tsx?$/;
-        const ignored = ['node_modules', '.superadmin'];
+        const ignored = ['node_modules', '.superadmin', '.git', '.turbo', '.nx', '.yarn'];
 
         const clientDir = path.join(projectConfig.runtimePath, 'client');
         const serverDir = path.join(projectConfig.runtimePath, 'server');
