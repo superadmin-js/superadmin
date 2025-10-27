@@ -26,6 +26,6 @@
         "@superadmin/tsconfig": "*",
         "@types/debug": "^4.1.12",
         "@types/node": "^24.9.1",
-        "vitest": "^3.2.4"
+        "vitest": "^4.0.4"
     }
 }
