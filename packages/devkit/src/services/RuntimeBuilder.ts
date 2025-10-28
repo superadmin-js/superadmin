@@ -105,9 +105,9 @@ export const RuntimeBuilder = defineService({
             const watcher = watch('.', {
                 cwd: projectConfig.cwd,
                 ignored: ignored.map(pattern => {
-                    pattern = `/${pattern}/`;
+                    pattern = `/${pattern}`;
                     const matcher: Matcher = path => {
-                        return path.includes(pattern);
+                        return path.endsWith(pattern);
                     };
 
                     return matcher;
