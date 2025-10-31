@@ -4,7 +4,6 @@ import { defineService } from '@nzyme/ioc';
 import { resolveProjectPath } from '@nzyme/project-utils';
 import { createPromise, joinLines } from '@nzyme/utils';
 import { watch } from 'chokidar';
-import type { Matcher } from 'chokidar';
 import createDebug from 'debug';
 import fastGlob from 'fast-glob';
 import type { TsConfigJson } from 'type-fest';
@@ -28,7 +27,15 @@ export const RuntimeBuilder = defineService({
         const debug = createDebug('superadmin:runtime');
         const serverRegex = /\.(server|common)\.ts$/;
         const clientRegex = /\.(client|common)\.tsx?$/;
-        const ignored = ['node_modules', '.superadmin', '.git', '.turbo', '.nx', '.yarn'];
+        const ignored = [
+            'node_modules',
+            '.superadmin',
+            '.git',
+            '.turbo',
+            '.nx',
+            '.yarn',
+            '.output',
+        ];
 
         const clientDir = path.join(projectConfig.runtimePath, 'client');
         const serverDir = path.join(projectConfig.runtimePath, 'server');
@@ -102,16 +109,12 @@ export const RuntimeBuilder = defineService({
         async function start() {
             const promise = createPromise();
 
+            const ignoredPatterns = ignored.map(pattern => `/${pattern}`);
             const watcher = watch('.', {
                 cwd: projectConfig.cwd,
-                ignored: ignored.map(pattern => {
-                    pattern = `/${pattern}`;
-                    const matcher: Matcher = path => {
-                        return path.endsWith(pattern);
-                    };
-
-                    return matcher;
-                }),
+                ignored: file => {
+                    return ignoredPatterns.some(pattern => file.endsWith(pattern));
+                },
                 persistent: true,
                 ignoreInitial: true,
             });
@@ -120,8 +123,8 @@ export const RuntimeBuilder = defineService({
             watcher.on('unlink', onDeleteFile);
             watcher.on('ready', promise.resolve);
 
+            await render();
             await promise.promise;
-            await Promise.all([client.watch(), server.watch()]);
         }
 
         /**
