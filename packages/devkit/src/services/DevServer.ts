@@ -79,6 +79,10 @@ export const DevServer = defineService({
                 },
                 plugins: [watchFilesPlugin()],
                 external: (source: string) => {
+                    if (source === 'superadmin') {
+                        return false;
+                    }
+
                     return isFileExternal(source);
                 },
             };
