@@ -42,11 +42,6 @@ export interface ProjectConfigInit {
     plugins?: Module[];
 
     /**
-     * Watch for changes in the following files.
-     */
-    watch?: (string | RegExp)[];
-
-    /**
      * Client configuration.
      */
     client?: ProjectClientConfig;
@@ -145,7 +140,6 @@ export function defineConfig(config: ProjectConfigInit): ProjectConfig {
         cwd,
         runtimePath: pathJoin(cwd, '.superadmin'),
         plugins: config.plugins || [],
-        watch: config.watch || [],
         basePath: config.basePath || '/',
         client: {
             storagePrefix: config.client?.storagePrefix || 'superadmin',

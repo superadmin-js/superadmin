@@ -1,9 +1,9 @@
 import path from 'path';
 
 import { defineService } from '@nzyme/ioc';
-import { devServerMiddleware } from '@nzyme/rollup-utils';
+import { devServerMiddleware, isFileExternal, watchFilesPlugin } from '@nzyme/rollup-utils';
 import chalk from 'chalk';
-import type { RollupOptions, Plugin as RollupPlugin } from 'rollup';
+import type { RollupOptions } from 'rollup';
 import { joinURL } from 'ufo';
 import type { UserConfig as ViteConfig } from 'vite';
 import { createServer, mergeConfig } from 'vite';
@@ -66,31 +66,6 @@ export const DevServer = defineService({
         }
 
         function createApiMiddleware() {
-            const shouldWatch = (source: string): boolean => {
-                for (const watch of config.watch) {
-                    if (typeof watch === 'string') {
-                        if (watch === source) {
-                            return true;
-                        }
-                    } else {
-                        if (watch.test(source)) {
-                            return true;
-                        }
-                    }
-                }
-
-                return false;
-            };
-
-            const watchFilesPlugin: RollupPlugin = {
-                name: 'watch-files',
-                transform(_code, id) {
-                    if (shouldWatch(id)) {
-                        this.addWatchFile(id);
-                    }
-                },
-            };
-
             const rollupConfigBase = serverRollupConfigProvider();
             const rollupConfigOverrides: RollupOptions = {
                 input: normalizePath(config.server.devEntry, config.cwd),
@@ -102,25 +77,9 @@ export const DevServer = defineService({
                     chunkFileNames: `[name].js`,
                     assetFileNames: `[name].[hash].[ext]`,
                 },
-                plugins: [watchFilesPlugin],
+                plugins: [watchFilesPlugin()],
                 external: (source: string) => {
-                    if (source.startsWith('./') || source.startsWith('../')) {
-                        return false;
-                    }
-
-                    if (shouldWatch(source)) {
-                        return false;
-                    }
-
-                    if (/^node:/.test(source) || /^[\w_-]+$/.test(source)) {
-                        return true;
-                    }
-
-                    if (source.includes('/node_modules/')) {
-                        return true;
-                    }
-
-                    return false;
+                    return isFileExternal(source);
                 },
             };
 
