@@ -1,6 +1,7 @@
 import { parseBearerToken } from '@nzyme/crypto';
 import { HttpError } from '@nzyme/fetch-utils';
 import { Container } from '@nzyme/ioc';
+import { Logger } from '@nzyme/logging';
 import type { HttpRequest } from '@nzyme/rpc';
 import { defineEndpoint, HttpContextProvider } from '@nzyme/rpc';
 import { assert, identity } from '@nzyme/utils';
@@ -30,8 +31,17 @@ export const ExecuteAction = defineEndpoint({
         actionHandlers: ActionHandlerRegistry,
         functions: FunctionRegistry,
         verifyAuthToken: VerifyAuthToken,
+        logger: Logger,
     },
-    setup({ container, httpContextProvider, actions, actionHandlers, functions, verifyAuthToken }) {
+    setup({
+        container,
+        httpContextProvider,
+        actions,
+        actionHandlers,
+        functions,
+        verifyAuthToken,
+        logger,
+    }) {
         const actionSchema = s.action();
 
         return async input => {
@@ -87,6 +97,8 @@ export const ExecuteAction = defineEndpoint({
                         stack: error.stack,
                     });
                 }
+
+                logger.error('Error executing action', { error });
 
                 throw error;
             }
