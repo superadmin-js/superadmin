@@ -27,7 +27,7 @@
         "@nzyme/eslint": "0.14.0",
         "@superadmin/tsconfig": "*",
         "@types/debug": "^4.1.12",
-        "@types/node": "^24.7.2",
-        "vitest": "^3.2.4"
+        "@types/node": "^24.10.0",
+        "vitest": "^4.0.8"
     }
 }

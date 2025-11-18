@@ -27,7 +27,15 @@ export const RuntimeBuilder = defineService({
         const debug = createDebug('superadmin:runtime');
         const serverRegex = /\.(server|common)\.ts$/;
         const clientRegex = /\.(client|common)\.tsx?$/;
-        const ignored = ['node_modules', '.superadmin'];
+        const ignored = [
+            'node_modules',
+            '.superadmin',
+            '.git',
+            '.turbo',
+            '.nx',
+            '.yarn',
+            '.output',
+        ];
 
         const clientDir = path.join(projectConfig.runtimePath, 'client');
         const serverDir = path.join(projectConfig.runtimePath, 'server');
@@ -101,17 +109,22 @@ export const RuntimeBuilder = defineService({
         async function start() {
             const promise = createPromise();
 
+            const ignoredPatterns = ignored.map(pattern => `/${pattern}`);
             const watcher = watch('.', {
                 cwd: projectConfig.cwd,
-                ignored,
+                ignored: file => {
+                    return ignoredPatterns.some(pattern => file.endsWith(pattern));
+                },
+                persistent: true,
+                ignoreInitial: true,
             });
 
             watcher.on('add', onAddFile);
             watcher.on('unlink', onDeleteFile);
             watcher.on('ready', promise.resolve);
 
+            await render();
             await promise.promise;
-            await Promise.all([client.watch(), server.watch()]);
         }
 
         /**

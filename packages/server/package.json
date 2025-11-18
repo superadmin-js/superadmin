@@ -33,6 +33,7 @@
         "@nzyme/crypto": "^0.14.0",
         "@nzyme/fetch-utils": "^0.14.0",
         "@nzyme/ioc": "^0.14.0",
+        "@nzyme/logging": "^0.14.0",
         "@nzyme/rollup-utils": "^0.14.0",
         "@nzyme/rpc": "^0.14.0",
         "@nzyme/types": "^0.14.0",
@@ -50,8 +51,8 @@
     "devDependencies": {
         "@superadmin/tsconfig": "*",
         "@types/connect": "^3.4.38",
-        "@types/node": "^24.7.2",
+        "@types/node": "^24.10.0",
         "typescript": "^5.9.3",
-        "vitest": "^3.2.4"
+        "vitest": "^4.0.8"
     }
 }
