@@ -6,6 +6,7 @@ import { createPromise, joinLines } from '@nzyme/utils';
 import { watch } from 'chokidar';
 import createDebug from 'debug';
 import fastGlob from 'fast-glob';
+import { isFileIgnored } from '@nzyme/project-utils';
 import type { TsConfigJson } from 'type-fest';
 
 import type { RuntimeConfig as ClientRuntimeConfig } from '@superadmin/client';
@@ -27,15 +28,7 @@ export const RuntimeBuilder = defineService({
         const debug = createDebug('superadmin:runtime');
         const serverRegex = /\.(server|common)\.ts$/;
         const clientRegex = /\.(client|common)\.tsx?$/;
-        const ignored = [
-            'node_modules',
-            '.superadmin',
-            '.git',
-            '.turbo',
-            '.nx',
-            '.yarn',
-            '.output',
-        ];
+        const ignored = ['node_modules', '.output'];
 
         const clientDir = path.join(projectConfig.runtimePath, 'client');
         const serverDir = path.join(projectConfig.runtimePath, 'server');
@@ -110,10 +103,14 @@ export const RuntimeBuilder = defineService({
             const promise = createPromise();
 
             const ignoredPatterns = ignored.map(pattern => `/${pattern}`);
+            console.log('Watching ' + projectConfig.cwd);
             const watcher = watch('.', {
                 cwd: projectConfig.cwd,
                 ignored: file => {
-                    return ignoredPatterns.some(pattern => file.endsWith(pattern));
+                    return (
+                        ignoredPatterns.some(pattern => file.endsWith(pattern)) ||
+                        !!isFileIgnored(file)
+                    );
                 },
                 persistent: true,
                 ignoreInitial: true,
