@@ -9,8 +9,9 @@
     "types": "./src/index.ts",
     "exports": {
         "./module": {
+            "types": "./src/module.ts",
             "import": "./src/module.ts",
-            "types": "./src/module.ts"
+            "default": "./src/module.ts"
         },
         "./package.json": "./package.json"
     },
