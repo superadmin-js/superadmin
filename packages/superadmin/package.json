@@ -14,32 +14,32 @@
     "bin": "./dist/cli.js",
     "exports": {
         ".": {
-            "default": "./dist/core.js",
-            "types": "./dist/core.d.ts"
+            "types": "./dist/core.d.ts",
+            "default": "./dist/core.js"
         },
         "./client": {
-            "default": "./dist/client.js",
-            "types": "./dist/client.d.ts"
+            "types": "./dist/client.d.ts",
+            "default": "./dist/client.js"
         },
         "./server": {
-            "default": "./dist/server.js",
-            "types": "./dist/server.d.ts"
+            "types": "./dist/server.d.ts",
+            "default": "./dist/server.js"
         },
         "./schema": {
-            "default": "./dist/schema.js",
-            "types": "./dist/schema.d.ts"
+            "types": "./dist/schema.d.ts",
+            "default": "./dist/schema.js"
         },
         "./validation": {
-            "default": "./dist/validation.js",
-            "types": "./dist/validation.d.ts"
+            "types": "./dist/validation.d.ts",
+            "default": "./dist/validation.js"
         },
         "./ioc": {
-            "default": "./dist/ioc.js",
-            "types": "./dist/ioc.d.ts"
+            "types": "./dist/ioc.d.ts",
+            "default": "./dist/ioc.js"
         },
         "./config": {
-            "default": "./dist/config.js",
-            "types": "./dist/config.d.ts"
+            "types": "./dist/config.d.ts",
+            "default": "./dist/config.js"
         }
     },
     "dependencies": {

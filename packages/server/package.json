@@ -13,20 +13,24 @@
     },
     "exports": {
         ".": {
+            "types": "./dist/index.d.ts",
             "import": "./dist/index.js",
-            "types": "./dist/index.d.ts"
+            "default": "./dist/index.js"
         },
         "./entry": {
+            "types": "./dist/entry.d.ts",
             "import": "./dist/entry.js",
-            "types": "./dist/entry.d.ts"
+            "default": "./dist/entry.js"
         },
         "./entry-dev": {
+            "types": "./dist/entry-dev.d.ts",
             "import": "./dist/entry-dev.js",
-            "types": "./dist/entry-dev.d.ts"
+            "default": "./dist/entry-dev.js"
         },
         "./module": {
+            "types": "./dist/module.d.ts",
             "import": "./dist/module.js",
-            "types": "./dist/module.d.ts"
+            "default": "./dist/module.js"
         }
     },
     "dependencies": {
