@@ -19,7 +19,7 @@
     "devDependencies": {
         "@superadmin/tsconfig": "*",
         "drizzle-kit": "^0.31.1",
-        "prisma": "6.9.0",
+        "prisma": "7.0.1",
         "prisma-generator-drizzle": "^0.7.6"
     }
 }
