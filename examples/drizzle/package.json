@@ -13,7 +13,7 @@
     "dependencies": {
         "@libsql/client": "^0.15.9",
         "@superadmin/drizzle": "*",
-        "drizzle-orm": "^0.44.2",
+        "drizzle-orm": "^0.45.0",
         "superadmin": "*"
     },
     "devDependencies": {
