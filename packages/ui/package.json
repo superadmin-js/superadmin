@@ -21,21 +21,21 @@
         "@nzyme/vue": "^0.14.0",
         "@nzyme/vue-ioc": "^0.14.0",
         "@nzyme/vue-utils": "^0.14.0",
-        "@primevue/forms": "^4.4.1",
+        "@primevue/forms": "^4.5.2",
         "@superadmin/client": "*",
         "@superadmin/core": "*",
         "@superadmin/schema": "*",
         "@superadmin/utils": "*",
         "@superadmin/validation": "*",
-        "lucide-static": "^0.553.0",
-        "primevue": "^4.4.1",
+        "lucide-static": "^0.556.0",
+        "primevue": "^4.5.2",
         "tailwindcss": "^4.1.17",
         "vue": "^3.5.25",
         "vue-router": "^4.6.3"
     },
     "devDependencies": {
         "@superadmin/tsconfig": "*",
-        "@types/node": "^24.10.1",
-        "vitest": "^4.0.13"
+        "@types/node": "^24.10.2",
+        "vitest": "^4.0.15"
     }
 }

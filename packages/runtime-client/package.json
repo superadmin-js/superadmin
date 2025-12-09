@@ -29,7 +29,7 @@
         "@nzyme/vue": "^0.14.0",
         "@nzyme/vue-ioc": "^0.14.0",
         "@nzyme/vue-utils": "^0.14.0",
-        "@primevue/themes": "^4.4.1",
+        "@primevue/themes": "^4.5.2",
         "@superadmin/client": "*",
         "@superadmin/core": "*",
         "@superadmin/runtime-common": "*",
@@ -38,7 +38,7 @@
         "@superadmin/utils": "*",
         "@superadmin/validation": "*",
         "debug": "^4.4.3",
-        "primevue": "^4.4.1",
+        "primevue": "^4.5.2",
         "tailwindcss": "^4.1.17",
         "tailwindcss-primeui": "^0.6.1",
         "vue": "^3.5.25",
@@ -48,9 +48,9 @@
         "@nzyme/rollup-utils": "^0.14.0",
         "@superadmin/tsconfig": "*",
         "@types/debug": "^4.1.12",
-        "@types/node": "^24.10.1",
+        "@types/node": "^24.10.2",
         "@vue/tsconfig": "^0.8.1",
-        "vite": "^7.2.4",
-        "vitest": "^4.0.13"
+        "vite": "^7.2.7",
+        "vitest": "^4.0.15"
     }
 }
