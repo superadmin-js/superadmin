@@ -14,7 +14,7 @@
     "dependencies": {
         "@nzyme/utils": "^0.14.0",
         "@nzyme/zchema": "^0.14.0",
-        "lucide-static": "^0.556.0"
+        "lucide-static": "^0.561.0"
     },
     "devDependencies": {
         "@superadmin/tsconfig": "*",
