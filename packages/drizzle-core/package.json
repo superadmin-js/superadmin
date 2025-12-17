@@ -19,11 +19,11 @@
         "@superadmin/core": "*",
         "@superadmin/schema": "*",
         "@superadmin/utils": "*",
-        "drizzle-orm": "^0.44.7"
+        "drizzle-orm": "^0.45.1"
     },
     "devDependencies": {
         "@superadmin/tsconfig": "*",
-        "@types/node": "^24.10.1",
-        "vitest": "^4.0.13"
+        "@types/node": "^25.0.3",
+        "vitest": "^4.0.16"
     }
 }
