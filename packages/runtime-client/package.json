@@ -38,7 +38,7 @@
         "@superadmin/utils": "*",
         "@superadmin/validation": "*",
         "debug": "^4.4.3",
-        "primevue": "^4.4.1",
+        "primevue": "^4.5.4",
         "tailwindcss": "^4.1.17",
         "tailwindcss-primeui": "^0.6.1",
         "vue": "^3.5.25",
