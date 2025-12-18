@@ -18,11 +18,11 @@
     },
     "dependencies": {
         "@nzyme/ioc": "^0.14.0",
-        "rollup": "^4.53.3"
+        "rollup": "^4.46.2"
     },
     "devDependencies": {
         "@nzyme/eslint": "0.14.0",
         "@superadmin/tsconfig": "*",
-        "@types/node": "^24.10.2"
+        "@types/node": "^25.0.3"
     }
 }
