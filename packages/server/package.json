@@ -56,6 +56,7 @@
         "@superadmin/tsconfig": "*",
         "@types/connect": "^3.4.38",
         "@types/node": "^25.0.6",
+        "typecript": "^0.0.1-security",
         "typescript": "^5.9.3",
         "vitest": "^4.0.16"
     }
