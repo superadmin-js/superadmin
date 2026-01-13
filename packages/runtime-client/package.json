@@ -50,7 +50,6 @@
         "@types/debug": "^4.1.12",
         "@types/node": "^25.0.6",
         "@vue/tsconfig": "^0.8.1",
-        "typecript": "^0.0.1-security",
         "vite": "^7.3.0",
         "vitest": "^4.0.16"
     }

@@ -22,7 +22,6 @@
     },
     "devDependencies": {
         "@nzyme/eslint": "^0.14.0",
-        "@superadmin/tsconfig": "*",
-        "typecript": "^0.0.1-security"
+        "@superadmin/tsconfig": "*"
     }
 }

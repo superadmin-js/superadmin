@@ -4,8 +4,5 @@
     "repository": "https://github.com/kedrzu/superadmin.git",
     "author": "Michał Kędrzyński <m.kedrzynski@gmail.com>",
     "sideEffects": false,
-    "main": "./base.json",
-    "devDependencies": {
-        "typecript": "^0.0.1-security"
-    }
+    "main": "./base.json"
 }
