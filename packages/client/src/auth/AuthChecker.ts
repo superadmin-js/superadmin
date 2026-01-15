@@ -1,6 +1,6 @@
 import { defineService } from '@nzyme/ioc';
 import { Logger } from '@nzyme/logging';
-import { withSingleExecution } from '@nzyme/utils';
+import { createSingleRunner } from '@nzyme/utils';
 import { watch } from 'vue';
 
 import { ApplicationError, AuthRegistry, createAction } from '@superadmin/core';
@@ -21,7 +21,7 @@ export const AuthChecker = defineService({
     },
     setup({ authRegistry, authStore, actionDispatcher, logger }) {
         let refreshTimeout: ReturnType<typeof setTimeout>;
-        const checkAuthOnce = withSingleExecution(checkAuth);
+        const checkAuthRunner = createSingleRunner({ handler: checkAuth });
 
         watch(
             () => authStore.authData,
@@ -39,16 +39,16 @@ export const AuthChecker = defineService({
                 const now = Date.now();
 
                 if (now >= refreshAt) {
-                    setTimeout(() => void checkAuthOnce());
+                    setTimeout(checkAuthRunner.execute);
                     return;
                 }
 
-                refreshTimeout = setTimeout(() => void checkAuthOnce(), refreshAt - now);
+                refreshTimeout = setTimeout(checkAuthRunner.execute, refreshAt - now);
             },
             { immediate: true },
         );
 
-        return checkAuthOnce;
+        return checkAuthRunner.execute;
 
         async function checkAuth() {
             logger.debug('Checking authentication');
