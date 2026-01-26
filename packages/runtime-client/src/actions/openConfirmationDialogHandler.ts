@@ -10,9 +10,8 @@ export const openConfirmationDialogHandler = defineActionHandler({
     },
     setup({ modalService }) {
         return async params => {
-            const { default: ConfirmationDialog } = await import(
-                '../components/ConfirmationDialog.vue'
-            );
+            const { default: ConfirmationDialog } =
+                await import('../components/ConfirmationDialog.vue');
 
             return await modalService.open(ConfirmationDialog, {
                 params,

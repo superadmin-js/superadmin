@@ -33,4 +33,3 @@ const editor = useEditor(props);
     />
   </FormField>
 </template>
-

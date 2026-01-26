@@ -43,8 +43,10 @@ export interface FunctionHandlerOptions<
 /**
  *
  */
-export interface FunctionHandler<P extends Schema = Schema, R extends Schema = Schema>
-    extends Submodule {
+export interface FunctionHandler<
+    P extends Schema = Schema,
+    R extends Schema = Schema,
+> extends Submodule {
     /**
      *
      */

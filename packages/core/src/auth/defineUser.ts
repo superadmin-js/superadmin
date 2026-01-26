@@ -58,9 +58,7 @@ export interface UserConfig<TSchema extends UserSchema> {
  *
  */
 export interface UserDefinition<TSchema extends UserSchema = UserSchema>
-    extends Authorizer,
-        Submodule,
-        UserConfig<TSchema> {
+    extends Authorizer, Submodule, UserConfig<TSchema> {
     /**
      *
      */

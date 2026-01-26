@@ -15,8 +15,10 @@ declare const ACTION_SYMBOL: unique symbol;
 /**
  *
  */
-export interface Action<P extends Schema = Schema, R extends Schema = Schema>
-    extends ActionPayload<P> {
+export interface Action<
+    P extends Schema = Schema,
+    R extends Schema = Schema,
+> extends ActionPayload<P> {
     /**
      * This is just a marker to preserve result type
      * @internal
