@@ -22,6 +22,8 @@
     },
     "devDependencies": {
         "@nzyme/eslint": "^0.14.0",
-        "@superadmin/tsconfig": "*"
+        "@superadmin/tsconfig": "*",
+        "eslint": "^9.39.2",
+        "prettier": "^3.8.1"
     }
 }
