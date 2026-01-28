@@ -4,5 +4,9 @@
     "repository": "https://github.com/kedrzu/superadmin.git",
     "author": "Michał Kędrzyński <m.kedrzynski@gmail.com>",
     "sideEffects": false,
-    "main": "./base.json"
+    "main": "./base.json",
+    "devDependencies": {
+        "eslint": "^9.39.2",
+        "prettier": "^3.8.1"
+    }
 }
