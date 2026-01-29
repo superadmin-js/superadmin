@@ -9,7 +9,7 @@
     "types": "./dist/index.d.ts",
     "sideEffects": false,
     "scripts": {
-        "eslint": "eslint . --fix --cache"
+        "lint": "prettier ./src --write && eslint . --fix --cache"
     },
     "dependencies": {
         "@nzyme/validation": "^0.14.0"
