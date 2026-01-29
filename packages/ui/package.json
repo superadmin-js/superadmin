@@ -11,7 +11,7 @@
         "./theme": "./src/Theme.ts"
     },
     "scripts": {
-        "eslint": "eslint . --fix --cache"
+        "lint": "prettier ./src --write && eslint . --fix --cache"
     },
     "dependencies": {
         "@nzyme/crypto": "^0.14.0",

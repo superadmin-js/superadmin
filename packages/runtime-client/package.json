@@ -17,7 +17,7 @@
     },
     "sideEffects": false,
     "scripts": {
-        "eslint": "eslint . --fix --cache",
+        "lint": "prettier ./src --write && eslint . --fix --cache",
         "build": "vite build",
         "watch": "vite build --watch"
     },

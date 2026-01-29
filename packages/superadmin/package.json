@@ -9,7 +9,7 @@
     "types": "./dist/core.d.ts",
     "sideEffects": false,
     "scripts": {
-        "eslint": "eslint . --fix --cache"
+        "lint": "prettier ./src --write && eslint . --fix --cache"
     },
     "bin": "./dist/cli.js",
     "exports": {
