@@ -9,7 +9,8 @@
     "types": "./dist/index.d.ts",
     "sideEffects": false,
     "scripts": {
-        "lint": "prettier ./src --write && eslint . --fix --cache"
+        "lint": "prettier ./src --write && eslint . --fix --cache",
+        "test": "vitest run"
     },
     "exports": {
         ".": "./dist/index.js",
