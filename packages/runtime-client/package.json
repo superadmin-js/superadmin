@@ -41,18 +41,18 @@
         "primevue": "^4.5.4",
         "tailwindcss": "^4.1.17",
         "tailwindcss-primeui": "^0.6.1",
-        "vue": "^3.5.25",
-        "vue-router": "^4.6.4"
+        "vue": "^3.5.27",
+        "vue-router": "^5.0.2"
     },
     "devDependencies": {
         "@nzyme/rollup-utils": "^0.14.0",
         "@superadmin/tsconfig": "*",
         "@types/debug": "^4.1.12",
-        "@types/node": "^25.0.6",
+        "@types/node": "^25.2.0",
         "@vue/tsconfig": "^0.8.1",
         "eslint": "^9.39.2",
         "prettier": "^3.8.1",
-        "vite": "^7.3.0",
-        "vitest": "^4.0.16"
+        "vite": "^7.3.1",
+        "vitest": "^4.0.18"
     }
 }
