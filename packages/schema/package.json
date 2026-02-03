@@ -14,13 +14,13 @@
     "dependencies": {
         "@nzyme/utils": "^0.14.0",
         "@nzyme/zchema": "^0.14.0",
-        "lucide-static": "^0.562.0"
+        "lucide-static": "^0.563.0"
     },
     "devDependencies": {
         "@superadmin/tsconfig": "*",
-        "@types/node": "^25.0.6",
+        "@types/node": "^25.2.0",
         "eslint": "^9.39.2",
         "prettier": "^3.8.1",
-        "vitest": "^4.0.16"
+        "vitest": "^4.0.18"
     }
 }
