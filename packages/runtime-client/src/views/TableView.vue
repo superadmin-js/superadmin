@@ -163,7 +163,7 @@ function reload() {
       <DataTable
         v-model:sort-field="sortBy"
         v-model:sort-order="sortDirection"
-        :value="data?.rows"
+        :value="data.value?.rows"
         show-gridlines
         lazy
         removable-sort
