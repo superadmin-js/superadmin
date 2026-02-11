@@ -11,6 +11,7 @@ import type { TableView } from '@superadmin/core';
 import * as s from '@superadmin/schema';
 import { ActionButtons, Icon } from '@superadmin/ui';
 import { prettifyName } from '@superadmin/utils';
+
 const props = defineProps({
   ...useViewProps<TableView>(),
 });
@@ -197,7 +198,7 @@ function reload() {
       <Pagination
         v-if="view.config.pagination && Pagination"
         v-model:value="pagination"
-        :result="data?.pagination"
+        :result="data.value?.pagination"
         :config="view.config.pagination.config"
       />
     </template>
