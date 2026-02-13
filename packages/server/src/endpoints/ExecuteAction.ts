@@ -9,7 +9,7 @@ import { assert } from '@nzyme/utils/assert.js';
 import { identity } from '@nzyme/utils/functions/identity.js';
 import * as z from '@zod/mini';
 
-import type { ActionDefinition } from '@superadmin/core';
+import type { ActionDefinition } from '@superadmin/core/actions/defineAction.js';
 import { ActionHandlerRegistry } from '@superadmin/core/actions/ActionHandlerRegistry.js';
 import { ActionRegistry } from '@superadmin/core/actions/ActionRegistry.js';
 import { FunctionRegistry } from '@superadmin/core/functions/FunctionRegistry.js';

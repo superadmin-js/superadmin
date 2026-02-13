@@ -1,6 +1,6 @@
 import type { Container } from '@nzyme/ioc/Container.js';
 
-import type { Submodule } from '@superadmin/core';
+import type { Submodule } from '@superadmin/core/defineSubmodule.js';
 import { isSubmodule } from '@superadmin/core/defineSubmodule.js';
 import { initializeSubmodule, installSubmodule } from '@superadmin/core/internal';
 

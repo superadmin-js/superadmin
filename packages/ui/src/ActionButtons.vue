@@ -3,7 +3,7 @@ import { classProp } from '@nzyme/vue-utils/classProp.js';
 import { useEmitAsync } from '@nzyme/vue-utils/useEmitAsync.js';
 import type { PropType } from 'vue';
 
-import type { ActionButton } from '@superadmin/core';
+import type { ActionButton } from '@superadmin/core/actions/ActionButton.js';
 
 import Button from './ActionButton.vue';
 

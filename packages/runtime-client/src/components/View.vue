@@ -4,7 +4,7 @@ import type { PropType } from 'vue';
 import { computed } from 'vue';
 
 import { ComponentRegistry } from '@superadmin/client/components/ComponentRegistry.js';
-import type { View } from '@superadmin/core';
+import type { View } from '@superadmin/core/views/defineView.js';
 import { coerce } from '@superadmin/schema';
 
 const props = defineProps({

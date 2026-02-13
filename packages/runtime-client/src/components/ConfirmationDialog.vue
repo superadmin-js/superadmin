@@ -8,7 +8,7 @@ import { computed } from 'vue';
 import { noAction } from '@superadmin/core/actions/noAction.js';
 import type { openConfirmDialog } from '@superadmin/core/actions/openConfirmDialog.js';
 import type * as s from '@superadmin/schema';
-import { ActionButton as ActionButtonUI } from '@superadmin/ui';
+import { default as ActionButtonUI } from '@superadmin/ui/ActionButton.vue';
 
 const props = defineProps({
   ...useModalProps(),

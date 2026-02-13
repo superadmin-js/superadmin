@@ -9,7 +9,7 @@ import { computed, ref } from 'vue';
 import { ActionDispatcher } from '@superadmin/client/actions/ActionDispatcher.js';
 import { AuthStore } from '@superadmin/client/auth/AuthStore.js';
 import { ActionRegistry } from '@superadmin/core/actions/ActionRegistry.js';
-import type { ActionButton } from '@superadmin/core';
+import type { ActionButton } from '@superadmin/core/actions/ActionButton.js';
 import Icon from './Icon.vue';
 
 const props = defineProps({

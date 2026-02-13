@@ -5,7 +5,7 @@ import type { PropType } from 'vue';
 
 import type { openDialog } from '@superadmin/core/actions/openDialog.js';
 import type * as s from '@superadmin/schema';
-import { ActionButton } from '@superadmin/ui';
+import { default as ActionButton } from '@superadmin/ui/ActionButton.vue';
 
 defineProps({
   ...useModalProps(),

@@ -11,7 +11,7 @@ import { useViewProps } from '@superadmin/client/actions/useViewProps.js';
 import { ApplicationError } from '@superadmin/core/ApplicationError.js';
 import type { FormView } from '@superadmin/core/views/defineFormView.js';
 import { validate } from '@superadmin/schema';
-import { Editor } from '@superadmin/ui';
+import { default as Editor } from '@superadmin/ui/Editor.vue';
 import { ValidationError } from '@superadmin/validation';
 import type { ValidationErrors } from '@superadmin/validation';
 

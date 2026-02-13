@@ -7,9 +7,9 @@ import { useRouter } from 'vue-router';
 
 import { ActionDispatcher } from '@superadmin/client/actions/ActionDispatcher.js';
 import { useViewProps } from '@superadmin/client/actions/useViewProps.js';
-import type { LoginView } from '@superadmin/core';
+import type { LoginView } from '@superadmin/core/auth/defineLoginView.js';
 import { coerce, validate } from '@superadmin/schema';
-import { Editor } from '@superadmin/ui';
+import { default as Editor } from '@superadmin/ui/Editor.vue';
 import type { ValidationErrors } from '@superadmin/validation';
 const props = defineProps({
   ...useViewProps<LoginView>(),

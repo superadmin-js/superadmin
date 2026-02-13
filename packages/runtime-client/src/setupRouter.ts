@@ -6,7 +6,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import { AuthChecker } from '@superadmin/client/auth/AuthChecker.js';
 import { AuthStore } from '@superadmin/client/auth/AuthStore.js';
 import { RuntimeConfig } from '@superadmin/client/RuntimeConfig.js';
-import type { View } from '@superadmin/core';
+import type { View } from '@superadmin/core/views/defineView.js';
 import { ViewRegistry } from '@superadmin/core/views/ViewRegistry.js';
 import { loginComponent } from '@superadmin/core/internal';
 

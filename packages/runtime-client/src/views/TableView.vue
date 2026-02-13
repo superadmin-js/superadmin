@@ -11,7 +11,8 @@ import { useComponent } from '@superadmin/client/components/useComponent.js';
 import { useViewProps } from '@superadmin/client/actions/useViewProps.js';
 import type { TableView } from '@superadmin/core/views/defineTableView.js';
 import * as s from '@superadmin/schema';
-import { ActionButtons, Icon } from '@superadmin/ui';
+import { default as ActionButtons } from '@superadmin/ui/ActionButtons.vue';
+import { default as Icon } from '@superadmin/ui/Icon.vue';
 import { prettifyName } from '@superadmin/utils/prettifyName.js';
 
 const props = defineProps({

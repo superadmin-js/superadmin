@@ -7,7 +7,7 @@ import { useRouter } from 'vue-router';
 
 import { useComponent } from '@superadmin/client/components/useComponent.js';
 import { ViewContext } from '@superadmin/client/views/ViewContext.js';
-import type { View } from '@superadmin/core';
+import type { View } from '@superadmin/core/views/defineView.js';
 import { parseJson } from '@superadmin/schema';
 
 import PageViewLayout from './PageViewLayout.vue';
