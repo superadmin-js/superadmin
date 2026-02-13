@@ -17,9 +17,7 @@
     },
     "sideEffects": false,
     "scripts": {
-        "lint": "prettier ./src --write && eslint . --fix --cache",
-        "build": "vite build",
-        "watch": "vite build --watch"
+        "lint": "prettier ./src --write && eslint . --fix --cache"
     },
     "dependencies": {
         "@nzyme/crypto": "^0.14.0",
