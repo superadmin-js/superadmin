@@ -1,4 +1,4 @@
-import type { Component } from '@nzyme/vue-utils';
+import type { Component } from '@nzyme/vue-utils/component.js';
 
 import type { Infer, Schema } from '@superadmin/schema';
 

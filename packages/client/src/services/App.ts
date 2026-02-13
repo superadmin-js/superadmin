@@ -1,4 +1,4 @@
-import { defineInterface } from '@nzyme/ioc';
+import { defineInterface } from '@nzyme/ioc/Interface.js';
 import type { App as VueApp } from 'vue';
 
 /**

@@ -1,5 +1,5 @@
-import { defineService } from '@nzyme/ioc';
-import { resolveProjectPath } from '@nzyme/project-utils';
+import { defineService } from '@nzyme/ioc/Service.js';
+import { resolveProjectPath } from '@nzyme/project-utils/resolveProjectPath.js';
 import tailwindcss from '@tailwindcss/vite';
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
@@ -9,7 +9,7 @@ import { checker } from 'vite-plugin-checker';
 import { nodePolyfills } from 'vite-plugin-node-polyfills';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
-import { ProjectConfig } from '@superadmin/config';
+import { ProjectConfig } from '@superadmin/config/ProjectConfig.js';
 
 import { normalizePath } from '../utils/normalizePath.js';
 import { RuntimeBuilder } from './RuntimeBuilder.js';

@@ -7,7 +7,13 @@
     "sideEffects": false,
     "exports": {
         ".": "./dist/index.js",
-        "./internal": "./dist/internal.js"
+        "./internal": "./dist/internal.js",
+        "./*.js": {
+            "types": "./dist/*.d.ts",
+            "import": "./dist/*.js",
+            "default": "./dist/*.js",
+            "source": "./src/*.ts"
+        }
     },
     "scripts": {
         "lint": "prettier ./src --write && eslint . --fix --cache"

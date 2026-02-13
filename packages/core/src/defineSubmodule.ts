@@ -1,5 +1,5 @@
-import type { Container } from '@nzyme/ioc';
-import { writable } from '@nzyme/utils';
+import type { Container } from '@nzyme/ioc/Container.js';
+import { writable } from '@nzyme/utils/writable.js';
 import debug from 'debug';
 
 /**

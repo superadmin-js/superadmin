@@ -1,7 +1,8 @@
 <script lang="ts" setup>
 import InputText from 'primevue/inputtext';
 
-import { useEditor, useEditorProps } from '@superadmin/client';
+import { useEditor } from '@superadmin/client/editors/useEditor.js';
+import { useEditorProps } from '@superadmin/client/editors/useEditorProps.js';
 import type { StringSchema } from '@superadmin/schema';
 
 import FormField from './FormField.vue';

@@ -14,7 +14,13 @@
     "exports": {
         ".": "./dist/index.js",
         "./internal": "./dist/internal.js",
-        "./module": "./dist/module.js"
+        "./module": "./dist/module.js",
+        "./*.js": {
+            "types": "./dist/*.d.ts",
+            "import": "./dist/*.js",
+            "default": "./dist/*.js",
+            "source": "./src/*.ts"
+        }
     },
     "dependencies": {
         "@nzyme/ioc": "^0.14.0",

@@ -1,6 +1,6 @@
-import { HttpError } from '@nzyme/fetch-utils';
+import { HttpError } from '@nzyme/fetch-utils/HttpError.js';
 
-import { defineFunctionHandler } from '@superadmin/core';
+import { defineFunctionHandler } from '@superadmin/core/functions/defineFunctionHandler.js';
 import { refreshAuthTransform } from '@superadmin/core/internal';
 
 import { VerifyAuthToken } from './VerifyAuthToken.js';

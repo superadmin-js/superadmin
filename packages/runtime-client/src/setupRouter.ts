@@ -1,11 +1,13 @@
-import type { Container } from '@nzyme/ioc';
+import type { Container } from '@nzyme/ioc/Container.js';
 import createDebug from 'debug';
 import type { RouteRecordRaw } from 'vue-router';
 import { createRouter, createWebHistory } from 'vue-router';
 
-import { AuthChecker, AuthStore, RuntimeConfig } from '@superadmin/client';
+import { AuthChecker } from '@superadmin/client/auth/AuthChecker.js';
+import { AuthStore } from '@superadmin/client/auth/AuthStore.js';
+import { RuntimeConfig } from '@superadmin/client/RuntimeConfig.js';
 import type { View } from '@superadmin/core';
-import { ViewRegistry } from '@superadmin/core';
+import { ViewRegistry } from '@superadmin/core/views/ViewRegistry.js';
 import { loginComponent } from '@superadmin/core/internal';
 
 import NavigationLayout from './components/NavigationLayout.vue';

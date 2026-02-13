@@ -1,8 +1,8 @@
-import { defineService } from '@nzyme/ioc';
+import { defineService } from '@nzyme/ioc/Service.js';
 import { jwtVerify } from 'jose';
 
-import type { AuthContext } from '@superadmin/core';
-import { AuthRegistry } from '@superadmin/core';
+import type { AuthContext } from '@superadmin/core/auth/AuthContext.js';
+import { AuthRegistry } from '@superadmin/core/auth/AuthRegistry.js';
 import { coerce } from '@superadmin/schema';
 
 import { AuthSecret } from './AuthSecret.js';

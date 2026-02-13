@@ -1,5 +1,5 @@
-import { defineInterface } from '@nzyme/ioc';
-import type { Func } from '@nzyme/types';
+import { defineInterface } from '@nzyme/ioc/Interface.js';
+import type { Func } from '@nzyme/types/Common.js';
 
 /**
  *

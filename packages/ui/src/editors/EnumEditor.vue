@@ -1,10 +1,11 @@
 <script lang="ts" setup>
-import type { Primitive } from '@nzyme/types';
+import type { Primitive } from '@nzyme/types/Common.js';
 import Select from 'primevue/select';
 import SelectButton from 'primevue/selectbutton';
 import { computed } from 'vue';
 
-import { useEditor, useEditorProps } from '@superadmin/client';
+import { useEditor } from '@superadmin/client/editors/useEditor.js';
+import { useEditorProps } from '@superadmin/client/editors/useEditorProps.js';
 import type { EnumSchema } from '@superadmin/schema';
 
 import FormField from './FormField.vue';

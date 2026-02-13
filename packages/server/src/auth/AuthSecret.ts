@@ -1,5 +1,5 @@
 import { randomString } from '@nzyme/crypto';
-import { defineInterface } from '@nzyme/ioc';
+import { defineInterface } from '@nzyme/ioc/Interface.js';
 
 /**
  *

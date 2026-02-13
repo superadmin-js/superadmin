@@ -1,14 +1,15 @@
 <script lang="ts" setup>
-import { ModalContext } from '@nzyme/vue';
-import { useService } from '@nzyme/vue-ioc';
-import { injectContext } from '@nzyme/vue-utils';
+import { ModalContext } from '@nzyme/vue/modal/ModalContext.js';
+import { useService } from '@nzyme/vue-ioc/useService.js';
+import { injectContext } from '@nzyme/vue-utils/context.js';
 import Button from 'primevue/button';
 import Message from 'primevue/message';
 import { ref } from 'vue';
 
-import { ActionDispatcher, useViewProps } from '@superadmin/client';
-import { ApplicationError } from '@superadmin/core';
-import type { FormView } from '@superadmin/core';
+import { ActionDispatcher } from '@superadmin/client/actions/ActionDispatcher.js';
+import { useViewProps } from '@superadmin/client/actions/useViewProps.js';
+import { ApplicationError } from '@superadmin/core/ApplicationError.js';
+import type { FormView } from '@superadmin/core/views/defineFormView.js';
 import { validate } from '@superadmin/schema';
 import { Editor } from '@superadmin/ui';
 import { ValidationError } from '@superadmin/validation';

@@ -12,7 +12,13 @@
         "lint": "prettier ./src --write && eslint . --fix --cache"
     },
     "exports": {
-        ".": "./dist/index.js"
+        ".": "./dist/index.js",
+        "./*.js": {
+            "types": "./dist/*.d.ts",
+            "import": "./dist/*.js",
+            "default": "./dist/*.js",
+            "source": "./src/*.ts"
+        }
     },
     "dependencies": {
         "@nzyme/ioc": "^0.14.0",

@@ -1,5 +1,5 @@
-import { defineService } from '@nzyme/ioc';
-import type { Action } from '@superadmin/schema';
+import { defineService } from '@nzyme/ioc/Service.js';
+import type { Action } from '@superadmin/schema/action.js';
 
 import type { ActionDefinition } from './defineAction.js';
 

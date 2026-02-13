@@ -7,8 +7,13 @@
     "sideEffects": false,
     "exports": {
         ".": "./src/index.ts",
-        "./*": "./src/*",
-        "./theme": "./src/Theme.ts"
+        "./theme": "./src/Theme.ts",
+        "./*.js": {
+            "types": "./dist/*.d.ts",
+            "import": "./dist/*.js",
+            "default": "./dist/*.js",
+            "source": "./src/*.ts"
+        }
     },
     "scripts": {
         "lint": "prettier ./src --write && eslint . --fix --cache"

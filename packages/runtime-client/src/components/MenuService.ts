@@ -1,5 +1,5 @@
-import { defineService } from '@nzyme/ioc';
-import { createEventEmitter } from '@nzyme/utils';
+import { defineService } from '@nzyme/ioc/Service.js';
+import { createEventEmitter } from '@nzyme/utils/createEventEmitter.js';
 
 import type { MenuItem } from '@superadmin/core';
 

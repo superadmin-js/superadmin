@@ -1,6 +1,6 @@
-import { defineModule } from '@nzyme/ioc';
+import { defineModule } from '@nzyme/ioc/Module.js';
 
-import { RuntimeBuilder } from '@superadmin/devkit';
+import { RuntimeBuilder } from '@superadmin/devkit/services/RuntimeBuilder.js';
 
 export default defineModule(container => {
     const runtime = container.resolve(RuntimeBuilder);

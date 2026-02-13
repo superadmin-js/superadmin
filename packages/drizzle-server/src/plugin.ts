@@ -2,10 +2,11 @@ import { desc } from 'drizzle-orm';
 import type { SQL, SQLWrapper } from 'drizzle-orm';
 
 import type { Submodule } from '@superadmin/core';
-import { defineSubmodule } from '@superadmin/core';
-import { defineActionHandler } from '@superadmin/core';
-import type { Entity } from '@superadmin/drizzle-core';
-import { DrizzleClient, EntityRegistry } from '@superadmin/drizzle-core';
+import { defineSubmodule } from '@superadmin/core/defineSubmodule.js';
+import { defineActionHandler } from '@superadmin/core/actions/defineActionHandler.js';
+import type { Entity } from '@superadmin/drizzle-core/defineEntityTableView.js';
+import { DrizzleClient } from '@superadmin/drizzle-core/DrizzleClient.js';
+import { EntityRegistry } from '@superadmin/drizzle-core/EntityRegistry.js';
 import * as s from '@superadmin/schema';
 
 import { queryDrizzle } from './utils/queryDrizzle.js';

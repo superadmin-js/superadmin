@@ -2,7 +2,7 @@ import { computed, reactive } from 'vue';
 
 import { randomString } from '@nzyme/crypto';
 import type { Schema } from '@superadmin/schema';
-import { prettifyName } from '@superadmin/utils';
+import { prettifyName } from '@superadmin/utils/prettifyName.js';
 
 import type { EditorProps } from './useEditorProps.js';
 

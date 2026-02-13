@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { useService } from '@nzyme/vue-ioc';
+import { useService } from '@nzyme/vue-ioc/useService.js';
 
-import { NavigationRegistry } from '@superadmin/core';
+import { NavigationRegistry } from '@superadmin/core/navigation/NavigationRegistry.js';
 
 import Navigation from './Navigation.vue';
 

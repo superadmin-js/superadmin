@@ -1,5 +1,6 @@
-import { ToastService } from '@superadmin/client';
-import { defineActionHandler, showToast } from '@superadmin/core';
+import { ToastService } from '@superadmin/client/services/ToastService.js';
+import { defineActionHandler } from '@superadmin/core/actions/defineActionHandler.js';
+import { showToast } from '@superadmin/core/actions/showToast.js';
 
 export const showToastHandler = defineActionHandler({
     action: showToast,

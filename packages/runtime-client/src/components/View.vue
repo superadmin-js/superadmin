@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import { useService } from '@nzyme/vue-ioc';
+import { useService } from '@nzyme/vue-ioc/useService.js';
 import type { PropType } from 'vue';
 import { computed } from 'vue';
 
-import { ComponentRegistry } from '@superadmin/client';
+import { ComponentRegistry } from '@superadmin/client/components/ComponentRegistry.js';
 import type { View } from '@superadmin/core';
 import { coerce } from '@superadmin/schema';
 

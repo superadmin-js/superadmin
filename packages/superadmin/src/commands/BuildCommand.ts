@@ -1,6 +1,6 @@
-import { Command } from '@nzyme/cli';
+import { Command } from '@nzyme/cli/Command.js';
 
-import { ProjectBuilder } from '@superadmin/devkit';
+import { ProjectBuilder } from '@superadmin/devkit/services/ProjectBuilder.js';
 
 import { loadProject } from '../utils/loadProject.js';
 

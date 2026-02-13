@@ -1,11 +1,12 @@
 <script lang="ts" setup>
-import { ModalHost } from '@nzyme/vue';
-import { useService } from '@nzyme/vue-ioc';
-import { onWindowEvent } from '@nzyme/vue-utils';
+import { ModalHost } from '@nzyme/vue/modal/ModalHost.js';
+import { useService } from '@nzyme/vue-ioc/useService.js';
+import { onWindowEvent } from '@nzyme/vue-utils/onWindowEvent.js';
 import Toast from 'primevue/toast';
 import { RouterView, useRoute } from 'vue-router';
 
-import { ErrorEvent, ToastService } from '@superadmin/client';
+import { ErrorEvent } from '@superadmin/client/events/ErrorEvent.js';
+import { ToastService } from '@superadmin/client/services/ToastService.js';
 
 import MenuHost from './components/MenuHost.vue';
 

@@ -1,4 +1,4 @@
-import { defineProp } from '@nzyme/vue-utils';
+import { defineProp } from '@nzyme/vue-utils/defineProp.js';
 import type { ExtractPropTypes } from 'vue';
 
 import type { View } from '@superadmin/core';

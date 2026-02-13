@@ -1,4 +1,4 @@
-import type { Simplify } from '@nzyme/types';
+import type { Simplify } from '@nzyme/types/Common.js';
 
 import * as s from '@superadmin/schema';
 

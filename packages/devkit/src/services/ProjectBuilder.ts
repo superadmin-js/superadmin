@@ -1,14 +1,14 @@
 import path from 'path';
 
-import { defineService } from '@nzyme/ioc';
-import { rollupCompile } from '@nzyme/rollup-utils';
-import type { RollupOptions } from '@nzyme/rollup-utils';
+import { defineService } from '@nzyme/ioc/Service.js';
+import { rollupCompile } from '@nzyme/rollup-utils/rollupCompile.js';
+import type { RollupOptions } from '@nzyme/rollup-utils/types.js';
 import chalk from 'chalk';
 import type { InputOptions } from 'rollup';
 import type { UserConfig as ViteConfig } from 'vite';
 import { mergeConfig, build as viteBuild } from 'vite';
 
-import { ProjectConfig } from '@superadmin/config';
+import { ProjectConfig } from '@superadmin/config/ProjectConfig.js';
 
 import { normalizePath } from '../utils/normalizePath.js';
 import { ClientViteConfigProvider } from './ClientViteConfigProvider.js';

@@ -1,7 +1,9 @@
 import { SignJWT } from 'jose';
 
-import type { AuthData, AuthenticateInput } from '@superadmin/core';
-import { AuthRegistry, defineFunctionHandler } from '@superadmin/core';
+import type { AuthData } from '@superadmin/core/auth/AuthData.js';
+import type { AuthenticateInput } from '@superadmin/core/auth/authenticate.js';
+import { AuthRegistry } from '@superadmin/core/auth/AuthRegistry.js';
+import { defineFunctionHandler } from '@superadmin/core/functions/defineFunctionHandler.js';
 import { authenticateTransform } from '@superadmin/core/internal';
 
 import { AuthSecret } from './AuthSecret.js';

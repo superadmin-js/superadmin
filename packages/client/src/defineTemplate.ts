@@ -1,5 +1,5 @@
-import type { Component } from '@superadmin/core';
-import { defineSubmodule } from '@superadmin/core';
+import type { Component } from '@superadmin/core/defineComponent.js';
+import { defineSubmodule } from '@superadmin/core/defineSubmodule.js';
 
 import type { ComponentTemplate } from './components/ComponentRegistry.js';
 import { ComponentRegistry } from './components/ComponentRegistry.js';

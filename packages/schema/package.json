@@ -22,5 +22,17 @@
         "eslint": "^9.39.2",
         "prettier": "^3.8.1",
         "vitest": "^4.0.18"
+    },
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "default": "./dist/index.js"
+        },
+        "./*.js": {
+            "types": "./dist/*.d.ts",
+            "import": "./dist/*.js",
+            "default": "./dist/*.js",
+            "source": "./src/*.ts"
+        }
     }
 }

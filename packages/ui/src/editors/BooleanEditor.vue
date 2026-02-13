@@ -1,7 +1,8 @@
 <script lang="ts" setup>
 import Checkbox from 'primevue/checkbox';
 
-import { useEditor, useEditorProps } from '@superadmin/client';
+import { useEditor } from '@superadmin/client/editors/useEditor.js';
+import { useEditorProps } from '@superadmin/client/editors/useEditorProps.js';
 import type { BooleanSchema } from '@superadmin/schema';
 
 const props = defineProps({

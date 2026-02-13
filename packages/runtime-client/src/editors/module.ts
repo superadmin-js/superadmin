@@ -1,4 +1,4 @@
-import { defineEditor } from '@superadmin/client';
+import { defineEditor } from '@superadmin/client/editors/defineEditor.js';
 import * as s from '@superadmin/schema';
 import BooleanEditor from '@superadmin/ui/editors/BooleanEditor.vue';
 import EnumEditor from '@superadmin/ui/editors/EnumEditor.vue';

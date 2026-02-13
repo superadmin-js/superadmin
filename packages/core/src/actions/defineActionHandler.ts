@@ -1,7 +1,7 @@
-import { defineService } from '@nzyme/ioc';
-import type { Dependencies, Service, ServiceSetup } from '@nzyme/ioc';
-import type { HttpRequest } from '@nzyme/rpc';
-import type { EmptyObject } from '@nzyme/types';
+import { defineService } from '@nzyme/ioc/Service.js';
+import type { Dependencies, Service, ServiceSetup } from '@nzyme/ioc/Service.js';
+import type { HttpRequest } from '@nzyme/rpc/types/HttpRequest.js';
+import type { EmptyObject } from '@nzyme/types/EmptyObject.js';
 
 import type * as s from '@superadmin/schema';
 

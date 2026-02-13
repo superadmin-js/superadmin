@@ -1,7 +1,7 @@
 import { join as pathJoin } from 'path';
 
-import { defineInterface } from '@nzyme/ioc';
-import type { Module } from '@nzyme/ioc';
+import { defineInterface } from '@nzyme/ioc/Interface.js';
+import type { Module } from '@nzyme/ioc/Module.js';
 import type { InputOptions } from 'rollup';
 
 /**

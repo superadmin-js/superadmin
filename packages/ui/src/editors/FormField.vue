@@ -1,7 +1,8 @@
 <script lang="ts" setup>
 import IftaLabel from 'primevue/iftalabel';
 
-import { useEditor, useEditorProps } from '@superadmin/client';
+import { useEditor } from '@superadmin/client/editors/useEditor.js';
+import { useEditorProps } from '@superadmin/client/editors/useEditorProps.js';
 
 const props = defineProps({
   ...useEditorProps(),

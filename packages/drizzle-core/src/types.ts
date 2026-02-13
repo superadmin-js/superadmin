@@ -1,6 +1,6 @@
 import type { Table } from 'drizzle-orm';
 
-import type { IfLiteral } from '@nzyme/types';
+import type { IfLiteral } from '@nzyme/types/TypeGuards.js';
 
 export type DrizzleSchema = Record<string, unknown>;
 

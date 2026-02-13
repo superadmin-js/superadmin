@@ -1,4 +1,4 @@
-import type { SomeObject } from '@nzyme/types';
+import type { SomeObject } from '@nzyme/types/Object.js';
 import type * as s from '@superadmin/schema';
 
 import { type Component, defineComponent } from '../defineComponent.js';

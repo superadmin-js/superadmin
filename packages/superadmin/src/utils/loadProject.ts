@@ -1,7 +1,7 @@
-import { createContainer } from '@nzyme/ioc';
+import { createContainer } from '@nzyme/ioc/Container.js';
 
-import { ProjectConfig } from '@superadmin/config';
-import { resolveConfig } from '@superadmin/devkit';
+import { ProjectConfig } from '@superadmin/config/ProjectConfig.js';
+import { resolveConfig } from '@superadmin/devkit/utils/resolveConfig.js';
 
 /**
  *

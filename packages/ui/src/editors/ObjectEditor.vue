@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { computed } from 'vue';
 
-import { useEditorProps } from '@superadmin/client';
+import { useEditorProps } from '@superadmin/client/editors/useEditorProps.js';
 import { coerceNonNull } from '@superadmin/schema';
 import type { ObjectSchema } from '@superadmin/schema';
 import { concatKeys } from '@superadmin/validation';

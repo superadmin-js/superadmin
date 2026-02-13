@@ -2,7 +2,8 @@ import type { SQL, SQLWrapper, Table } from 'drizzle-orm';
 import type { LibSQLDatabase } from 'drizzle-orm/libsql';
 import type { SelectedFields } from 'drizzle-orm/sqlite-core';
 
-import type { DrizzleClient, DrizzleSchema } from '@superadmin/drizzle-core';
+import type { DrizzleClient } from '@superadmin/drizzle-core/DrizzleClient.js';
+import type { DrizzleSchema } from '@superadmin/drizzle-core/types.js';
 
 interface QueryParams {
     drizzle: DrizzleClient;

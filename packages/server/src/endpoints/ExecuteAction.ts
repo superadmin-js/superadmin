@@ -1,15 +1,19 @@
 import { parseBearerToken } from '@nzyme/crypto';
-import { HttpError } from '@nzyme/fetch-utils';
-import { Container } from '@nzyme/ioc';
-import { Logger } from '@nzyme/logging';
-import type { HttpRequest } from '@nzyme/rpc';
-import { defineEndpoint, HttpContextProvider } from '@nzyme/rpc';
-import { assert, identity } from '@nzyme/utils';
+import { HttpError } from '@nzyme/fetch-utils/HttpError.js';
+import { Container } from '@nzyme/ioc/Container.js';
+import { Logger } from '@nzyme/logging/Logger.js';
+import type { HttpRequest } from '@nzyme/rpc/types/HttpRequest.js';
+import { defineEndpoint } from '@nzyme/rpc/defineEndpoint.js';
+import { HttpContextProvider } from '@nzyme/rpc/services/HttpContextProvider.js';
+import { assert } from '@nzyme/utils/assert.js';
+import { identity } from '@nzyme/utils/functions/identity.js';
 import * as z from '@zod/mini';
 
 import type { ActionDefinition } from '@superadmin/core';
-import { ActionHandlerRegistry, ActionRegistry, FunctionRegistry } from '@superadmin/core';
-import { ApplicationError } from '@superadmin/core';
+import { ActionHandlerRegistry } from '@superadmin/core/actions/ActionHandlerRegistry.js';
+import { ActionRegistry } from '@superadmin/core/actions/ActionRegistry.js';
+import { FunctionRegistry } from '@superadmin/core/functions/FunctionRegistry.js';
+import { ApplicationError } from '@superadmin/core/ApplicationError.js';
 import * as s from '@superadmin/schema';
 import { ValidationError } from '@superadmin/validation';
 

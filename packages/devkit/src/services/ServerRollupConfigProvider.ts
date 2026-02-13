@@ -1,6 +1,6 @@
-import { unwrapCjsDefaultImport } from '@nzyme/esm';
-import { defineService } from '@nzyme/ioc';
-import { normalizeBuiltinsPlugin } from '@nzyme/rollup-utils';
+import { unwrapCjsDefaultImport } from '@nzyme/esm/unwrapCjsDefaultImport.js';
+import { defineService } from '@nzyme/ioc/Service.js';
+import { normalizeBuiltinsPlugin } from '@nzyme/rollup-utils/plugins/normalizeBuiltinsPlugin.js';
 import alias from '@rollup/plugin-alias';
 import commonjs from '@rollup/plugin-commonjs';
 import json from '@rollup/plugin-json';

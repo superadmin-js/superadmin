@@ -1,5 +1,5 @@
 declare module '@modules' {
-    import type { RuntimeModules } from '@superadmin/runtime-common';
+    import type { RuntimeModules } from '@superadmin/runtime-common/RuntimeModules.js';
     const modules: RuntimeModules;
     export default modules;
 }

@@ -1,4 +1,4 @@
-import { defineSubmodule } from '@superadmin/core';
+import { defineSubmodule } from '@superadmin/core/defineSubmodule.js';
 import type { Schema, SchemaBase } from '@superadmin/schema';
 
 import type { EditorComponent } from './EditorComponent.js';
