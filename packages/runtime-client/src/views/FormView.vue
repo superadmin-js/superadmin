@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { ModalContext } from '@nzyme/vue/modal/ModalContext.js';
 import { useService } from '@nzyme/vue-ioc/useService.js';
 import { injectContext } from '@nzyme/vue-utils/context.js';
+import { ModalContext } from '@nzyme/vue/modal/ModalContext.js';
 import Button from 'primevue/button';
 import Message from 'primevue/message';
 import { ref } from 'vue';

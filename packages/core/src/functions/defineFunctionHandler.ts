@@ -1,5 +1,5 @@
 import { defineService } from '@nzyme/ioc/Service.js';
-import type { Service, Dependencies, ServiceSetup } from '@nzyme/ioc/Service.js';
+import type { Dependencies, Service, ServiceSetup } from '@nzyme/ioc/Service.js';
 import type { EmptyObject } from '@nzyme/types/EmptyObject.js';
 
 import type { Infer, Schema } from '@superadmin/schema';

@@ -1,8 +1,8 @@
 import config from '@config';
 import modules from '@modules';
-import { CommonPlugin } from '@nzyme/vue/CommonPlugin.js';
 import { createContainer } from '@nzyme/vue-ioc/createContainer.js';
 import { IocPlugin } from '@nzyme/vue-ioc/IocPlugin.js';
+import { CommonPlugin } from '@nzyme/vue/CommonPlugin.js';
 import theme from '@theme';
 import type { PrimeVueConfiguration } from 'primevue/config';
 import PrimeVue from 'primevue/config';
@@ -10,9 +10,9 @@ import PrimeVueToastService from 'primevue/toastservice';
 import { createApp } from 'vue';
 import type { Plugin } from 'vue';
 
+import { RuntimeConfig } from '@superadmin/client/RuntimeConfig.js';
 import { App } from '@superadmin/client/services/App.js';
 import { Router } from '@superadmin/client/services/Router.js';
-import { RuntimeConfig } from '@superadmin/client/RuntimeConfig.js';
 import { ToastService } from '@superadmin/client/services/ToastService.js';
 import { installModules } from '@superadmin/runtime-common/installModules.js';
 

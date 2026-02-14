@@ -3,6 +3,7 @@ import { injectContext } from '@nzyme/vue-utils/context.js';
 
 import { ViewContext } from '@superadmin/client/views/ViewContext.js';
 import type { ViewLayoutSlots } from '@superadmin/client/views/ViewLayout.js';
+
 defineSlots<ViewLayoutSlots>();
 
 const view = injectContext(ViewContext);

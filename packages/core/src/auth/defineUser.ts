@@ -83,7 +83,6 @@ export interface UserDefinition<TSchema extends UserSchema = UserSchema>
 }
 
 /**
- *
  * @__NO_SIDE_EFFECTS__
  */
 export function defineUser<TSchema extends UserSchema>(config: UserConfig<TSchema>) {

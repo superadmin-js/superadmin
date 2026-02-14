@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { ModalHost } from '@nzyme/vue/modal/ModalHost.js';
 import { useService } from '@nzyme/vue-ioc/useService.js';
 import { onWindowEvent } from '@nzyme/vue-utils/onWindowEvent.js';
+import { ModalHost } from '@nzyme/vue/modal/ModalHost.js';
 import Toast from 'primevue/toast';
 import { RouterView, useRoute } from 'vue-router';
 

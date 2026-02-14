@@ -136,7 +136,6 @@ export interface View<
 }
 
 /**
- *
  * @__NO_SIDE_EFFECTS__
  */
 export function defineView<

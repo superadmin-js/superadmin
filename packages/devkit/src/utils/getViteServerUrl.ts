@@ -1,5 +1,8 @@
-import { ViteDevServer } from 'vite';
+import type { ViteDevServer } from 'vite';
 
+/**
+ *
+ */
 export function getViteServerUrl(server: ViteDevServer) {
     const address = server.httpServer?.address();
 

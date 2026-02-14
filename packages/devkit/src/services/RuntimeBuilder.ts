@@ -1,13 +1,13 @@
 import path from 'path';
 
 import { defineService } from '@nzyme/ioc/Service.js';
+import { isFileIgnored } from '@nzyme/project-utils/isFileIgnored.js';
 import { resolveProjectPath } from '@nzyme/project-utils/resolveProjectPath.js';
 import { createPromise } from '@nzyme/utils/createPromise.js';
 import { joinLines } from '@nzyme/utils/string/joinLines.js';
 import { watch } from 'chokidar';
 import createDebug from 'debug';
 import fastGlob from 'fast-glob';
-import { isFileIgnored } from '@nzyme/project-utils/isFileIgnored.js';
 import type { TsConfigJson } from 'type-fest';
 
 import type { RuntimeConfig as ClientRuntimeConfig } from '@superadmin/client/RuntimeConfig.js';

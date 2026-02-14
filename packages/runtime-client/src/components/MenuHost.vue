@@ -1,7 +1,7 @@
 <script lang="ts" setup>
+import { mapNotNull } from '@nzyme/utils/array/mapNotNull.js';
 import type { PromiseWrapper } from '@nzyme/utils/createPromise.js';
 import { createPromise } from '@nzyme/utils/createPromise.js';
-import { mapNotNull } from '@nzyme/utils/array/mapNotNull.js';
 import { useService } from '@nzyme/vue-ioc/useService.js';
 import { onEventEmitter } from '@nzyme/vue-utils/onEventEmitter.js';
 import type { MenuMethods } from 'primevue/menu';

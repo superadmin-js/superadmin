@@ -1,6 +1,7 @@
 import * as s from '@superadmin/schema';
 
 import type { ActionDefinition, ActionInput } from './defineAction.js';
+
 const ACTION_SCHEMA = s.action();
 
 /**

@@ -1,7 +1,13 @@
 import { identity } from '@nzyme/utils/functions/identity.js';
-import type { SchemaMeta, SchemaOptionsBase, SchemaOptionsSimplify } from '@nzyme/zchema/Schema.js';
 import { defineSchema } from '@nzyme/zchema/defineSchema.js';
-import type { Schema, SchemaOptions, SchemaProto } from '@nzyme/zchema/Schema.js';
+import type {
+    Schema,
+    SchemaMeta,
+    SchemaOptions,
+    SchemaOptionsBase,
+    SchemaOptionsSimplify,
+    SchemaProto,
+} from '@nzyme/zchema/Schema.js';
 
 /**
  *

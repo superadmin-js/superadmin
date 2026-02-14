@@ -1,7 +1,10 @@
 import type { SQL, SQLWrapper } from 'drizzle-orm';
 import { desc } from 'drizzle-orm';
 
-import type { BasicPaginationParams, BasicPaginationResult } from '@superadmin/core/pagination/defineBasicPagination.js';
+import type {
+    BasicPaginationParams,
+    BasicPaginationResult,
+} from '@superadmin/core/pagination/defineBasicPagination.js';
 
 /**
  *

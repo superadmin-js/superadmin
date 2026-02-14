@@ -14,6 +14,9 @@ export type EditorComponent<S extends Schema = Schema> = Component<
     // eslint-disable-next-line @typescript-eslint/no-empty-object-type
     {},
     {
+        /**
+         *
+         */
         'update:modelValue': (value: Infer<S>) => void;
     }
 >;

@@ -1,4 +1,4 @@
-import type { Service, Dependencies, ServiceSetup } from '@nzyme/ioc/Service.js';
+import type { Dependencies, Service, ServiceSetup } from '@nzyme/ioc/Service.js';
 import { defineService } from '@nzyme/ioc/Service.js';
 
 import type { Submodule } from '@superadmin/core/defineSubmodule.js';

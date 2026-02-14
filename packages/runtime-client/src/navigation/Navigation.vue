@@ -7,9 +7,9 @@ import { computed } from 'vue';
 
 import { ActionDispatcher } from '@superadmin/client/actions/ActionDispatcher.js';
 import { getViewRoute } from '@superadmin/client/views/getViewRoute.js';
-import { ViewRegistry } from '@superadmin/core/views/ViewRegistry.js';
-import type { Navigation, NavigationItem } from '@superadmin/core/navigation/defineNavigation.js';
 import { goToViewAction } from '@superadmin/core/module';
+import type { Navigation, NavigationItem } from '@superadmin/core/navigation/defineNavigation.js';
+import { ViewRegistry } from '@superadmin/core/views/ViewRegistry.js';
 import Icon from '@superadmin/ui/Icon.vue';
 
 const props = defineProps<{

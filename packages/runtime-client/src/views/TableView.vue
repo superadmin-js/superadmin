@@ -7,8 +7,8 @@ import DataTable from 'primevue/datatable';
 import { computed } from 'vue';
 
 import { ActionDispatcher } from '@superadmin/client/actions/ActionDispatcher.js';
-import { useComponent } from '@superadmin/client/components/useComponent.js';
 import { useViewProps } from '@superadmin/client/actions/useViewProps.js';
+import { useComponent } from '@superadmin/client/components/useComponent.js';
 import type { TableView } from '@superadmin/core/views/defineTableView.js';
 import * as s from '@superadmin/schema';
 import { default as ActionButtons } from '@superadmin/ui/ActionButtons.vue';

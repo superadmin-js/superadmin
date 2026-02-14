@@ -1,8 +1,8 @@
 import { Router } from '@superadmin/client/services/Router.js';
 import { getViewRoute } from '@superadmin/client/views/getViewRoute.js';
 import { defineActionHandler } from '@superadmin/core/actions/defineActionHandler.js';
-import { ViewRegistry } from '@superadmin/core/views/ViewRegistry.js';
 import { goToViewAction } from '@superadmin/core/internal';
+import { ViewRegistry } from '@superadmin/core/views/ViewRegistry.js';
 
 export const goToViewHandler = defineActionHandler({
     action: goToViewAction,

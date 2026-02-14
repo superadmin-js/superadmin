@@ -2,7 +2,10 @@ import { defineService } from '@nzyme/ioc/Service.js';
 
 import type { Entity } from './defineEntityTableView.js';
 
-export const EntityRegistry = defineService({
+export /**
+ *
+ */
+const EntityRegistry = defineService({
     name: 'EntityRegistry',
     setup() {
         const entities: Entity[] = [];

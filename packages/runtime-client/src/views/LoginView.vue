@@ -11,6 +11,7 @@ import type { LoginView } from '@superadmin/core/auth/defineLoginView.js';
 import { coerce, validate } from '@superadmin/schema';
 import { default as Editor } from '@superadmin/ui/Editor.vue';
 import type { ValidationErrors } from '@superadmin/validation';
+
 const props = defineProps({
   ...useViewProps<LoginView>(),
 });

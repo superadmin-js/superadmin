@@ -1,6 +1,14 @@
 import { identity } from '@nzyme/utils/functions/identity.js';
-import type { Infer, Schema, SchemaMeta, SchemaOptions, SchemaOptionsBase, SchemaOptionsSimplify, SchemaProto } from '@nzyme/zchema/Schema.js';
 import { defineSchema } from '@nzyme/zchema/defineSchema.js';
+import type {
+    Infer,
+    Schema,
+    SchemaMeta,
+    SchemaOptions,
+    SchemaOptionsBase,
+    SchemaOptionsSimplify,
+    SchemaProto,
+} from '@nzyme/zchema/Schema.js';
 
 declare const ACTION_SYMBOL: unique symbol;
 

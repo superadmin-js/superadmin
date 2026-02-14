@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { getSingleItem } from '@nzyme/utils/array/getSingleItem.js';
-import { defineProp } from '@nzyme/vue-utils/defineProp.js';
 import { provideContext } from '@nzyme/vue-utils/context.js';
+import { defineProp } from '@nzyme/vue-utils/defineProp.js';
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 

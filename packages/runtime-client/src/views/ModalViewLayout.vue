@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { ModalContext } from '@nzyme/vue/modal/ModalContext.js';
 import { injectContext } from '@nzyme/vue-utils/context.js';
+import { ModalContext } from '@nzyme/vue/modal/ModalContext.js';
 import Dialog from 'primevue/dialog';
 
 import { ViewContext } from '@superadmin/client/views/ViewContext.js';

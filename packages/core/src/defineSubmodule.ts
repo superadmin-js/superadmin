@@ -46,21 +46,18 @@ type SubmoduleOptionsFor<TModule extends Submodule = Submodule> = {
 };
 
 /**
- *
  * @__NO_SIDE_EFFECTS__
  */
 export function defineSubmodule<TModule extends SubmoduleOptions>(
     module: TModule,
 ): Submodule & TModule;
 /**
- *
  * @__NO_SIDE_EFFECTS__
  */
 export function defineSubmodule<TModule extends Submodule>(
     module: SubmoduleOptionsFor<TModule>,
 ): TModule;
 /**
- *
  * @__NO_SIDE_EFFECTS__
  */
 export function defineSubmodule<TModule extends Submodule>(
@@ -68,7 +65,6 @@ export function defineSubmodule<TModule extends Submodule>(
     module: SubmoduleOptionsFor<TModule>,
 ): TModule;
 /**
- *
  * @__NO_SIDE_EFFECTS__
  */
 export function defineSubmodule(
