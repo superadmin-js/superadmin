@@ -8,12 +8,10 @@
     "exports": {
         ".": "./src/index.ts",
         "./theme": "./src/Theme.ts",
-        "./*.js": {
-            "types": "./dist/*.d.ts",
-            "import": "./dist/*.js",
-            "default": "./dist/*.js",
-            "source": "./src/*.ts"
-        }
+        "./package.json": "./package.json",
+        "./*.js": "./src/*.ts",
+        "./*.jsx": "./src/*.tsx",
+        "./*.vue": "./src/*.vue"
     },
     "scripts": {
         "lint": "prettier ./src --write && eslint . --fix --cache"
