@@ -1,8 +1,8 @@
-import { ModalService } from '@nzyme/vue';
+import { ModalService } from '@nzyme/vue/modal/ModalService.js';
 
-import { defineActionHandler } from '@superadmin/core';
-import { ViewRegistry } from '@superadmin/core';
+import { defineActionHandler } from '@superadmin/core/actions/defineActionHandler.js';
 import { openModalInternal } from '@superadmin/core/module';
+import { ViewRegistry } from '@superadmin/core/views/ViewRegistry.js';
 
 import ViewRenderer from '../views/ViewRenderer.vue';
 

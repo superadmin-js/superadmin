@@ -1,8 +1,9 @@
 <script lang="ts" setup>
+import { useService } from '@nzyme/vue-ioc/useService.js';
 import { computed } from 'vue';
 
-import { useService } from '@nzyme/vue-ioc';
-import { EditorRegistry, useEditorProps } from '@superadmin/client';
+import { EditorRegistry } from '@superadmin/client/editors/EditorRegistry.js';
+import { useEditorProps } from '@superadmin/client/editors/useEditorProps.js';
 
 const props = defineProps({
   ...useEditorProps(),

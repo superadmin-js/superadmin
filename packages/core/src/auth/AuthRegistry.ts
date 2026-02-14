@@ -1,8 +1,11 @@
-import { defineService } from '@nzyme/ioc';
+import { defineService } from '@nzyme/ioc/Service.js';
 
 import type { UserDefinition } from './defineUser.js';
 
-export const AuthRegistry = defineService({
+export /**
+ *
+ */
+const AuthRegistry = defineService({
     name: 'AuthRegistry',
     setup() {
         const userTypes = new Map<string, UserDefinition>();

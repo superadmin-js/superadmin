@@ -1,14 +1,16 @@
 import path from 'path';
 
-import { defineService } from '@nzyme/ioc';
-import { devServerMiddleware, isFileExternal, watchFilesPlugin } from '@nzyme/rollup-utils';
+import { defineService } from '@nzyme/ioc/Service.js';
+import { devServerMiddleware } from '@nzyme/rollup-utils/devServerMiddleware.js';
+import { isFileExternal } from '@nzyme/rollup-utils/isFileExternal.js';
+import { watchFilesPlugin } from '@nzyme/rollup-utils/plugins/watchFilesPlugin.js';
 import chalk from 'chalk';
 import type { RollupOptions } from 'rollup';
 import { joinURL } from 'ufo';
 import type { UserConfig as ViteConfig } from 'vite';
 import { createServer, mergeConfig } from 'vite';
 
-import { ProjectConfig } from '@superadmin/config';
+import { ProjectConfig } from '@superadmin/config/ProjectConfig.js';
 
 import { getViteServerUrl } from '../utils/getViteServerUrl.js';
 import { normalizePath } from '../utils/normalizePath.js';

@@ -1,9 +1,9 @@
 import modules from '@modules';
-import type { Container } from '@nzyme/ioc';
-import { createContainer } from '@nzyme/ioc';
-import { createRouter as createRpcRouter } from '@nzyme/rpc';
+import type { Container } from '@nzyme/ioc/Container.js';
+import { createContainer } from '@nzyme/ioc/Container.js';
+import { createRouter as createRpcRouter } from '@nzyme/rpc/createRouter.js';
 
-import { installModules } from '@superadmin/runtime-common';
+import { installModules } from '@superadmin/runtime-common/installModules.js';
 
 import { ExecuteAction } from './endpoints/ExecuteAction.js';
 

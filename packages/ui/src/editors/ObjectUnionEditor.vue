@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import type { Primitive } from '@nzyme/types';
+import type { Primitive } from '@nzyme/types/Common.js';
 import { computed } from 'vue';
 
-import { useEditorProps } from '@superadmin/client';
+import { useEditorProps } from '@superadmin/client/editors/useEditorProps.js';
 import * as s from '@superadmin/schema';
 import type { ObjectUnionSchema } from '@superadmin/schema';
 import { concatKeys } from '@superadmin/validation';

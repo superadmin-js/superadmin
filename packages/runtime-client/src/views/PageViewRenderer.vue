@@ -1,11 +1,13 @@
 <script lang="ts" setup>
-import { getSingleItem } from '@nzyme/utils';
-import { defineProp, provideContext } from '@nzyme/vue-utils';
+import { getSingleItem } from '@nzyme/utils/array/getSingleItem.js';
+import { provideContext } from '@nzyme/vue-utils/context.js';
+import { defineProp } from '@nzyme/vue-utils/defineProp.js';
 import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 
-import { useComponent, ViewContext } from '@superadmin/client';
-import type { View } from '@superadmin/core';
+import { useComponent } from '@superadmin/client/components/useComponent.js';
+import { ViewContext } from '@superadmin/client/views/ViewContext.js';
+import type { View } from '@superadmin/core/views/defineView.js';
 import { parseJson } from '@superadmin/schema';
 
 import PageViewLayout from './PageViewLayout.vue';

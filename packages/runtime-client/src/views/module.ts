@@ -1,6 +1,6 @@
 import { defineAsyncComponent } from 'vue';
 
-import { defineTemplate } from '@superadmin/client';
+import { defineTemplate } from '@superadmin/client/defineTemplate.js';
 import { formComponent, loginComponent, tableComponent } from '@superadmin/core/internal';
 
 export const formView = defineTemplate(formComponent, {

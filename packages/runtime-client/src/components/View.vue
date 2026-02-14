@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import { useService } from '@nzyme/vue-ioc';
+import { useService } from '@nzyme/vue-ioc/useService.js';
 import type { PropType } from 'vue';
 import { computed } from 'vue';
 
-import { ComponentRegistry } from '@superadmin/client';
-import type { View } from '@superadmin/core';
+import { ComponentRegistry } from '@superadmin/client/components/ComponentRegistry.js';
+import type { View } from '@superadmin/core/views/defineView.js';
 import { coerce } from '@superadmin/schema';
 
 const props = defineProps({

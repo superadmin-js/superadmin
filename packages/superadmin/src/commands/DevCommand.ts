@@ -1,7 +1,7 @@
-import { Command } from '@nzyme/cli';
-import { waitForever } from '@nzyme/utils';
+import { Command } from '@nzyme/cli/Command.js';
+import { waitForever } from '@nzyme/utils/waitForever.js';
 
-import { DevServer } from '@superadmin/devkit';
+import { DevServer } from '@superadmin/devkit/services/DevServer.js';
 
 import { loadProject } from '../utils/loadProject.js';
 

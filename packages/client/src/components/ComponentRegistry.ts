@@ -1,7 +1,7 @@
-import { defineService } from '@nzyme/ioc';
-import type { Component as VueComponent } from '@nzyme/vue-utils';
+import { defineService } from '@nzyme/ioc/Service.js';
+import type { Component as VueComponent } from '@nzyme/vue-utils/component.js';
 
-import type { Component, ComponentAny } from '@superadmin/core';
+import type { Component, ComponentAny } from '@superadmin/core/defineComponent.js';
 
 /**
  *

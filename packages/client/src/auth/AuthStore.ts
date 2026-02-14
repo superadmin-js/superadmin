@@ -1,10 +1,12 @@
-import { defineService } from '@nzyme/ioc';
-import { reactive, storageRef } from '@nzyme/vue-utils';
+import { defineService } from '@nzyme/ioc/Service.js';
+import { reactive } from '@nzyme/vue-utils/reactivity/reactive.js';
+import { storageRef } from '@nzyme/vue-utils/reactivity/storageRef.js';
 import createDebug from 'debug';
 import { computed } from 'vue';
 
-import type { AuthContext } from '@superadmin/core';
-import { AuthData, AuthRegistry } from '@superadmin/core';
+import type { AuthContext } from '@superadmin/core/auth/AuthContext.js';
+import { AuthData } from '@superadmin/core/auth/AuthData.js';
+import { AuthRegistry } from '@superadmin/core/auth/AuthRegistry.js';
 import * as s from '@superadmin/schema';
 
 import { RuntimeConfig } from '../RuntimeConfig.js';

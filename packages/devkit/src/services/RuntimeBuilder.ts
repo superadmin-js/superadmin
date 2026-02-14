@@ -1,17 +1,18 @@
 import path from 'path';
 
-import { defineService } from '@nzyme/ioc';
-import { resolveProjectPath } from '@nzyme/project-utils';
-import { createPromise, joinLines } from '@nzyme/utils';
+import { defineService } from '@nzyme/ioc/Service.js';
+import { isFileIgnored } from '@nzyme/project-utils/isFileIgnored.js';
+import { resolveProjectPath } from '@nzyme/project-utils/resolveProjectPath.js';
+import { createPromise } from '@nzyme/utils/createPromise.js';
+import { joinLines } from '@nzyme/utils/string/joinLines.js';
 import { watch } from 'chokidar';
 import createDebug from 'debug';
 import fastGlob from 'fast-glob';
-import { isFileIgnored } from '@nzyme/project-utils';
 import type { TsConfigJson } from 'type-fest';
 
-import type { RuntimeConfig as ClientRuntimeConfig } from '@superadmin/client';
-import { ProjectConfig } from '@superadmin/config';
-import type { RuntimeConfig as ServerRuntimeConfig } from '@superadmin/server';
+import type { RuntimeConfig as ClientRuntimeConfig } from '@superadmin/client/RuntimeConfig.js';
+import { ProjectConfig } from '@superadmin/config/ProjectConfig.js';
+import type { RuntimeConfig as ServerRuntimeConfig } from '@superadmin/server/RuntimeConfig.js';
 
 import { generateRuntime } from '../runtime/createRuntime.js';
 import { normalizePath } from '../utils/normalizePath.js';

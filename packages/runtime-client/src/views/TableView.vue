@@ -1,16 +1,19 @@
 <script lang="ts" setup>
-import { useService } from '@nzyme/vue-ioc';
-import { useDataSource } from '@nzyme/vue-utils';
+import { useService } from '@nzyme/vue-ioc/useService.js';
+import { useDataSource } from '@nzyme/vue-utils/useDataSource.js';
 import Button from 'primevue/button';
 import Column from 'primevue/column';
 import DataTable from 'primevue/datatable';
 import { computed } from 'vue';
 
-import { ActionDispatcher, useComponent, useViewProps } from '@superadmin/client';
-import type { TableView } from '@superadmin/core';
+import { ActionDispatcher } from '@superadmin/client/actions/ActionDispatcher.js';
+import { useViewProps } from '@superadmin/client/actions/useViewProps.js';
+import { useComponent } from '@superadmin/client/components/useComponent.js';
+import type { TableView } from '@superadmin/core/views/defineTableView.js';
 import * as s from '@superadmin/schema';
-import { ActionButtons, Icon } from '@superadmin/ui';
-import { prettifyName } from '@superadmin/utils';
+import { default as ActionButtons } from '@superadmin/ui/ActionButtons.vue';
+import { default as Icon } from '@superadmin/ui/Icon.vue';
+import { prettifyName } from '@superadmin/utils/prettifyName.js';
 
 const props = defineProps({
   ...useViewProps<TableView>(),

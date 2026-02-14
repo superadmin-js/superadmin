@@ -32,7 +32,7 @@ export const loggedIn = defineAuthorizer(ctx => ctx !== null);
 /**
  *
  */
-export function resolveAuthorizer(auth: Authorizer | false | undefined | null) {
+export function resolveAuthorizer(auth: Authorizer | false | null | undefined) {
     if (auth === false) {
         return noAuth;
     }

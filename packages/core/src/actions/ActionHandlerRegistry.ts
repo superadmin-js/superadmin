@@ -1,4 +1,4 @@
-import { defineService } from '@nzyme/ioc';
+import { defineService } from '@nzyme/ioc/Service.js';
 
 import type { ActionDefinition } from './defineAction.js';
 import type { ActionHandler } from './defineActionHandler.js';

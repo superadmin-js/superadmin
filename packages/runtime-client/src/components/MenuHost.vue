@@ -1,8 +1,9 @@
 <script lang="ts" setup>
-import type { PromiseWrapper } from '@nzyme/utils';
-import { createPromise, mapNotNull } from '@nzyme/utils';
-import { useService } from '@nzyme/vue-ioc';
-import { onEventEmitter } from '@nzyme/vue-utils';
+import { mapNotNull } from '@nzyme/utils/array/mapNotNull.js';
+import type { PromiseWrapper } from '@nzyme/utils/createPromise.js';
+import { createPromise } from '@nzyme/utils/createPromise.js';
+import { useService } from '@nzyme/vue-ioc/useService.js';
+import { onEventEmitter } from '@nzyme/vue-utils/onEventEmitter.js';
 import type { MenuMethods } from 'primevue/menu';
 import Menu from 'primevue/menu';
 import type { MenuItem } from 'primevue/menuitem';
@@ -10,8 +11,8 @@ import vRipple from 'primevue/ripple';
 import type { ComponentPublicInstance } from 'vue';
 import { nextTick, ref } from 'vue';
 
-import { ActionDispatcher } from '@superadmin/client';
-import { ActionRegistry } from '@superadmin/core';
+import { ActionDispatcher } from '@superadmin/client/actions/ActionDispatcher.js';
+import { ActionRegistry } from '@superadmin/core/actions/ActionRegistry.js';
 import Icon from '@superadmin/ui/Icon.vue';
 
 import { MenuService } from './MenuService';

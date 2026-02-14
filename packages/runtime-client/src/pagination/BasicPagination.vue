@@ -2,7 +2,10 @@
 import Paginator from 'primevue/paginator';
 import { computed } from 'vue';
 
-import type { BasicPaginationEvents, BasicPaginationProps } from '@superadmin/core';
+import type {
+  BasicPaginationEvents,
+  BasicPaginationProps,
+} from '@superadmin/core/pagination/defineBasicPagination.js';
 
 const props = defineProps<BasicPaginationProps>();
 const emit = defineEmits<BasicPaginationEvents>();

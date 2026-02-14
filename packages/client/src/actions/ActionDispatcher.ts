@@ -1,17 +1,18 @@
-import { FetchError, fetchJson } from '@nzyme/fetch-utils';
-import { Container, defineService } from '@nzyme/ioc';
-import type { Resolved } from '@nzyme/ioc';
-import { Logger } from '@nzyme/logging';
-import { identity } from '@nzyme/utils';
+import { FetchError } from '@nzyme/fetch-utils/FetchError.js';
+import { fetchJson } from '@nzyme/fetch-utils/fetchJson.js';
+import { Container } from '@nzyme/ioc/Container.js';
+import type { Resolved } from '@nzyme/ioc/Injectable.js';
+import { defineService } from '@nzyme/ioc/Service.js';
+import { Logger } from '@nzyme/logging/Logger.js';
+import { identity } from '@nzyme/utils/functions/identity.js';
 import { joinURL } from 'ufo';
 
-import type { ActionDefinition, ActionError } from '@superadmin/core';
-import {
-    ActionHandlerRegistry,
-    ActionRegistry,
-    ApplicationError,
-    showToast,
-} from '@superadmin/core';
+import type { ActionError } from '@superadmin/core/actions/ActionError.js';
+import { ActionHandlerRegistry } from '@superadmin/core/actions/ActionHandlerRegistry.js';
+import { ActionRegistry } from '@superadmin/core/actions/ActionRegistry.js';
+import type { ActionDefinition } from '@superadmin/core/actions/defineAction.js';
+import { showToast } from '@superadmin/core/actions/showToast.js';
+import { ApplicationError } from '@superadmin/core/ApplicationError.js';
 import * as s from '@superadmin/schema';
 import { ValidationError } from '@superadmin/validation';
 

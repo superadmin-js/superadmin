@@ -1,9 +1,11 @@
-import { defineService } from '@nzyme/ioc';
-import { Logger } from '@nzyme/logging';
-import { createSingleRunner } from '@nzyme/utils';
+import { defineService } from '@nzyme/ioc/Service.js';
+import { Logger } from '@nzyme/logging/Logger.js';
+import { createSingleRunner } from '@nzyme/utils/createSingleRunner.js';
 import { watch } from 'vue';
 
-import { ApplicationError, AuthRegistry, createAction } from '@superadmin/core';
+import { createAction } from '@superadmin/core/actions/createAction.js';
+import { ApplicationError } from '@superadmin/core/ApplicationError.js';
+import { AuthRegistry } from '@superadmin/core/auth/AuthRegistry.js';
 
 import { ActionDispatcher } from '../actions/ActionDispatcher.js';
 import { AuthStore } from './AuthStore.js';

@@ -1,7 +1,7 @@
-import type { SomeObject } from '@nzyme/types';
+import type { SomeObject } from '@nzyme/types/Object.js';
 
 import * as s from '@superadmin/schema';
-import { prettifyName } from '@superadmin/utils';
+import { prettifyName } from '@superadmin/utils/prettifyName.js';
 
 import type { ActionDefinition } from '../actions/defineAction.js';
 import { resolveAuthorizer } from '../auth/defineAuthorizer.js';
@@ -136,7 +136,6 @@ export interface View<
 }
 
 /**
- *
  * @__NO_SIDE_EFFECTS__
  */
 export function defineView<

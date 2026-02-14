@@ -1,4 +1,4 @@
-import { defineService } from '@nzyme/ioc';
+import { defineService } from '@nzyme/ioc/Service.js';
 
 import type { Schema, SchemaBase } from '@superadmin/schema';
 

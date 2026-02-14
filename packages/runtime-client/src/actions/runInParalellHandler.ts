@@ -1,5 +1,6 @@
-import { ActionDispatcher } from '@superadmin/client';
-import { defineActionHandler, runInParalell } from '@superadmin/core';
+import { ActionDispatcher } from '@superadmin/client/actions/ActionDispatcher.js';
+import { defineActionHandler } from '@superadmin/core/actions/defineActionHandler.js';
+import { runInParalell } from '@superadmin/core/actions/runInParalell.js';
 
 /**
  *

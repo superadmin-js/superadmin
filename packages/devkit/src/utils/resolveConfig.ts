@@ -1,6 +1,6 @@
 import path from 'path';
 
-import type { ProjectConfig } from '@superadmin/config';
+import type { ProjectConfig } from '@superadmin/config/ProjectConfig.js';
 
 /**
  *

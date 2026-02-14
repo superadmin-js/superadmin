@@ -7,8 +7,11 @@
     "sideEffects": false,
     "exports": {
         ".": "./src/index.ts",
-        "./*": "./src/*",
-        "./theme": "./src/Theme.ts"
+        "./theme": "./src/Theme.ts",
+        "./package.json": "./package.json",
+        "./*.js": "./src/*.ts",
+        "./*.jsx": "./src/*.tsx",
+        "./*.vue": "./src/*.vue"
     },
     "scripts": {
         "lint": "prettier ./src --write && eslint . --fix --cache"

@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import { ModalContext } from '@nzyme/vue';
-import { injectContext } from '@nzyme/vue-utils';
+import { injectContext } from '@nzyme/vue-utils/context.js';
+import { ModalContext } from '@nzyme/vue/modal/ModalContext.js';
 import Dialog from 'primevue/dialog';
 
-import { ViewContext } from '@superadmin/client';
-import type { ViewLayoutSlots } from '@superadmin/client';
+import { ViewContext } from '@superadmin/client/views/ViewContext.js';
+import type { ViewLayoutSlots } from '@superadmin/client/views/ViewLayout.js';
 
 defineSlots<ViewLayoutSlots>();
 const view = injectContext(ViewContext);

@@ -13,7 +13,13 @@
     },
     "exports": {
         ".": "./dist/index.js",
-        "./internal": "./dist/internal.js"
+        "./internal": "./dist/internal.js",
+        "./*.js": {
+            "types": "./dist/*.d.ts",
+            "import": "./dist/*.js",
+            "default": "./dist/*.js",
+            "source": "./src/*.ts"
+        }
     },
     "dependencies": {
         "@nzyme/types": "^0.14.0",

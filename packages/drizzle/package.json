@@ -12,6 +12,12 @@
         "./plugin": {
             "types": "./dist/plugin.d.ts",
             "default": "./dist/plugin.js"
+        },
+        "./*.js": {
+            "types": "./dist/*.d.ts",
+            "import": "./dist/*.js",
+            "default": "./dist/*.js",
+            "source": "./src/*.ts"
         }
     },
     "sideEffects": false,

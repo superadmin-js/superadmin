@@ -1,10 +1,14 @@
-import { defineService } from '@nzyme/ioc';
+import { defineService } from '@nzyme/ioc/Service.js';
+
 import type { Schema } from '@superadmin/schema';
 
 import type { FunctionDefinition } from './defineFunction.js';
 import type { FunctionHandler } from './defineFunctionHandler.js';
 
-export const FunctionRegistry = defineService({
+export /**
+ *
+ */
+const FunctionRegistry = defineService({
     name: 'FunctionRegistry',
     setup: () => {
         const handlers = new Map<object, FunctionHandler>();

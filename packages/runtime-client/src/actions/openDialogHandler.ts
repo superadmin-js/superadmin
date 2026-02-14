@@ -1,7 +1,7 @@
-import { ModalService } from '@nzyme/vue';
+import { ModalService } from '@nzyme/vue/modal/ModalService.js';
 
-import { defineActionHandler } from '@superadmin/core';
-import { openDialog } from '@superadmin/core';
+import { defineActionHandler } from '@superadmin/core/actions/defineActionHandler.js';
+import { openDialog } from '@superadmin/core/actions/openDialog.js';
 
 export const openDialogHandler = defineActionHandler({
     action: openDialog,

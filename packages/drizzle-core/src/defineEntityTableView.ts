@@ -1,15 +1,17 @@
-import type { IfLiteral } from '@nzyme/types';
+import type { IfLiteral } from '@nzyme/types/TypeGuards.js';
 import type { Column, GetColumnData, SQLWrapper, Table } from 'drizzle-orm';
 import { getTableName } from 'drizzle-orm';
 
+import type { Submodule } from '@superadmin/core/defineSubmodule.js';
+import { defineSubmodule } from '@superadmin/core/defineSubmodule.js';
+import type { BasicPagination } from '@superadmin/core/pagination/defineBasicPagination.js';
+import { defineBasicPagination } from '@superadmin/core/pagination/defineBasicPagination.js';
 import type {
-    BasicPagination,
-    Submodule,
     TableSortOptions,
     TableView,
     TableViewOptions,
-} from '@superadmin/core';
-import { defineBasicPagination, defineSubmodule, defineTableView } from '@superadmin/core';
+} from '@superadmin/core/views/defineTableView.js';
+import { defineTableView } from '@superadmin/core/views/defineTableView.js';
 import * as s from '@superadmin/schema';
 
 import { EntityRegistry } from './EntityRegistry.js';

@@ -1,6 +1,7 @@
 import path from 'path';
 
-import { createScript, saveFile } from '@nzyme/project-utils';
+import { createScript } from '@nzyme/project-utils/createScript.js';
+import { saveFile } from '@nzyme/project-utils/saveFile.js';
 import debounce from 'lodash.debounce';
 
 /**

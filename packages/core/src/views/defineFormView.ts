@@ -1,4 +1,4 @@
-import { defineInjectable } from '@nzyme/ioc';
+import { defineInjectable } from '@nzyme/ioc/Injectable.js';
 
 import * as s from '@superadmin/schema';
 

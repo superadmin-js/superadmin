@@ -49,8 +49,7 @@
         "@nzyme/utils": "^0.14.0",
         "@superadmin/config": "*",
         "@superadmin/devkit": "*",
-        "@superadmin/tsconfig": "*",
-        "ts-node": "^10.9.2"
+        "@superadmin/tsconfig": "*"
     },
     "devDependencies": {
         "@nzyme/eslint": "^0.14.0",

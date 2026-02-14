@@ -1,6 +1,6 @@
 import type { RouteLocationRaw } from 'vue-router';
 
-import type { View } from '@superadmin/core';
+import type { View } from '@superadmin/core/views/defineView.js';
 
 /**
  *

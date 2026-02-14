@@ -1,4 +1,4 @@
-import type { Component } from '@nzyme/vue-utils';
+import type { Component } from '@nzyme/vue-utils/component.js';
 
 import type { Infer, Schema } from '@superadmin/schema';
 
@@ -14,6 +14,9 @@ export type EditorComponent<S extends Schema = Schema> = Component<
     // eslint-disable-next-line @typescript-eslint/no-empty-object-type
     {},
     {
+        /**
+         *
+         */
         'update:modelValue': (value: Infer<S>) => void;
     }
 >;

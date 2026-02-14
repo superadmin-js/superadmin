@@ -1,6 +1,7 @@
-import { noop } from '@nzyme/utils';
-import { defineActionHandler } from '@superadmin/core';
-import { noAction } from '@superadmin/core';
+import { noop } from '@nzyme/utils/functions/noop.js';
+
+import { defineActionHandler } from '@superadmin/core/actions/defineActionHandler.js';
+import { noAction } from '@superadmin/core/actions/noAction.js';
 
 export const noActionHandler = defineActionHandler({
     action: noAction,

@@ -1,4 +1,4 @@
-import { devServerRuntime } from '@nzyme/rollup-utils';
+import { devServerRuntime } from '@nzyme/rollup-utils/devServerRuntime.js';
 import chalk from 'chalk';
 
 import { createServer } from './createServer.js';

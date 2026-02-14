@@ -1,6 +1,6 @@
 import type * as s from '@superadmin/schema';
-import type { Action } from '@superadmin/schema';
-import { prettifyName } from '@superadmin/utils';
+import type { Action } from '@superadmin/schema/action.js';
+import { prettifyName } from '@superadmin/utils/prettifyName.js';
 
 import type { Submodule } from '../defineSubmodule.js';
 import { defineSubmodule, isSubmodule } from '../defineSubmodule.js';

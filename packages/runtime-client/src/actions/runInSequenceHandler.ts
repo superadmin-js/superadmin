@@ -1,5 +1,6 @@
-import { ActionDispatcher } from '@superadmin/client';
-import { defineActionHandler, runInSequence } from '@superadmin/core';
+import { ActionDispatcher } from '@superadmin/client/actions/ActionDispatcher.js';
+import { defineActionHandler } from '@superadmin/core/actions/defineActionHandler.js';
+import { runInSequence } from '@superadmin/core/actions/runInSequence.js';
 
 export const runInSequenceHandler = defineActionHandler({
     action: runInSequence,

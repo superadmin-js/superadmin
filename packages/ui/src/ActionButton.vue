@@ -1,14 +1,16 @@
 <script lang="ts" setup>
 import { randomString } from '@nzyme/crypto';
-import { useService } from '@nzyme/vue-ioc';
-import { useEmitAsync } from '@nzyme/vue-utils';
+import { useService } from '@nzyme/vue-ioc/useService.js';
+import { useEmitAsync } from '@nzyme/vue-utils/useEmitAsync.js';
 import Button from 'primevue/button';
 import type { PropType } from 'vue';
 import { computed, ref } from 'vue';
 
-import { ActionDispatcher, AuthStore } from '@superadmin/client';
-import { ActionRegistry } from '@superadmin/core';
-import type { ActionButton } from '@superadmin/core';
+import { ActionDispatcher } from '@superadmin/client/actions/ActionDispatcher.js';
+import { AuthStore } from '@superadmin/client/auth/AuthStore.js';
+import type { ActionButton } from '@superadmin/core/actions/ActionButton.js';
+import { ActionRegistry } from '@superadmin/core/actions/ActionRegistry.js';
+
 import Icon from './Icon.vue';
 
 const props = defineProps({

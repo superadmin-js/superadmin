@@ -2,7 +2,10 @@ import * as s from '@superadmin/schema';
 
 import { defineAction } from './defineAction.js';
 
-export const showToast = defineAction({
+export /**
+ *
+ */
+const showToast = defineAction({
     params: s.object({
         props: {
             title: s.string({ optional: true, nullable: true }),

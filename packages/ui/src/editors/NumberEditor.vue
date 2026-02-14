@@ -1,7 +1,8 @@
 <script lang="ts" setup>
 import InputNumber from 'primevue/inputnumber';
 
-import { useEditor, useEditorProps } from '@superadmin/client';
+import { useEditor } from '@superadmin/client/editors/useEditor.js';
+import { useEditorProps } from '@superadmin/client/editors/useEditorProps.js';
 import type { NumberSchema } from '@superadmin/schema';
 
 import FormField from './FormField.vue';

@@ -1,7 +1,7 @@
-import type { Injectable } from '@nzyme/ioc';
+import type { Injectable } from '@nzyme/ioc/Injectable.js';
 
 import * as s from '@superadmin/schema';
-import { prettifyName } from '@superadmin/utils';
+import { prettifyName } from '@superadmin/utils/prettifyName.js';
 
 import type { Authorizer } from '../auth/defineAuthorizer.js';
 import { resolveAuthorizer } from '../auth/defineAuthorizer.js';

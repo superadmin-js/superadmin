@@ -1,14 +1,14 @@
 <script lang="ts" setup>
-import { skipUndefinedProps } from '@nzyme/utils';
-import { useModalProps } from '@nzyme/vue';
+import { skipUndefinedProps } from '@nzyme/utils/removeUndefinedProps.js';
+import { useModalProps } from '@nzyme/vue/modal/useModalProps.js';
 import Dialog from 'primevue/dialog';
 import type { PropType } from 'vue';
 import { computed } from 'vue';
 
-import { noAction } from '@superadmin/core';
-import type { ActionButton, openConfirmDialog } from '@superadmin/core';
+import { noAction } from '@superadmin/core/actions/noAction.js';
+import type { openConfirmDialog } from '@superadmin/core/actions/openConfirmDialog.js';
 import type * as s from '@superadmin/schema';
-import { ActionButton as ActionButtonUI } from '@superadmin/ui';
+import { default as ActionButtonUI } from '@superadmin/ui/ActionButton.vue';
 
 const props = defineProps({
   ...useModalProps(),

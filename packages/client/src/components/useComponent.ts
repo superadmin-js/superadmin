@@ -1,9 +1,9 @@
-import { useService } from '@nzyme/vue-ioc';
-import { makeRef } from '@nzyme/vue-utils';
-import type { RefParam } from '@nzyme/vue-utils';
+import { useService } from '@nzyme/vue-ioc/useService.js';
+import { makeRef } from '@nzyme/vue-utils/reactivity/makeRef.js';
+import type { RefParam } from '@nzyme/vue-utils/reactivity/makeRef.js';
 import { computed } from 'vue';
 
-import type { ComponentAny } from '@superadmin/core';
+import type { ComponentAny } from '@superadmin/core/defineComponent.js';
 
 import { ComponentRegistry } from './ComponentRegistry.js';
 

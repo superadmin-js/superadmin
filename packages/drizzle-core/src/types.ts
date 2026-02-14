@@ -1,9 +1,14 @@
+import type { IfLiteral } from '@nzyme/types/TypeGuards.js';
 import type { Table } from 'drizzle-orm';
 
-import type { IfLiteral } from '@nzyme/types';
-
+/**
+ *
+ */
 export type DrizzleSchema = Record<string, unknown>;
 
+/**
+ *
+ */
 export type TablesOf<TSchema extends DrizzleSchema> = {
     [K in keyof TSchema as TSchema[K] extends Table
         ? K & string
@@ -12,9 +17,14 @@ export type TablesOf<TSchema extends DrizzleSchema> = {
         : IfLiteral<K, never, Table>;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+/**
+ *
+ */
 export type TableConfigOf<T extends Table<any>> = T extends Table<infer Config> ? Config : never;
 
+/**
+ *
+ */
 export type TableNamesOf<TSchema extends DrizzleSchema> = {
     [K in keyof TSchema as TSchema[K] extends Table
         ? K & string
@@ -23,5 +33,7 @@ export type TableNamesOf<TSchema extends DrizzleSchema> = {
         : IfLiteral<K, never, Table>;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+/**
+ *
+ */
 export type TableAny = Table<any>;

@@ -1,15 +1,17 @@
 <script lang="ts" setup>
 import logo from '@logo';
-import { useService } from '@nzyme/vue-ioc';
+import { useService } from '@nzyme/vue-ioc/useService.js';
 import Button from 'primevue/button';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
-import { ActionDispatcher, useViewProps } from '@superadmin/client';
-import type { LoginView } from '@superadmin/core';
+import { ActionDispatcher } from '@superadmin/client/actions/ActionDispatcher.js';
+import { useViewProps } from '@superadmin/client/actions/useViewProps.js';
+import type { LoginView } from '@superadmin/core/auth/defineLoginView.js';
 import { coerce, validate } from '@superadmin/schema';
-import { Editor } from '@superadmin/ui';
+import { default as Editor } from '@superadmin/ui/Editor.vue';
 import type { ValidationErrors } from '@superadmin/validation';
+
 const props = defineProps({
   ...useViewProps<LoginView>(),
 });

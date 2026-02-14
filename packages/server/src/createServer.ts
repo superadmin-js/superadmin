@@ -1,6 +1,6 @@
-import type { CreateMiddlewareOptions } from '@nzyme/rpc';
-import { createMiddleware } from '@nzyme/rpc';
-import type { OmitProps } from '@nzyme/types';
+import type { CreateMiddlewareOptions } from '@nzyme/rpc/createMiddleware.js';
+import { createMiddleware } from '@nzyme/rpc/createMiddleware.js';
+import type { OmitProps } from '@nzyme/types/Object.js';
 import connect from 'connect';
 
 import { createRouter } from './createRouter.js';
