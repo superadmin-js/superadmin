@@ -24,12 +24,12 @@
         "@superadmin/core": "*",
         "@superadmin/drizzle-core": "*",
         "@superadmin/schema": "*",
-        "drizzle-orm": "^0.45.1"
+        "drizzle-orm": "0.45.1"
     },
     "devDependencies": {
-        "@nzyme/eslint": "^0.14.0",
+        "@nzyme/eslint": "0.14.0",
         "@superadmin/tsconfig": "*",
-        "eslint": "^9.39.2",
-        "prettier": "^3.8.1"
+        "eslint": "9.39.2",
+        "prettier": "3.8.1"
     }
 }

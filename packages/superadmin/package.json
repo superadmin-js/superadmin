@@ -43,10 +43,10 @@
         }
     },
     "dependencies": {
-        "@nzyme/cli": "^0.14.0",
-        "@nzyme/ioc": "^0.14.0",
-        "@nzyme/project-utils": "^0.14.0",
-        "@nzyme/utils": "^0.14.0",
+        "@nzyme/cli": "0.14.0",
+        "@nzyme/ioc": "0.14.0",
+        "@nzyme/project-utils": "0.14.0",
+        "@nzyme/utils": "0.14.0",
         "@superadmin/client": "workspace:*",
         "@superadmin/config": "*",
         "@superadmin/core": "workspace:*",
@@ -58,9 +58,9 @@
         "@superadmin/validation": "workspace:*"
     },
     "devDependencies": {
-        "@nzyme/eslint": "^0.14.0",
-        "@types/node": "^25.2.0",
-        "eslint": "^9.39.2",
-        "prettier": "^3.8.1"
+        "@nzyme/eslint": "0.14.0",
+        "@types/node": "25.2.0",
+        "eslint": "9.39.2",
+        "prettier": "3.8.1"
     }
 }

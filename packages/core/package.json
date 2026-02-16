@@ -20,22 +20,22 @@
         }
     },
     "dependencies": {
-        "@nzyme/ioc": "^0.14.0",
-        "@nzyme/rpc": "^0.14.0",
-        "@nzyme/types": "^0.14.0",
-        "@nzyme/utils": "^0.14.0",
+        "@nzyme/ioc": "0.14.0",
+        "@nzyme/rpc": "0.14.0",
+        "@nzyme/types": "0.14.0",
+        "@nzyme/utils": "0.14.0",
         "@superadmin/schema": "*",
         "@superadmin/utils": "*",
         "@superadmin/validation": "*",
-        "debug": "^4.4.3"
+        "debug": "4.4.3"
     },
     "devDependencies": {
         "@nzyme/eslint": "0.14.0",
         "@superadmin/tsconfig": "*",
-        "@types/debug": "^4.1.12",
-        "@types/node": "^25.2.0",
-        "eslint": "^9.39.2",
-        "prettier": "^3.8.1",
-        "vitest": "^4.0.18"
+        "@types/debug": "4.1.12",
+        "@types/node": "25.2.0",
+        "eslint": "9.39.2",
+        "prettier": "3.8.1",
+        "vitest": "4.0.18"
     }
 }

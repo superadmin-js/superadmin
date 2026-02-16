@@ -24,13 +24,13 @@
         "watch:tsc": "bun run build --watch --preserveWatchOutput"
     },
     "devDependencies": {
-        "@nzyme/cli": "^0.14.0",
-        "@nzyme/eslint": "^0.14.0",
-        "@nzyme/tsconfig": "^0.14.0",
-        "del-cli": "^6.0.0",
-        "prettier": "^3.5.3",
-        "turbo": "^2.5.4",
-        "typescript": "^5.8.3"
+        "@nzyme/cli": "0.14.0",
+        "@nzyme/eslint": "0.14.0",
+        "@nzyme/tsconfig": "0.14.0",
+        "del-cli": "6.0.0",
+        "prettier": "3.5.3",
+        "turbo": "2.5.4",
+        "typescript": "5.8.3"
     },
     "workspaces": [
         "packages/*",
