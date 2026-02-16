@@ -47,9 +47,15 @@
         "@nzyme/ioc": "^0.14.0",
         "@nzyme/project-utils": "^0.14.0",
         "@nzyme/utils": "^0.14.0",
+        "@superadmin/client": "workspace:*",
         "@superadmin/config": "*",
+        "@superadmin/core": "workspace:*",
         "@superadmin/devkit": "*",
-        "@superadmin/tsconfig": "*"
+        "@superadmin/ioc": "workspace:*",
+        "@superadmin/schema": "workspace:*",
+        "@superadmin/server": "workspace:*",
+        "@superadmin/tsconfig": "*",
+        "@superadmin/validation": "workspace:*"
     },
     "devDependencies": {
         "@nzyme/eslint": "^0.14.0",
