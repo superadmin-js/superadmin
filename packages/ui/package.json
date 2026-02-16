@@ -24,7 +24,7 @@
         "@nzyme/vue": "0.14.0",
         "@nzyme/vue-ioc": "0.14.0",
         "@nzyme/vue-utils": "0.14.0",
-        "@primevue/forms": "4.4.1",
+        "@primevue/forms": "4.5.4",
         "@superadmin/client": "*",
         "@superadmin/core": "*",
         "@superadmin/schema": "*",
@@ -38,7 +38,7 @@
     },
     "devDependencies": {
         "@superadmin/tsconfig": "*",
-        "@types/node": "25.2.0",
+        "@types/node": "25.2.3",
         "eslint": "9.39.2",
         "prettier": "3.8.1",
         "vitest": "4.0.18"

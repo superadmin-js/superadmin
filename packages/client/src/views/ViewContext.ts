@@ -3,7 +3,7 @@ import type { Ref } from 'vue';
 
 import type { View } from '@superadmin/core/views/defineView.js';
 
-export /**
+/**
  *
  */
-const ViewContext = defineContext<Readonly<Ref<View>>>('View');
+export const ViewContext = defineContext<Readonly<Ref<View>>>('View');

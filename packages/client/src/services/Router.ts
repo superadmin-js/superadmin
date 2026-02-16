@@ -5,7 +5,7 @@ import type { Router as VueRouter } from 'vue-router';
  *
  */
 export type Router = VueRouter;
-export /**
+/**
  *
  */
-const Router = defineInterface<Router>({ name: 'Router' });
+export const Router = defineInterface<Router>({ name: 'Router' });

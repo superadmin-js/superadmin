@@ -1,4 +1,5 @@
 import { defineService } from '@nzyme/ioc/Service.js';
+import { resolveModulePath } from '@nzyme/project-utils/resolveModulePath.js';
 import { resolveProjectPath } from '@nzyme/project-utils/resolveProjectPath.js';
 import tailwindcss from '@tailwindcss/vite';
 import vue from '@vitejs/plugin-vue';
@@ -6,7 +7,6 @@ import vueJsx from '@vitejs/plugin-vue-jsx';
 import autoprefixer from 'autoprefixer';
 import type { InlineConfig } from 'vite';
 import { checker } from 'vite-plugin-checker';
-import { nodePolyfills } from 'vite-plugin-node-polyfills';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
 import { ProjectConfig } from '@superadmin/config/ProjectConfig.js';
@@ -41,9 +41,6 @@ export const ClientViteConfigProvider = defineService({
                         },
                     }),
                     tailwindcss(),
-                    nodePolyfills({
-                        globals: { Buffer: true },
-                    }),
                 ],
                 logLevel: 'warn',
                 resolve: {

@@ -5,10 +5,10 @@ import type { Schema } from '@superadmin/schema';
 import type { FunctionDefinition } from './defineFunction.js';
 import type { FunctionHandler } from './defineFunctionHandler.js';
 
-export /**
+/**
  *
  */
-const FunctionRegistry = defineService({
+export const FunctionRegistry = defineService({
     name: 'FunctionRegistry',
     setup: () => {
         const handlers = new Map<object, FunctionHandler>();

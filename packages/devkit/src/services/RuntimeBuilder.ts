@@ -2,7 +2,7 @@ import path from 'path';
 
 import { defineService } from '@nzyme/ioc/Service.js';
 import { isFileIgnored } from '@nzyme/project-utils/isFileIgnored.js';
-import { resolveProjectPath } from '@nzyme/project-utils/resolveProjectPath.js';
+import { resolveModulePath } from '@nzyme/project-utils/resolveModulePath.js';
 import { createPromise } from '@nzyme/utils/createPromise.js';
 import { joinLines } from '@nzyme/utils/string/joinLines.js';
 import { watch } from 'chokidar';
@@ -58,7 +58,7 @@ export const RuntimeBuilder = defineService({
                     `@import 'tailwindcss';`,
                     `@import 'tailwindcss-primeui';`,
                     `@source '${normalizePath('.', projectConfig.cwd)}';`,
-                    `@source '${resolveProjectPath('@superadmin/ui')}';`,
+                    `@source '${resolveModulePath('@superadmin/ui', import.meta)}';`,
                 ]),
             },
         });
@@ -73,22 +73,26 @@ export const RuntimeBuilder = defineService({
             runtimeConfig: serverRuntimeConfig,
         });
 
-        client.addFile('@superadmin/core/module', {
+        client.addFile({
+            path: resolveModulePath('@superadmin/core/module', import.meta),
             id: '@superadmin/core',
             order: -1,
         });
 
-        client.addFile('@superadmin/runtime-client/module', {
+        client.addFile({
+            path: resolveModulePath('@superadmin/runtime-client/module', import.meta),
             id: '@superadmin/client',
             order: -1,
         });
 
-        server.addFile('@superadmin/core/module', {
+        server.addFile({
+            path: resolveModulePath('@superadmin/core/module', import.meta),
             id: '@superadmin/core',
             order: -1,
         });
 
-        server.addFile('@superadmin/server/module', {
+        server.addFile({
+            path: resolveModulePath('@superadmin/server/module', import.meta),
             id: '@superadmin/server',
             order: -1,
         });
@@ -148,12 +152,12 @@ export const RuntimeBuilder = defineService({
             const absolutePath = toAbsolute(file);
 
             if (clientRegex.test(absolutePath)) {
-                client.addFile(absolutePath);
+                client.addFile({ path: absolutePath });
                 added = true;
             }
 
             if (serverRegex.test(absolutePath)) {
-                server.addFile(absolutePath);
+                server.addFile({ path: absolutePath });
                 added = true;
             }
 
