@@ -1,8 +1,7 @@
 {
     "extends": "@vue/tsconfig/tsconfig.dom.json",
     "compilerOptions": {
-        "rootDir": "./src",
-        "preserveSymlinks": true
+        "rootDir": "./src"
     },
     "include": ["./src/**/*"]
 }

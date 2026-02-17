@@ -42,6 +42,7 @@ export const ClientViteConfigProvider = defineService({
                     tailwindcss(),
                 ],
                 logLevel: 'warn',
+                define: config.client.define,
                 resolve: {
                     alias: {
                         '@config': runtime.client.configPath,
