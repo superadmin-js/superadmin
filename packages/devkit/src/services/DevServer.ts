@@ -3,6 +3,7 @@ import path from 'path';
 import { defineService } from '@nzyme/ioc/Service.js';
 import { devServerMiddleware } from '@nzyme/rollup-utils/devServerMiddleware.js';
 import { isFileExternal } from '@nzyme/rollup-utils/isFileExternal.js';
+import { resolveExternalsPlugin } from '@nzyme/rollup-utils/plugins/resolveExternalsPlugin.js';
 import { watchFilesPlugin } from '@nzyme/rollup-utils/plugins/watchFilesPlugin.js';
 import chalk from 'chalk';
 import type { RollupOptions } from 'rollup';
@@ -79,14 +80,7 @@ export const DevServer = defineService({
                     chunkFileNames: `[name].js`,
                     assetFileNames: `[name].[hash].[ext]`,
                 },
-                plugins: [watchFilesPlugin()],
-                external: (source: string) => {
-                    if (source === 'superadmin') {
-                        return false;
-                    }
-
-                    return isFileExternal(source);
-                },
+                plugins: [watchFilesPlugin(), resolveExternalsPlugin()],
             };
 
             const rollupConfig: RollupOptions = mergeConfig(

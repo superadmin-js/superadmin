@@ -1,5 +1,4 @@
 import { defineService } from '@nzyme/ioc/Service.js';
-import { resolveModulePath } from '@nzyme/project-utils/resolveModulePath.js';
 import { resolveProjectPath } from '@nzyme/project-utils/resolveProjectPath.js';
 import tailwindcss from '@tailwindcss/vite';
 import vue from '@vitejs/plugin-vue';

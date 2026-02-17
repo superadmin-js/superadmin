@@ -40,7 +40,7 @@ export const RuntimeBuilder = defineService({
         };
 
         const clientTsConfig: TsConfigJson = {
-            extends: '@superadmin/tsconfig/vue.json',
+            extends: resolveModulePath('@superadmin/tsconfig/vue.json', import.meta),
             compilerOptions: {
                 moduleResolution: 'Bundler',
                 module: 'ESNext',

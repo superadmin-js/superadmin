@@ -4,7 +4,7 @@
     "private": true,
     "scripts": {
         "dev": "turbo run dev",
-        "start": "bun --cwd examples/drizzle dev",
+        "start": "turbo run dev",
         "build:turbo": "turbo run build",
         "clean": "del \"**/dist\" \"**/dist-cjs\" \"**/.turbo\" \"**/.nzyme\" \"**/.tsbuildinfo\" \"**/*.tsbuildinfo\" \"**/.rollup.cache\" \"!**/node_modules/**\"",
         "clean:npm": "del \"**/node_modules\" \"**/bun.lock\"",

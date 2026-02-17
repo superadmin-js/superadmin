@@ -9,10 +9,6 @@
             "types": "./dist/index.d.ts",
             "default": "./dist/index.js"
         },
-        "./plugin": {
-            "types": "./dist/plugin.d.ts",
-            "default": "./dist/plugin.js"
-        },
         "./*.js": {
             "types": "./dist/*.d.ts",
             "import": "./dist/*.js",
@@ -25,16 +21,7 @@
         "lint": "prettier ./src --write && eslint . --fix --cache"
     },
     "dependencies": {
-        "@nzyme/ioc": "0.14.0",
-        "@nzyme/types": "0.14.0",
-        "@nzyme/utils": "0.14.0",
-        "@nzyme/project-utils": "0.14.0",
         "@superadmin/core": "*",
-        "@superadmin/devkit": "*",
-        "@superadmin/drizzle-core": "*",
-        "@superadmin/drizzle-server": "*",
-        "@superadmin/schema": "*",
-        "@superadmin/utils": "*",
         "drizzle-orm": "0.45.1"
     },
     "devDependencies": {
