@@ -1,10 +1,6 @@
 # Logs
 logs
 *.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-lerna-debug.log*
 
 # Dependency directories
 node_modules/
@@ -15,23 +11,12 @@ node_modules/
 # Optional eslint cache
 .eslintcache
 
-# Yarn Integrity file
-.yarn-integrity
-
 # dotenv environment variables file
 .env
 .env.*
 
-# yarn berry files
-.yarn/*
-!.yarn/releases
-!.yarn/plugins
-!.yarn/sdks
-!.yarn/versions
-
 # output files
 dist/
-dist-cjs/
 
 # Tooling files
 .turbo
@@ -45,4 +30,4 @@ tsconfig.cjs.json
 *.loc.ts
 
 # Not needed for a library, messes up with monorepo
-yarn.lock
+bun.lock

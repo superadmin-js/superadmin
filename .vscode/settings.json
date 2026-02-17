@@ -33,8 +33,7 @@
         "**/dist": true,
         "**/node_modules/**": true,
         "**/*.code-search": true,
-        "yarn.lock": true,
-        "**/.yarn": true,
+        "bun.lock": true,
         "**/.pnp.*": true
     },
     "search.followSymlinks": true,
@@ -46,7 +45,7 @@
     },
     "javascript.format.enable": false,
     "json.format.enable": false,
-    "npm.packageManager": "yarn",
+    "npm.packageManager": "bun",
     "npm.scriptExplorerAction": "run",
     "typescript.format.enable": false,
     "typescript.tsdk": "node_modules/typescript/lib",
