@@ -69,6 +69,12 @@ export interface ProjectClientConfig {
      * @default 'assets'
      */
     assetsPath?: string;
+
+    /**
+     * Define variables for the client to pass to vite.
+     *
+     */
+    define?: Record<string, unknown>;
 }
 
 /**
@@ -144,6 +150,7 @@ export function defineConfig(config: ProjectConfigInit): ProjectConfig {
         client: {
             storagePrefix: config.client?.storagePrefix || 'superadmin',
             assetsPath: config.client?.assetsPath || 'assets',
+            define: config.client?.define || {},
         },
         server: {
             buildEntry: config.server?.buildEntry || '@superadmin/server/entry',

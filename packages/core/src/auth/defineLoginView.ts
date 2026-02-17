@@ -31,10 +31,10 @@ export type LoginView<TForm extends s.Schema = s.Schema> = ReturnType<
     typeof defineLoginView<TForm>
 >;
 
-export /**
+/**
  *
  */
-const loginComponent = defineComponent<LoginView['component']>();
+export const loginComponent = defineComponent<LoginView['component']>();
 
 /**
  *

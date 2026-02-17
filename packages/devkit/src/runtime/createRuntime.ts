@@ -77,6 +77,10 @@ export function generateRuntime<T extends Record<string, string> = Record<string
         /**
          *
          */
+        path: string;
+        /**
+         *
+         */
         id?: string;
         /**
          *
@@ -84,13 +88,14 @@ export function generateRuntime<T extends Record<string, string> = Record<string
         order?: number;
     };
 
-    function addFile(path: string, options?: AddFileOptions) {
+    function addFile(options: AddFileOptions) {
+        const { path, id, order = 0 } = options;
         const index = modules.findIndex(file => file.file === path);
         if (index !== -1) {
             return;
         }
 
-        modules.push({ file: path, order: options?.order ?? 0, id: options?.id });
+        modules.push({ file: path, order, id });
         modules.sort((a, b) => {
             if (a.order === b.order) {
                 return a.file.localeCompare(b.file);

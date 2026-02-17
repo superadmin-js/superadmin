@@ -6,7 +6,6 @@ import vueJsx from '@vitejs/plugin-vue-jsx';
 import autoprefixer from 'autoprefixer';
 import type { InlineConfig } from 'vite';
 import { checker } from 'vite-plugin-checker';
-import { nodePolyfills } from 'vite-plugin-node-polyfills';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
 import { ProjectConfig } from '@superadmin/config/ProjectConfig.js';
@@ -41,11 +40,9 @@ export const ClientViteConfigProvider = defineService({
                         },
                     }),
                     tailwindcss(),
-                    nodePolyfills({
-                        globals: { Buffer: true },
-                    }),
                 ],
                 logLevel: 'warn',
+                define: config.client.define,
                 resolve: {
                     alias: {
                         '@config': runtime.client.configPath,

@@ -4,10 +4,10 @@ import type { Action } from '@superadmin/schema/action.js';
 
 import type { ActionDefinition } from './defineAction.js';
 
-export /**
+/**
  *
  */
-const ActionRegistry = defineService({
+export const ActionRegistry = defineService({
     name: 'ActionRegistry',
     setup() {
         const actions = new Map<string, ActionDefinition>();

@@ -5,9 +5,9 @@ import type { ToastServiceMethods } from 'primevue/toastservice';
  *
  */
 export type ToastService = ToastServiceMethods;
-export /**
+/**
  *
  */
-const ToastService = defineInterface<ToastService>({
+export const ToastService = defineInterface<ToastService>({
     name: 'ToastService',
 });

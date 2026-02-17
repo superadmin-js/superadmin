@@ -1,5 +1,5 @@
 import { createRequire } from 'module';
-import { resolve, sep } from 'path';
+import { join, resolve, sep } from 'path';
 
 /**
  *
@@ -9,8 +9,7 @@ export function normalizePath(path: string, cwd: string) {
         return resolve(cwd, path);
     }
 
-    const url = new URL(`file://${cwd}`);
-    const require = createRequire(url);
+    const require = createRequire(join(cwd, 'noop.js'));
 
     return require.resolve(path);
 }

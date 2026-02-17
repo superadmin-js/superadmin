@@ -1,13 +1,16 @@
 import path from 'path';
+import { fileURLToPath } from 'url';
 
 import { defineService } from '@nzyme/ioc/Service.js';
 import { isFileIgnored } from '@nzyme/project-utils/isFileIgnored.js';
+import { resolveModulePath } from '@nzyme/project-utils/resolveModulePath.js';
 import { resolveProjectPath } from '@nzyme/project-utils/resolveProjectPath.js';
 import { createPromise } from '@nzyme/utils/createPromise.js';
 import { joinLines } from '@nzyme/utils/string/joinLines.js';
 import { watch } from 'chokidar';
 import createDebug from 'debug';
 import fastGlob from 'fast-glob';
+import { ResolverFactory } from 'oxc-resolver';
 import type { TsConfigJson } from 'type-fest';
 
 import type { RuntimeConfig as ClientRuntimeConfig } from '@superadmin/client/RuntimeConfig.js';
@@ -34,19 +37,54 @@ export const RuntimeBuilder = defineService({
         const clientDir = path.join(projectConfig.runtimePath, 'client');
         const serverDir = path.join(projectConfig.runtimePath, 'server');
 
+        const currentFile = fileURLToPath(import.meta.url);
+
+        const typesResolver = new ResolverFactory({
+            conditionNames: ['types'],
+            mainFields: ['types'],
+        });
+
+        const styleResolver = new ResolverFactory({
+            conditionNames: ['style'],
+            mainFields: ['style'],
+        });
+
         const clientRuntimeConfig: ClientRuntimeConfig = {
             basePath: projectConfig.basePath,
             storagePrefix: projectConfig.client.storagePrefix,
         };
 
         const clientTsConfig: TsConfigJson = {
-            extends: '@superadmin/tsconfig/vue.json',
+            extends: resolveModulePath('@superadmin/tsconfig/base.json', import.meta),
             compilerOptions: {
                 moduleResolution: 'Bundler',
                 module: 'ESNext',
+                useDefineForClassFields: true,
+                lib: ['ESNext', 'dom', 'dom.iterable', 'webworker'],
+                allowJs: false,
+                esModuleInterop: true,
+                allowSyntheticDefaultImports: true,
+                allowArbitraryExtensions: true,
+                jsx: 'react',
+                jsxFactory: 'h',
+                jsxFragmentFactory: 'h',
+                types: [],
             },
             include: ['../../**/*.ts', '../../**/*.tsx', '../../**/*.vue', '../../**/*.json'],
         };
+
+        const viteClientTypes = typesResolver.resolveFileSync(currentFile, 'vite/client');
+        const vueJsxTypes = typesResolver.resolveFileSync(currentFile, 'vue/jsx');
+        const tailwindStyles = styleResolver.resolveFileSync(currentFile, 'tailwindcss');
+        const tailwindPrimeuiStyles = styleResolver.resolveFileSync(
+            currentFile,
+            'tailwindcss-primeui',
+        );
+
+        const shims = `
+/// <reference types="${viteClientTypes?.path}" />
+/// <reference types="${vueJsxTypes?.path}" />
+export {}`;
 
         const client = generateRuntime({
             outputDir: clientDir,
@@ -54,11 +92,12 @@ export const RuntimeBuilder = defineService({
             runtimeConfig: clientRuntimeConfig,
             additionalFiles: {
                 'tsconfig.json': JSON.stringify(clientTsConfig, null, 2),
+                'shims.d.ts': shims,
                 'tailwind.css': joinLines([
-                    `@import 'tailwindcss';`,
-                    `@import 'tailwindcss-primeui';`,
+                    `@import '${tailwindStyles?.path}';`,
+                    `@import '${tailwindPrimeuiStyles?.path}';`,
                     `@source '${normalizePath('.', projectConfig.cwd)}';`,
-                    `@source '${resolveProjectPath('@superadmin/ui')}';`,
+                    `@source '${resolveProjectPath('@superadmin/ui', import.meta)}';`,
                 ]),
             },
         });
@@ -73,22 +112,26 @@ export const RuntimeBuilder = defineService({
             runtimeConfig: serverRuntimeConfig,
         });
 
-        client.addFile('@superadmin/core/module', {
+        client.addFile({
+            path: resolveModulePath('@superadmin/core/module', import.meta),
             id: '@superadmin/core',
             order: -1,
         });
 
-        client.addFile('@superadmin/runtime-client/module', {
+        client.addFile({
+            path: resolveModulePath('@superadmin/runtime-client/module', import.meta),
             id: '@superadmin/client',
             order: -1,
         });
 
-        server.addFile('@superadmin/core/module', {
+        server.addFile({
+            path: resolveModulePath('@superadmin/core/module', import.meta),
             id: '@superadmin/core',
             order: -1,
         });
 
-        server.addFile('@superadmin/server/module', {
+        server.addFile({
+            path: resolveModulePath('@superadmin/server/module', import.meta),
             id: '@superadmin/server',
             order: -1,
         });
@@ -148,12 +191,12 @@ export const RuntimeBuilder = defineService({
             const absolutePath = toAbsolute(file);
 
             if (clientRegex.test(absolutePath)) {
-                client.addFile(absolutePath);
+                client.addFile({ path: absolutePath });
                 added = true;
             }
 
             if (serverRegex.test(absolutePath)) {
-                server.addFile(absolutePath);
+                server.addFile({ path: absolutePath });
                 added = true;
             }
 

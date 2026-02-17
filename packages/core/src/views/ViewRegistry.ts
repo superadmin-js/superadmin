@@ -2,10 +2,10 @@ import { defineService } from '@nzyme/ioc/Service.js';
 
 import type { View } from './defineView.js';
 
-export /**
+/**
  *
  */
-const ViewRegistry = defineService({
+export const ViewRegistry = defineService({
     name: 'ViewRegistry',
     setup() {
         const viewsByName = new Map<string, View>();

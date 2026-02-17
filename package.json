@@ -4,38 +4,38 @@
     "private": true,
     "scripts": {
         "dev": "turbo run dev",
-        "start": "yarn --cwd examples/drizzle dev",
+        "start": "turbo run dev",
         "build:turbo": "turbo run build",
         "clean": "del \"**/dist\" \"**/dist-cjs\" \"**/.turbo\" \"**/.nzyme\" \"**/.tsbuildinfo\" \"**/*.tsbuildinfo\" \"**/.rollup.cache\" \"!**/node_modules/**\"",
-        "clean:npm": "del \"**/node_modules\" \"**/yarn.lock\"",
+        "clean:npm": "del \"**/node_modules\" \"**/bun.lock\"",
         "codegen": "turbo run codegen",
         "coverage": "vitest run --coverage",
         "monorepo": "nzyme monorepo",
-        "reinstall": "yarn clean && yarn clean:npm && yarn",
-        "setup": "turbo run build:esm --filter=@nzyme/cli && yarn monorepo && yarn codegen && nzyme localise",
+        "reinstall": "bun run clean && bun run clean:npm && bun install",
+        "setup": "turbo run build:esm --filter=@nzyme/cli && bun run monorepo && bun run codegen && nzyme localise",
         "test": "vitest run",
-        "update": "yarn upgrade-interactive",
-        "update:deps": "yarn up \"@nzyme/*\"",
-        "update:self": "yarn set version berry",
+        "update": "bun update",
+        "update:deps": "bun update \"@nzyme/*\"",
+        "update:self": "bun upgrade",
         "update:submodules": "git submodule update --init --recursive --remote",
         "watch": "turbo run watch '//#watch:i18n' '//#watch:tsc' '//#watch:monorepo'",
         "watch:i18n": "nzyme localise --watch",
         "watch:monorepo": "nzyme monorepo --watch",
-        "watch:tsc": "yarn build --watch --preserveWatchOutput"
+        "watch:tsc": "bun run build --watch --preserveWatchOutput"
     },
     "devDependencies": {
-        "@nzyme/cli": "^0.14.0",
-        "@nzyme/eslint": "^0.14.0",
-        "@nzyme/tsconfig": "^0.14.0",
-        "del-cli": "^6.0.0",
-        "prettier": "^3.5.3",
-        "turbo": "^2.5.4",
-        "typescript": "^5.8.3"
+        "@nzyme/cli": "0.14.0",
+        "@nzyme/eslint": "0.14.0",
+        "@nzyme/tsconfig": "0.14.0",
+        "del-cli": "6.0.0",
+        "prettier": "3.5.3",
+        "turbo": "2.5.4",
+        "typescript": "5.8.3"
     },
     "workspaces": [
         "packages/*",
         "examples/*",
         "nzyme/packages/*"
     ],
-    "packageManager": "yarn@4.1.0"
+    "packageManager": "bun@1.2.4"
 }
