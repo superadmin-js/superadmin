@@ -59,6 +59,7 @@ export const ProjectBuilder = defineService({
                         },
                     },
                 },
+                logLevel: 'error',
             };
 
             const viteConfig = mergeConfig(viteConfigBase, viteConfigOverrides);
@@ -85,6 +86,7 @@ export const ProjectBuilder = defineService({
                     chunkFileNames: `[name].[hash].mjs`,
                     assetFileNames: `[name].[hash].[ext]`,
                 },
+                logLevel: 'silent',
             };
 
             const rollupConfig = mergeRollupConfig(
