@@ -3,7 +3,7 @@
     "compilerOptions": {
         "outDir": "./dist",
         "rootDir": "./src",
-        "tsBuildInfoFile": "tsconfig.esm.tsbuildinfo"
+        "tsBuildInfoFile": "./dist/.tsbuildinfo"
     },
     "include": ["src"],
     "exclude": ["src/**/*.test.ts"]
