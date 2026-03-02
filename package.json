@@ -12,7 +12,7 @@
         "coverage": "vitest run --coverage",
         "monorepo": "nzyme monorepo",
         "reinstall": "bun run clean && bun run clean:npm && bun install",
-        "setup": "turbo run build:esm --filter=@nzyme/cli && bun run monorepo && bun run codegen && nzyme localise",
+        "setup": "turbo run build --filter=@nzyme/cli && bun run monorepo && bun run codegen && nzyme localise",
         "test": "vitest run",
         "update": "bun update",
         "update:deps": "bun update \"@nzyme/*\"",
