@@ -33,7 +33,6 @@
         "@types/debug": "4.1.12",
         "@types/node": "25.2.3",
         "eslint": "9.39.2",
-        "prettier": "3.8.1",
-        "vitest": "4.0.18"
+        "prettier": "3.8.1"
     }
 }
