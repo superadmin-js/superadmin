@@ -2,12 +2,11 @@ import { parseBearerToken } from '@nzyme/crypto';
 import { HttpError } from '@nzyme/fetch-utils/HttpError.js';
 import { Container } from '@nzyme/ioc/Container.js';
 import { Logger } from '@nzyme/logging/Logger.js';
-import { defineEndpoint } from '@nzyme/rpc/defineEndpoint.js';
+import { defineEndpointHandler } from '@nzyme/rpc/defineEndpointHandler.js';
 import { HttpContextProvider } from '@nzyme/rpc/services/HttpContextProvider.js';
 import type { HttpRequest } from '@nzyme/rpc/types/HttpRequest.js';
 import { assert } from '@nzyme/utils/assert.js';
 import { identity } from '@nzyme/utils/functions/identity.js';
-import * as z from '@zod/mini';
 
 import { ActionHandlerRegistry } from '@superadmin/core/actions/ActionHandlerRegistry.js';
 import { ActionRegistry } from '@superadmin/core/actions/ActionRegistry.js';
@@ -18,16 +17,10 @@ import * as s from '@superadmin/schema';
 import { ValidationError } from '@superadmin/validation';
 
 import { VerifyAuthToken } from '../auth/VerifyAuthToken.js';
+import { ExecuteActionEndpoint } from './ExecuteActionEndpoint.js';
 
-/**
- *
- */
-export const ExecuteAction = defineEndpoint({
-    name: 'ExecuteAction',
-    input: z.object({
-        action: z.string(),
-        params: z.unknown(),
-    }),
+export const ExecuteActionEndpointHandler = defineEndpointHandler({
+    endpoint: ExecuteActionEndpoint,
     deps: {
         container: Container,
         httpContextProvider: HttpContextProvider,
