@@ -5,7 +5,7 @@ import { createRouter as createRpcRouter } from '@nzyme/rpc/createRouter.js';
 
 import { installModules } from '@superadmin/runtime-common/installModules.js';
 
-import { ExecuteAction } from './endpoints/ExecuteAction.js';
+import { ExecuteActionEndpointHandler } from './endpoints/ExecuteActionEndpointHandler.js';
 
 /**
  *
@@ -27,6 +27,6 @@ export function createRouter(options: CreateRouterOptions = {}) {
 
     return createRpcRouter({
         container,
-        endpoints: [ExecuteAction],
+        handlers: [ExecuteActionEndpointHandler],
     });
 }
