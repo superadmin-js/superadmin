@@ -9,7 +9,7 @@
     "types": "./dist/index.d.ts",
     "sideEffects": false,
     "scripts": {
-        "lint": "prettier ./src --write && eslint . --fix --cache"
+        "lint": "prettier ./src --write > /dev/null && eslint . --fix --cache"
     },
     "exports": {
         ".": "./dist/index.js",
@@ -29,7 +29,7 @@
     "devDependencies": {
         "@nzyme/eslint": "0.14.0",
         "@superadmin/tsconfig": "*",
-        "@types/node": "25.2.3",
+        "@types/node": "25.3.5",
         "eslint": "9.39.2",
         "prettier": "3.8.1"
     }

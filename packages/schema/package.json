@@ -9,19 +9,18 @@
     "types": "./dist/index.d.ts",
     "sideEffects": false,
     "scripts": {
-        "lint": "prettier ./src --write && eslint . --fix --cache"
+        "lint": "prettier ./src --write > /dev/null && eslint . --fix --cache"
     },
     "dependencies": {
         "@nzyme/utils": "0.14.0",
         "@nzyme/zchema": "0.14.0",
-        "lucide-static": "0.564.0"
+        "lucide-static": "0.577.0"
     },
     "devDependencies": {
         "@superadmin/tsconfig": "*",
-        "@types/node": "25.2.3",
+        "@types/node": "25.3.5",
         "eslint": "9.39.2",
-        "prettier": "3.8.1",
-        "vitest": "4.0.18"
+        "prettier": "3.8.1"
     },
     "exports": {
         ".": {
