@@ -19,6 +19,9 @@ import { ValidationError } from '@superadmin/validation';
 import { VerifyAuthToken } from '../auth/VerifyAuthToken.js';
 import { ExecuteActionEndpoint } from './ExecuteActionEndpoint.js';
 
+/**
+ *
+ */
 export const ExecuteActionEndpointHandler = defineEndpointHandler({
     endpoint: ExecuteActionEndpoint,
     deps: {
