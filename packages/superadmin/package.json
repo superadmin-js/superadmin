@@ -11,7 +11,11 @@
     "scripts": {
         "lint": "prettier ./src --write > /dev/null && eslint . --fix --cache"
     },
-    "bin": "./dist/cli.js",
+    "bin": "./bin/cli.js",
+    "files": [
+        "dist",
+        "bin"
+    ],
     "exports": {
         ".": {
             "types": "./dist/core.d.ts",
