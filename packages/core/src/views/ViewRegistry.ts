@@ -2,9 +2,7 @@ import { defineService } from '@nzyme/ioc/Service.js';
 
 import type { View } from './defineView.js';
 
-/**
- *
- */
+/** Service that stores and resolves view definitions by their ID. */
 export const ViewRegistry = defineService({
     name: 'ViewRegistry',
     setup() {

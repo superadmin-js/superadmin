@@ -7,9 +7,7 @@ import { installModules } from '@superadmin/runtime-common/installModules.js';
 
 import { ExecuteActionEndpointHandler } from './endpoints/ExecuteActionEndpointHandler.js';
 
-/**
- *
- */
+/** Options for creating the server-side RPC router. */
 export interface CreateRouterOptions {
     /**
      * The ioc container to use for the router.
@@ -18,9 +16,7 @@ export interface CreateRouterOptions {
     container?: Container;
 }
 
-/**
- *
- */
+/** Creates the server-side RPC router with all registered modules and action endpoint handlers. */
 export function createRouter(options: CreateRouterOptions = {}) {
     const container = options.container ?? createContainer();
     installModules(container, modules);

@@ -1,9 +1,7 @@
 import { randomString } from '@nzyme/crypto';
 import { defineInterface } from '@nzyme/ioc/Interface.js';
 
-/**
- *
- */
+/** IoC interface providing the secret key used for JWT signing and verification. */
 export const AuthSecret = defineInterface<Promise<Uint8Array> | Uint8Array>({
     name: 'AuthSecret',
     default() {

@@ -1,6 +1,4 @@
-/**
- *
- */
+/** Converts a dot-separated or camelCase identifier into a human-readable capitalized label. */
 export function prettifyName(name: string, separator = '.') {
     if (!name) {
         return '';

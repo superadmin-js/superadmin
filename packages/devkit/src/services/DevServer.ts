@@ -2,7 +2,6 @@ import path from 'path';
 
 import { defineService } from '@nzyme/ioc/Service.js';
 import { devServerMiddleware } from '@nzyme/rollup-utils/devServerMiddleware.js';
-import { isFileExternal } from '@nzyme/rollup-utils/isFileExternal.js';
 import { resolveExternalsPlugin } from '@nzyme/rollup-utils/plugins/resolveExternalsPlugin.js';
 import { watchFilesPlugin } from '@nzyme/rollup-utils/plugins/watchFilesPlugin.js';
 import chalk from 'chalk';
@@ -19,9 +18,7 @@ import { ClientViteConfigProvider } from './ClientViteConfigProvider.js';
 import { RuntimeBuilder } from './RuntimeBuilder.js';
 import { ServerRollupConfigProvider } from './ServerRollupConfigProvider.js';
 
-/**
- *
- */
+/** Development server that runs Vite for the client and Rollup-based middleware for the server API. */
 export const DevServer = defineService({
     name: 'DevServer',
     deps: {

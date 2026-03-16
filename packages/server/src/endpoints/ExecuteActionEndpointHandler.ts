@@ -19,9 +19,7 @@ import { ValidationError } from '@superadmin/validation';
 import { VerifyAuthToken } from '../auth/VerifyAuthToken.js';
 import { ExecuteActionEndpoint } from './ExecuteActionEndpoint.js';
 
-/**
- *
- */
+/** Handles action execution requests by resolving handlers, verifying auth, and processing action chains. */
 export const ExecuteActionEndpointHandler = defineEndpointHandler({
     endpoint: ExecuteActionEndpoint,
     deps: {
@@ -54,7 +52,7 @@ export const ExecuteActionEndpointHandler = defineEndpointHandler({
                     throw new HttpError(404, `Action handler for ${input.action} not found`);
                 }
 
-                const actionDef = handler.action;
+                const actionDef = handler.action as ActionDefinition;
                 const authCtx = await resolveAuthContext(request);
 
                 if (!actionDef.auth.isAuthorized(authCtx)) {
@@ -73,12 +71,12 @@ export const ExecuteActionEndpointHandler = defineEndpointHandler({
                 s.validateOrThrow(paramsSchema, params);
 
                 const handlerFn = container.resolve(handler.service);
-                const result = await handlerFn(params, {
+                const result: unknown = await handlerFn(params, {
                     request,
                     result: identity,
                 });
 
-                await processResult(handler.action, result);
+                await processResult(actionDef, result);
 
                 return s.serialize(actionDef.result, result);
             } catch (error) {

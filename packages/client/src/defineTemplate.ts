@@ -8,9 +8,7 @@ interface TemplateComponentOptions<TComponent extends Component> {
     component: ComponentTemplate<TComponent>;
 }
 
-/**
- *
- */
+/** Creates a submodule that registers a Vue template for a superadmin component. */
 export function defineTemplate<TComponent extends Component>(
     component: TComponent,
     options: TemplateComponentOptions<TComponent>,

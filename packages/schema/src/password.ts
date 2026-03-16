@@ -9,9 +9,7 @@ import type {
     SchemaProto,
 } from '@nzyme/zchema/Schema.js';
 
-/**
- *
- */
+/** Schema type for password string values with configurable options. */
 export type PasswordSchema<O extends SchemaOptionsBase = SchemaOptionsBase> = Schema<string, O>;
 
 const proto: SchemaProto<string> = {
@@ -35,9 +33,7 @@ type PasswordSchemaBase = {
     ): PasswordSchema<SchemaOptionsSimplify<TNullable, TOptional, TMeta>>;
 };
 
-/**
- *
- */
+/** Schema definition for password string values, displayed as masked input in editors. */
 export const password = defineSchema<PasswordSchemaBase>({
     name: 'password',
     proto: () => proto,

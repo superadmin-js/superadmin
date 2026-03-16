@@ -4,21 +4,13 @@ import { createScript } from '@nzyme/project-utils/createScript.js';
 import { saveFile } from '@nzyme/project-utils/saveFile.js';
 import debounce from 'lodash.debounce';
 
-/**
- *
- */
+/** Options for generating the runtime module registry and configuration files. */
 export interface GenerateRuntimeOptions<T extends Record<string, string> = Record<string, never>> {
-    /**
-     *
-     */
+    /** Directory where generated runtime files will be written. */
     outputDir: string;
-    /**
-     *
-     */
+    /** Root directory used for resolving relative module paths. */
     rootDir: string;
-    /**
-     *
-     */
+    /** Configuration object to be serialized as the runtime config module. */
     runtimeConfig: object;
     /**
      * Additional files to be added to the runtime.
@@ -26,27 +18,18 @@ export interface GenerateRuntimeOptions<T extends Record<string, string> = Recor
     additionalFiles?: T;
 }
 
-/**
- *
- */
+/** Generates runtime module registry and config files, with support for incremental file watching. */
 export function generateRuntime<T extends Record<string, string> = Record<string, never>>(
     options: GenerateRuntimeOptions<T>,
 ) {
     const { outputDir, rootDir, runtimeConfig, additionalFiles } = options;
 
-    /**
-     *
-     */
     type Module = {
-        /**
-         *
-         */
-        file: string /**
-         *
-         */;
-        id?: string /**
-         *
-         */;
+        /** Path to the module file. */
+        file: string;
+        /** Optional explicit module identifier. */
+        id?: string;
+        /** Sort order for module registration. */
         order: number;
     };
     const modules: Module[] = [];
@@ -74,17 +57,11 @@ export function generateRuntime<T extends Record<string, string> = Record<string
     };
 
     type AddFileOptions = {
-        /**
-         *
-         */
+        /** File path of the module to add. */
         path: string;
-        /**
-         *
-         */
+        /** Optional explicit module identifier. */
         id?: string;
-        /**
-         *
-         */
+        /** Sort order for module registration. */
         order?: number;
     };
 

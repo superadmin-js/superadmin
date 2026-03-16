@@ -4,18 +4,14 @@ import { ProjectBuilder } from '@superadmin/devkit/services/ProjectBuilder.js';
 
 import { loadProject } from '../utils/loadProject.js';
 
-/**
- *
- */
+/** CLI command that builds the frontend and backend for production deployment. */
 export class BuildCommand extends Command {
     static override paths = [['build']];
     static override usage = Command.Usage({
         description: 'Build the frontend (Vite) and backend (Rollup) for production',
     });
 
-    /**
-     *
-     */
+    /** Executes the production build process. */
     async run() {
         const container = await loadProject();
 

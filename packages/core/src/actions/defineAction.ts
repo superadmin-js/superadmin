@@ -10,35 +10,25 @@ import type { Submodule } from '../defineSubmodule.js';
 import type { FunctionDefinition } from '../functions/defineFunction.js';
 import { ActionRegistry } from './ActionRegistry.js';
 
-/**
- *
- */
+/** Symbol used to identify action submodules. */
 export const ACTION_SYMBOL = Symbol('action');
 
-/**
- *
- */
+/** Full action definition including factory function and submodule metadata. */
 export type ActionDefinition<
     TParams extends s.Schema = s.SchemaAny,
     TResult extends s.Schema = s.Schema,
     TInput extends s.Schema = TParams,
 > = ActionFactory<TInput, TResult> & ActionSubmodule<TParams, TResult, TInput>;
 
-/**
- *
- */
+/** Callback that visits actions recursively during traversal. */
 export interface ActionVisitor {
     (action: s.Action): void;
 }
 
-/**
- *
- */
+/** Extracts the action payload type from an action definition. */
 export type ActionOf<TDef extends ActionDefinition> = s.Action<TDef['params'], TDef['result']>;
 
-/**
- *
- */
+/** Extracts the inferred input type from an action definition. */
 export type ActionInput<TDef extends ActionDefinition> = s.Infer<TDef['input']>;
 
 type ActionFactory<TParams extends s.Schema = s.SchemaAny, R extends s.Schema = s.Schema<unknown>> =
@@ -78,19 +68,20 @@ interface ActionOptions<
     defaultHandler?: Injectable<ActionHandler<TInput, TResult>>;
     visit?: (action: s.Action<TInput, TResult>, visitor: ActionVisitor) => void;
 }
-/** */
+/** Defines an action with custom input type (overload with explicit TInput). */
 export function defineAction<
     TParams extends s.Schema = s.Schema<void>,
     TResult extends s.Schema = s.Schema<void>,
     TInput extends s.Schema = TParams,
 >(options: ActionOptions<TParams, TResult, TInput>): ActionDefinition<TParams, TResult, TInput>;
-/** */
+/** Defines an action with params doubling as input type. */
 export function defineAction<
     TParams extends s.Schema = s.Schema<void>,
     TResult extends s.Schema = s.Schema<void>,
 >(options: ActionOptions<TParams, TResult>): ActionDefinition<TParams, TResult>;
 /**
- *
+ * Creates an action definition that can be invoked as a factory and registered as a submodule.
+ * The returned object is both callable (to produce action payloads) and a submodule (for DI registration).
  */
 export function defineAction(options: ActionOptions): ActionDefinition {
     const factory: ActionFactory = (input: unknown) => {
@@ -134,16 +125,12 @@ export function defineAction(options: ActionOptions): ActionDefinition {
     return action;
 }
 
-/**
- *
- */
+/** Type guard that checks whether a value is an action definition. */
 export function isActionDefinition(value: unknown): value is ActionDefinition {
     return isSubmodule(value, ACTION_SYMBOL);
 }
 
-/**
- *
- */
+/** Type guard that checks whether an action payload belongs to a specific action definition. */
 export function isAction<
     TInput extends s.Schema,
     TParams extends s.Schema,

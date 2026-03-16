@@ -5,6 +5,7 @@ import Dialog from 'primevue/dialog';
 import type { PropType } from 'vue';
 import { computed } from 'vue';
 
+import type { ActionButton } from '@superadmin/core/actions/ActionButton.js';
 import { noAction } from '@superadmin/core/actions/noAction.js';
 import type { openConfirmDialog } from '@superadmin/core/actions/openConfirmDialog.js';
 import type * as s from '@superadmin/schema';
