@@ -5,9 +5,7 @@ import type { Schema } from '@superadmin/schema';
 import type { FunctionDefinition } from './defineFunction.js';
 import type { FunctionHandler } from './defineFunctionHandler.js';
 
-/**
- *
- */
+/** Service that stores and resolves function handlers by their definition. */
 export const FunctionRegistry = defineService({
     name: 'FunctionRegistry',
     setup: () => {

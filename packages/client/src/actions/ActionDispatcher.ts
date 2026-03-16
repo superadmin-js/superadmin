@@ -19,9 +19,7 @@ import { ValidationError } from '@superadmin/validation';
 import { AuthStore } from '../auth/AuthStore.js';
 import { RuntimeConfig } from '../RuntimeConfig.js';
 
-/**
- *
- */
+/** Resolved type of the ActionDispatcher service. */
 export type ActionDispatcher = Resolved<typeof ActionDispatcher>;
 
 /**
@@ -45,9 +43,7 @@ export interface ActionDispatcherOptions {
     handleErrors?: boolean;
 }
 
-/**
- *
- */
+/** Dispatches actions either locally via handlers or remotely via HTTP to the server API. */
 export const ActionDispatcher = defineService({
     name: 'ActionDispatcher',
     deps: {
@@ -104,7 +100,7 @@ export const ActionDispatcher = defineService({
             handleErrors: boolean;
         }
 
-        async function execute(options: ExecuteOptions) {
+        async function execute(options: ExecuteOptions): Promise<unknown> {
             const { action, actionDefinition, event, handleErrors } = options;
             const handler = actionHandlers.resolve(action.action);
             if (handler) {

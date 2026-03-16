@@ -4,9 +4,7 @@ import type { Action } from '@superadmin/schema/action.js';
 
 import type { ActionDefinition } from './defineAction.js';
 
-/**
- *
- */
+/** Service that stores and resolves action definitions by their ID. */
 export const ActionRegistry = defineService({
     name: 'ActionRegistry',
     setup() {

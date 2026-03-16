@@ -5,18 +5,14 @@ import { DevServer } from '@superadmin/devkit/services/DevServer.js';
 
 import { loadProject } from '../utils/loadProject.js';
 
-/**
- *
- */
+/** CLI command that starts the development server with hot module replacement. */
 export class DevCommand extends Command {
     static override paths = [['dev'], []];
     static override usage = Command.Usage({
         description: 'Start the development server',
     });
 
-    /**
-     *
-     */
+    /** Loads the project configuration and starts the dev server. */
     async run() {
         const container = await loadProject();
 

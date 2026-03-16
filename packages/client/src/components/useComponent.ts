@@ -7,9 +7,7 @@ import type { ComponentAny } from '@superadmin/core/defineComponent.js';
 
 import { ComponentRegistry } from './ComponentRegistry.js';
 
-/**
- *
- */
+/** Resolves a superadmin component definition to its registered Vue template via the component registry. */
 export function useComponent<T extends ComponentAny>(component: RefParam<T | null | undefined>) {
     const componentRef = makeRef(component);
 

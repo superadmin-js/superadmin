@@ -3,9 +3,7 @@ import { createContainer } from '@nzyme/ioc/Container.js';
 import { ProjectConfig } from '@superadmin/config/ProjectConfig.js';
 import { resolveConfig } from '@superadmin/devkit/utils/resolveConfig.js';
 
-/**
- *
- */
+/** Loads the project configuration from the current working directory and creates an IoC container with plugins. */
 export async function loadProject() {
     const container = createContainer();
     const config = await resolveConfig(process.cwd());

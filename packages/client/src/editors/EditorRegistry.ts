@@ -4,9 +4,7 @@ import type { Schema, SchemaBase } from '@superadmin/schema';
 
 import type { EditorComponent } from './EditorComponent.js';
 
-/**
- *
- */
+/** Registry that maps schema types to their editor Vue components. */
 export const EditorRegistry = defineService({
     name: 'EditorRegistry',
     setup() {
