@@ -2,9 +2,7 @@ import { defineService } from '@nzyme/ioc/Service.js';
 
 import type { UserDefinition } from './defineUser.js';
 
-/**
- *
- */
+/** Service that stores and resolves user type definitions by name. */
 export const AuthRegistry = defineService({
     name: 'AuthRegistry',
     setup() {

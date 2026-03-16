@@ -8,29 +8,17 @@ import type { ComponentAny } from '../defineComponent.js';
 import { defineComponent } from '../defineComponent.js';
 import { defineView } from './defineView.js';
 
-/**
- *
- */
+/** Configuration for defining a form view. */
 export interface FormViewConfig<S extends s.ObjectSchema, TParams extends s.Schema> {
-    /**
-     *
-     */
+    /** Display title for the form view. */
     title?: string;
-    /**
-     *
-     */
+    /** Schema for the view's route parameters. */
     params?: TParams;
-    /**
-     *
-     */
+    /** URL path for the form view. */
     path?: string;
-    /**
-     *
-     */
+    /** Schema describing the form data shape. */
     schema: S;
-    /**
-     *
-     */
+    /** Authorization rule for accessing this form view. */
     auth?: Authorizer | false;
 
     /**
@@ -39,22 +27,16 @@ export interface FormViewConfig<S extends s.ObjectSchema, TParams extends s.Sche
     fetch?: (params: s.Infer<TParams>) => Promise<s.Infer<S>> | s.Infer<S>;
 }
 
-/**
- *
- */
+/** Type alias for the return type of {@link defineFormView}. */
 export type FormView<
     S extends s.ObjectSchema = s.ObjectSchema,
     P extends s.Schema = s.Schema<unknown>,
 > = ReturnType<typeof defineFormView<S, P>>;
 
-/**
- *
- */
+/** Shared component definition for all form views. */
 export const formComponent = defineComponent<FormView['component']>();
 
-/**
- *
- */
+/** Creates a form view with fetch and submit actions for the given schema. */
 export function defineFormView<S extends s.ObjectSchema, P extends s.Schema = s.Schema<void>>(
     config: FormViewConfig<S, P>,
 ) {

@@ -1,8 +1,6 @@
 import type { ViteDevServer } from 'vite';
 
-/**
- *
- */
+/** Extracts the HTTP URL from a running Vite dev server, normalizing localhost addresses. */
 export function getViteServerUrl(server: ViteDevServer) {
     const address = server.httpServer?.address();
 

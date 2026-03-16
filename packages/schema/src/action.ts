@@ -12,9 +12,7 @@ import type {
 
 declare const ACTION_SYMBOL: unique symbol;
 
-/**
- *
- */
+/** Represents a dispatchable action with typed parameters and result. */
 export interface Action<
     P extends Schema = Schema,
     R extends Schema = Schema,
@@ -26,9 +24,7 @@ export interface Action<
     [ACTION_SYMBOL]: R;
 }
 
-/**
- *
- */
+/** Payload of an action containing its name and typed parameters. */
 export interface ActionPayload<P extends Schema = Schema> {
     /**
      * ID of the action
@@ -40,9 +36,7 @@ export interface ActionPayload<P extends Schema = Schema> {
     params: Infer<P>;
 }
 
-/**
- *
- */
+/** Schema type for action values with configurable options. */
 export type ActionSchema<O extends SchemaOptionsBase = SchemaOptionsBase> = Schema<Action, O>;
 
 const proto: SchemaProto<Action> = {
@@ -79,9 +73,7 @@ type ActionSchemaBase = {
     ): ActionSchema<SchemaOptionsSimplify<TNullable, TOptional, TMeta>>;
 };
 
-/**
- *
- */
+/** Schema definition for action values with coercion, serialization, and validation support. */
 export const action = defineSchema<ActionSchemaBase>({
     name: 'action',
     proto: () => proto,

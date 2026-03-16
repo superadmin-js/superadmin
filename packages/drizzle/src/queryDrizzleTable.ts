@@ -6,9 +6,7 @@ import type {
     BasicPaginationResult,
 } from '@superadmin/core/pagination/defineBasicPagination.js';
 
-/**
- *
- */
+/** Parameters for querying a Drizzle table with pagination, sorting, and optional row mapping. */
 export interface QueryDrizzleTableParams<TRow, TMap = TRow> {
     /**
      * Pagination parameters
@@ -36,9 +34,7 @@ export interface QueryDrizzleTableParams<TRow, TMap = TRow> {
     map?: (row: TRow) => TMap;
 }
 
-/**
- *
- */
+/** Context values passed to the query builder for pagination and sorting. */
 export interface QueryDrizzleTableContext {
     /**
      * Offset to pass to the query
@@ -62,9 +58,7 @@ type DrizzleQuery<T> = PromiseLike<T[]> & {
     orderBy(orderBy: SQLWrapper): PromiseLike<T[]>;
 };
 
-/**
- *
- */
+/** Executes a paginated Drizzle query with sorting and optional row mapping, returning rows and pagination metadata. */
 export async function queryDrizzleTable<TRow, TMap = TRow>(
     params: QueryDrizzleTableParams<TRow, TMap>,
 ) {

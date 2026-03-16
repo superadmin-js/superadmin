@@ -7,9 +7,7 @@ import { coerce } from '@superadmin/schema';
 
 import { AuthSecret } from './AuthSecret.js';
 
-/**
- *
- */
+/** Verifies a JWT token and extracts the authentication context from its payload. */
 export const VerifyAuthToken = defineService({
     deps: {
         authRegistry: AuthRegistry,

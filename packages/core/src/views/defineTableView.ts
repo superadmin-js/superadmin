@@ -10,61 +10,37 @@ import { defineComponent } from '../defineComponent.js';
 import type { Pagination } from '../pagination/definePagination.js';
 import { defineView } from './defineView.js';
 
-/**
- *
- */
+/** Sort options for a table: true for all columns, or an explicit list of sortable column names. */
 export type TableSortOptions<TRow extends s.NonNullable<s.ObjectSchema>> = boolean | RowProps<TRow>;
 
-/**
- *
- */
+/** Configuration for defining a table view. */
 export interface TableViewOptions<
     TRow extends s.NonNullable<s.ObjectSchema>,
     TParams extends s.SchemaAny,
     TSort extends TableSortOptions<TRow>,
     TPagination extends Pagination | undefined = undefined,
 > {
-    /**
-     *
-     */
+    /** Display title for the table view. */
     title?: string;
-    /**
-     *
-     */
+    /** Schema describing the shape of each table row. */
     schema: TRow;
-    /**
-     *
-     */
+    /** Optional schema for the table's filter parameters. */
     filters?: TParams;
-    /**
-     *
-     */
+    /** URL path for the table view. */
     path?: string;
-    /**
-     *
-     */
+    /** Authorization rule for accessing this table view. */
     auth?: Authorizer | false;
-    /**
-     *
-     */
+    /** Factory function returning action buttons for the table header. */
     headerButtons?: (params: s.Infer<TParams>) => ActionButton[];
-    /**
-     *
-     */
+    /** Factory function returning action buttons for each table row. */
     rowButtons?: (data: s.Infer<TRow>) => ActionButton[];
-    /**
-     *
-     */
+    /** Columns that can be sorted, or true for all columns. */
     sortColumns?: TSort;
-    /**
-     *
-     */
+    /** Optional pagination strategy for the table. */
     pagination?: TPagination;
 }
 
-/**
- *
- */
+/** Type alias for the return type of {@link defineTableView}. */
 export type TableView<
     TRow extends s.NonNullable<s.ObjectSchema> = s.NonNullable<s.ObjectSchema>,
     TParams extends s.Schema = s.Schema<unknown>,
@@ -72,9 +48,7 @@ export type TableView<
     TPagination extends Pagination | undefined = Pagination | undefined,
 > = ReturnType<typeof defineTableView<TRow, TParams, TSort, TPagination>>;
 
-/**
- *
- */
+/** Shared component definition for all table views. */
 export const tableComponent = defineComponent<TableView['component']>();
 
 type RowProps<TRow extends s.NonNullable<s.ObjectSchema>> = Simplify<(keyof TRow['props'])[]>;
@@ -106,6 +80,7 @@ type TablePaginationResult<TPagination extends Pagination | undefined> =
     TPagination extends Pagination ? TPagination['result'] : s.VoidSchema;
 
 /**
+ * Creates a table view with fetch action, sorting, pagination, and row/header button support.
  * @__NO_SIDE_EFFECTS__
  */
 export function defineTableView<

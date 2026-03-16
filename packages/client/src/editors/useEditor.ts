@@ -6,9 +6,7 @@ import { prettifyName } from '@superadmin/utils/prettifyName.js';
 
 import type { EditorProps } from './useEditorProps.js';
 
-/**
- *
- */
+/** Composable that provides a unique ID and computed label for an editor field. */
 export function useEditor<S extends Schema>(props: EditorProps<S>) {
     const id = `editor-${randomString(10)}`;
     const label = computed(() => {

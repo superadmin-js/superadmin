@@ -3,9 +3,7 @@ import type { Component as VueComponent } from '@nzyme/vue-utils/component.js';
 
 import type { Component, ComponentAny } from '@superadmin/core/defineComponent.js';
 
-/**
- *
- */
+/** Vue component type that implements a superadmin component's props and events. */
 export type ComponentTemplate<TComponent extends Component> = VueComponent<
     TComponent['$props'],
     // eslint-disable-next-line @typescript-eslint/no-empty-object-type
@@ -15,9 +13,7 @@ export type ComponentTemplate<TComponent extends Component> = VueComponent<
     }
 >;
 
-/**
- *
- */
+/** Registry that maps superadmin component definitions to their Vue template implementations. */
 export const ComponentRegistry = defineService({
     name: 'ComponentRegistry',
     setup() {

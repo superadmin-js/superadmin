@@ -5,9 +5,7 @@ import { refreshAuthTransform } from '@superadmin/core/internal';
 
 import { VerifyAuthToken } from './VerifyAuthToken.js';
 
-/**
- *
- */
+/** Handles token refresh by verifying the refresh token and returning the associated user data. */
 export const refreshAuthTransformHandler = defineFunctionHandler({
     function: refreshAuthTransform,
     deps: {
