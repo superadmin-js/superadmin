@@ -20,5 +20,9 @@ export class BuildCommand extends Command {
         await builder.build();
 
         console.info('Build completed successfully!');
+
+        // Explicitly exit because build tooling (Vite, Rollup, debounced generators)
+        // may leave handles open that prevent the process from exiting naturally.
+        process.exit(0);
     }
 }
