@@ -2,9 +2,7 @@ import { defineService } from '@nzyme/ioc/Service.js';
 
 import type { Navigation } from './defineNavigation.js';
 
-/**
- *
- */
+/** Service that stores and resolves navigation definitions by their ID. */
 export const NavigationRegistry = defineService({
     name: 'NavigationRegistry',
     setup() {

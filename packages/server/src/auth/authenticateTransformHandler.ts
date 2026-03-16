@@ -8,9 +8,7 @@ import { authenticateTransform } from '@superadmin/core/internal';
 
 import { AuthSecret } from './AuthSecret.js';
 
-/**
- *
- */
+/** Handles authentication by generating signed JWT auth and refresh tokens from user credentials. */
 export const authenticateTransformHandler = defineFunctionHandler({
     function: authenticateTransform,
     deps: {
@@ -62,29 +60,17 @@ export const authenticateTransformHandler = defineFunctionHandler({
             return authData;
         };
 
-        /**
-         *
-         */
+        /** Parameters for generating a signed JWT token. */
         interface TokenParams {
-            /**
-             *
-             */
+            /** Authenticated user input containing user type and data. */
             auth: AuthenticateInput;
-            /**
-             *
-             */
+            /** Whether this is an auth token or a refresh token. */
             type: 'auth' | 'refresh';
-            /**
-             *
-             */
+            /** Secret key used for signing. */
             secret: Uint8Array;
-            /**
-             *
-             */
+            /** Token issuance timestamp. */
             timestamp: Date;
-            /**
-             *
-             */
+            /** Token expiration date. */
             expiration: Date;
         }
 

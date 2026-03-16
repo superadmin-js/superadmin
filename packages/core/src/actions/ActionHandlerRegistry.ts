@@ -3,9 +3,7 @@ import { defineService } from '@nzyme/ioc/Service.js';
 import type { ActionDefinition } from './defineAction.js';
 import type { ActionHandler } from './defineActionHandler.js';
 
-/**
- *
- */
+/** Service that stores and resolves action handlers by their action ID. */
 export const ActionHandlerRegistry = defineService({
     name: 'ActionHandlerRegistry',
     setup() {

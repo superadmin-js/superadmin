@@ -6,9 +6,7 @@ import { initializeSubmodule, installSubmodule } from '@superadmin/core/internal
 
 import type { RuntimeModules } from './RuntimeModules.js';
 
-/**
- *
- */
+/** Discovers and installs all submodules from the runtime module registry into the IoC container. */
 export function installModules(container: Container, modules: RuntimeModules) {
     const rootSubmodules: Submodule[] = [];
     const childSubmodules: {

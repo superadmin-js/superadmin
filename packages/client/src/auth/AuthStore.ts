@@ -11,9 +11,7 @@ import * as s from '@superadmin/schema';
 
 import { RuntimeConfig } from '../RuntimeConfig.js';
 
-/**
- *
- */
+/** Manages authentication state including token storage, serialization, and user context resolution. */
 export const AuthStore = defineService({
     name: 'AuthStore',
     deps: {

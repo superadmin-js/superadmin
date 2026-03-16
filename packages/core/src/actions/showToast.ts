@@ -2,9 +2,7 @@ import * as s from '@superadmin/schema';
 
 import { defineAction } from './defineAction.js';
 
-/**
- *
- */
+/** Action that displays a toast notification with a title, message, type, and duration. */
 export const showToast = defineAction({
     params: s.object({
         props: {

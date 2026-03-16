@@ -4,9 +4,7 @@ import { defineInterface } from '@nzyme/ioc/Interface.js';
 import type { Module } from '@nzyme/ioc/Module.js';
 import type { InputOptions } from 'rollup';
 
-/**
- *
- */
+/** Initial configuration options for a superadmin project, with sensible defaults. */
 export interface ProjectConfigInit {
     /**
      * Port to run the server on.
@@ -101,9 +99,7 @@ export interface ProjectServerConfig {
     rollupOptions?: InputOptions;
 }
 
-/**
- *
- */
+/** Fully resolved project configuration with all defaults applied and computed paths. */
 export interface ProjectConfig extends Required<ProjectConfigInit> {
     /**
      * Path to the current working directory.
@@ -126,16 +122,12 @@ export interface ProjectConfig extends Required<ProjectConfigInit> {
     server: Required<ProjectServerConfig>;
 }
 
-/**
- *
- */
+/** IoC interface for the resolved project configuration. */
 export const ProjectConfig = defineInterface<ProjectConfig>({
     name: 'ProjectConfig',
 });
 
-/**
- *
- */
+/** Creates a fully resolved project configuration by applying defaults to the provided init options. */
 export function defineConfig(config: ProjectConfigInit): ProjectConfig {
     const cwd = process.cwd();
 

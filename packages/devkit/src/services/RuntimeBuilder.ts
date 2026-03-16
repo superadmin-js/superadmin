@@ -20,9 +20,7 @@ import type { RuntimeConfig as ServerRuntimeConfig } from '@superadmin/server/Ru
 import { generateRuntime } from '../runtime/createRuntime.js';
 import { normalizePath } from '../utils/normalizePath.js';
 
-/**
- *
- */
+/** Discovers module files in the project and generates client/server runtime configurations with file watching. */
 export const RuntimeBuilder = defineService({
     name: 'RuntimeBuilder',
     deps: {

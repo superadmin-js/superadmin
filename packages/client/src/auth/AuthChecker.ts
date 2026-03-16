@@ -10,9 +10,7 @@ import { AuthRegistry } from '@superadmin/core/auth/AuthRegistry.js';
 import { ActionDispatcher } from '../actions/ActionDispatcher.js';
 import { AuthStore } from './AuthStore.js';
 
-/**
- *
- */
+/** Periodically checks and refreshes authentication tokens before they expire. */
 export const AuthChecker = defineService({
     name: 'AuthChecker',
     deps: {
@@ -41,11 +39,11 @@ export const AuthChecker = defineService({
                 const now = Date.now();
 
                 if (now >= refreshAt) {
-                    setTimeout(checkAuthRunner.execute);
+                    setTimeout(() => void checkAuthRunner.execute());
                     return;
                 }
 
-                refreshTimeout = setTimeout(checkAuthRunner.execute, refreshAt - now);
+                refreshTimeout = setTimeout(() => void checkAuthRunner.execute(), refreshAt - now);
             },
             { immediate: true },
         );
