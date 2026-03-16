@@ -20,7 +20,7 @@ export interface Component<
 }
 
 /** A component with unconstrained props and events, used when the exact shape is unknown. */
-export type ComponentAny = Component<Record<string, unknown>, Record<string, unknown[]>>;
+export type ComponentAny = Component<any, any>;
 
 /** Creates a component definition with fully specified Component type. */
 export function defineComponent<TComponent extends ComponentAny>(): TComponent;

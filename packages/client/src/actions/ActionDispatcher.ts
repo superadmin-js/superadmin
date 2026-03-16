@@ -100,7 +100,7 @@ export const ActionDispatcher = defineService({
             handleErrors: boolean;
         }
 
-        async function execute(options: ExecuteOptions) {
+        async function execute(options: ExecuteOptions): Promise<unknown> {
             const { action, actionDefinition, event, handleErrors } = options;
             const handler = actionHandlers.resolve(action.action);
             if (handler) {
