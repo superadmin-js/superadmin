@@ -20,6 +20,7 @@ export interface Component<
 }
 
 /** A component with unconstrained props and events, used when the exact shape is unknown. */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type ComponentAny = Component<any, any>;
 
 /** Creates a component definition with fully specified Component type. */
