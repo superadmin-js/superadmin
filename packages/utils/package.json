@@ -27,8 +27,8 @@
     },
     "devDependencies": {
         "@superadmin/tsconfig": "*",
-        "@types/node": "25.3.5",
-        "eslint": "9.39.2",
+        "@types/node": "25.5.0",
+        "eslint": "10.0.3",
         "prettier": "3.8.1"
     }
 }

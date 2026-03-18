@@ -46,9 +46,9 @@
         "@nzyme/rollup-utils": "0.14.0",
         "@superadmin/tsconfig": "*",
         "@types/debug": "4.1.12",
-        "@types/node": "25.3.5",
+        "@types/node": "25.5.0",
         "@vue/tsconfig": "0.8.1",
-        "eslint": "9.39.2",
+        "eslint": "10.0.3",
         "prettier": "3.8.1",
         "vite": "7.3.1"
     }

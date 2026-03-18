@@ -40,7 +40,7 @@
         "@nzyme/eslint": "0.14.0",
         "@superadmin/tsconfig": "*",
         "@types/debug": "4.1.12",
-        "eslint": "9.39.2",
+        "eslint": "10.0.3",
         "prettier": "3.8.1"
     }
 }
