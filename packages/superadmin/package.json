@@ -9,7 +9,8 @@
     "types": "./dist/core.d.ts",
     "sideEffects": false,
     "scripts": {
-        "lint": "prettier ./src --write > /dev/null && eslint . --fix --cache"
+        "lint": "eslint . --fix --cache",
+        "prettify": "prettier ./src --write > /dev/null"
     },
     "bin": "./bin/cli.js",
     "files": [

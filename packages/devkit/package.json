@@ -9,7 +9,8 @@
     "types": "./dist/index.d.ts",
     "sideEffects": false,
     "scripts": {
-        "lint": "prettier ./src --write > /dev/null && eslint . --fix --cache"
+        "lint": "eslint . --fix --cache",
+        "prettify": "prettier ./src --write > /dev/null"
     },
     "dependencies": {
         "@nzyme/esm": "0.14.0",

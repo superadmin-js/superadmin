@@ -7,6 +7,7 @@ export default [
         rootDir: import.meta.dirname,
         target: 'browser',
         internalImports: ['@superadmin/*'],
+        allowDefaultProject: ['vite.config.ts'],
     }),
     ...packageJson(),
     ...vue(),

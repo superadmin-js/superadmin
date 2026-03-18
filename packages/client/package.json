@@ -16,7 +16,8 @@
         }
     },
     "scripts": {
-        "lint": "prettier ./src --write > /dev/null && eslint . --fix --cache"
+        "lint": "eslint . --fix --cache",
+        "prettify": "prettier ./src --write > /dev/null"
     },
     "dependencies": {
         "@nzyme/crypto": "0.14.0",
