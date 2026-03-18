@@ -2,11 +2,14 @@ import { createContainer } from '@nzyme/ioc/Container.js';
 
 import { ProjectConfig } from '@superadmin/config/ProjectConfig.js';
 import { resolveConfig } from '@superadmin/devkit/utils/resolveConfig.js';
+import type { ResolveConfigOptions } from '@superadmin/devkit/utils/resolveConfig.js';
 
-/** Loads the project configuration from the current working directory and creates an IoC container with plugins. */
-export async function loadProject() {
+/**
+ *
+ */
+export async function loadProject(options: ResolveConfigOptions) {
     const container = createContainer();
-    const config = await resolveConfig(process.cwd());
+    const config = await resolveConfig(options);
     container.set(ProjectConfig, config);
 
     for (const plugin of config.plugins) {

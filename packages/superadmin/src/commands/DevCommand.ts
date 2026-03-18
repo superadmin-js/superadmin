@@ -1,3 +1,4 @@
+import { Option } from '@nzyme/cli';
 import { Command } from '@nzyme/cli/Command.js';
 import { waitForever } from '@nzyme/utils/waitForever.js';
 
@@ -12,9 +13,16 @@ export class DevCommand extends Command {
         description: 'Start the development server',
     });
 
+    config = Option.String({
+        name: '--config,-c',
+        required: false,
+    });
+
     /** Loads the project configuration and starts the dev server. */
     async run() {
-        const container = await loadProject();
+        const container = await loadProject({
+            configFile: this.config,
+        });
 
         const devServer = await container.resolve(DevServer);
         await devServer.start();
