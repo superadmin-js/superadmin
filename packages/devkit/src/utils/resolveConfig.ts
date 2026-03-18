@@ -19,11 +19,21 @@ export interface ResolveConfigOptions {
 
 /**
  * Resolve the Superadmin config.
+ *
+ * Uses the config file's directory as the project root so that builds,
+ * output paths and asset resolution work correctly even when the CLI
+ * is invoked from a different directory (e.g. a monorepo root).
  */
 export async function resolveConfig(options: ResolveConfigOptions) {
     const { cwd = process.cwd(), configFile = 'superadmin.config.ts' } = options;
-    const configPath = path.join(cwd, configFile);
+    const configPath = path.resolve(cwd, configFile);
     const config = (await import(configPath)) as { default: ProjectConfig };
 
-    return config.default;
+    const projectRoot = path.dirname(configPath);
+
+    return {
+        ...config.default,
+        cwd: projectRoot,
+        runtimePath: path.join(projectRoot, '.superadmin'),
+    };
 }
