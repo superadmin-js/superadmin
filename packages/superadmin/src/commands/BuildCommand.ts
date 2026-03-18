@@ -19,9 +19,7 @@ export class BuildCommand extends Command {
         required: false,
     });
 
-    /**
-     *
-     */
+    /** Executes the build command. */
     async run() {
         const container = await loadProject({
             configFile: this.config,
