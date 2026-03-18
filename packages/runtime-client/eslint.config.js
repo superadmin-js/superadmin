@@ -4,9 +4,10 @@ export default [
     //
     ...common(),
     ...typescript({
+        rootDir: import.meta.dirname,
         target: 'browser',
-        project: ['./tsconfig.json', './tsconfig.node.json'],
         internalImports: ['@superadmin/*'],
+        allowDefaultProject: ['vite.config.ts'],
     }),
     ...packageJson(),
     ...vue(),
