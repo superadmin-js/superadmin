@@ -46,7 +46,7 @@
     "devDependencies": {
         "@nzyme/rollup-utils": "0.14.0",
         "@superadmin/tsconfig": "*",
-        "@types/debug": "4.1.12",
+        "@types/debug": "4.1.13",
         "@types/node": "25.5.0",
         "@vue/tsconfig": "0.8.1",
         "eslint": "10.0.3",
