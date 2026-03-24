@@ -48,7 +48,7 @@
         "@superadmin/tsconfig": "*",
         "@types/debug": "4.1.13",
         "@types/node": "25.5.0",
-        "@vue/tsconfig": "0.8.1",
+        "@vue/tsconfig": "0.9.1",
         "eslint": "10.1.0",
         "prettier": "3.8.1",
         "vite": "7.3.1"
