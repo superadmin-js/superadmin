@@ -15,12 +15,12 @@
     "dependencies": {
         "@nzyme/utils": "0.14.0",
         "@nzyme/zchema": "0.14.0",
-        "lucide-static": "0.577.0"
+        "lucide-static": "1.0.1"
     },
     "devDependencies": {
         "@superadmin/tsconfig": "*",
         "@types/node": "25.5.0",
-        "eslint": "10.0.3",
+        "eslint": "10.1.0",
         "prettier": "3.8.1"
     },
     "exports": {
