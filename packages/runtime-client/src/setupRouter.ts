@@ -30,21 +30,21 @@ export function setupRouter(container: Container) {
         path: '/',
         component: NavigationLayout,
         children: routesWithNavigation,
-        beforeEnter: async (to, _from, next) => {
+        beforeEnter: async (to, _from) => {
             await authChecker();
 
             if (authStore.auth) {
-                return next();
+                return;
             }
 
             if (loginView) {
-                return next({
+                return {
                     path: loginView.path,
                     query: { redirect: to.path },
-                });
+                };
             }
 
-            return next(new Error('Unauthorized'));
+            return new Error('Unauthorized');
         },
     });
 
@@ -61,22 +61,22 @@ export function setupRouter(container: Container) {
             path: view.path,
             component: PageViewRenderer,
             props: { view },
-            beforeEnter: async (to, _from, next) => {
+            beforeEnter: async (to, _from) => {
                 await authChecker();
 
                 const authorized = view.auth.isAuthorized(authStore.auth);
                 if (authorized) {
-                    return next();
+                    return;
                 }
 
                 if (loginView) {
-                    return next({
+                    return {
                         path: loginView.path,
                         query: { redirect: to.path },
-                    });
+                    };
                 }
 
-                return next(new Error('Unauthorized'));
+                return new Error('Unauthorized');
             },
         });
     }
@@ -86,9 +86,8 @@ export function setupRouter(container: Container) {
         history: createWebHistory(config.basePath),
     });
 
-    router.beforeEach((to, from, next) => {
+    router.beforeEach((to, from) => {
         debug(`before %s → %s`, from.path, to.path);
-        next();
     });
 
     router.afterEach((to, from) => {

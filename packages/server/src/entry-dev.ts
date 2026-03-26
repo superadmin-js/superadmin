@@ -5,7 +5,7 @@ import { createServer } from './createServer.js';
 
 const runtime = devServerRuntime();
 const server = createServer({
-    port: runtime.port,
+    port: runtime.port || 3000,
     afterRequest: (req, res) => {
         const method = `[${req.method?.toUpperCase() ?? 'GET'}]`;
         const status = `[${res.statusCode}]`;
