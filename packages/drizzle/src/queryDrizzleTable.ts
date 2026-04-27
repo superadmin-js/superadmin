@@ -59,9 +59,7 @@ type DrizzleQuery<T> = PromiseLike<T[]> & {
 };
 
 /** Executes a paginated Drizzle query with sorting and optional row mapping, returning rows and pagination metadata. */
-export async function queryDrizzleTable<TRow, TMap = TRow>(
-    params: QueryDrizzleTableParams<TRow, TMap>,
-) {
+export async function queryDrizzleTable<TRow, TMap = TRow>(params: QueryDrizzleTableParams<TRow, TMap>) {
     const pagination = params.pagination;
     const offset = (pagination.page - 1) * pagination.pageSize;
     const limit = pagination.pageSize + 1;

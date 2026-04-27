@@ -31,9 +31,7 @@ const discriminatorOptions = computed(() => {
 });
 
 const discriminatorSchema = computed(() => {
-  const defaultDiscriminator = discriminatorOptions.value.find(
-    option => option.discriminator.value,
-  );
+  const defaultDiscriminator = discriminatorOptions.value.find(option => option.discriminator.value);
 
   return s.enum({
     values: discriminatorOptions.value.map(option => option.discriminator.value),

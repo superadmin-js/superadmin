@@ -17,11 +17,7 @@ export interface FunctionHandlerFunction<P extends Schema, R extends Schema> {
 }
 
 /** Configuration for defining a function handler via {@link defineFunctionHandler}. */
-export interface FunctionHandlerOptions<
-    P extends Schema,
-    R extends Schema,
-    TDeps extends Dependencies,
-> {
+export interface FunctionHandlerOptions<P extends Schema, R extends Schema, TDeps extends Dependencies> {
     /** The function definition this handler implements. */
     readonly function: FunctionDefinition<P, R>;
     /** Optional dependencies required by this function handler. */
@@ -31,10 +27,7 @@ export interface FunctionHandlerOptions<
 }
 
 /** Registered function handler linking a function definition to its service implementation. */
-export interface FunctionHandler<
-    P extends Schema = Schema,
-    R extends Schema = Schema,
-> extends Submodule {
+export interface FunctionHandler<P extends Schema = Schema, R extends Schema = Schema> extends Submodule {
     /** The function definition this handler is registered for. */
     function: FunctionDefinition<P, R>;
     /** The service that provides the handler function. */
@@ -45,11 +38,9 @@ export interface FunctionHandler<
  * Creates a function handler submodule that binds a handler to a function definition.
  * @__NO_SIDE_EFFECTS__
  */
-export function defineFunctionHandler<
-    P extends Schema,
-    R extends Schema,
-    TDeps extends Dependencies = EmptyObject,
->(options: FunctionHandlerOptions<P, R, TDeps>) {
+export function defineFunctionHandler<P extends Schema, R extends Schema, TDeps extends Dependencies = EmptyObject>(
+    options: FunctionHandlerOptions<P, R, TDeps>,
+) {
     return defineSubmodule<FunctionHandler<P, R>>(FUNCTION_HANDLER_SYMBOL, {
         function: options.function,
         service: defineService({

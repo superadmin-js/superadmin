@@ -7,9 +7,7 @@ import type { Infer } from '@superadmin/schema';
 import type { ViewLayout } from '../views/ViewLayout.js';
 
 /** Extracted prop types for a view component. */
-export type ViewProps<TView extends View = View> = ExtractPropTypes<
-    ReturnType<typeof useViewProps<TView>>
->;
+export type ViewProps<TView extends View = View> = ExtractPropTypes<ReturnType<typeof useViewProps<TView>>>;
 
 /** Creates Vue prop definitions for a view component including view, params, and layout. */
 export function useViewProps<TView extends View = View>() {

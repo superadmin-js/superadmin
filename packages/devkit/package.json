@@ -1,22 +1,34 @@
 {
     "name": "@superadmin/devkit",
     "version": "1.0.0",
-    "repository": "https://github.com/kedrzu/superadmin.git",
     "author": "Michał Kędrzyński <m.kedrzynski@gmail.com>",
+    "repository": "https://github.com/kedrzu/superadmin.git",
     "type": "module",
+    "sideEffects": false,
     "main": "./dist/index.js",
     "module": "./dist/index.js",
     "types": "./dist/index.d.ts",
-    "sideEffects": false,
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "default": "./dist/index.js"
+        },
+        "./*.js": {
+            "types": "./dist/*.d.ts",
+            "import": "./dist/*.js",
+            "source": "./src/*.ts",
+            "default": "./dist/*.js"
+        }
+    },
     "scripts": {
         "lint": "eslint . --fix --cache",
         "prettify": "prettier ./src --write > /dev/null"
     },
     "dependencies": {
         "@nzyme/esm": "0.14.0",
-        "@nzyme/ioc": "0.14.0",
         "@nzyme/i18n": "0.14.0",
         "@nzyme/i18n-core": "0.14.0",
+        "@nzyme/ioc": "0.14.0",
         "@nzyme/project-utils": "0.14.0",
         "@nzyme/rollup-utils": "0.14.0",
         "@nzyme/utils": "0.14.0",
@@ -26,12 +38,12 @@
         "@rollup/plugin-node-resolve": "16.0.3",
         "@rollup/plugin-typescript": "12.3.0",
         "@rollup/plugin-virtual": "3.0.2",
-        "@superadmin/ui": "*",
-        "@superadmin/core": "*",
         "@superadmin/client": "*",
         "@superadmin/config": "*",
+        "@superadmin/core": "*",
         "@superadmin/runtime-client": "*",
         "@superadmin/server": "*",
+        "@superadmin/ui": "*",
         "@tailwindcss/vite": "4.2.2",
         "@vitejs/plugin-vue": "6.0.5",
         "@vitejs/plugin-vue-jsx": "5.1.5",
@@ -40,20 +52,20 @@
         "chokidar": "5.0.0",
         "debug": "4.4.3",
         "fast-glob": "3.3.3",
-        "oxc-resolver": "11.19.1",
         "lodash.debounce": "4.0.8",
-        "tailwindcss": "4.2.2",
-        "tailwindcss-primeui": "0.6.1",
+        "oxc-resolver": "11.19.1",
         "postcss": "8.5.8",
         "rollup": "4.60.0",
         "rollup-plugin-sourcemaps": "0.6.3",
+        "tailwindcss": "4.2.2",
+        "tailwindcss-primeui": "0.6.1",
         "type-fest": "5.5.0",
         "typescript": "6.0.2",
         "ufo": "1.6.3",
-        "vue": "3.5.30",
         "vite": "7.3.1",
         "vite-plugin-checker": "0.12.0",
         "vite-tsconfig-paths": "6.1.1",
+        "vue": "3.5.30",
         "vue-tsc": "3.2.6"
     },
     "devDependencies": {
@@ -69,17 +81,5 @@
         "ignoreDeps": [
             "vue-tsc"
         ]
-    },
-    "exports": {
-        ".": {
-            "types": "./dist/index.d.ts",
-            "default": "./dist/index.js"
-        },
-        "./*.js": {
-            "types": "./dist/*.d.ts",
-            "import": "./dist/*.js",
-            "source": "./src/*.ts",
-            "default": "./dist/*.js"
-        }
     }
 }

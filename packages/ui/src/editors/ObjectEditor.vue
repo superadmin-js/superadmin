@@ -13,9 +13,7 @@ const props = defineProps({
 });
 
 const model = defineModel<Record<string, unknown> | null | undefined>();
-const fields = computed(() =>
-  Object.entries(props.schema.props).filter(([_, schema]) => !schema.hidden),
-);
+const fields = computed(() => Object.entries(props.schema.props).filter(([_, schema]) => !schema.hidden));
 
 function setProp(prop: string, value: unknown) {
   if (!model.value) {

@@ -3,12 +3,7 @@ export * from './actions/ActionError.js';
 export * from './actions/ActionHandlerRegistry.js';
 export * from './actions/ActionRegistry.js';
 export * from './actions/createAction.js';
-export {
-    type ActionDefinition,
-    type ActionOf,
-    defineAction,
-    isAction,
-} from './actions/defineAction.js';
+export { type ActionDefinition, type ActionOf, defineAction, isAction } from './actions/defineAction.js';
 export * from './actions/defineActionHandler.js';
 export { goToView } from './actions/goToView.js';
 export { noAction } from './actions/noAction.js';

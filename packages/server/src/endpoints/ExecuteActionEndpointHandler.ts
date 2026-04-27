@@ -31,15 +31,7 @@ export const ExecuteActionEndpointHandler = defineEndpointHandler({
         verifyAuthToken: VerifyAuthToken,
         logger: Logger,
     },
-    setup({
-        container,
-        httpContextProvider,
-        actions,
-        actionHandlers,
-        functions,
-        verifyAuthToken,
-        logger,
-    }) {
+    setup({ container, httpContextProvider, actions, actionHandlers, functions, verifyAuthToken, logger }) {
         const actionSchema = s.action();
 
         return async input => {

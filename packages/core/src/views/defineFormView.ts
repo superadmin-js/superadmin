@@ -28,10 +28,9 @@ export interface FormViewConfig<S extends s.ObjectSchema, TParams extends s.Sche
 }
 
 /** Type alias for the return type of {@link defineFormView}. */
-export type FormView<
-    S extends s.ObjectSchema = s.ObjectSchema,
-    P extends s.Schema = s.Schema<unknown>,
-> = ReturnType<typeof defineFormView<S, P>>;
+export type FormView<S extends s.ObjectSchema = s.ObjectSchema, P extends s.Schema = s.Schema<unknown>> = ReturnType<
+    typeof defineFormView<S, P>
+>;
 
 /** Shared component definition for all form views. */
 export const formComponent = defineComponent<FormView['component']>();

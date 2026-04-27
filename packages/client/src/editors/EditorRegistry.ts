@@ -15,18 +15,12 @@ export const EditorRegistry = defineService({
             resolve,
         };
 
-        function register<S extends Schema>(
-            schema: S | SchemaBase<S>,
-            component: EditorComponent<S>,
-        ) {
+        function register<S extends Schema>(schema: S | SchemaBase<S>, component: EditorComponent<S>) {
             registry.set(schema, component as EditorComponent);
         }
 
         function resolve<S extends Schema>(schema: S) {
-            return (
-                registry.get(schema) ??
-                (registry.get(schema.type) as EditorComponent<S> | undefined)
-            );
+            return registry.get(schema) ?? (registry.get(schema.type) as EditorComponent<S> | undefined);
         }
     },
 });

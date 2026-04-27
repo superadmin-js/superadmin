@@ -42,9 +42,7 @@ const actionDispatcher = useService(ActionDispatcher);
 const id = `button-${randomString(12)}`;
 const loading = ref(false);
 
-const actionDef = computed(
-  () => props.button.action && actionRegistry.resolve(props.button.action),
-);
+const actionDef = computed(() => props.button.action && actionRegistry.resolve(props.button.action));
 
 const isAuthorized = computed(() => {
   if (!actionDef.value) {

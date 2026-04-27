@@ -37,32 +37,22 @@ type SubmoduleOptionsFor<TModule extends Submodule = Submodule> = {
  * Creates a submodule from plain options.
  * @__NO_SIDE_EFFECTS__
  */
-export function defineSubmodule<TModule extends SubmoduleOptions>(
-    module: TModule,
-): Submodule & TModule;
+export function defineSubmodule<TModule extends SubmoduleOptions>(module: TModule): Submodule & TModule;
 /**
  * Creates a typed submodule from options matching the target interface.
  * @__NO_SIDE_EFFECTS__
  */
-export function defineSubmodule<TModule extends Submodule>(
-    module: SubmoduleOptionsFor<TModule>,
-): TModule;
+export function defineSubmodule<TModule extends Submodule>(module: SubmoduleOptionsFor<TModule>): TModule;
 /**
  * Creates a typed submodule with an explicit type discriminant symbol.
  * @__NO_SIDE_EFFECTS__
  */
-export function defineSubmodule<TModule extends Submodule>(
-    type: symbol,
-    module: SubmoduleOptionsFor<TModule>,
-): TModule;
+export function defineSubmodule<TModule extends Submodule>(type: symbol, module: SubmoduleOptionsFor<TModule>): TModule;
 /**
  * Creates a submodule object with lifecycle hooks for initialization and DI installation.
  * @__NO_SIDE_EFFECTS__
  */
-export function defineSubmodule(
-    typeOrModule: symbol | SubmoduleOptionsFor,
-    module?: SubmoduleOptionsFor,
-): Submodule {
+export function defineSubmodule(typeOrModule: symbol | SubmoduleOptionsFor, module?: SubmoduleOptionsFor): Submodule {
     let type: symbol | true;
 
     if (typeof typeOrModule === 'symbol') {

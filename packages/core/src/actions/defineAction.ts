@@ -32,13 +32,9 @@ export type ActionOf<TDef extends ActionDefinition> = s.Action<TDef['params'], T
 export type ActionInput<TDef extends ActionDefinition> = s.Infer<TDef['input']>;
 
 type ActionFactory<TParams extends s.Schema = s.SchemaAny, R extends s.Schema = s.Schema<unknown>> =
-    s.Infer<TParams> extends void
-        ? () => s.Action<TParams, R>
-        : (input: s.Infer<TParams>) => s.Action<TParams, R>;
+    s.Infer<TParams> extends void ? () => s.Action<TParams, R> : (input: s.Infer<TParams>) => s.Action<TParams, R>;
 
-type ActionHandler<P extends s.Schema, R extends s.Schema> = (
-    params: s.Infer<P>,
-) => Promise<s.Infer<R>> | s.Infer<R>;
+type ActionHandler<P extends s.Schema, R extends s.Schema> = (params: s.Infer<P>) => Promise<s.Infer<R>> | s.Infer<R>;
 
 type ActionSubmodule<
     TParams extends s.Schema = s.SchemaAny,
@@ -75,10 +71,9 @@ export function defineAction<
     TInput extends s.Schema = TParams,
 >(options: ActionOptions<TParams, TResult, TInput>): ActionDefinition<TParams, TResult, TInput>;
 /** Defines an action with params doubling as input type. */
-export function defineAction<
-    TParams extends s.Schema = s.Schema<void>,
-    TResult extends s.Schema = s.Schema<void>,
->(options: ActionOptions<TParams, TResult>): ActionDefinition<TParams, TResult>;
+export function defineAction<TParams extends s.Schema = s.Schema<void>, TResult extends s.Schema = s.Schema<void>>(
+    options: ActionOptions<TParams, TResult>,
+): ActionDefinition<TParams, TResult>;
 /**
  * Creates an action definition that can be invoked as a factory and registered as a submodule.
  * The returned object is both callable (to produce action payloads) and a submodule (for DI registration).
@@ -131,11 +126,7 @@ export function isActionDefinition(value: unknown): value is ActionDefinition {
 }
 
 /** Type guard that checks whether an action payload belongs to a specific action definition. */
-export function isAction<
-    TInput extends s.Schema,
-    TParams extends s.Schema,
-    TResult extends s.Schema,
->(
+export function isAction<TInput extends s.Schema, TParams extends s.Schema, TResult extends s.Schema>(
     def: ActionDefinition<TInput, TParams, TResult>,
     action: s.Action,
 ): action is s.Action<TInput, TResult> {

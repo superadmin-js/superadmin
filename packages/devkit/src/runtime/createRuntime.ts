@@ -133,9 +133,7 @@ export function generateRuntime<T extends Record<string, string> = Record<string
         const modulesMap: Record<string, string> = {};
 
         for (const module of modules) {
-            const modulePath = path.isAbsolute(module.file)
-                ? path.relative(outputDir, module.file)
-                : module.file;
+            const modulePath = path.isAbsolute(module.file) ? path.relative(outputDir, module.file) : module.file;
 
             const moduleId = getModuleId(module);
 
