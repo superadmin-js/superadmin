@@ -1,9 +1,10 @@
 {
     "name": "@superadmin/drizzle",
-    "repository": "https://github.com/kedrzu/superadmin.git",
-    "author": "Michał Kędrzyński <m.kedrzynski@gmail.com>",
     "version": "1.0.0",
+    "author": "Michał Kędrzyński <m.kedrzynski@gmail.com>",
+    "repository": "https://github.com/kedrzu/superadmin.git",
     "type": "module",
+    "sideEffects": false,
     "exports": {
         ".": {
             "types": "./dist/index.d.ts",
@@ -16,10 +17,9 @@
             "default": "./dist/*.js"
         }
     },
-    "sideEffects": false,
     "scripts": {
         "lint": "eslint . --fix --cache",
-        "prettify": "prettier ./src --write > /dev/null"
+        "format": "oxfmt ./src > /dev/null"
     },
     "dependencies": {
         "@superadmin/core": "*",
@@ -29,6 +29,6 @@
         "@superadmin/tsconfig": "*",
         "@types/node": "25.5.0",
         "eslint": "10.1.0",
-        "prettier": "3.8.1"
+        "oxfmt": "0.46.0"
     }
 }
