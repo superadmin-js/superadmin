@@ -1,7 +1,12 @@
 {
-    "repository": "https://github.com/kedrzu/superadmin.git",
-    "author": "Michał Kędrzyński <m.kedrzynski@gmail.com>",
     "private": true,
+    "author": "Michał Kędrzyński <m.kedrzynski@gmail.com>",
+    "repository": "https://github.com/kedrzu/superadmin.git",
+    "workspaces": [
+        "packages/*",
+        "examples/*",
+        "nzyme/packages/*"
+    ],
     "scripts": {
         "dev": "turbo run dev",
         "start": "turbo run dev",
@@ -28,14 +33,9 @@
         "@nzyme/eslint": "0.14.0",
         "@nzyme/tsconfig": "0.14.0",
         "del-cli": "6.0.0",
-        "prettier": "3.5.3",
+        "oxfmt": "0.46.0",
         "turbo": "2.5.4",
         "typescript": "5.8.3"
     },
-    "workspaces": [
-        "packages/*",
-        "examples/*",
-        "nzyme/packages/*"
-    ],
     "packageManager": "bun@1.2.4"
 }
