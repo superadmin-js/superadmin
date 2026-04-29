@@ -32,10 +32,10 @@
         "@nzyme/cli": "0.14.0",
         "@nzyme/eslint": "0.14.0",
         "@nzyme/tsconfig": "0.14.0",
+        "@typescript/native-preview": "^7.0.0-dev.20260428.1",
         "del-cli": "6.0.0",
         "oxfmt": "0.46.0",
-        "turbo": "2.5.4",
-        "typescript": "5.8.3"
+        "turbo": "2.5.4"
     },
     "packageManager": "bun@1.2.4"
 }
