@@ -11,6 +11,8 @@ export type FunctionDefinition<P extends s.Schema, R extends s.Schema> = {
 };
 
 /** Creates a function definition with typed params and result schemas. */
-export function defineFunction<P extends s.Schema, R extends s.Schema>(definition: FunctionDefinition<P, R>) {
+export function defineFunction<P extends s.Schema, R extends s.Schema>(
+    definition: FunctionDefinition<P, R>,
+) {
     return definition;
 }

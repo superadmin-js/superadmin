@@ -80,7 +80,10 @@ export const DevServer = defineService({
                 plugins: [watchFilesPlugin(), resolveExternalsPlugin()],
             };
 
-            const rollupConfig: RollupOptions = mergeConfig(rollupConfigBase, rollupConfigOverrides);
+            const rollupConfig: RollupOptions = mergeConfig(
+                rollupConfigBase,
+                rollupConfigOverrides,
+            );
             const api = devServerMiddleware(rollupConfig);
 
             return api;

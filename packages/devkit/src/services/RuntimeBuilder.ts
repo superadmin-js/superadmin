@@ -74,7 +74,10 @@ export const RuntimeBuilder = defineService({
         const viteClientTypes = typesResolver.resolveFileSync(currentFile, 'vite/client');
         const vueJsxTypes = typesResolver.resolveFileSync(currentFile, 'vue/jsx');
         const tailwindStyles = styleResolver.resolveFileSync(currentFile, 'tailwindcss');
-        const tailwindPrimeuiStyles = styleResolver.resolveFileSync(currentFile, 'tailwindcss-primeui');
+        const tailwindPrimeuiStyles = styleResolver.resolveFileSync(
+            currentFile,
+            'tailwindcss-primeui',
+        );
 
         const shims = `
 /// <reference types="${viteClientTypes?.path}" />
@@ -146,7 +149,10 @@ export {}`;
             const watcher = watch('.', {
                 cwd: projectConfig.cwd,
                 ignored: file => {
-                    return ignoredPatterns.some(pattern => file.endsWith(pattern)) || !!isFileIgnored(file);
+                    return (
+                        ignoredPatterns.some(pattern => file.endsWith(pattern)) ||
+                        !!isFileIgnored(file)
+                    );
                 },
                 persistent: true,
                 ignoreInitial: true,

@@ -5,6 +5,9 @@ import type { ActionDefinition, ActionInput } from './defineAction.js';
 const ACTION_SCHEMA = s.action();
 
 /** Creates an action payload from a definition and its input, coercing to the action schema. */
-export function createAction<TDef extends ActionDefinition>(action: TDef, input: ActionInput<TDef>) {
+export function createAction<TDef extends ActionDefinition>(
+    action: TDef,
+    input: ActionInput<TDef>,
+) {
     return s.coerce(ACTION_SCHEMA, { action: action.id, params: input as unknown });
 }

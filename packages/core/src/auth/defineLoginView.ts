@@ -17,13 +17,17 @@ export interface LoginViewConfig<TForm extends s.Schema> {
 }
 
 /** Type alias for the return type of {@link defineLoginView}. */
-export type LoginView<TForm extends s.Schema = s.Schema> = ReturnType<typeof defineLoginView<TForm>>;
+export type LoginView<TForm extends s.Schema = s.Schema> = ReturnType<
+    typeof defineLoginView<TForm>
+>;
 
 /** Shared component definition for all login views. */
 export const loginComponent = defineComponent<LoginView['component']>();
 
 /** Creates a login view with a submit action, accessible without authentication. */
-export function defineLoginView<TForm extends s.Schema = s.Schema<void>>(config: LoginViewConfig<TForm>) {
+export function defineLoginView<TForm extends s.Schema = s.Schema<void>>(
+    config: LoginViewConfig<TForm>,
+) {
     const component = loginComponent as ComponentAny;
 
     return defineView({

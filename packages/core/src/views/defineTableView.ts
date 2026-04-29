@@ -53,8 +53,10 @@ export const tableComponent = defineComponent<TableView['component']>();
 
 type RowProps<TRow extends s.NonNullable<s.ObjectSchema>> = Simplify<(keyof TRow['props'])[]>;
 
-type TableSort<TRow extends s.NonNullable<s.ObjectSchema>, TSort extends TableSortOptions<TRow>> = string[] &
-    (TSort extends string[] ? TSort : TSort extends true ? RowProps<TRow> : []);
+type TableSort<
+    TRow extends s.NonNullable<s.ObjectSchema>,
+    TSort extends TableSortOptions<TRow>,
+> = string[] & (TSort extends string[] ? TSort : TSort extends true ? RowProps<TRow> : []);
 
 type TableSortParams<
     TRow extends s.NonNullable<s.ObjectSchema> = s.NonNullable<s.ObjectSchema>,
@@ -68,17 +70,14 @@ type TableSortParams<
     };
 }>;
 
-type TablePaginationParams<TPagination extends Pagination | undefined> = TPagination extends Pagination
-    ? TPagination['params']
-    : s.VoidSchema;
+type TablePaginationParams<TPagination extends Pagination | undefined> =
+    TPagination extends Pagination ? TPagination['params'] : s.VoidSchema;
 
-type TablePaginationParamsNullish<TPagination extends Pagination | undefined> = TPagination extends Pagination
-    ? s.Nullish<TPagination['params']>
-    : s.VoidSchema;
+type TablePaginationParamsNullish<TPagination extends Pagination | undefined> =
+    TPagination extends Pagination ? s.Nullish<TPagination['params']> : s.VoidSchema;
 
-type TablePaginationResult<TPagination extends Pagination | undefined> = TPagination extends Pagination
-    ? TPagination['result']
-    : s.VoidSchema;
+type TablePaginationResult<TPagination extends Pagination | undefined> =
+    TPagination extends Pagination ? TPagination['result'] : s.VoidSchema;
 
 /**
  * Creates a table view with fetch action, sorting, pagination, and row/header button support.

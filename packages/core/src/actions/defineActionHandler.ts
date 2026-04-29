@@ -34,7 +34,10 @@ export interface ActionHandlerContext<TResult extends s.Schema> {
 
 /** Callable signature for an action handler that processes params and returns a result. */
 export interface ActionHandlerFunction<TParams extends s.Schema, TResult extends s.Schema> {
-    (params: s.Infer<TParams>, ctx: ActionHandlerContext<TResult>): Promise<s.Infer<TResult>> | s.Infer<TResult>;
+    (
+        params: s.Infer<TParams>,
+        ctx: ActionHandlerContext<TResult>,
+    ): Promise<s.Infer<TResult>> | s.Infer<TResult>;
 }
 
 /** Configuration for defining an action handler via {@link defineActionHandler}. */
