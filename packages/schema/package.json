@@ -27,12 +27,12 @@
     "dependencies": {
         "@nzyme/utils": "0.14.0",
         "@nzyme/zchema": "0.14.0",
-        "lucide-static": "1.0.1"
+        "lucide-static": "1.16.0"
     },
     "devDependencies": {
         "@superadmin/tsconfig": "*",
         "@types/node": "25.5.0",
-        "eslint": "10.1.0",
+        "eslint": "10.4.0",
         "oxfmt": "0.50.0"
     }
 }

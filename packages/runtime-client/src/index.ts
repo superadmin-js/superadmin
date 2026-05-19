@@ -8,7 +8,6 @@ import type { PrimeVueConfiguration } from 'primevue/config';
 import PrimeVue from 'primevue/config';
 import PrimeVueToastService from 'primevue/toastservice';
 import { createApp } from 'vue';
-import type { Plugin } from 'vue';
 
 import { RuntimeConfig } from '@superadmin/client/RuntimeConfig.js';
 import { App } from '@superadmin/client/services/App.js';
@@ -45,8 +44,8 @@ const primeVueConfig: PrimeVueConfiguration = {
     },
 };
 
-app.use(PrimeVue as unknown as Plugin, primeVueConfig);
-app.use(PrimeVueToastService as unknown as Plugin);
+app.use(PrimeVue, primeVueConfig);
+app.use(PrimeVueToastService);
 
 container.set(ToastService, app.config.globalProperties.$toast);
 
