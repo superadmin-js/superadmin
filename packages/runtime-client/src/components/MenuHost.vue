@@ -48,15 +48,17 @@ onEventEmitter(menuService.onOpen, async ({ items, event }) => {
         return;
       }
 
-      const handler = async () => {
-        await actionDispatcher(item.action);
-        promise.resolve();
+      const handler = () => {
+        void (async () => {
+          await actionDispatcher(item.action);
+          promise.resolve();
+        })();
       };
 
       const menuItem: MenuItem = {
         label: item.label || actionDef.title,
         icon: item.icon,
-        command: handler as () => void,
+        command: handler,
         style: getItemStyle(item),
       };
 

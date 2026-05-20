@@ -32,16 +32,16 @@
         "@superadmin/utils": "*",
         "@superadmin/validation": "*",
         "debug": "4.4.3",
-        "primevue": "4.5.4",
-        "ufo": "1.6.3",
-        "vue": "3.5.30",
-        "vue-router": "5.0.4"
+        "primevue": "4.5.5",
+        "ufo": "1.6.4",
+        "vue": "3.5.34",
+        "vue-router": "5.0.7"
     },
     "devDependencies": {
         "@nzyme/eslint": "0.14.0",
         "@superadmin/tsconfig": "*",
         "@types/debug": "4.1.13",
-        "eslint": "10.1.0",
-        "oxfmt": "0.46.0"
+        "eslint": "10.4.0",
+        "oxfmt": "0.50.0"
     }
 }

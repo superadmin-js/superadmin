@@ -23,12 +23,12 @@
     },
     "dependencies": {
         "@superadmin/core": "*",
-        "drizzle-orm": "0.45.1"
+        "drizzle-orm": "0.45.2"
     },
     "devDependencies": {
         "@superadmin/tsconfig": "*",
         "@types/node": "25.5.0",
-        "eslint": "10.1.0",
-        "oxfmt": "0.46.0"
+        "eslint": "10.4.0",
+        "oxfmt": "0.50.0"
     }
 }
