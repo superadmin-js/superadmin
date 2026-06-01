@@ -2,6 +2,7 @@ import modules from '@modules';
 import type { Container } from '@nzyme/ioc/Container.js';
 import { createContainer } from '@nzyme/ioc/Container.js';
 import { createRouter as createRpcRouter } from '@nzyme/rpc/createRouter.js';
+import type { RouterBeforeRequest } from '@nzyme/rpc/createRouter.js';
 
 import { installModules } from '@superadmin/runtime-common/installModules.js';
 
@@ -14,6 +15,12 @@ export interface CreateRouterOptions {
      * If not provided, a new container will be created.
      */
     container?: Container;
+
+    /**
+     * Optional hook invoked before each request is routed. Returning a response short-circuits the
+     * router (e.g. to reject requests that did not arrive through a trusted edge).
+     */
+    beforeRequest?: RouterBeforeRequest;
 }
 
 /** Creates the server-side RPC router with all registered modules and action endpoint handlers. */
@@ -24,5 +31,6 @@ export function createRouter(options: CreateRouterOptions = {}) {
     return createRpcRouter({
         container,
         handlers: [ExecuteActionEndpointHandler],
+        beforeRequest: options.beforeRequest,
     });
 }
